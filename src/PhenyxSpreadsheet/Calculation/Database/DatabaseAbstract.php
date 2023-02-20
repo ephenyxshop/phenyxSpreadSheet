@@ -27,7 +27,7 @@ abstract class DatabaseAbstract {
      */
     protected static function fieldExtract(array $database, $field):  ? int{
 
-        $field = strtoupper(Functions::flattenSingleValue($field ?  ? ''));
+        $field = strtoupper(Functions::flattenSingleValue($field ?? ''));
 
         if ($field === '') {
             return null;
@@ -87,9 +87,9 @@ abstract class DatabaseAbstract {
 
         foreach ($database as $rowKey => $row) {
             $keys = array_keys($row);
-            $key = $keys[$field] ?  ? null;
-            $columnKey = $key ?  ? 'A';
-            $columnData[$rowKey][$columnKey] = $row[$key] ?  ? $defaultReturnColumnValue;
+            $key = $keys[$field] ?? null;
+            $columnKey = $key ?? 'A';
+            $columnData[$rowKey][$columnKey] = $row[$key] ?? $defaultReturnColumnValue;
         }
 
         return $columnData;
@@ -116,12 +116,12 @@ abstract class DatabaseAbstract {
         $rowQuery = array_map(
             function ($rowValue) {
 
-                return (count($rowValue) > 1) ? 'AND(' . implode(',', $rowValue) . ')' : ($rowValue[0] ?  ? '');
+                return (count($rowValue) > 1) ? 'AND(' . implode(',', $rowValue) . ')' : ($rowValue[0] ?? '');
             },
             $baseQuery
         );
 
-        return (count($rowQuery) > 1) ? 'OR(' . implode(',', $rowQuery) . ')' : ($rowQuery[0] ?  ? '');
+        return (count($rowQuery) > 1) ? 'OR(' . implode(',', $rowQuery) . ')' : ($rowQuery[0] ?? '');
     }
 
     private static function buildCondition($criterion, string $criterionName) : string{

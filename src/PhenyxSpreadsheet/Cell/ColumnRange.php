@@ -25,7 +25,7 @@ class ColumnRange implements AddressRange {
 
         $this->validateFromTo(
             Coordinate::columnIndexFromString($from),
-            Coordinate::columnIndexFromString($to ?  ? $from)
+            Coordinate::columnIndexFromString($to ?? $from)
         );
         $this->worksheet = $worksheet;
     }

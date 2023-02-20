@@ -47,7 +47,7 @@ class Subtotal {
                     $isFormula = $cellReference->getWorksheet()->getCell($column . $row)->isFormula();
                     $cellFormula = !preg_match(
                         '/^=.*\b(SUBTOTAL|AGGREGATE)\s*\(/i',
-                        $cellReference->getWorksheet()->getCell($column . $row)->getValue() ?  ? ''
+                        $cellReference->getWorksheet()->getCell($column . $row)->getValue() ?? ''
                     );
 
                     $retVal = !$isFormula || $cellFormula;

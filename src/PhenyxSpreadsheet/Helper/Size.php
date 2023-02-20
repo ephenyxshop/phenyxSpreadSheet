@@ -27,7 +27,7 @@ class Size {
 
         if ($this->valid) {
             $this->size = $matches['size'];
-            $this->unit = $matches['unit'] ?  ? 'pt';
+            $this->unit = $matches['unit'] ?? 'pt';
         }
 
     }

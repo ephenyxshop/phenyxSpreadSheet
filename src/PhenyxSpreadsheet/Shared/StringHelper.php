@@ -475,7 +475,7 @@ class StringHelper {
      */
     public static function countCharacters($textValue, $encoding = 'UTF-8') {
 
-        return mb_strlen($textValue ?  ? '', $encoding);
+        return mb_strlen($textValue ?? '', $encoding);
     }
 
     /**
@@ -501,7 +501,7 @@ class StringHelper {
      */
     public static function strToUpper($textValue) {
 
-        return mb_convert_case($textValue ?  ? '', MB_CASE_UPPER, 'UTF-8');
+        return mb_convert_case($textValue ?? '', MB_CASE_UPPER, 'UTF-8');
     }
 
     /**
@@ -513,7 +513,7 @@ class StringHelper {
      */
     public static function strToLower($textValue) {
 
-        return mb_convert_case($textValue ?  ? '', MB_CASE_LOWER, 'UTF-8');
+        return mb_convert_case($textValue ?? '', MB_CASE_LOWER, 'UTF-8');
     }
 
     /**

@@ -55,7 +55,7 @@ class ConditionalHelper {
                 $formula = Wizard\WizardAbstract::reverseAdjustCellRef((string) $condition, $cellRange);
                 $this->parser->parse($formula);
                 $this->tokens = $this->parser->toReversePolish();
-                $this->size = strlen($this->tokens ?  ? '');
+                $this->size = strlen($this->tokens ?? '');
             } catch (PhenyxSpreadsheetException $e) {
                 // In the event of a parser error with a formula value, we set the expression to ptgInt + 0
                 $this->tokens = pack('Cv', 0x1E, 0);

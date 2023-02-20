@@ -1150,7 +1150,7 @@ class Parser {
 
         $this->currentCharacter = 0;
         $this->formula = (string) $formula;
-        $this->lookAhead = $formula[1] ?  ? '';
+        $this->lookAhead = $formula[1] ?? '';
         $this->advance();
         $this->parseTree = $this->condition();
 

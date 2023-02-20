@@ -36,7 +36,7 @@ class DCountA extends DatabaseAbstract {
         $field = self::fieldExtract($database, $field);
 
         return Counts::COUNTA(
-            self::getFilteredColumn($database, $field ?  ? 0, $criteria)
+            self::getFilteredColumn($database, $field ?? 0, $criteria)
         );
     }
 }

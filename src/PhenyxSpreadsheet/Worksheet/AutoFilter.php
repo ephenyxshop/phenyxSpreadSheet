@@ -151,7 +151,7 @@ class AutoFilter {
 
         if ($this->workSheet !== null) {
             $thisrange = $this->range;
-            $range = preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange) ?  ? '';
+            $range = preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange) ?? '';
 
             if ($range !== $thisrange) {
                 $this->setRange($range);
@@ -408,7 +408,7 @@ class AutoFilter {
         /** @var array[] */
         $dataSet = $ruleSet['filterRules'];
         $join = $ruleSet['join'];
-        $customRuleForBlanks = $ruleSet['customRuleForBlanks'] ?  ? false;
+        $customRuleForBlanks = $ruleSet['customRuleForBlanks'] ?? false;
 
         if (!$customRuleForBlanks) {
             //    Blank cells are always ignored, so return a FALSE
@@ -427,7 +427,7 @@ class AutoFilter {
             /** @var string */
             $ruleOperator = $rule['operator'];
             /** @var string */
-            $cellValueString = $cellValue ?  ? '';
+            $cellValueString = $cellValue ?? '';
             $retVal = false;
 
             if (is_numeric($ruleValue)) {

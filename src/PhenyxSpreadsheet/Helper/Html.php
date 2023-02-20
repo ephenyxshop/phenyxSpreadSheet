@@ -712,7 +712,7 @@ class Html {
 
     public static function colourNameLookup(string $colorName): string {
 
-        return self::$colourMap[$colorName] ?  ? '';
+        return self::$colourMap[$colorName] ?? '';
     }
 
     protected function startFontTag($tag) : void {

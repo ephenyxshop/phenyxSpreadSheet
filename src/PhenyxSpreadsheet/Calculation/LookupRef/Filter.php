@@ -26,7 +26,7 @@ class Filter {
         : self::filterByColumn($lookupArray, $matchArray);
 
         if (empty($result)) {
-            return $ifEmpty ?  ? ExcelError::CALC();
+            return $ifEmpty ?? ExcelError::CALC();
         }
 
         return array_values(array_map('array_values', $result));

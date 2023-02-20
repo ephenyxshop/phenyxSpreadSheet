@@ -23,7 +23,7 @@ class RowRange implements AddressRange {
 
     public function __construct(int $from,  ? int $to = null,  ? Worksheet $worksheet = null) {
 
-        $this->validateFromTo($from, $to ?  ? $from);
+        $this->validateFromTo($from, $to ?? $from);
         $this->worksheet = $worksheet;
     }
 

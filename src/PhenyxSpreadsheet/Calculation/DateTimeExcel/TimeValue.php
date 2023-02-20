@@ -42,7 +42,7 @@ class TimeValue {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $timeValue);
         }
 
-        $timeValue = trim($timeValue ?  ? '', '"');
+        $timeValue = trim($timeValue ?? '', '"');
         $timeValue = str_replace(['/', '.'], '-', $timeValue);
 
         $arraySplit = preg_split('/[\/:\-\s]/', $timeValue) ?: [];

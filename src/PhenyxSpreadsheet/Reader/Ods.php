@@ -568,7 +568,7 @@ class Ods extends BaseReader {
 
                                     $dataValue = Date::PHPToExcel(
                                         strtotime(
-                                            '01-01-1970 ' . implode(':', sscanf($timeValue, 'PT%dH%dM%dS') ?  ? [])
+                                            '01-01-1970 ' . implode(':', sscanf($timeValue, 'PT%dH%dM%dS') ?? [])
                                         )
                                     );
                                     $formatting = NumberFormat::FORMAT_DATE_TIME4;

@@ -80,7 +80,7 @@ abstract class WizardAbstract {
 
     public function getStyle(): Style {
 
-        return $this->style ?  ? new Style(false, true);
+        return $this->style ?? new Style(false, true);
     }
 
     public function setStyle(Style $style) : void{

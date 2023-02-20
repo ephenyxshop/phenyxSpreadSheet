@@ -1405,12 +1405,12 @@ class Worksheet extends BIFFwriter {
      */
     private function writeColinfo($col_array): void{
 
-        $colFirst = $col_array[0] ?  ? null;
-        $colLast = $col_array[1] ?  ? null;
-        $coldx = $col_array[2] ?  ? 8.43;
-        $xfIndex = $col_array[3] ?  ? 15;
-        $grbit = $col_array[4] ?  ? 0;
-        $level = $col_array[5] ?  ? 0;
+        $colFirst = $col_array[0] ?? null;
+        $colLast = $col_array[1] ?? null;
+        $coldx = $col_array[2] ?? 8.43;
+        $xfIndex = $col_array[3] ?? 15;
+        $grbit = $col_array[4] ?? 0;
+        $level = $col_array[5] ?? 0;
 
         $record = 0x007D; // Record identifier
         $length = 0x000C; // Number of bytes to follow
@@ -1674,7 +1674,7 @@ class Worksheet extends BIFFwriter {
             return;
         }
 
-        [$column, $row] = Coordinate::indexesFromString($this->phpSheet->getFreezePane() ?  ? '');
+        [$column, $row] = Coordinate::indexesFromString($this->phpSheet->getFreezePane() ?? '');
         $x = $column - 1;
         $y = $row - 1;
 

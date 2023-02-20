@@ -31,7 +31,7 @@ class HLookup extends LookupBase {
             return self::evaluateArrayArgumentsIgnore([self::class, __FUNCTION__], 1, $lookupValue, $lookupArray, $indexNumber, $notExactMatch);
         }
 
-        $notExactMatch = (bool) ($notExactMatch ?  ? true);
+        $notExactMatch = (bool) ($notExactMatch ?? true);
 
         try {
             self::validateLookupArray($lookupArray);
@@ -50,7 +50,7 @@ class HLookup extends LookupBase {
 
         $firstkey = $f[0] - 1;
         $returnColumn = $firstkey + $indexNumber;
-        $firstColumn = array_shift($f) ?  ? 1;
+        $firstColumn = array_shift($f) ?? 1;
         $rowNumber = self::hLookupSearch($lookupValue, $lookupArray, $firstColumn, $notExactMatch);
 
         if ($rowNumber !== null) {

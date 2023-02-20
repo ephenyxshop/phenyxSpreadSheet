@@ -58,12 +58,12 @@ class Difference {
         $PHPDiffDateObject = $PHPEndDateObject->diff($PHPStartDateObject);
 
         $retVal = false;
-        $retVal = self::replaceRetValue($retVal, $unit, 'D') ?  ? self::datedifD($difference);
-        $retVal = self::replaceRetValue($retVal, $unit, 'M') ?  ? self::datedifM($PHPDiffDateObject);
-        $retVal = self::replaceRetValue($retVal, $unit, 'MD') ?  ? self::datedifMD($startDays, $endDays, $PHPEndDateObject, $PHPDiffDateObject);
-        $retVal = self::replaceRetValue($retVal, $unit, 'Y') ?  ? self::datedifY($PHPDiffDateObject);
-        $retVal = self::replaceRetValue($retVal, $unit, 'YD') ?  ? self::datedifYD($difference, $startYears, $endYears, $PHPStartDateObject, $PHPEndDateObject);
-        $retVal = self::replaceRetValue($retVal, $unit, 'YM') ?  ? self::datedifYM($PHPDiffDateObject);
+        $retVal = self::replaceRetValue($retVal, $unit, 'D') ?? self::datedifD($difference);
+        $retVal = self::replaceRetValue($retVal, $unit, 'M') ?? self::datedifM($PHPDiffDateObject);
+        $retVal = self::replaceRetValue($retVal, $unit, 'MD') ?? self::datedifMD($startDays, $endDays, $PHPEndDateObject, $PHPDiffDateObject);
+        $retVal = self::replaceRetValue($retVal, $unit, 'Y') ?? self::datedifY($PHPDiffDateObject);
+        $retVal = self::replaceRetValue($retVal, $unit, 'YD') ?? self::datedifYD($difference, $startYears, $endYears, $PHPStartDateObject, $PHPEndDateObject);
+        $retVal = self::replaceRetValue($retVal, $unit, 'YM') ?? self::datedifYM($PHPDiffDateObject);
 
         return is_bool($retVal) ? ExcelError::VALUE() : $retVal;
     }

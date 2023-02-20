@@ -47,9 +47,9 @@ class DateValue {
 
         $dti = new DateTimeImmutable();
         $baseYear = SharedDateHelper::getExcelCalendar();
-        $dateValue = trim($dateValue ?  ? '', '"');
+        $dateValue = trim($dateValue ?? '', '"');
         //    Strip any ordinals because they're allowed in Excel (English only)
-        $dateValue = preg_replace('/(\d)(st|nd|rd|th)([ -\/])/Ui', '$1$3', $dateValue) ?  ? '';
+        $dateValue = preg_replace('/(\d)(st|nd|rd|th)([ -\/])/Ui', '$1$3', $dateValue) ?? '';
         //    Convert separators (/ . or space) to hyphens (should also handle dot used for ordinals in some countries, e.g. Denmark, Germany)
         $dateValue = str_replace(['/', '.', '-', '  '], ' ', $dateValue);
 

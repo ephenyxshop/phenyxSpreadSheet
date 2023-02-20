@@ -4169,7 +4169,7 @@ class Calculation {
 
                     $functionName = $matches[1]; //    Get the function name
                     $d = $stack->pop();
-                    $argumentCount = $d['value'] ?  ? 0; //    See how many arguments there were (argument count is the next value stored on the stack)
+                    $argumentCount = $d['value'] ?? 0; //    See how many arguments there were (argument count is the next value stored on the stack)
                     $output[] = $d; //    Dump the argument count on the output
                     $output[] = $stack->pop(); //    Pop the function and push onto the output
 
@@ -4273,7 +4273,7 @@ class Calculation {
                 // make sure there was a function
                 $d = $stack->last(2);
 
-                if (!preg_match('/^' . self::CALCULATION_REGEXP_FUNCTION . '$/miu', $d['value'] ?  ? '', $matches)) {
+                if (!preg_match('/^' . self::CALCULATION_REGEXP_FUNCTION . '$/miu', $d['value'] ?? '', $matches)) {
                     // Can we inject a dummy function at this point so that the braces at least have some context
                     //     because at least the braces are paired up (at this stage in the formula)
                     // MS Excel allows this if the content is cell references; but doesn't allow actual values,
@@ -4669,11 +4669,11 @@ class Calculation {
         foreach ($tokens as $tokenData) {
             $token = $tokenData['value'];
             // Branch pruning: skip useless resolutions
-            $storeKey = $tokenData['storeKey'] ?  ? null;
+            $storeKey = $tokenData['storeKey'] ?? null;
 
             if ($this->branchPruningEnabled && isset($tokenData['onlyIf'])) {
                 $onlyIfStoreKey = $tokenData['onlyIf'];
-                $storeValue = $branchStore[$onlyIfStoreKey] ?  ? null;
+                $storeValue = $branchStore[$onlyIfStoreKey] ?? null;
                 $storeValueAsBool = ($storeValue === null) ?
                 true : (bool) Functions::flattenSingleValue($storeValue);
 
@@ -4708,7 +4708,7 @@ class Calculation {
 
             if ($this->branchPruningEnabled && isset($tokenData['onlyIfNot'])) {
                 $onlyIfNotStoreKey = $tokenData['onlyIfNot'];
-                $storeValue = $branchStore[$onlyIfNotStoreKey] ?  ? null;
+                $storeValue = $branchStore[$onlyIfNotStoreKey] ?? null;
                 $storeValueAsBool = ($storeValue === null) ?
                 true : (bool) Functions::flattenSingleValue($storeValue);
 
@@ -5008,7 +5008,7 @@ class Calculation {
                     $this->executeNumericBinaryOperation($multiplier, $arg, '*', 'arrayTimesEquals', $stack);
                 }
 
-            } else if (preg_match('/^' . self::CALCULATION_REGEXP_CELLREF . '$/i', $token ?  ? '', $matches)) {
+            } else if (preg_match('/^' . self::CALCULATION_REGEXP_CELLREF . '$/i', $token ?? '', $matches)) {
                 $cellRef = null;
 
                 if (isset($matches[8])) {
@@ -5109,7 +5109,7 @@ class Calculation {
                 }
 
                 // if the token is a function, pop arguments off the stack, hand them to the function, and push the result back on
-            } else if (preg_match('/^' . self::CALCULATION_REGEXP_FUNCTION . '$/miu', $token ?  ? '', $matches)) {
+            } else if (preg_match('/^' . self::CALCULATION_REGEXP_FUNCTION . '$/miu', $token ?? '', $matches)) {
 
                 if ($pCellParent) {
                     $cell->attach($pCellParent);
@@ -5232,7 +5232,7 @@ class Calculation {
             } else {
                 // if the token is a number, boolean, string or an Excel error, push it onto the stack
 
-                if (isset(self::$excelConstants[strtoupper($token ?  ? '')])) {
+                if (isset(self::$excelConstants[strtoupper($token ?? '')])) {
                     $excelConstant = strtoupper($token);
                     $stack->push('Constant Value', self::$excelConstants[$excelConstant]);
 
@@ -5766,7 +5766,7 @@ class Calculation {
             $defaultValue = $methodArgument->getDefaultValue();
 
             if ($methodArgument->isDefaultValueConstant()) {
-                $constantName = $methodArgument->getDefaultValueConstantName() ?  ? '';
+                $constantName = $methodArgument->getDefaultValueConstantName() ?? '';
                 // read constant value
 
                 if (strpos($constantName, '::') !== false) {
@@ -5819,7 +5819,7 @@ class Calculation {
 
         $tokensStr = array_map(function ($token) {
 
-            $value = $token['value'] ?  ? 'no value';
+            $value = $token['value'] ?? 'no value';
 
             while (is_array($value)) {
                 $value = array_pop($value);

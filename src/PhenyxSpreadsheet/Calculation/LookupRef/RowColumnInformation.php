@@ -59,7 +59,7 @@ class RowColumnInformation {
             return self::cellColumn($cell);
         }
 
-        $cellAddress = $cellAddress ?  ? '';
+        $cellAddress = $cellAddress ?? '';
 
         if ($cell != null) {
             [, , $sheetName] = Helpers::extractWorksheet($cellAddress, $cell);
@@ -159,7 +159,7 @@ class RowColumnInformation {
             return self::cellRow($cell);
         }
 
-        $cellAddress = $cellAddress ?  ? '';
+        $cellAddress = $cellAddress ?? '';
 
         if ($cell !== null) {
             [, , $sheetName] = Helpers::extractWorksheet($cellAddress, $cell);

@@ -78,7 +78,7 @@ class Helpers {
             return;
         }
 
-        throw new Exception($except ?  ? ExcelError::NAN());
+        throw new Exception($except ?? ExcelError::NAN());
     }
 
     /**
@@ -92,7 +92,7 @@ class Helpers {
             return;
         }
 
-        throw new Exception($except ?  ? ExcelError::NAN());
+        throw new Exception($except ?? ExcelError::NAN());
     }
 
     /**

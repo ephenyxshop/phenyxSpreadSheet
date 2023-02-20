@@ -146,7 +146,7 @@ class Format {
      */
     private static function convertValue($value) {
 
-        $value = $value ?  ? 0;
+        $value = $value ?? 0;
 
         if (is_bool($value)) {
 

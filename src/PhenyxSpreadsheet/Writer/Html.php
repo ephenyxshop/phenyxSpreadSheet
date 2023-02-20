@@ -1410,7 +1410,7 @@ class Html extends BaseWriter {
             }
 
             if ($cellData === $origData) {
-                $cellData = htmlspecialchars($cellData ?  ? '', Settings::htmlEntityFlags());
+                $cellData = htmlspecialchars($cellData ?? '', Settings::htmlEntityFlags());
             }
 
             if ($worksheet->getParent()->getCellXfByIndex($cell->getXfIndex())->getFont()->getSuperscript()) {
@@ -1996,7 +1996,7 @@ class Html extends BaseWriter {
             $htmlPage .= 'margin-top: ' . $top;
             $bottom = StringHelper::FormatNumber($worksheet->getPageMargins()->getBottom()) . 'in; ';
             $htmlPage .= 'margin-bottom: ' . $bottom;
-            $orientation = $this->getOrientation() ?  ? $worksheet->getPageSetup()->getOrientation();
+            $orientation = $this->getOrientation() ?? $worksheet->getPageSetup()->getOrientation();
 
             if ($orientation === \PhpOffice\PhenyxSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) {
                 $htmlPage .= 'size: landscape; ';

@@ -225,7 +225,7 @@ class Table {
 
         if ($this->workSheet !== null) {
             $thisrange = $this->range;
-            $range = preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange) ?  ? '';
+            $range = preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange) ?? '';
 
             if ($range !== $thisrange) {
                 $this->setRange($range);

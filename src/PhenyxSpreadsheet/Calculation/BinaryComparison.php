@@ -19,8 +19,8 @@ class BinaryComparison {
      */
     private static function strcmpLowercaseFirst($str1, $str2): int{
 
-        $inversedStr1 = StringHelper::strCaseReverse($str1 ?  ? '');
-        $inversedStr2 = StringHelper::strCaseReverse($str2 ?  ? '');
+        $inversedStr1 = StringHelper::strCaseReverse($str1 ?? '');
+        $inversedStr2 = StringHelper::strCaseReverse($str2 ?? '');
 
         return strcmp($inversedStr1, $inversedStr2);
     }
@@ -33,7 +33,7 @@ class BinaryComparison {
      */
     private static function strcmpAllowNull($str1, $str2) : int {
 
-        return strcmp($str1 ?  ? '', $str2 ?  ? '');
+        return strcmp($str1 ?? '', $str2 ?? '');
     }
 
     /**

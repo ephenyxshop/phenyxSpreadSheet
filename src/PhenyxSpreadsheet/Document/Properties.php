@@ -172,9 +172,9 @@ class Properties {
             if (is_numeric($timestamp)) {
                 $timestamp = (float) $timestamp;
             } else {
-                $timestamp = preg_replace('/[.][0-9]*$/', '', $timestamp) ?  ? '';
-                $timestamp = preg_replace('/^(\\d{4})- (\\d)/', '$1-0$2', $timestamp) ?  ? '';
-                $timestamp = preg_replace('/^(\\d{4}-\\d{2})- (\\d)/', '$1-0$2', $timestamp) ?  ? '';
+                $timestamp = preg_replace('/[.][0-9]*$/', '', $timestamp) ?? '';
+                $timestamp = preg_replace('/^(\\d{4})- (\\d)/', '$1-0$2', $timestamp) ?? '';
+                $timestamp = preg_replace('/^(\\d{4}-\\d{2})- (\\d)/', '$1-0$2', $timestamp) ?? '';
                 $timestamp = (float) (new DateTime($timestamp))->format('U');
             }
 
@@ -411,7 +411,7 @@ class Properties {
      */
     public function getCustomPropertyType(string $propertyName) {
 
-        return $this->customProperties[$propertyName]['type'] ?  ? null;
+        return $this->customProperties[$propertyName]['type'] ?? null;
     }
 
     /**
@@ -506,7 +506,7 @@ class Properties {
      */
     public static function convertProperty($propertyValue, string $propertyType) {
 
-        return self::SPECIAL_TYPES[$propertyType] ?  ? self::convertProperty2($propertyValue, $propertyType);
+        return self::SPECIAL_TYPES[$propertyType] ?? self::convertProperty2($propertyValue, $propertyType);
     }
 
     /**
@@ -539,7 +539,7 @@ class Properties {
 
     public static function convertPropertyType(string $propertyType): string {
 
-        return self::PROPERTY_TYPE_ARRAY[$propertyType] ?  ? self::PROPERTY_TYPE_UNKNOWN;
+        return self::PROPERTY_TYPE_ARRAY[$propertyType] ?? self::PROPERTY_TYPE_UNKNOWN;
     }
 
 }

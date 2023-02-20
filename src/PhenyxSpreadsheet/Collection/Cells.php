@@ -205,7 +205,7 @@ class Cells {
      */
     public function getCurrentColumn() {
 
-        sscanf($this->currentCoordinate ?  ? '', '%[A-Z]%d', $column, $row);
+        sscanf($this->currentCoordinate ?? '', '%[A-Z]%d', $column, $row);
 
         return $column;
     }
@@ -217,7 +217,7 @@ class Cells {
      */
     public function getCurrentRow() {
 
-        sscanf($this->currentCoordinate ?  ? '', '%[A-Z]%d', $column, $row);
+        sscanf($this->currentCoordinate ?? '', '%[A-Z]%d', $column, $row);
 
         return (int) $row;
     }

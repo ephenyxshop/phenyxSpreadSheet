@@ -428,7 +428,7 @@ class Style extends Supervisor {
                     $objId = spl_object_id($style);
 
                     // Look for the original HashCode
-                    $styleHash = self::$cachedStyles['hashByObjId'][$objId] ?  ? null;
+                    $styleHash = self::$cachedStyles['hashByObjId'][$objId] ?? null;
 
                     if ($styleHash === null) {
                         // This object_id is not cached, store the hashcode in case encounter again
@@ -436,7 +436,7 @@ class Style extends Supervisor {
                     }
 
                     // Find existing style by hash.
-                    $existingStyle = self::$cachedStyles['styleByHash'][$styleHash] ?  ? null;
+                    $existingStyle = self::$cachedStyles['styleByHash'][$styleHash] ?? null;
 
                     if (!$existingStyle) {
                         // The old style combined with the new style array is not cached, so we create it now
@@ -492,7 +492,7 @@ class Style extends Supervisor {
                 for ($row = $rangeStartIndexes[1]; $row <= $rangeEndIndexes[1]; ++$row) {
                     $rowDimension = $this->getActiveSheet()->getRowDimension($row);
                     // row without explicit style should be formatted based on default style
-                    $oldXfIndex = $rowDimension->getXfIndex() ?  ? 0;
+                    $oldXfIndex = $rowDimension->getXfIndex() ?? 0;
                     $rowDimension->setXfIndex($newXfIndexes[$oldXfIndex]);
                 }
 

@@ -98,7 +98,7 @@ class Sort extends LookupRefValidations {
 
             for ($i = 0; $i < $argumentCount; $i += 2) {
                 $sortBy[] = self::validateSortVector($args[$i], $lookupArraySize);
-                $sortOrder[] = self::validateSortOrder($args[$i + 1] ?  ? self::ORDER_ASCENDING);
+                $sortOrder[] = self::validateSortOrder($args[$i + 1] ?? self::ORDER_ASCENDING);
             }
 
         } catch (Exception $e) {

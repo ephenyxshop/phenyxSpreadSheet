@@ -39,7 +39,7 @@ class ExcelMatch {
         }
 
         $lookupArray = Functions::flattenArray($lookupArray);
-        $matchType = (int) ($matchType ?  ? self::MATCHTYPE_LARGEST_VALUE);
+        $matchType = (int) ($matchType ?? self::MATCHTYPE_LARGEST_VALUE);
 
         try {
             // Input validation

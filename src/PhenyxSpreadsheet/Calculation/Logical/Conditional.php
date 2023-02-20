@@ -54,8 +54,8 @@ class Conditional {
             return $condition;
         }
 
-        $returnIfTrue = $returnIfTrue ?  ? 0;
-        $returnIfFalse = $returnIfFalse ?  ? false;
+        $returnIfTrue = $returnIfTrue ?? 0;
+        $returnIfFalse = $returnIfFalse ?? false;
 
         return ((bool) $condition) ? $returnIfTrue : $returnIfFalse;
     }
@@ -144,7 +144,7 @@ class Conditional {
             return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $testValue, $errorpart);
         }
 
-        $errorpart = $errorpart ?  ? '';
+        $errorpart = $errorpart ?? '';
 
         return self::statementIf(ErrorValue::isError($testValue), $errorpart, $testValue);
     }
@@ -170,7 +170,7 @@ class Conditional {
             return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $testValue, $napart);
         }
 
-        $napart = $napart ?  ? '';
+        $napart = $napart ?? '';
 
         return self::statementIf(ErrorValue::isNa($testValue), $napart, $testValue);
     }

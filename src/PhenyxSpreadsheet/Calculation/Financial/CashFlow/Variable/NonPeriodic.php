@@ -41,7 +41,7 @@ class NonPeriodic {
         }
 
         // create an initial range, with a root somewhere between 0 and guess
-        $guess = Functions::flattenSingleValue($guess) ?  ? self::DEFAULT_GUESS;
+        $guess = Functions::flattenSingleValue($guess) ?? self::DEFAULT_GUESS;
 
         if (!is_numeric($guess)) {
             return ExcelError::VALUE();

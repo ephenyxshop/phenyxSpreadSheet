@@ -245,12 +245,12 @@ class Csv extends BaseReader {
         $worksheetInfo[0]['totalColumns'] = 0;
 
         // Loop through each line of the file in turn
-        $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?  ? '', $this->enclosure, $this->escapeCharacter);
+        $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?? '', $this->enclosure, $this->escapeCharacter);
 
         while (is_array($rowData)) {
             ++$worksheetInfo[0]['totalRows'];
             $worksheetInfo[0]['lastColumnIndex'] = max($worksheetInfo[0]['lastColumnIndex'], count($rowData) - 1);
-            $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?  ? '', $this->enclosure, $this->escapeCharacter);
+            $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?? '', $this->enclosure, $this->escapeCharacter);
         }
 
         $worksheetInfo[0]['lastColumnLetter'] = Coordinate::stringFromColumnIndex($worksheetInfo[0]['lastColumnIndex'] + 1);
@@ -364,7 +364,7 @@ class Csv extends BaseReader {
         $outRow = 0;
 
         // Loop through each line of the file in turn
-        $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?  ? '', $this->enclosure, $this->escapeCharacter);
+        $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?? '', $this->enclosure, $this->escapeCharacter);
         $valueBinder = Cell::getValueBinder();
         $preserveBooleanString = method_exists($valueBinder, 'getBooleanConversion') && $valueBinder->getBooleanConversion();
 
@@ -400,7 +400,7 @@ class Csv extends BaseReader {
                 ++$columnLetter;
             }
 
-            $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?  ? '', $this->enclosure, $this->escapeCharacter);
+            $rowData = fgetcsv($fileHandle, 0, $this->delimiter ?? '', $this->enclosure, $this->escapeCharacter);
             ++$currentRow;
         }
 

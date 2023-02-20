@@ -142,8 +142,8 @@ class PPS {
         $this->PrevPps = $prev;
         $this->NextPps = $next;
         $this->DirPps = $dir;
-        $this->Time1st = $time_1st ?  ? 0;
-        $this->Time2nd = $time_2nd ?  ? 0;
+        $this->Time1st = $time_1st ?? 0;
+        $this->Time2nd = $time_2nd ?? 0;
         $this->_data = $data;
         $this->children = $children;
 
@@ -191,7 +191,7 @@ class PPS {
          . "\x00\x00\x00\x00" // 100
          . OLE::localDateToOLE($this->Time1st) // 108
          . OLE::localDateToOLE($this->Time2nd) // 116
-         . pack('V', $this->startBlock ?  ? 0) // 120
+         . pack('V', $this->startBlock ?? 0) // 120
          . pack('V', $this->Size) // 124
          . pack('V', 0); // 128
 

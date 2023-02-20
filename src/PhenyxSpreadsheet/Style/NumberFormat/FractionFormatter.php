@@ -45,7 +45,7 @@ class FractionFormatter extends BaseFormatter {
             }
 
             return "{$sign}{$integerPart} {$adjustedDecimalPart}/{$adjustedDecimalDivisor}";
-        } else if ((substr($format, 0, 3) == '? ?')) {
+        } else if ((substr($format, 0, 3) == '??')) {
 
             if ($integerPart == 0) {
                 $integerPart = '';

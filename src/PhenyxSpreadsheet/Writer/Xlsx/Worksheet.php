@@ -271,7 +271,7 @@ class Worksheet extends WriterPart {
         $pane = '';
 
         if ($worksheet->getFreezePane()) {
-            [$xSplit, $ySplit] = Coordinate::coordinateFromString($worksheet->getFreezePane() ?  ? '');
+            [$xSplit, $ySplit] = Coordinate::coordinateFromString($worksheet->getFreezePane() ?? '');
             $xSplit = Coordinate::columnIndexFromString($xSplit);
             --$xSplit;
             --$ySplit;
@@ -854,7 +854,7 @@ class Worksheet extends WriterPart {
                     $objWriter->writeAttribute('prompt', $dv->getPrompt());
                 }
 
-                $objWriter->writeAttribute('sqref', $dv->getSqref() ?  ? $coordinate);
+                $objWriter->writeAttribute('sqref', $dv->getSqref() ?? $coordinate);
 
                 if ($dv->getFormula1() !== '') {
                     $objWriter->writeElement('formula1', $dv->getFormula1());
@@ -1389,7 +1389,7 @@ class Worksheet extends WriterPart {
         $objWriter->writeAttribute('t', $mappedType);
 
         if (!$cellValue instanceof RichText) {
-            self::writeElementIf($objWriter, isset($flippedStringTable[$cellValue]), 'v', $flippedStringTable[$cellValue] ?  ? '');
+            self::writeElementIf($objWriter, isset($flippedStringTable[$cellValue]), 'v', $flippedStringTable[$cellValue] ?? '');
         } else {
             $objWriter->writeElement('v', $flippedStringTable[$cellValue->getHashCode()]);
         }
@@ -1451,7 +1451,7 @@ class Worksheet extends WriterPart {
 
         $attributes = $cell->getFormulaAttributes();
 
-        if (($attributes['t'] ?  ? null) === 'array') {
+        if (($attributes['t'] ?? null) === 'array') {
             $objWriter->startElement('f');
             $objWriter->writeAttribute('t', 'array');
             $objWriter->writeAttribute('ref', $cell->getCoordinate());
@@ -1465,7 +1465,7 @@ class Worksheet extends WriterPart {
                 $objWriter,
                 $this->getParentWriter()->getOffice2003Compatibility() === false,
                 'v',
-                ($this->getParentWriter()->getPreCalculateFormulas() && !is_array($calculatedValue) && substr($calculatedValue ?  ? '', 0, 1) !== '#')
+                ($this->getParentWriter()->getPreCalculateFormulas() && !is_array($calculatedValue) && substr($calculatedValue ?? '', 0, 1) !== '#')
                 ? StringHelper::formatNumber($calculatedValue) : '0'
             );
         }

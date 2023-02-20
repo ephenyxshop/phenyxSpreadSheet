@@ -122,7 +122,7 @@ class Date {
      */
     public static function getDefaultTimezone(): DateTimeZone {
 
-        return self::$defaultTimeZone ?  ? new DateTimeZone('UTC');
+        return self::$defaultTimeZone ?? new DateTimeZone('UTC');
     }
 
     /**
@@ -130,7 +130,7 @@ class Date {
      */
     public static function getDefaultOrLocalTimezone() : DateTimeZone {
 
-        return self::$defaultTimeZone ?  ? new DateTimeZone(date_default_timezone_get());
+        return self::$defaultTimeZone ?? new DateTimeZone(date_default_timezone_get());
     }
 
     /**
@@ -571,7 +571,7 @@ class Date {
     public static function dateTimeFromTimestamp(string $date,  ? DateTimeZone $timeZone = null) : DateTime{
 
         $dtobj = DateTime::createFromFormat('U', $date) ?: new DateTime();
-        $dtobj->setTimeZone($timeZone ?  ? self::getDefaultOrLocalTimezone());
+        $dtobj->setTimeZone($timeZone ?? self::getDefaultOrLocalTimezone());
 
         return $dtobj;
     }

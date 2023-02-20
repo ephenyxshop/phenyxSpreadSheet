@@ -108,7 +108,7 @@ class Meta extends WriterPart {
                 break;
             case Properties::PROPERTY_TYPE_DATE:
                 $objWriter->writeAttribute('meta:value-type', 'date');
-                $dtobj = Date::dateTimeFromTimestamp($propertyValue ?  ? 0);
+                $dtobj = Date::dateTimeFromTimestamp($propertyValue ?? 0);
                 $objWriter->writeRawData($dtobj->format(DATE_W3C));
 
                 break;

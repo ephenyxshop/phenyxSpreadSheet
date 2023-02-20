@@ -1291,7 +1291,7 @@ class Worksheet implements IComparable {
         [$sheet, $finalCoordinate] = $this->getWorksheetAndCoordinate($cellAddress);
         $cell = $sheet->cellCollection->get($finalCoordinate);
 
-        return $cell ?  ? $sheet->createNewCell($finalCoordinate);
+        return $cell ?? $sheet->createNewCell($finalCoordinate);
     }
 
     /**
@@ -1415,8 +1415,8 @@ class Worksheet implements IComparable {
 
         // Cell needs appropriate xfIndex from dimensions records
         //    but don't create dimension records if they don't already exist
-        $rowDimension = $this->rowDimensions[$row] ?  ? null;
-        $columnDimension = $this->columnDimensions[$column] ?  ? null;
+        $rowDimension = $this->rowDimensions[$row] ?? null;
+        $columnDimension = $this->columnDimensions[$column] ?? null;
 
         if ($rowDimension !== null && $rowDimension->getXfIndex() > 0) {
             // then there is a row dimension with explicit style, assign it to the cell
@@ -1590,7 +1590,7 @@ class Worksheet implements IComparable {
         $coordinate = strtoupper($coordinate);
 
         if (strpos($coordinate, ':') !== false) {
-            return $this->conditionalStylesCollection[$coordinate] ?  ? [];
+            return $this->conditionalStylesCollection[$coordinate] ?? [];
         }
 
         $cell = $this->getCell($coordinate);

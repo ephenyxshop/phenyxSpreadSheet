@@ -65,7 +65,7 @@ class TimeZone {
      */
     public static function getTimeZoneAdjustment($timezoneName, $timestamp) {
 
-        $timezoneName = $timezoneName ?  ? self::$timezone;
+        $timezoneName = $timezoneName ?? self::$timezone;
         $dtobj = Date::dateTimeFromTimestamp("$timestamp");
 
         if (!self::validateTimezone($timezoneName)) {

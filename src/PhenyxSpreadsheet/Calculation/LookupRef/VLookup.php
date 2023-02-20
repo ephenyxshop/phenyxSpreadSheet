@@ -30,7 +30,7 @@ class VLookup extends LookupBase {
             return self::evaluateArrayArgumentsIgnore([self::class, __FUNCTION__], 1, $lookupValue, $lookupArray, $indexNumber, $notExactMatch);
         }
 
-        $notExactMatch = (bool) ($notExactMatch ?  ? true);
+        $notExactMatch = (bool) ($notExactMatch ?? true);
 
         try {
             self::validateLookupArray($lookupArray);
@@ -48,7 +48,7 @@ class VLookup extends LookupBase {
 
         $columnKeys = array_keys($lookupArray[$firstRow]);
         $returnColumn = $columnKeys[--$indexNumber];
-        $firstColumn = array_shift($columnKeys) ?  ? 1;
+        $firstColumn = array_shift($columnKeys) ?? 1;
 
         if (!$notExactMatch) {
             uasort($lookupArray, ['self', 'vlookupSort']);

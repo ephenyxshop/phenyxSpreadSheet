@@ -294,7 +294,7 @@ class Xml extends BaseReader {
         /** @var null|SimpleXMLElement $worksheetx */
 
         foreach ($xml_ss->Worksheet as $worksheetx) {
-            $worksheet = $worksheetx ?  ? new SimpleXMLElement('<xml></xml>');
+            $worksheet = $worksheetx ?? new SimpleXMLElement('<xml></xml>');
             $worksheet_ss = self::getAttributes($worksheet, $namespaces['ss']);
 
             if (
@@ -599,7 +599,7 @@ class Xml extends BaseReader {
 
         return ($simple === null)
         ? new SimpleXMLElement('<xml></xml>')
-        : ($simple->attributes($node) ?  ? new SimpleXMLElement('<xml></xml>'));
+        : ($simple->attributes($node) ?? new SimpleXMLElement('<xml></xml>'));
     }
 
 }

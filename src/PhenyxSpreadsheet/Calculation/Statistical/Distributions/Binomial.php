@@ -90,7 +90,7 @@ class Binomial {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $trials, $probability, $successes, $limit);
         }
 
-        $limit = $limit ?  ? $successes;
+        $limit = $limit ?? $successes;
 
         try {
             $trials = DistributionValidations::validateInt($trials);

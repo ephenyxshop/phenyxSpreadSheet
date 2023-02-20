@@ -32,7 +32,7 @@ class Helpers {
         if ($sheetTitle) {
             $sheetTitle .= '!';
 
-            if (stripos($value ?  ? '', $sheetTitle) === 0) {
+            if (stripos($value ?? '', $sheetTitle) === 0) {
                 $sheetTitle = '';
             }
 

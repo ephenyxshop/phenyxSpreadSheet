@@ -47,7 +47,7 @@ class Trim {
 
         $stringValue = Helpers::extractString($stringValue);
 
-        return trim(preg_replace('/ +/', ' ', trim("$stringValue", ' ')) ?  ? '', ' ');
+        return trim(preg_replace('/ +/', ' ', trim("$stringValue", ' ')) ?? '', ' ');
     }
 
 }

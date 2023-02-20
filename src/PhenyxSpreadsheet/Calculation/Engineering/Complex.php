@@ -38,9 +38,9 @@ class Complex {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $realNumber, $imaginary, $suffix);
         }
 
-        $realNumber = $realNumber ?  ? 0.0;
-        $imaginary = $imaginary ?  ? 0.0;
-        $suffix = $suffix ?  ? 'i';
+        $realNumber = $realNumber ?? 0.0;
+        $imaginary = $imaginary ?? 0.0;
+        $suffix = $suffix ?? 'i';
 
         try {
             $realNumber = EngineeringValidations::validateFloat($realNumber);

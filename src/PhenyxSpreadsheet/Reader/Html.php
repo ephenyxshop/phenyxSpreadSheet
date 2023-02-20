@@ -312,7 +312,7 @@ class Html extends BaseReader {
 
         $attributeArray = [];
 
-        foreach (($child->attributes ?  ? []) as $attribute) {
+        foreach (($child->attributes ?? []) as $attribute) {
             $attributeArray[$attribute->name] = $attribute->value;
         }
 
@@ -732,7 +732,7 @@ class Html extends BaseReader {
         }
 
         if ($loaded === false) {
-            throw new Exception('Failed to load ' . $filename . ' as a DOM Document', 0, $e ?  ? null);
+            throw new Exception('Failed to load ' . $filename . ' as a DOM Document', 0, $e ?? null);
         }
 
         return $this->loadDocument($dom, $spreadsheet);
@@ -756,10 +756,10 @@ class Html extends BaseReader {
         }
 
         if ($loaded === false) {
-            throw new Exception('Failed to load content as a DOM Document', 0, $e ?  ? null);
+            throw new Exception('Failed to load content as a DOM Document', 0, $e ?? null);
         }
 
-        return $this->loadDocument($dom, $spreadsheet ?  ? new Spreadsheet());
+        return $this->loadDocument($dom, $spreadsheet ?? new Spreadsheet());
     }
 
     /**
@@ -971,14 +971,14 @@ class Html extends BaseReader {
 
             case 'width':
                 $sheet->getColumnDimension($column)->setWidth(
-                    (new CssDimension($styleValue ?  ? ''))->width()
+                    (new CssDimension($styleValue ?? ''))->width()
                 );
 
                 break;
 
             case 'height' :
                 $sheet->getRowDimension($row)->setRowHeight(
-                    (new CssDimension($styleValue ?  ? ''))->height()
+                    (new CssDimension($styleValue ?? ''))->height()
                 );
 
                 break;
@@ -1013,7 +1013,7 @@ class Html extends BaseReader {
 
         $value = (string) $value;
 
-        if (strpos($value ?  ? '', '#') === 0) {
+        if (strpos($value ?? '', '#') === 0) {
             return substr($value, 1);
         }
 
@@ -1033,7 +1033,7 @@ class Html extends BaseReader {
         $src = urldecode($attributes['src']);
         $width = isset($attributes['width']) ? (float) $attributes['width'] : null;
         $height = isset($attributes['height']) ? (float) $attributes['height'] : null;
-        $name = $attributes['alt'] ?  ? null;
+        $name = $attributes['alt'] ?? null;
 
         $drawing = new Drawing();
         $drawing->setPath($src);
@@ -1096,7 +1096,7 @@ class Html extends BaseReader {
      */
     public function getBorderStyle($style) {
 
-        return self::BORDER_MAPPINGS[$style] ?  ? null;
+        return self::BORDER_MAPPINGS[$style] ?? null;
     }
 
     /**
@@ -1117,7 +1117,7 @@ class Html extends BaseReader {
                 $color = $borderArray[2];
             } else {
                 $borderStyle = $borderArray[0];
-                $color = $borderArray[1] ?  ? null;
+                $color = $borderArray[1] ?? null;
             }
 
         }

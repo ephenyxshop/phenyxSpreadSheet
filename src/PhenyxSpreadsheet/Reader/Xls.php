@@ -1070,7 +1070,7 @@ class Xls extends BaseReader {
 
                     break;
                 case self::XLS_TYPE_CFRULE:
-                    $this->readCFRule($cellRangeAddresses ?  ? []);
+                    $this->readCFRule($cellRangeAddresses ?? []);
 
                     break;
                 case self::XLS_TYPE_SHEETLAYOUT :
@@ -5618,12 +5618,12 @@ class Xls extends BaseReader {
 
         foreach ($tokens as $token) {
             // initialize spaces
-            $space0 = $space0 ?  ? ''; // spaces before next token, not tParen
-            $space1 = $space1 ?  ? ''; // carriage returns before next token, not tParen
-            $space2 = $space2 ?  ? ''; // spaces before opening parenthesis
-            $space3 = $space3 ?  ? ''; // carriage returns before opening parenthesis
-            $space4 = $space4 ?  ? ''; // spaces before closing parenthesis
-            $space5 = $space5 ?  ? ''; // carriage returns before closing parenthesis
+            $space0 = $space0 ?? ''; // spaces before next token, not tParen
+            $space1 = $space1 ?? ''; // carriage returns before next token, not tParen
+            $space2 = $space2 ?? ''; // spaces before opening parenthesis
+            $space3 = $space3 ?? ''; // carriage returns before opening parenthesis
+            $space4 = $space4 ?? ''; // spaces before closing parenthesis
+            $space5 = $space5 ?? ''; // carriage returns before closing parenthesis
 
             switch ($token['name']) {
             case 'tAdd' : // addition
@@ -7249,7 +7249,7 @@ class Xls extends BaseReader {
             // offset: 1; size: 2; one-based index to definedname record
             $definedNameIndex = self::getUInt2d($formulaData, 1) - 1;
             // offset: 2; size: 2; not used
-            $data = $this->definedname[$definedNameIndex]['name'] ?  ? '';
+            $data = $this->definedname[$definedNameIndex]['name'] ?? '';
 
             break;
         case 0x24 : //    single cell reference e.g. A5
@@ -7325,7 +7325,7 @@ class Xls extends BaseReader {
             // offset: 3; size: 2; one-based index to DEFINEDNAME or EXTERNNAME record
             $index = self::getUInt2d($formulaData, 3);
             // assume index is to EXTERNNAME record
-            $data = $this->externalNames[$index - 1]['name'] ?  ? '';
+            $data = $this->externalNames[$index - 1]['name'] ?? '';
             // offset: 5; size: 2; not used
             break;
         case 0x3A : //    3d reference to cell

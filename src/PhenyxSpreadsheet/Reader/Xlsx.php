@@ -181,7 +181,7 @@ class Xlsx extends BaseReader {
         foreach ($rels->Relationship as $relx) {
             $rel = self::getAttributes($relx);
             $relType = (string) $rel['Type'];
-            $mainNS = self::REL_TO_MAIN[$relType] ?  ? Namespaces::MAIN;
+            $mainNS = self::REL_TO_MAIN[$relType] ?? Namespaces::MAIN;
 
             if ($mainNS !== '') {
                 $xmlWorkbook = $this->loadZip((string) $rel['Target'], $mainNS);
@@ -225,7 +225,7 @@ class Xlsx extends BaseReader {
         foreach ($rels->Relationship as $relx) {
             $rel = self::getAttributes($relx);
             $relType = (string) $rel['Type'];
-            $mainNS = self::REL_TO_MAIN[$relType] ?  ? Namespaces::MAIN;
+            $mainNS = self::REL_TO_MAIN[$relType] ?? Namespaces::MAIN;
 
             if ($mainNS !== '') {
                 $relTarget = (string) $rel['Target'];
@@ -449,7 +449,7 @@ class Xlsx extends BaseReader {
             case "$xmlNamespaceBase/theme" :
                 $themeOrderArray = ['lt1', 'dk1', 'lt2', 'dk2'];
                 $themeOrderAdditional = count($themeOrderArray);
-                $drawingNS = self::REL_TO_DRAWING[$xmlNamespaceBase] ?  ? Namespaces::DRAWINGML;
+                $drawingNS = self::REL_TO_DRAWING[$xmlNamespaceBase] ?? Namespaces::DRAWINGML;
 
                 $xmlTheme = $this->loadZip("xl/{$relTarget}", $drawingNS);
                 $xmlThemeName = self::getAttributes($xmlTheme);
@@ -495,7 +495,7 @@ class Xlsx extends BaseReader {
             $rel = self::getAttributes($relx);
             $relTarget = (string) $rel['Target'];
             $relType = (string) $rel['Type'];
-            $mainNS = self::REL_TO_MAIN[$relType] ?  ? Namespaces::MAIN;
+            $mainNS = self::REL_TO_MAIN[$relType] ?? Namespaces::MAIN;
 
             switch ($relType) {
             case Namespaces::CORE_PROPERTIES :
@@ -654,10 +654,10 @@ class Xlsx extends BaseReader {
 
                         }
 
-                        $quotePrefix = (bool) ($xf['quotePrefix'] ?  ? false);
+                        $quotePrefix = (bool) ($xf['quotePrefix'] ?? false);
 
                         $style = (object) [
-                            'numFmt'      => $numFmt ?  ? NumberFormat::FORMAT_GENERAL,
+                            'numFmt'      => $numFmt ?? NumberFormat::FORMAT_GENERAL,
                             'font'        => $fonts[(int) ($xf['fontId'])],
                             'fill'        => $fills[(int) ($xf['fillId'])],
                             'border'      => $borders[(int) ($xf['borderId'])],
@@ -694,7 +694,7 @@ class Xlsx extends BaseReader {
 
                         }
 
-                        $quotePrefix = (bool) ($xf['quotePrefix'] ?  ? false);
+                        $quotePrefix = (bool) ($xf['quotePrefix'] ?? false);
 
                         $cellStyle = (object) [
                             'numFmt'      => $numFmt,
@@ -1026,7 +1026,7 @@ class Xlsx extends BaseReader {
                             foreach ($xmlSheet->extLst->ext->children('x14', true)->dataValidations->dataValidation as $item) {
                                 $node = self::testSimpleXml($xmlSheet->dataValidations)->addChild('dataValidation');
 
-                                foreach ($item->attributes() ?  ? [] as $attr) {
+                                foreach ($item->attributes() ?? [] as $attr) {
                                     $node->addAttribute($attr->getName(), $attr);
                                 }
 
@@ -1499,7 +1499,7 @@ class Xlsx extends BaseReader {
                                                     $shadow->setDistance(Drawing::EMUToPixels(self::getArrayItem(self::getAttributes($outerShdw), 'dist')));
                                                     $shadow->setDirection(Drawing::angleToDegrees(self::getArrayItem(self::getAttributes($outerShdw), 'dir')));
                                                     $shadow->setAlignment((string) self::getArrayItem(self::getAttributes($outerShdw), 'algn'));
-                                                    $clr = $outerShdw->srgbClr ?  ? $outerShdw->prstClr;
+                                                    $clr = $outerShdw->srgbClr ?? $outerShdw->prstClr;
                                                     $shadow->getColor()->setRGB(self::getArrayItem(self::getAttributes($clr), 'val'));
                                                     $shadow->setAlpha(self::getArrayItem(self::getAttributes($clr->alpha), 'val') / 1000);
                                                 }
@@ -1602,7 +1602,7 @@ class Xlsx extends BaseReader {
                                                     $shadow->setDistance(Drawing::EMUToPixels(self::getArrayItem(self::getAttributes($outerShdw), 'dist')));
                                                     $shadow->setDirection(Drawing::angleToDegrees(self::getArrayItem(self::getAttributes($outerShdw), 'dir')));
                                                     $shadow->setAlignment((string) self::getArrayItem(self::getAttributes($outerShdw), 'algn'));
-                                                    $clr = $outerShdw->srgbClr ?  ? $outerShdw->prstClr;
+                                                    $clr = $outerShdw->srgbClr ?? $outerShdw->prstClr;
                                                     $shadow->getColor()->setRGB(self::getArrayItem(self::getAttributes($clr), 'val'));
                                                     $shadow->setAlpha(self::getArrayItem(self::getAttributes($clr->alpha), 'val') / 1000);
                                                 }
@@ -2105,7 +2105,7 @@ class Xlsx extends BaseReader {
 
     private static function getArrayItem($array, $key = 0) {
 
-        return $array[$key] ?  ? null;
+        return $array[$key] ?? null;
     }
 
     private static function dirAdd($base, $add) {

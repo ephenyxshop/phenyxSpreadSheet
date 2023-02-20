@@ -46,12 +46,12 @@ class Tcpdf extends Pdf {
         $paperSize = 'LETTER'; //    Letter    (8.5 in. by 11 in.)
 
         //  Check for paper size and page orientation
-        $setup = $this->spreadsheet->getSheet($this->getSheetIndex() ?  ? 0)->getPageSetup();
-        $orientation = $this->getOrientation() ?  ? $setup->getOrientation();
+        $setup = $this->spreadsheet->getSheet($this->getSheetIndex() ?? 0)->getPageSetup();
+        $orientation = $this->getOrientation() ?? $setup->getOrientation();
         $orientation = ($orientation === PageSetup::ORIENTATION_LANDSCAPE) ? 'L' : 'P';
-        $printPaperSize = $this->getPaperSize() ?  ? $setup->getPaperSize();
-        $paperSize = self::$paperSizes[$printPaperSize] ?  ? PageSetup::getPaperSizeDefault();
-        $printMargins = $this->spreadsheet->getSheet($this->getSheetIndex() ?  ? 0)->getPageMargins();
+        $printPaperSize = $this->getPaperSize() ?? $setup->getPaperSize();
+        $paperSize = self::$paperSizes[$printPaperSize] ?? PageSetup::getPaperSizeDefault();
+        $printMargins = $this->spreadsheet->getSheet($this->getSheetIndex() ?? 0)->getPageMargins();
 
         //  Create PDF
         $pdf = $this->createExternalWriterInstance($orientation, 'pt', $paperSize);

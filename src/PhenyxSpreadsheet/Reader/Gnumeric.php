@@ -362,10 +362,10 @@ class Gnumeric extends BaseReader {
         if ($sheet !== null && isset($sheet->Selections)) {
 
             foreach ($sheet->Selections as $selection) {
-                $startCol = (int) ($selection->StartCol ?  ? 0);
-                $startRow = (int) ($selection->StartRow ?  ? 0) + 1;
-                $endCol = (int) ($selection->EndCol ?  ? $startCol);
-                $endRow = (int) ($selection->endRow ?  ? 0) + 1;
+                $startCol = (int) ($selection->StartCol ?? 0);
+                $startRow = (int) ($selection->StartRow ?? 0) + 1;
+                $endCol = (int) ($selection->EndCol ?? $startCol);
+                $endRow = (int) ($selection->endRow ?? 0) + 1;
 
                 $startColumn = Coordinate::stringFromColumnIndex($startCol + 1);
                 $endColumn = Coordinate::stringFromColumnIndex($endCol + 1);
@@ -450,7 +450,7 @@ class Gnumeric extends BaseReader {
         $column = $columnAttributes['No'];
         $columnWidth = ((float) $columnAttributes['Unit']) / 5.4;
         $hidden = (isset($columnAttributes['Hidden'])) && ((string) $columnAttributes['Hidden'] == '1');
-        $columnCount = (int) ($columnAttributes['Count'] ?  ? 1);
+        $columnCount = (int) ($columnAttributes['Count'] ?? 1);
 
         while ($whichColumn < $column) {
             $this->setColumnWidth($whichColumn, $defaultWidth);
@@ -523,7 +523,7 @@ class Gnumeric extends BaseReader {
         $row = $rowAttributes['No'];
         $rowHeight = (float) $rowAttributes['Unit'];
         $hidden = (isset($rowAttributes['Hidden'])) && ((string) $rowAttributes['Hidden'] == '1');
-        $rowCount = (int) ($rowAttributes['Count'] ?  ? 1);
+        $rowCount = (int) ($rowAttributes['Count'] ?? 1);
 
         while ($whichRow < $row) {
             ++$whichRow;

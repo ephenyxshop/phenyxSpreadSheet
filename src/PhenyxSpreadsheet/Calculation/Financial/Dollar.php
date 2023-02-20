@@ -59,7 +59,7 @@ class Dollar {
 
         try {
             $fractionalDollar = FinancialValidations::validateFloat(
-                Functions::flattenSingleValue($fractionalDollar) ?  ? 0.0
+                Functions::flattenSingleValue($fractionalDollar) ?? 0.0
             );
             $fraction = FinancialValidations::validateInt(Functions::flattenSingleValue($fraction));
         } catch (Exception $e) {
@@ -109,7 +109,7 @@ class Dollar {
 
         try {
             $decimalDollar = FinancialValidations::validateFloat(
-                Functions::flattenSingleValue($decimalDollar) ?  ? 0.0
+                Functions::flattenSingleValue($decimalDollar) ?? 0.0
             );
             $fraction = FinancialValidations::validateInt(Functions::flattenSingleValue($fraction));
         } catch (Exception $e) {

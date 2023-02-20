@@ -278,7 +278,7 @@ class Color extends Supervisor {
             return $this->getSharedComponent()->getRGB();
         }
 
-        return substr($this->argb ?  ? '', 2);
+        return substr($this->argb ?? '', 2);
     }
 
     /**

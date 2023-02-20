@@ -234,7 +234,7 @@ class NumberFormatter {
 
     private static function pregReplace(string $pattern, string $replacement, string $subject): string {
 
-        return self::makeString(preg_replace($pattern, $replacement, $subject) ?  ? '');
+        return self::makeString(preg_replace($pattern, $replacement, $subject) ?? '');
     }
 
 }
