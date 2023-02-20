@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Logical;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Logical;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Operations {
 

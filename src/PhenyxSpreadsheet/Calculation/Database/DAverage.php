@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Database;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
 
 class DAverage extends DatabaseAbstract {
 

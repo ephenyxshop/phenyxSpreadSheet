@@ -1,29 +1,29 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Chart;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\Run;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Font as SharedFont;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Border;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Drawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Chart;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\RichText\Run;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Font as SharedFont;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Border;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use HTMLPurifier;
 
 class Html extends BaseWriter {

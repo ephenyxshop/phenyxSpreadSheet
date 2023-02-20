@@ -1,13 +1,13 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\MathTrig;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Minimum;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Minimum;
 
 class Mean {
 

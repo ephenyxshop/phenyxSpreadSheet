@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Distributions;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Distributions;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
 
 class StandardNormal {
 

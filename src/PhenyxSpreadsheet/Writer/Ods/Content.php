@@ -1,18 +1,18 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Row;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Cell\Comment;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Cell\Style;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Row;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Cell\Comment;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Cell\Style;
 
 /**
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>

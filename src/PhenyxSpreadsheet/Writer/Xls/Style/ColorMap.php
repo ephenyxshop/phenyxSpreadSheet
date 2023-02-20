@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
 
 class ColorMap {
 

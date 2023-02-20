@@ -1,13 +1,13 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Database\DAverage;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Database\DCount;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Database\DMax;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Database\DMin;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Database\DSum;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Database\DAverage;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Database\DCount;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Database\DMax;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Database\DMin;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Database\DSum;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
 class Conditional {
 

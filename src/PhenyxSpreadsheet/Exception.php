@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet;
+namespace EphenyxShop\PhenyxSpreadsheet;
 
 class Exception extends \Exception {
 

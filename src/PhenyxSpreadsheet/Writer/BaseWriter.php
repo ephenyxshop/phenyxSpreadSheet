@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
 abstract class BaseWriter implements IWriter {
 

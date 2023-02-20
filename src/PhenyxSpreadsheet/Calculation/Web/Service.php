@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Web;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Web;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class Service {

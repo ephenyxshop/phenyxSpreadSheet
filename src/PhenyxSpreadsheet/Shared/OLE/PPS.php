@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
 // vim: set expandtab tabstop=4 shiftwidth=4:
 // +----------------------------------------------------------------------+
@@ -20,7 +20,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
 /**
  * Class for creating PPS's for OLE containers.

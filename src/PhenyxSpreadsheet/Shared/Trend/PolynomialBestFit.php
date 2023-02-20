@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\Trend;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\Trend;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA\Matrix;
+use EphenyxShop\PhenyxSpreadsheet\Shared\JAMA\Matrix;
 
 class PolynomialBestFit extends BestFit {
 

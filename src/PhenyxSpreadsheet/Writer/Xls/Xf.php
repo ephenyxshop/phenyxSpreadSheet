@@ -1,14 +1,14 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Protection;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Style\CellAlignment;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Style\CellBorder;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Style\CellFill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Protection;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Style\CellAlignment;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Style\CellBorder;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Style\CellFill;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Format (used as the base for this class):
 // -----------------------------------------------------------------------------------------

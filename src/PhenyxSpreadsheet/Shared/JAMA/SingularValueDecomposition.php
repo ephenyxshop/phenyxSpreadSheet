@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\JAMA;
 
 /**
  *    For an m-by-n matrix A with m >= n, the singular value decomposition is

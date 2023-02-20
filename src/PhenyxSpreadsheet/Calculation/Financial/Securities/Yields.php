@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Securities;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Securities;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Helpers;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Helpers;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
 class Yields {
 

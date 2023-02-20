@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
 
 class ColumnDimension extends Dimension {
 

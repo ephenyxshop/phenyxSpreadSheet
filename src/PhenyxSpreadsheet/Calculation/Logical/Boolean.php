@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Logical;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Logical;
 
 class Boolean {
 

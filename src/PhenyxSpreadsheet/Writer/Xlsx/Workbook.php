@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx\DefinedNames as DefinedNamesWriter;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx\DefinedNames as DefinedNamesWriter;
 
 class Workbook extends WriterPart {
 

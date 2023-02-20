@@ -1,14 +1,14 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\HeaderFooterDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\HeaderFooterDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
 
 class Drawing extends WriterPart {
 

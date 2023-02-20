@@ -1,38 +1,38 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataValidation;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Ephenyxshop\PhenyxSpreadsheet\NamedRange;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\ConditionalFormatting;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\Style\CellFont;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\Style\FillPattern;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\CodePage;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLERead;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Xls as SharedXls;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Protection;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\SheetView;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataValidation;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\NamedRange;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xls\ConditionalFormatting;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xls\Style\CellFont;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xls\Style\FillPattern;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Shared\CodePage;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLERead;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Xls as SharedXls;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\Protection;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\SheetView;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 // Original file header of ParseXL (used as the base for this class):
 // --------------------------------------------------------------------------------

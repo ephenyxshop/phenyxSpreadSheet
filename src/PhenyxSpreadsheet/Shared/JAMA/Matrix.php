@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\JAMA;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
 /**
  * Matrix class.

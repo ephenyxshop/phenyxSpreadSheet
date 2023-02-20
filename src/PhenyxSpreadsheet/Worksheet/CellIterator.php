@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
 use Iterator;
 
 /**

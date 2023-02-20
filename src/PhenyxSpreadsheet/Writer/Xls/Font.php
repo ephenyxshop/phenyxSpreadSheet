@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
 class Font {
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Distributions;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Distributions;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engineering;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Normal {
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Collection;
+namespace EphenyxShop\PhenyxSpreadsheet\Collection;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use Generator;
 use Psr\SimpleCache\CacheInterface;
 

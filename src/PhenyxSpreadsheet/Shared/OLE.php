@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
 // vim: set expandtab tabstop=4 shiftwidth=4:
 // +----------------------------------------------------------------------+
@@ -21,10 +21,10 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
 // +----------------------------------------------------------------------+
 //
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE\ChainedBlockStream;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE\PPS\Root;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE\ChainedBlockStream;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE\PPS\Root;
 
 /*
  * Array for storing OLE instances that are accessed from

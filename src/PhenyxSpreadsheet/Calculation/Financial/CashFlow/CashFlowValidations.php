@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\CashFlow;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\FinancialValidations;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\FinancialValidations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class CashFlowValidations extends FinancialValidations {
 

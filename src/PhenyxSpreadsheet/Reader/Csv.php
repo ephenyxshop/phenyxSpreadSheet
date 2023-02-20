@@ -1,15 +1,15 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Csv\Delimiter;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Csv\Delimiter;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 class Csv extends BaseReader {
 

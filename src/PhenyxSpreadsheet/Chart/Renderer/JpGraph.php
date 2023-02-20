@@ -1,13 +1,13 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart\Renderer;
 
 use AccBarPlot;
 use AccLinePlot;
 use BarPlot;
 use ContourPlot;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Chart;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Chart;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 use Graph;
 use GroupBarPlot;
 use LinePlot;

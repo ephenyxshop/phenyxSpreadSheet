@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 
 class SheetViewOptions extends BaseParserClass

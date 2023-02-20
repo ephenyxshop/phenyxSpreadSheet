@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
 use ZipArchive;
 
 class File {

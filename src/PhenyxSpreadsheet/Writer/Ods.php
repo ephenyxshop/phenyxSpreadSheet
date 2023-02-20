@@ -1,16 +1,16 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Content;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Meta;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\MetaInf;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Mimetype;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Styles;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Thumbnails;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Content;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Meta;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\MetaInf;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Mimetype;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Styles;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Thumbnails;
 use ZipStream\Exception\OverflowException;
 use ZipStream\Option\Archive;
 use ZipStream\ZipStream;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class PlotArea {
 

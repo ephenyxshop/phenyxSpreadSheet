@@ -1,21 +1,21 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine\BranchPruner;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine\CyclicReferenceStack;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine\Logger;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\Value;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Token\Stack;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\ReferenceHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Shared;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\BranchPruner;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\CyclicReferenceStack;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\Logger;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\Value;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Token\Stack;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\ReferenceHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use ReflectionClassConstant;
 use ReflectionMethod;
 use ReflectionParameter;

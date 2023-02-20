@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 
 class Address {
 

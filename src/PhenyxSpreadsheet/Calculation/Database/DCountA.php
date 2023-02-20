@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Database;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
 
 class DCountA extends DatabaseAbstract {
 

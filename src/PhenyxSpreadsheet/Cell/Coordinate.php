@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 /**
  * Helper class to manipulate cell coordinates.

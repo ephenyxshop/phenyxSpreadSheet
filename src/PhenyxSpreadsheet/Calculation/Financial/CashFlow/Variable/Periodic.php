@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Variable;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Variable;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Periodic {
 

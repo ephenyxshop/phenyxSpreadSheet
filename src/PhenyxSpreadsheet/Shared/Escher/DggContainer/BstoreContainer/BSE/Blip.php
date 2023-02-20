@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
 
 class Blip {
 

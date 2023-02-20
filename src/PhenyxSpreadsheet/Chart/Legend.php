@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart;
 
 class Legend {
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Workbook (used as the base for this class):
 // -----------------------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart;
 
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class Chart {
 

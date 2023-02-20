@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
 
 class InterestAndPrincipal {
 

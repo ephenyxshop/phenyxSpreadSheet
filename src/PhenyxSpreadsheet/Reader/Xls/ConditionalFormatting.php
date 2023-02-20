@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
 
 class ConditionalFormatting
 {

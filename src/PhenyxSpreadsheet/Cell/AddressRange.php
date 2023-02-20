@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
 interface AddressRange {
     public const MAX_ROW = 1048576;

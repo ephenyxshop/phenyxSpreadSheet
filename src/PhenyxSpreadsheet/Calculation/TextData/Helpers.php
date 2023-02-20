@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\TextData;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\TextData;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception as CalcExp;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception as CalcExp;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Helpers {
 

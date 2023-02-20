@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
 abstract class WriterPart {
 

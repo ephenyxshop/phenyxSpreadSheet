@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Helper;
+namespace EphenyxShop\PhenyxSpreadsheet\Helper;
 
-use Ephenyxshop\PhenyxSpreadsheet\IOFactory;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\IWriter;
+use EphenyxShop\PhenyxSpreadsheet\IOFactory;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Writer\IWriter;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;

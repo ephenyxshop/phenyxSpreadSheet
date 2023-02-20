@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Document;
+namespace EphenyxShop\PhenyxSpreadsheet\Document;
 
 use DateTime;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\IntOrFloat;
+use EphenyxShop\PhenyxSpreadsheet\Shared\IntOrFloat;
 
 class Properties {
 

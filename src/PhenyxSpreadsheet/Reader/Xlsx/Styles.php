@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Border;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Protection;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Border;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\Protection;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 use SimpleXMLElement;
 use stdClass;
 

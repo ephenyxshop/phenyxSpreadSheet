@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
 class Thumbnails extends WriterPart {
 

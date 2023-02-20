@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
 use GdImage;
 
 class MemoryDrawing extends BaseDrawing {

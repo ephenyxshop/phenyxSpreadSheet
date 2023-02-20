@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
 
 class FormulaTranslator
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column\Rule;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column\Rule;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 
 class AutoFilter

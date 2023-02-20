@@ -1,22 +1,22 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMText;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Border;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Drawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Border;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use Throwable;
 
 class Html extends BaseReader {

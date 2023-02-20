@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Collection\Cells;
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date as SharedDate;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\CellStyleAssessor;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Collection\Cells;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDate;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\CellStyleAssessor;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use Throwable;
 
 class Cell {

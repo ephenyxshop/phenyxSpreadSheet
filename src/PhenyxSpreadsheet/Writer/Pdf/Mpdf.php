@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Pdf;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Pdf;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Html;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Pdf;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Html;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Pdf;
 
 class Mpdf extends Pdf {
 

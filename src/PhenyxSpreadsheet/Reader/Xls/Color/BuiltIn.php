@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\Color;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls\Color;
 
 class BuiltIn
 {

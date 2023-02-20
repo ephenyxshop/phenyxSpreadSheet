@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\JAMA;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
 
 /**
  *    Cholesky decomposition class.

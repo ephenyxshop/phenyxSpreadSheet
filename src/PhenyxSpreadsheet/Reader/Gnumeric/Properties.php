@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use SimpleXMLElement;
 
 class Properties

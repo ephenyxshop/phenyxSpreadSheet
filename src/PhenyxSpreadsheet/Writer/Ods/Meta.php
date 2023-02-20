@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Document\Properties;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Document\Properties;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
 class Meta extends WriterPart {
 

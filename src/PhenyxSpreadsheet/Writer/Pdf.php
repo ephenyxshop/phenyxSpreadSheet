@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
 
 abstract class Pdf extends Html {
 

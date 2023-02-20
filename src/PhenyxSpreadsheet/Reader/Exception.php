@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class Exception extends PhenyxSpreadsheetException {
 

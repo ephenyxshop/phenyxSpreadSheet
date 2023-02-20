@@ -1,33 +1,33 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
 use ArrayObject;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressRange;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\CellAddress;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\CellRange;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataValidation;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Hyperlink;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Chart;
-use Ephenyxshop\PhenyxSpreadsheet\Collection\Cells;
-use Ephenyxshop\PhenyxSpreadsheet\Collection\CellsFactory;
-use Ephenyxshop\PhenyxSpreadsheet\Comment;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\IComparable;
-use Ephenyxshop\PhenyxSpreadsheet\ReferenceHelper;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Shared;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Cell\AddressRange;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\CellAddress;
+use EphenyxShop\PhenyxSpreadsheet\Cell\CellRange;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataValidation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Hyperlink;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Chart;
+use EphenyxShop\PhenyxSpreadsheet\Collection\Cells;
+use EphenyxShop\PhenyxSpreadsheet\Collection\CellsFactory;
+use EphenyxShop\PhenyxSpreadsheet\Comment;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\IComparable;
+use EphenyxShop\PhenyxSpreadsheet\ReferenceHelper;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Shared;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
 class Worksheet implements IComparable {
 

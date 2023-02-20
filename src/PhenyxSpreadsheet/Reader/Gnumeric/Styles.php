@@ -1,15 +1,15 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Border;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Border;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 use SimpleXMLElement;
 
 class Styles

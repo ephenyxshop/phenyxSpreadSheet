@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\JAMA;
 
 /**
  *    Class to obtain eigenvalues and eigenvectors of a real matrix.

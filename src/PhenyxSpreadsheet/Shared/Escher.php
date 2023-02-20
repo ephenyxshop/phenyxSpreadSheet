@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
 class Escher {
 

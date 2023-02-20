@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard\WizardInterface;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard\WizardInterface;
 
 class Wizard {
 

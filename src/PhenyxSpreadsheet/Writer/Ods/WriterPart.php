@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
 abstract class WriterPart {
 

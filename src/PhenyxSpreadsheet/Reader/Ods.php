@@ -1,25 +1,25 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
 use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Ods\AutoFilter;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Ods\DefinedNames;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Ods\FormulaTranslator;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Ods\PageSettings;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Ods\Properties as DocumentProperties;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Ods\AutoFilter;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Ods\DefinedNames;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Ods\FormulaTranslator;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Ods\PageSettings;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Ods\Properties as DocumentProperties;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 use Throwable;
 use XMLReader;
 use ZipArchive;

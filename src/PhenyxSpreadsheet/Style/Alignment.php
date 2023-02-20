@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class Alignment extends Supervisor {
 

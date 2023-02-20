@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class CodePage {
 

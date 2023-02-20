@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
 class BinaryComparison {
 

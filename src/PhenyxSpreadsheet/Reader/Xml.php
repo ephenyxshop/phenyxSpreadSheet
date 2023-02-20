@@ -1,23 +1,23 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
 use DateTime;
 use DateTimeZone;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\PageSettings;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Properties;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\AddressHelper;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xml\PageSettings;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Properties;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use SimpleXMLElement;
 
 /**

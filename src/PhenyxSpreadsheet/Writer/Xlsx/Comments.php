@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Comment;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Comment;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 
 class Comments extends WriterPart {
 

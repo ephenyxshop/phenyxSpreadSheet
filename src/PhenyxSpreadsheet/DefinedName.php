@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet;
+namespace EphenyxShop\PhenyxSpreadsheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 abstract class DefinedName {
 

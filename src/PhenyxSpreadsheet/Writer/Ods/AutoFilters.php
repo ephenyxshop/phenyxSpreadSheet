@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class AutoFilters {
 

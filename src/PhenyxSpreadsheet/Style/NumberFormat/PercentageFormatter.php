@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 class PercentageFormatter extends BaseFormatter {
 

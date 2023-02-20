@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\AddressHelper;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class Helpers {
 

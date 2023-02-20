@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
 
 use SimpleXMLElement;
 

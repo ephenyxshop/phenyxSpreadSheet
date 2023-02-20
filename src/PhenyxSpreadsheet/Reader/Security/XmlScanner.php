@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Security;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Security;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader;
+use EphenyxShop\PhenyxSpreadsheet\Reader;
 
 class XmlScanner
 {

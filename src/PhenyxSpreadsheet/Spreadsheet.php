@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet;
+namespace EphenyxShop\PhenyxSpreadsheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Iterator;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Iterator;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class Spreadsheet {
 

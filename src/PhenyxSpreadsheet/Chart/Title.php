@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart;
 
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
 
 class Title {
 

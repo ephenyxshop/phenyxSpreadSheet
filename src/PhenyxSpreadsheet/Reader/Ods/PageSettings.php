@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
 use DOMDocument;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class PageSettings
 {

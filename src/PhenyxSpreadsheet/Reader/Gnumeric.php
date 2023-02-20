@@ -1,20 +1,20 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric\Properties;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric\Styles;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
-use Ephenyxshop\PhenyxSpreadsheet\ReferenceHelper;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric\Properties;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric\Styles;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
+use EphenyxShop\PhenyxSpreadsheet\ReferenceHelper;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 use XMLReader;
 

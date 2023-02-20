@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
 class Counts extends AggregateBase {
 

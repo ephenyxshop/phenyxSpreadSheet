@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\DataValidation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataValidation;
 
 class DataValidationHelper
 {

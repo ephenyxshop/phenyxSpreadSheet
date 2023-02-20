@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
 
 class Constants {
 

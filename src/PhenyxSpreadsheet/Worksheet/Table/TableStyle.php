@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet\Table;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\Table;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Table;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Table;
 
 class TableStyle {
 

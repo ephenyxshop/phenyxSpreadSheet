@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class LookupRefValidations {
 

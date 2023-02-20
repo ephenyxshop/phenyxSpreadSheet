@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\RichText;
+namespace EphenyxShop\PhenyxSpreadsheet\RichText;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
 class Run extends TextElement implements ITextElement {
 

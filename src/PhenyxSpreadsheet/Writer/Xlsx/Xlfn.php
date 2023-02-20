@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
 class Xlfn {
 

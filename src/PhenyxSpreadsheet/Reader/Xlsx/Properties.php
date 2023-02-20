@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Document\Properties as DocumentProperties;
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Document\Properties as DocumentProperties;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
 use SimpleXMLElement;
 
 class Properties

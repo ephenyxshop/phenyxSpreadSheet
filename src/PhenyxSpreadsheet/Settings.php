@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet;
+namespace EphenyxShop\PhenyxSpreadsheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\IRenderer;
-use Ephenyxshop\PhenyxSpreadsheet\Collection\Memory;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\IRenderer;
+use EphenyxShop\PhenyxSpreadsheet\Collection\Memory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -13,7 +13,7 @@ class Settings {
 
     /**
      * Class name of the chart renderer used for rendering charts
-     * eg: Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\JpGraph.
+     * eg: EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\JpGraph.
      *
      * @var string
      */
@@ -66,7 +66,7 @@ class Settings {
      * Identify to PhenyxSpreadsheet the external library to use for rendering charts.
      *
      * @param string $rendererClassName Class name of the chart renderer
-     *    eg: Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\JpGraph
+     *    eg: EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\JpGraph
      */
     public static function setChartRenderer(string $rendererClassName): void {
 
@@ -81,7 +81,7 @@ class Settings {
      * Return the Chart Rendering Library that PhenyxSpreadsheet is currently configured to use.
      *
      * @return null|string Class name of the chart renderer
-     *    eg: Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\JpGraph
+     *    eg: EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\JpGraph
      */
     public static function getChartRenderer():  ? string {
 

@@ -1,22 +1,22 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\Value;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Settings;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column\Rule;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\SheetView;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet as PhpspreadsheetWorksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\Value;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Settings;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column\Rule;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\SheetView;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet as PhpspreadsheetWorksheet;
 
 class Worksheet extends WriterPart {
 

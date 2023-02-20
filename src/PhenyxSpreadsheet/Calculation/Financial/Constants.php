@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial;
 
 class Constants {
 

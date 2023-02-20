@@ -1,18 +1,18 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
 use DateTime;
 use DateTimeInterface;
 use DateTimeZone;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date as SharedDate;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDate;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 class Date {
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
 
 class Escher {
 

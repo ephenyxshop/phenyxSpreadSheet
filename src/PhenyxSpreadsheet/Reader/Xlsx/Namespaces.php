@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
 class Namespaces
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Information;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Information;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 
 class ExcelError {
 

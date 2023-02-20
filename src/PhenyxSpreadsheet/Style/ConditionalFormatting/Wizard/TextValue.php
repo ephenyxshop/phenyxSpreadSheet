@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
 /**
  * @method TextValue contains(string $value, string $operandValueType = Wizard::VALUE_TYPE_LITERAL)

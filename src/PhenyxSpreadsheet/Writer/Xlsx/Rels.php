@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
 
 class Rels extends WriterPart {
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
 abstract class WizardAbstract {
 

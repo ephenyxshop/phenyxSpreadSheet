@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Border as BorderStyle;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Borders;
+use EphenyxShop\PhenyxSpreadsheet\Style\Border as BorderStyle;
+use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
 use SimpleXMLElement;
 
 class Border extends StyleBase

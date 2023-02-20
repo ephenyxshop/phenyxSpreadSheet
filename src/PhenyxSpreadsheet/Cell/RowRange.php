@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class RowRange implements AddressRange {
 

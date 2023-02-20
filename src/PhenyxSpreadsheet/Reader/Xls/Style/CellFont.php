@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
 class CellFont
 {

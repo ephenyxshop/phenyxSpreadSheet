@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\IComparable;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
+use EphenyxShop\PhenyxSpreadsheet\IComparable;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
 
 class Conditional implements IComparable {
 

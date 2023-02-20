@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
 
 use DateTimeImmutable;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Current {
 

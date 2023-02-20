@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Document;
+namespace EphenyxShop\PhenyxSpreadsheet\Document;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\PasswordHasher;
+use EphenyxShop\PhenyxSpreadsheet\Shared\PasswordHasher;
 
 class Security {
 

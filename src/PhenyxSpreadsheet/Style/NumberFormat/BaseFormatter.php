@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 abstract class BaseFormatter {
 

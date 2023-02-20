@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as SpException;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Protection;
+use EphenyxShop\PhenyxSpreadsheet\Exception as SpException;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Protection;
 
 class PasswordHasher {
 

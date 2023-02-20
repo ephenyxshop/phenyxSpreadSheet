@@ -1,14 +1,14 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Helper;
+namespace EphenyxShop\PhenyxSpreadsheet\Helper;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMText;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
 class Html {
 

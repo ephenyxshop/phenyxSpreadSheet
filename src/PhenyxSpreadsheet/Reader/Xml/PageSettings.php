@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml;
 
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
 use SimpleXMLElement;
 use stdClass;
 

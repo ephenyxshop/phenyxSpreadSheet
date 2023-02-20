@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressRange;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\CellAddress;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\CellRange;
+use EphenyxShop\PhenyxSpreadsheet\Cell\AddressRange;
+use EphenyxShop\PhenyxSpreadsheet\Cell\CellAddress;
+use EphenyxShop\PhenyxSpreadsheet\Cell\CellRange;
 
 class Validations {
 

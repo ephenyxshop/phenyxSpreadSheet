@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Csv;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Csv;
 
 class Delimiter
 {

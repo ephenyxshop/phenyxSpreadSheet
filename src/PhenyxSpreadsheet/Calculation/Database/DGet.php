@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Database;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class DGet extends DatabaseAbstract {
 

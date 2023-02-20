@@ -1,12 +1,12 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\CashFlowValidations;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\CashFlowValidations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
 class Interest {
 

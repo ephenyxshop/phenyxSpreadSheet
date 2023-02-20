@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Pdf;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Pdf;
 
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Pdf;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Pdf;
 
 class Dompdf extends Pdf {
 

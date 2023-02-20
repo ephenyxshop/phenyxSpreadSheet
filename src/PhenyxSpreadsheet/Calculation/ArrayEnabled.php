@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine\ArrayArgumentHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine\ArrayArgumentProcessor;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\ArrayArgumentHelper;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\ArrayArgumentProcessor;
 
 trait ArrayEnabled {
 

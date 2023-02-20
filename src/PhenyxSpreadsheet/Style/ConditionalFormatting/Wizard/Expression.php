@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
 /**
  * @method Expression formula(string $expression)

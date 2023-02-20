@@ -1,11 +1,11 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Gnumeric;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageMargins;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\PageSetup as WorksheetPageSetup;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Gnumeric;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageMargins;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup as WorksheetPageSetup;
 use SimpleXMLElement;
 
 class PageSetup

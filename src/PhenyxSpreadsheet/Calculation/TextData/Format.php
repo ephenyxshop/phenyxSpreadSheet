@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\TextData;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\TextData;
 
 use DateTimeInterface;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception as CalcExp;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\MathTrig;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception as CalcExp;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 class Format {
 

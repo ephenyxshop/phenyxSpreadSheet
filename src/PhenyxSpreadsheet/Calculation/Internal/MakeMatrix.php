@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Internal;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Internal;
 
 class MakeMatrix {
 

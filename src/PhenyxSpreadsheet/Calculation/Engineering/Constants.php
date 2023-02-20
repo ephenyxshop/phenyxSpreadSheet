@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Engineering;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 
 class Constants {
 

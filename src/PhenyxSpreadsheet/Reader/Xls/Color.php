@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xls;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xls;
 
 class Color
 {

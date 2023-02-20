@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
 class ChainedBlockStream {
 

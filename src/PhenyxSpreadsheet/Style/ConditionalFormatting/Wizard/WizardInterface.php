@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
 interface WizardInterface {
     public function getCellRange(): string;

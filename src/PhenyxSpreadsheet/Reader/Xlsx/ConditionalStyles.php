@@ -1,14 +1,14 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx\Styles as StyleReader;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
-use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormatValueObject;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style as Style;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Styles as StyleReader;
+use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormattingRuleExtension;
+use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalFormatValueObject;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style as Style;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 
 class ConditionalStyles

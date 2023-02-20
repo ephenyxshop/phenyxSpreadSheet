@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Logical\Boolean;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Logical\Boolean;
 
 /**
  * @deprecated 1.17.0

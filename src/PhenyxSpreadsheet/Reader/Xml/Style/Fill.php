@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill as FillStyles;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill as FillStyles;
 use SimpleXMLElement;
 
 class Fill extends StyleBase

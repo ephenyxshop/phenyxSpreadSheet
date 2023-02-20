@@ -1,14 +1,14 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Amortization;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Coupons;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Depreciation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Dollar;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\InterestRate;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\Securities;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Financial\TreasuryBill;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Amortization;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Coupons;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Depreciation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Dollar;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\InterestRate;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Securities;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\TreasuryBill;
 
 /**
  * @deprecated 1.18.0

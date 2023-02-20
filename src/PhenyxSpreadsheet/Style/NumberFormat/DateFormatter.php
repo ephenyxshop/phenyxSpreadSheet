@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
 
 class DateFormatter {
 

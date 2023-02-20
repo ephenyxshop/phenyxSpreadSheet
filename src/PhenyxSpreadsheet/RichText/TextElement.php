@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\RichText;
+namespace EphenyxShop\PhenyxSpreadsheet\RichText;
 
 class TextElement implements ITextElement {
 

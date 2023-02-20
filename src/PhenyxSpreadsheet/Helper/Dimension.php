@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Helper;
+namespace EphenyxShop\PhenyxSpreadsheet\Helper;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Drawing;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Drawing;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
 class Dimension {
 

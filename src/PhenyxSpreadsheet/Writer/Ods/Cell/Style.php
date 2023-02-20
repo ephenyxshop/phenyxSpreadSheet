@@ -1,15 +1,15 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Helper\Dimension;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Fill;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Style as CellStyle;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\ColumnDimension;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\RowDimension;
+use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
+use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Style\Style as CellStyle;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\ColumnDimension;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\RowDimension;
 
 class Style {
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet\Drawing;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
 
-use Ephenyxshop\PhenyxSpreadsheet\IComparable;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\IComparable;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
 
 class Shadow implements IComparable {
 

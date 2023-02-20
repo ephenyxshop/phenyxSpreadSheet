@@ -1,31 +1,31 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\Run;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE\PPS\File;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\OLE\PPS\Root;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Drawing;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Parser;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Workbook;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\RichText\Run;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Drawing as SharedDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer\SpContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE\Blip;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE\PPS\File;
+use EphenyxShop\PhenyxSpreadsheet\Shared\OLE\PPS\Root;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\BaseDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\MemoryDrawing;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Parser;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Workbook;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Worksheet;
 
 class Xls extends BaseWriter {
 

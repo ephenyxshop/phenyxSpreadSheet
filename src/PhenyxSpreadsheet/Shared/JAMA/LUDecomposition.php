@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\JAMA;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\JAMA;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception as CalculationException;
 
 /**
  *    For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n

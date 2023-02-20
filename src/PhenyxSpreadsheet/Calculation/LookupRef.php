@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\Address;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\HLookup;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\Indirect;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\Lookup;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\Matrix;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\Offset;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\RowColumnInformation;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\LookupRef\VLookup;
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\Address;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\HLookup;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\Indirect;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\Lookup;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\Matrix;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\Offset;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\RowColumnInformation;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef\VLookup;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 /**
  * @deprecated 1.18.0

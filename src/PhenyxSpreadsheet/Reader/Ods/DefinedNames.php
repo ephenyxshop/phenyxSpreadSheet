@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
 use DOMElement;
-use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\DefinedName;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
 class DefinedNames extends BaseLoader
 {

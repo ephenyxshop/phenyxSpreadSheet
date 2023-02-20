@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Conditional;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Confidence;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Maximum;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Minimum;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Permutations;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Trends;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical\Variances;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Conditional;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Confidence;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Counts;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Maximum;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Minimum;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Permutations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Trends;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Variances;
 
 /**
  * @deprecated 1.18.0

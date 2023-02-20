@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
 
 class OLERead {
 

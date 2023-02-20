@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
+use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 
 class Rule {
 

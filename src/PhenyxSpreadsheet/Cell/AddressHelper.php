@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Exception;
 
 class AddressHelper {
 

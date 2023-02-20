@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Style;
 
 class Font extends Supervisor {
 

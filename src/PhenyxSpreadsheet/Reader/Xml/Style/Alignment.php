@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment as AlignmentStyles;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment as AlignmentStyles;
 use SimpleXMLElement;
 
 class Alignment extends StyleBase

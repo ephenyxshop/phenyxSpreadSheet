@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
 use DOMElement;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
 abstract class BaseLoader
 {

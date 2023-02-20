@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting;
 
 class ConditionalDataBarExtension {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Collection;
+namespace EphenyxShop\PhenyxSpreadsheet\Collection;
 
 use DateInterval;
 use Psr\SimpleCache\CacheInterface;

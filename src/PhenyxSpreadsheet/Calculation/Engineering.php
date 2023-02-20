@@ -1,10 +1,10 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
 use Complex\Complex;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engineering\ComplexFunctions;
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Engineering\ComplexOperations;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering\ComplexFunctions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering\ComplexOperations;
 
 /**
  * @deprecated 1.18.0

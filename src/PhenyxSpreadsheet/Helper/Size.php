@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Helper;
+namespace EphenyxShop\PhenyxSpreadsheet\Helper;
 
 class Size {
 

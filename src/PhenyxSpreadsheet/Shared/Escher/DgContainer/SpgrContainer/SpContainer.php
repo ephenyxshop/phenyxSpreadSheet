@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
+use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
 class SpContainer {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
 use DOMElement;
 use DOMNode;

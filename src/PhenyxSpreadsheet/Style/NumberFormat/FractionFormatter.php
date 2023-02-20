@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
+namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\MathTrig;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 
 class FractionFormatter extends BaseFormatter {
 

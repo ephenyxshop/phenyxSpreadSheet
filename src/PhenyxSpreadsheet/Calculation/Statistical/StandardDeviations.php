@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Statistical;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
 class StandardDeviations {
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer;
+namespace EphenyxShop\PhenyxSpreadsheet\Chart\Renderer;
 
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Chart;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Chart;
 
 interface IRenderer {
     /**

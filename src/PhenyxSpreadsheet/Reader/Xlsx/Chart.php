@@ -1,17 +1,17 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\DataSeries;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\DataSeriesValues;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Layout;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Legend;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\PlotArea;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Title;
-use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Color;
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Chart\DataSeries;
+use EphenyxShop\PhenyxSpreadsheet\Chart\DataSeriesValues;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Layout;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Legend;
+use EphenyxShop\PhenyxSpreadsheet\Chart\PlotArea;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Title;
+use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
+use EphenyxShop\PhenyxSpreadsheet\Style\Color;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 use SimpleXMLElement;
 
 class Chart

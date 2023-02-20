@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engine;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
 class ArrayArgumentHelper {
 

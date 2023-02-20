@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Database;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
-use Ephenyxshop\PhenyxSpreadsheet\Calculation\MathTrig;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 
 class DSum extends DatabaseAbstract {
 

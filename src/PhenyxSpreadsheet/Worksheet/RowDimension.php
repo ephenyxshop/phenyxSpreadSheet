@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
+namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
+use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
 
 class RowDimension extends Dimension {
 

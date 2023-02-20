@@ -1,8 +1,8 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Xml\Style;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xml\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Style\Font as FontUnderline;
+use EphenyxShop\PhenyxSpreadsheet\Style\Font as FontUnderline;
 use SimpleXMLElement;
 
 class Font extends StyleBase

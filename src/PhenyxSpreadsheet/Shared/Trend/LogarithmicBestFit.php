@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\Trend;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\Trend;
 
 class LogarithmicBestFit extends BestFit {
 

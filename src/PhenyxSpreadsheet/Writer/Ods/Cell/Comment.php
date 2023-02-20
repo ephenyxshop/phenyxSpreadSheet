@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Ods\Cell;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods\Cell;
 
-use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 
 /**
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>

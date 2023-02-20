@@ -1,18 +1,18 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xlsx;
+namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Axis;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\DataSeries;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\DataSeriesValues;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\GridLines;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Layout;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Legend;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\PlotArea;
-use Ephenyxshop\PhenyxSpreadsheet\Chart\Title;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
-use Ephenyxshop\PhenyxSpreadsheet\Shared\XMLWriter;
-use Ephenyxshop\PhenyxSpreadsheet\Writer\Exception as WriterException;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Axis;
+use EphenyxShop\PhenyxSpreadsheet\Chart\DataSeries;
+use EphenyxShop\PhenyxSpreadsheet\Chart\DataSeriesValues;
+use EphenyxShop\PhenyxSpreadsheet\Chart\GridLines;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Layout;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Legend;
+use EphenyxShop\PhenyxSpreadsheet\Chart\PlotArea;
+use EphenyxShop\PhenyxSpreadsheet\Chart\Title;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
 
 class Chart extends WriterPart {
 

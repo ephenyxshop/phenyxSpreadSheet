@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
+namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer;
 
 class BstoreContainer {
 

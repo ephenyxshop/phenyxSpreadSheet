@@ -1,9 +1,9 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Reader\Ods;
+namespace EphenyxShop\PhenyxSpreadsheet\Reader\Ods;
 
-use Ephenyxshop\PhenyxSpreadsheet\Document\Properties as DocumentProperties;
-use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Document\Properties as DocumentProperties;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use SimpleXMLElement;
 
 class Properties

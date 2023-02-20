@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\Engine;
+namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engine;
 
 class CyclicReferenceStack {
 
