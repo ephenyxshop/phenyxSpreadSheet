@@ -1,0 +1,64 @@
+<?php
+
+namespace Ephenyxshop\PhenyxSpreadsheet\Calculation\MathTrig;
+
+use Ephenyxshop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
+use Ephenyxshop\PhenyxSpreadsheet\Calculation\Exception;
+
+class Angle {
+
+    use ArrayEnabled;
+
+    /**
+     * DEGREES.
+     *
+     * Returns the result of builtin function rad2deg after validating args.
+     *
+     * @param mixed $number Should be numeric, or can be an array of numbers
+     *
+     * @return array|float|string Rounded number
+     *         If an array of numbers is passed as the argument, then the returned result will also be an array
+     *            with the same dimensions
+     */
+    public static function toDegrees($number) {
+
+        if (is_array($number)) {
+            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+        }
+
+        try {
+            $number = Helpers::validateNumericNullBool($number);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return rad2deg($number);
+    }
+
+    /**
+     * RADIANS.
+     *
+     * Returns the result of builtin function deg2rad after validating args.
+     *
+     * @param mixed $number Should be numeric, or can be an array of numbers
+     *
+     * @return array|float|string Rounded number
+     *         If an array of numbers is passed as the argument, then the returned result will also be an array
+     *            with the same dimensions
+     */
+    public static function toRadians($number) {
+
+        if (is_array($number)) {
+            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+        }
+
+        try {
+            $number = Helpers::validateNumericNullBool($number);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+        return deg2rad($number);
+    }
+
+}
