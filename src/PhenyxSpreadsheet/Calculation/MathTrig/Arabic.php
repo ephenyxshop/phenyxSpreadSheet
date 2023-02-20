@@ -86,7 +86,7 @@ class Arabic {
     public static function evaluate($roman) {
 
         if (is_array($roman)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $roman);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $roman);
         }
 
         // An empty string should return 0

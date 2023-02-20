@@ -54,7 +54,7 @@ class Dollar {
     public static function decimal($fractionalDollar = null, $fraction = 0) {
 
         if (is_array($fractionalDollar) || is_array($fraction)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $fractionalDollar, $fraction);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $fractionalDollar, $fraction);
         }
 
         try {
@@ -104,7 +104,7 @@ class Dollar {
     public static function fractional($decimalDollar = null, $fraction = 0) {
 
         if (is_array($decimalDollar) || is_array($fraction)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $decimalDollar, $fraction);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $decimalDollar, $fraction);
         }
 
         try {

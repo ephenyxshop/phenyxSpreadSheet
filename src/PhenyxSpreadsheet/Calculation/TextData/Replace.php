@@ -30,7 +30,7 @@ class Replace {
     public static function replace($oldText, $start, $chars, $newText) {
 
         if (is_array($oldText) || is_array($start) || is_array($chars) || is_array($newText)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $oldText, $start, $chars, $newText);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $oldText, $start, $chars, $newText);
         }
 
         try {
@@ -67,7 +67,7 @@ class Replace {
     public static function substitute($text = '', $fromText = '', $toText = '', $instance = null) {
 
         if (is_array($text) || is_array($fromText) || is_array($toText) || is_array($instance)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $text, $fromText, $toText, $instance);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $text, $fromText, $toText, $instance);
         }
 
         try {

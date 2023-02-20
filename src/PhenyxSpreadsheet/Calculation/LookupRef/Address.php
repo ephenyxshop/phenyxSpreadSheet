@@ -54,7 +54,7 @@ class Address {
             is_array($relativity) || is_array($referenceStyle) || is_array($sheetName)
         ) {
             return self::evaluateArrayArguments(
-                [self::, __FUNCTION__],
+                [self::class, __FUNCTION__],
                 $row,
                 $column,
                 $relativity,

@@ -29,7 +29,7 @@ class Logarithms {
     public static function withBase($number, $base = 10) {
 
         if (is_array($number) || is_array($base)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $base);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $base);
         }
 
         try {
@@ -59,7 +59,7 @@ class Logarithms {
     public static function base10($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {
@@ -87,7 +87,7 @@ class Logarithms {
     public static function natural($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {

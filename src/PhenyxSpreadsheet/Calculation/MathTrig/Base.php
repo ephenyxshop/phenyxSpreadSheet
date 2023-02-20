@@ -32,7 +32,7 @@ class Base {
     public static function evaluate($number, $radix, $minLength = null) {
 
         if (is_array($number) || is_array($radix) || is_array($minLength)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $radix, $minLength);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $radix, $minLength);
         }
 
         try {

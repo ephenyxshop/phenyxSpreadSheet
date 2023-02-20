@@ -30,7 +30,7 @@ class LogNormal {
     public static function cumulative($value, $mean, $stdDev) {
 
         if (is_array($value) || is_array($mean) || is_array($stdDev)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $mean, $stdDev);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev);
         }
 
         try {
@@ -70,7 +70,7 @@ class LogNormal {
     public static function distribution($value, $mean, $stdDev, $cumulative = false) {
 
         if (is_array($value) || is_array($mean) || is_array($stdDev) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $mean, $stdDev, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev, $cumulative);
         }
 
         try {
@@ -117,7 +117,7 @@ class LogNormal {
     public static function inverse($probability, $mean, $stdDev) {
 
         if (is_array($probability) || is_array($mean) || is_array($stdDev)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $mean, $stdDev);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $mean, $stdDev);
         }
 
         try {

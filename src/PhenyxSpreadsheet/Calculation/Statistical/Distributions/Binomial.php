@@ -37,7 +37,7 @@ class Binomial {
     public static function distribution($value, $trials, $probability, $cumulative) {
 
         if (is_array($value) || is_array($trials) || is_array($probability) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $trials, $probability, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $trials, $probability, $cumulative);
         }
 
         try {
@@ -87,7 +87,7 @@ class Binomial {
     public static function range($trials, $probability, $successes, $limit = null) {
 
         if (is_array($trials) || is_array($probability) || is_array($successes) || is_array($limit)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $trials, $probability, $successes, $limit);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $trials, $probability, $successes, $limit);
         }
 
         $limit = $limit ?  ? $successes;
@@ -147,7 +147,7 @@ class Binomial {
     public static function negative($failures, $successes, $probability) {
 
         if (is_array($failures) || is_array($successes) || is_array($probability)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $failures, $successes, $probability);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $failures, $successes, $probability);
         }
 
         try {
@@ -197,7 +197,7 @@ class Binomial {
     public static function inverse($trials, $probability, $alpha) {
 
         if (is_array($trials) || is_array($probability) || is_array($alpha)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $trials, $probability, $alpha);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $trials, $probability, $alpha);
         }
 
         try {

@@ -38,7 +38,7 @@ class Erf {
     public static function ERF($lower, $upper = null) {
 
         if (is_array($lower) || is_array($upper)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $lower, $upper);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $lower, $upper);
         }
 
         if (is_numeric($lower)) {
@@ -74,7 +74,7 @@ class Erf {
     public static function ERFPRECISE($limit) {
 
         if (is_array($limit)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $limit);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $limit);
         }
 
         return self::ERF($limit);

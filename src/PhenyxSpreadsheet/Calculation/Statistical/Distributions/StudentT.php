@@ -32,7 +32,7 @@ class StudentT {
     public static function distribution($value, $degrees, $tails) {
 
         if (is_array($value) || is_array($degrees) || is_array($tails)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $degrees, $tails);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $degrees, $tails);
         }
 
         try {
@@ -67,7 +67,7 @@ class StudentT {
     public static function inverse($probability, $degrees) {
 
         if (is_array($probability) || is_array($degrees)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $degrees);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $degrees);
         }
 
         try {

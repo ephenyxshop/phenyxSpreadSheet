@@ -32,7 +32,7 @@ class ChiSquared {
     public static function distributionRightTail($value, $degrees) {
 
         if (is_array($value) || is_array($degrees)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $degrees);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $degrees);
         }
 
         try {
@@ -77,7 +77,7 @@ class ChiSquared {
     public static function distributionLeftTail($value, $degrees, $cumulative) {
 
         if (is_array($value) || is_array($degrees) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $degrees, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $degrees, $cumulative);
         }
 
         try {
@@ -126,7 +126,7 @@ class ChiSquared {
     public static function inverseRightTail($probability, $degrees) {
 
         if (is_array($probability) || is_array($degrees)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $degrees);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $degrees);
         }
 
         try {
@@ -168,7 +168,7 @@ class ChiSquared {
     public static function inverseLeftTail($probability, $degrees) {
 
         if (is_array($probability) || is_array($degrees)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $degrees);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $degrees);
         }
 
         try {

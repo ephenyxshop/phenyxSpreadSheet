@@ -831,7 +831,7 @@ class Roman {
     public static function evaluate($aValue, $style = 0) {
 
         if (is_array($aValue) || is_array($style)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $aValue, $style);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $aValue, $style);
         }
 
         try {

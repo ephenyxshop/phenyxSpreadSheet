@@ -28,7 +28,7 @@ class Combinations {
     public static function withoutRepetition($numObjs, $numInSet) {
 
         if (is_array($numObjs) || is_array($numInSet)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $numObjs, $numInSet);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $numObjs, $numInSet);
         }
 
         try {
@@ -62,7 +62,7 @@ class Combinations {
     public static function withRepetition($numObjs, $numInSet) {
 
         if (is_array($numObjs) || is_array($numInSet)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $numObjs, $numInSet);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $numObjs, $numInSet);
         }
 
         try {

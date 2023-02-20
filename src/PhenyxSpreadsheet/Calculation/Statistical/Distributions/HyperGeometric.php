@@ -37,7 +37,7 @@ class HyperGeometric {
             is_array($populationSuccesses) || is_array($populationNumber)
         ) {
             return self::evaluateArrayArguments(
-                [self::, __FUNCTION__],
+                [self::class, __FUNCTION__],
                 $sampleSuccesses,
                 $sampleNumber,
                 $populationSuccesses,

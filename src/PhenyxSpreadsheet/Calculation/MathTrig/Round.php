@@ -25,7 +25,7 @@ class Round {
     public static function round($number, $precision) {
 
         if (is_array($number) || is_array($precision)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $precision);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $precision);
         }
 
         try {
@@ -53,7 +53,7 @@ class Round {
     public static function up($number, $digits) {
 
         if (is_array($number) || is_array($digits)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $digits);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $digits);
         }
 
         try {
@@ -89,7 +89,7 @@ class Round {
     public static function down($number, $digits) {
 
         if (is_array($number) || is_array($digits)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $digits);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $digits);
         }
 
         try {
@@ -125,7 +125,7 @@ class Round {
     public static function multiple($number, $multiple) {
 
         if (is_array($number) || is_array($multiple)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $multiple);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $multiple);
         }
 
         try {
@@ -169,7 +169,7 @@ class Round {
     public static function even($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {
@@ -195,7 +195,7 @@ class Round {
     public static function odd($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {

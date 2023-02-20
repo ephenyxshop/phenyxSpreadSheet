@@ -26,7 +26,7 @@ class Trunc {
     public static function evaluate($value = 0, $digits = 0) {
 
         if (is_array($value) || is_array($digits)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $digits);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $digits);
         }
 
         try {

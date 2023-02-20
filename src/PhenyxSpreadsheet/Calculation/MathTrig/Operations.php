@@ -26,7 +26,7 @@ class Operations {
     public static function mod($dividend, $divisor) {
 
         if (is_array($dividend) || is_array($divisor)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $dividend, $divisor);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $dividend, $divisor);
         }
 
         try {
@@ -65,7 +65,7 @@ class Operations {
     public static function power($x, $y) {
 
         if (is_array($x) || is_array($y)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $x, $y);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $x, $y);
         }
 
         try {
@@ -157,7 +157,7 @@ class Operations {
     public static function quotient($numerator, $denominator) {
 
         if (is_array($numerator) || is_array($denominator)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $numerator, $denominator);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $numerator, $denominator);
         }
 
         try {

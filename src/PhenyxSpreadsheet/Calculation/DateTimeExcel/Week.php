@@ -48,7 +48,7 @@ class Week {
     public static function number($dateValue, $method = Constants::STARTWEEK_SUNDAY) {
 
         if (is_array($dateValue) || is_array($method)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $dateValue, $method);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $method);
         }
 
         $origDateValueNull = empty($dateValue);
@@ -116,7 +116,7 @@ class Week {
     public static function isoWeekNumber($dateValue) {
 
         if (is_array($dateValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $dateValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         if (self::apparentBug($dateValue)) {
@@ -161,7 +161,7 @@ class Week {
     public static function day($dateValue, $style = 1) {
 
         if (is_array($dateValue) || is_array($style)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $dateValue, $style);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $style);
         }
 
         try {

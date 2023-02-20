@@ -166,7 +166,7 @@ class Operations {
     public static function NOT($logical = false) {
 
         if (is_array($logical)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $logical);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $logical);
         }
 
         if (is_string($logical)) {

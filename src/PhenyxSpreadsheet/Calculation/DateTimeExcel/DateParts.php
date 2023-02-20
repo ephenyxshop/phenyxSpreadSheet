@@ -31,7 +31,7 @@ class DateParts {
     public static function day($dateValue) {
 
         if (is_array($dateValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $dateValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         $weirdResult = self::weirdCondition($dateValue);
@@ -72,7 +72,7 @@ class DateParts {
     public static function month($dateValue) {
 
         if (is_array($dateValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $dateValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         try {
@@ -111,7 +111,7 @@ class DateParts {
     public static function year($dateValue) {
 
         if (is_array($dateValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $dateValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         try {

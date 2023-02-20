@@ -32,7 +32,7 @@ class Difference {
     public static function interval($startDate, $endDate, $unit = 'D') {
 
         if (is_array($startDate) || is_array($endDate) || is_array($unit)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $startDate, $endDate, $unit);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $startDate, $endDate, $unit);
         }
 
         try {

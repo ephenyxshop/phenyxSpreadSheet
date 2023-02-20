@@ -36,7 +36,7 @@ class Month {
     public static function adjust($dateValue, $adjustmentMonths) {
 
         if (is_array($dateValue) || is_array($adjustmentMonths)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $dateValue, $adjustmentMonths);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $adjustmentMonths);
         }
 
         try {
@@ -80,7 +80,7 @@ class Month {
     public static function lastDay($dateValue, $adjustmentMonths) {
 
         if (is_array($dateValue) || is_array($adjustmentMonths)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $dateValue, $adjustmentMonths);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $adjustmentMonths);
         }
 
         try {

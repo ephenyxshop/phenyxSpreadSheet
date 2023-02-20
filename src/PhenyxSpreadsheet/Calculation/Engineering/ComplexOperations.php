@@ -32,7 +32,7 @@ class ComplexOperations {
     public static function IMDIV($complexDividend, $complexDivisor) {
 
         if (is_array($complexDividend) || is_array($complexDivisor)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $complexDividend, $complexDivisor);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $complexDividend, $complexDivisor);
         }
 
         try {
@@ -63,7 +63,7 @@ class ComplexOperations {
     public static function IMSUB($complexNumber1, $complexNumber2) {
 
         if (is_array($complexNumber1) || is_array($complexNumber2)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $complexNumber1, $complexNumber2);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $complexNumber1, $complexNumber2);
         }
 
         try {

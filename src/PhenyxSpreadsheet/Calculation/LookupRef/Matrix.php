@@ -83,7 +83,7 @@ class Matrix {
     public static function index($matrix, $rowNum = 0, $columnNum = 0) {
 
         if (is_array($rowNum) || is_array($columnNum)) {
-            return self::evaluateArrayArgumentsSubsetFrom([self::, __FUNCTION__], 1, $matrix, $rowNum, $columnNum);
+            return self::evaluateArrayArgumentsSubsetFrom([self::class, __FUNCTION__], 1, $matrix, $rowNum, $columnNum);
         }
 
         $rowNum = $rowNum ?  ? 0;

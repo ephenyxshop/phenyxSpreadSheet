@@ -27,7 +27,7 @@ class Fisher {
     public static function distribution($value) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         try {
@@ -60,7 +60,7 @@ class Fisher {
     public static function inverse($probability) {
 
         if (is_array($probability)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $probability);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $probability);
         }
 
         try {

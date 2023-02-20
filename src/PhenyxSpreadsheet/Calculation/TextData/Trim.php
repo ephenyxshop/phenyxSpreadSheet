@@ -21,7 +21,7 @@ class Trim {
     public static function nonPrintable($stringValue = '') {
 
         if (is_array($stringValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $stringValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $stringValue);
         }
 
         $stringValue = Helpers::extractString($stringValue);
@@ -42,7 +42,7 @@ class Trim {
     public static function spaces($stringValue = '') {
 
         if (is_array($stringValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $stringValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $stringValue);
         }
 
         $stringValue = Helpers::extractString($stringValue);

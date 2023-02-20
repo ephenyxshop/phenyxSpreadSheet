@@ -42,7 +42,7 @@ class DateValue {
     public static function fromString($dateValue) {
 
         if (is_array($dateValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $dateValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         $dti = new DateTimeImmutable();

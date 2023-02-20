@@ -35,7 +35,7 @@ class Random {
     public static function randBetween($min, $max) {
 
         if (is_array($min) || is_array($max)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $min, $max);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $min, $max);
         }
 
         try {

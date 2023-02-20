@@ -66,7 +66,7 @@ class Date {
     public static function fromYMD($year, $month, $day) {
 
         if (is_array($year) || is_array($month) || is_array($day)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $year, $month, $day);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $year, $month, $day);
         }
 
         $baseYear = SharedDateHelper::getExcelCalendar();

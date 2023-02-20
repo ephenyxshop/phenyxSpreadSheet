@@ -34,7 +34,7 @@ class Ceiling {
     public static function ceiling($number, $significance = null) {
 
         if (is_array($number) || is_array($significance)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $significance);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance);
         }
 
         if ($significance === null) {
@@ -73,7 +73,7 @@ class Ceiling {
     public static function math($number, $significance = null, $mode = 0) {
 
         if (is_array($number) || is_array($significance) || is_array($mode)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $significance, $mode);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance, $mode);
         }
 
         try {
@@ -115,7 +115,7 @@ class Ceiling {
     public static function precise($number, $significance = 1) {
 
         if (is_array($number) || is_array($significance)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $significance);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance);
         }
 
         try {

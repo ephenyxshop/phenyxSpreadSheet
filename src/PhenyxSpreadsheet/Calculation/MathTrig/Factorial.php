@@ -29,7 +29,7 @@ class Factorial {
     public static function fact($factVal) {
 
         if (is_array($factVal)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $factVal);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $factVal);
         }
 
         try {
@@ -75,7 +75,7 @@ class Factorial {
     public static function factDouble($factVal) {
 
         if (is_array($factVal)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $factVal);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $factVal);
         }
 
         try {

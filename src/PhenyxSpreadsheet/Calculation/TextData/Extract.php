@@ -24,7 +24,7 @@ class Extract {
     public static function left($value, $chars = 1) {
 
         if (is_array($value) || is_array($chars)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $chars);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $chars);
         }
 
         try {
@@ -54,7 +54,7 @@ class Extract {
     public static function mid($value, $start, $chars) {
 
         if (is_array($value) || is_array($start) || is_array($chars)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $start, $chars);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $start, $chars);
         }
 
         try {
@@ -83,7 +83,7 @@ class Extract {
     public static function right($value, $chars = 1) {
 
         if (is_array($value) || is_array($chars)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $chars);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $chars);
         }
 
         try {

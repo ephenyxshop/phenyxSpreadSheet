@@ -34,7 +34,7 @@ class BesselY {
     public static function BESSELY($x, $ord) {
 
         if (is_array($x) || is_array($ord)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $x, $ord);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $x, $ord);
         }
 
         try {

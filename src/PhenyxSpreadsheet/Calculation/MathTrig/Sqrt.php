@@ -23,7 +23,7 @@ class Sqrt {
     public static function sqrt($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {
@@ -49,7 +49,7 @@ class Sqrt {
     public static function pi($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {

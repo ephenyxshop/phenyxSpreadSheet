@@ -33,7 +33,7 @@ class ErfC {
     public static function ERFC($value) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         if (is_numeric($value)) {

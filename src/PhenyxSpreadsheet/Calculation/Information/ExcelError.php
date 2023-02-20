@@ -35,7 +35,7 @@ class ExcelError {
     public static function type($value = '') {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         $i = 1;

@@ -542,7 +542,7 @@ class ConvertUOM {
     public static function CONVERT($value, $fromUOM, $toUOM) {
 
         if (is_array($value) || is_array($fromUOM) || is_array($toUOM)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $fromUOM, $toUOM);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $fromUOM, $toUOM);
         }
 
         if (!is_numeric($value)) {

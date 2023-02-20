@@ -28,7 +28,7 @@ class HLookup extends LookupBase {
     public static function lookup($lookupValue, $lookupArray, $indexNumber, $notExactMatch = true) {
 
         if (is_array($lookupValue)) {
-            return self::evaluateArrayArgumentsIgnore([self::, __FUNCTION__], 1, $lookupValue, $lookupArray, $indexNumber, $notExactMatch);
+            return self::evaluateArrayArgumentsIgnore([self::class, __FUNCTION__], 1, $lookupValue, $lookupArray, $indexNumber, $notExactMatch);
         }
 
         $notExactMatch = (bool) ($notExactMatch ?  ? true);

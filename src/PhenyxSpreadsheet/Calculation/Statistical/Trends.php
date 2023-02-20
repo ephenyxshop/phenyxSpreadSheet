@@ -128,7 +128,7 @@ class Trends {
     public static function FORECAST($xValue, $yValues, $xValues) {
 
         if (is_array($xValue)) {
-            return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $xValue, $yValues, $xValues);
+            return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $xValue, $yValues, $xValues);
         }
 
         try {

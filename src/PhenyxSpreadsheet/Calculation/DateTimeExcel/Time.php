@@ -46,7 +46,7 @@ class Time {
     public static function fromHMS($hour, $minute, $second) {
 
         if (is_array($hour) || is_array($minute) || is_array($second)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $hour, $minute, $second);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $hour, $minute, $second);
         }
 
         try {

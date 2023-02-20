@@ -24,7 +24,7 @@ class Secant {
     public static function sec($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {
@@ -50,7 +50,7 @@ class Secant {
     public static function sech($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {

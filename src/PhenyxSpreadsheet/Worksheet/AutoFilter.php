@@ -1135,7 +1135,7 @@ class AutoFilter {
                 //    Execute the filter test
                 $result = // $result && // phpstan says $result is always true here
                 // @phpstan-ignore-next-line
-                call_user_func_array([self::, $columnFilterTest['method']], [$cellValue, $columnFilterTest['arguments']]);
+                call_user_func_array([self::class, $columnFilterTest['method']], [$cellValue, $columnFilterTest['arguments']]);
                 //    If filter test has resulted in FALSE, exit the loop straightaway rather than running any more tests
 
                 if (!$result) {

@@ -30,7 +30,7 @@ class Confidence {
     public static function CONFIDENCE($alpha, $stdDev, $size) {
 
         if (is_array($alpha) || is_array($stdDev) || is_array($size)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $alpha, $stdDev, $size);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $alpha, $stdDev, $size);
         }
 
         try {

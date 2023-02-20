@@ -24,7 +24,7 @@ class CaseConvert {
     public static function lower($mixedCaseValue) {
 
         if (is_array($mixedCaseValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $mixedCaseValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
 
         $mixedCaseValue = Helpers::extractString($mixedCaseValue);
@@ -47,7 +47,7 @@ class CaseConvert {
     public static function upper($mixedCaseValue) {
 
         if (is_array($mixedCaseValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $mixedCaseValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
 
         $mixedCaseValue = Helpers::extractString($mixedCaseValue);
@@ -70,7 +70,7 @@ class CaseConvert {
     public static function proper($mixedCaseValue) {
 
         if (is_array($mixedCaseValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $mixedCaseValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
 
         $mixedCaseValue = Helpers::extractString($mixedCaseValue);

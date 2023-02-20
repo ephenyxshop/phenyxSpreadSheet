@@ -32,7 +32,7 @@ class Poisson {
     public static function distribution($value, $mean, $cumulative) {
 
         if (is_array($value) || is_array($mean) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $mean, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $cumulative);
         }
 
         try {

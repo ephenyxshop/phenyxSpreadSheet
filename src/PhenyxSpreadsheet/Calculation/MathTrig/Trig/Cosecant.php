@@ -24,7 +24,7 @@ class Cosecant {
     public static function csc($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {
@@ -50,7 +50,7 @@ class Cosecant {
     public static function csch($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {

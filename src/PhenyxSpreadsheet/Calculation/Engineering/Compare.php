@@ -32,7 +32,7 @@ class Compare {
     public static function DELTA($a, $b = 0.0) {
 
         if (is_array($a) || is_array($b)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $a, $b);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $a, $b);
         }
 
         try {
@@ -67,7 +67,7 @@ class Compare {
     public static function GESTEP($number, $step = 0.0) {
 
         if (is_array($number) || is_array($step)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $step);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $step);
         }
 
         try {

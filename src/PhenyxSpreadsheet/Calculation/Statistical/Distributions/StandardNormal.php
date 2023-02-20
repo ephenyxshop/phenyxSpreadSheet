@@ -97,7 +97,7 @@ class StandardNormal {
     public static function gauss($value) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         if (!is_numeric($value)) {
@@ -132,7 +132,7 @@ class StandardNormal {
     public static function zTest($dataSet, $m0, $sigma = null) {
 
         if (is_array($m0) || is_array($sigma)) {
-            return self::evaluateArrayArgumentsSubsetFrom([self::, __FUNCTION__], 1, $dataSet, $m0, $sigma);
+            return self::evaluateArrayArgumentsSubsetFrom([self::class, __FUNCTION__], 1, $dataSet, $m0, $sigma);
         }
 
         $dataSet = Functions::flattenArrayIndexed($dataSet);

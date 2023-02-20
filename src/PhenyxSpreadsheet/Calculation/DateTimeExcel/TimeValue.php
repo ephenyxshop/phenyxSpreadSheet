@@ -39,7 +39,7 @@ class TimeValue {
     public static function fromString($timeValue) {
 
         if (is_array($timeValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $timeValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $timeValue);
         }
 
         $timeValue = trim($timeValue ?  ? '', '"');

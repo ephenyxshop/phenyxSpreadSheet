@@ -31,7 +31,7 @@ class Exponential {
     public static function distribution($value, $lambda, $cumulative) {
 
         if (is_array($value) || is_array($lambda) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $lambda, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $lambda, $cumulative);
         }
 
         try {

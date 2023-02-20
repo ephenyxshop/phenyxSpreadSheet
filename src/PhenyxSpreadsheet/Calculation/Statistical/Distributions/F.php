@@ -34,7 +34,7 @@ class F {
     public static function distribution($value, $u, $v, $cumulative) {
 
         if (is_array($value) || is_array($u) || is_array($v) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $u, $v, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $u, $v, $cumulative);
         }
 
         try {

@@ -29,7 +29,7 @@ class Standardize extends StatisticalValidations {
     public static function execute($value, $mean, $stdDev) {
 
         if (is_array($value) || is_array($mean) || is_array($stdDev)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $mean, $stdDev);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev);
         }
 
         try {

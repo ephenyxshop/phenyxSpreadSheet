@@ -39,7 +39,7 @@ class WorkDay {
 
         if (is_array($startDate) || is_array($endDays)) {
             return self::evaluateArrayArgumentsSubset(
-                [self::, __FUNCTION__],
+                [self::class, __FUNCTION__],
                 2,
                 $startDate,
                 $endDays,
@@ -51,7 +51,7 @@ class WorkDay {
         try {
             $startDate = Helpers::getDateValue($startDate);
             $endDays = Helpers::validateNumericNull($endDays);
-            $holidayArray = array_map([Helpers::, 'getDateValue'], Functions::flattenArray($dateArgs));
+            $holidayArray = array_map([Helpers::class, 'getDateValue'], Functions::flattenArray($dateArgs));
         } catch (Exception $e) {
             return $e->getMessage();
         }

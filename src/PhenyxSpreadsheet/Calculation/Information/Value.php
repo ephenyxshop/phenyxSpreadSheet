@@ -27,7 +27,7 @@ class Value {
     public static function isBlank($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         return $value === null;
@@ -82,7 +82,7 @@ class Value {
     public static function isEven($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         if ($value === null) {
@@ -107,7 +107,7 @@ class Value {
     public static function isOdd($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         if ($value === null) {
@@ -132,7 +132,7 @@ class Value {
     public static function isNumber($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         if (is_string($value)) {
@@ -155,7 +155,7 @@ class Value {
     public static function isLogical($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         return is_bool($value);
@@ -174,7 +174,7 @@ class Value {
     public static function isText($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         return is_string($value) && !ErrorValue::isError($value);
@@ -193,7 +193,7 @@ class Value {
     public static function isNonText($value = null) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         return !self::isText($value);
@@ -220,7 +220,7 @@ class Value {
             $cellReferences = Coordinate::extractAllCellReferencesInRange($cellReference);
 
             if (count($cellReferences) > 1) {
-                return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $cellReferences, $cell);
+                return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $cellReferences, $cell);
             }
 
         }

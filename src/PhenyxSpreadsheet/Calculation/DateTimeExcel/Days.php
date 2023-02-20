@@ -34,7 +34,7 @@ class Days {
     public static function between($endDate, $startDate) {
 
         if (is_array($endDate) || is_array($startDate)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $endDate, $startDate);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $endDate, $startDate);
         }
 
         try {

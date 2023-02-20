@@ -46,7 +46,7 @@ class YearFrac {
     public static function fraction($startDate, $endDate, $method = 0) {
 
         if (is_array($startDate) || is_array($endDate) || is_array($method)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $startDate, $endDate, $method);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $startDate, $endDate, $method);
         }
 
         try {

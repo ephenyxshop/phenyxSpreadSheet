@@ -40,7 +40,7 @@ class Beta {
     public static function distribution($value, $alpha, $beta, $rMin = 0.0, $rMax = 1.0) {
 
         if (is_array($value) || is_array($alpha) || is_array($beta) || is_array($rMin) || is_array($rMax)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $alpha, $beta, $rMin, $rMax);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $alpha, $beta, $rMin, $rMax);
         }
 
         $rMin = $rMin ?  ? 0.0;
@@ -95,7 +95,7 @@ class Beta {
     public static function inverse($probability, $alpha, $beta, $rMin = 0.0, $rMax = 1.0) {
 
         if (is_array($probability) || is_array($alpha) || is_array($beta) || is_array($rMin) || is_array($rMax)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $alpha, $beta, $rMin, $rMax);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $alpha, $beta, $rMin, $rMax);
         }
 
         $rMin = $rMin ?  ? 0.0;

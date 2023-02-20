@@ -37,7 +37,7 @@ class Format {
     public static function DOLLAR($value = 0, $decimals = 2) {
 
         if (is_array($value) || is_array($decimals)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $decimals);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $decimals);
         }
 
         try {
@@ -83,7 +83,7 @@ class Format {
     public static function FIXEDFORMAT($value, $decimals = 2, $noCommas = false) {
 
         if (is_array($value) || is_array($decimals) || is_array($noCommas)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $decimals, $noCommas);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $decimals, $noCommas);
         }
 
         try {
@@ -126,7 +126,7 @@ class Format {
     public static function TEXTFORMAT($value, $format) {
 
         if (is_array($value) || is_array($format)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $format);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $format);
         }
 
         $value = Helpers::extractString($value);
@@ -174,7 +174,7 @@ class Format {
     public static function VALUE($value = '') {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         try {
@@ -255,7 +255,7 @@ class Format {
     public static function NUMBERVALUE($value = '', $decimalSeparator = null, $groupSeparator = null) {
 
         if (is_array($value) || is_array($decimalSeparator) || is_array($groupSeparator)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $decimalSeparator, $groupSeparator);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $decimalSeparator, $groupSeparator);
         }
 
         try {

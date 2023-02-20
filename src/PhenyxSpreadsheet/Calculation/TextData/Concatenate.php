@@ -46,7 +46,7 @@ class Concatenate {
 
         if (is_array($delimiter) || is_array($ignoreEmpty)) {
             return self::evaluateArrayArgumentsSubset(
-                [self::, __FUNCTION__],
+                [self::class, __FUNCTION__],
                 2,
                 $delimiter,
                 $ignoreEmpty,
@@ -87,7 +87,7 @@ class Concatenate {
     public static function builtinREPT($stringValue, $repeatCount) {
 
         if (is_array($stringValue) || is_array($repeatCount)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $stringValue, $repeatCount);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $stringValue, $repeatCount);
         }
 
         $stringValue = Helpers::extractString($stringValue);

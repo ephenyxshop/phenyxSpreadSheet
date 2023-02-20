@@ -48,7 +48,7 @@ class ConvertDecimal extends ConvertBase {
     public static function toBinary($value, $places = null) {
 
         if (is_array($value) || is_array($places)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $places);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $places);
         }
 
         try {
@@ -106,7 +106,7 @@ class ConvertDecimal extends ConvertBase {
     public static function toHex($value, $places = null) {
 
         if (is_array($value) || is_array($places)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $places);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $places);
         }
 
         try {
@@ -188,7 +188,7 @@ class ConvertDecimal extends ConvertBase {
     public static function toOctal($value, $places = null) {
 
         if (is_array($value) || is_array($places)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $places);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $places);
         }
 
         try {

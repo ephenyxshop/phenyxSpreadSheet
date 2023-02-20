@@ -97,7 +97,7 @@ class CellMatcher {
 
         foreach ($conditionalRange as $rangeSet) {
             $absoluteRangeSet = array_map(
-                [Coordinate::, 'absoluteCoordinate'],
+                [Coordinate::class, 'absoluteCoordinate'],
                 $rangeSet
             );
             $rangeSets[] = implode(':', $absoluteRangeSet);

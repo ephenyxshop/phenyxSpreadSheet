@@ -23,7 +23,7 @@ class Lookup {
     public static function lookup($lookupValue, $lookupVector, $resultVector = null) {
 
         if (is_array($lookupValue)) {
-            return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $lookupValue, $lookupVector, $resultVector);
+            return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $lookupValue, $lookupVector, $resultVector);
         }
 
         if (!is_array($lookupVector)) {

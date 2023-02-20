@@ -9,7 +9,7 @@ class ExceptionHandler {
      */
     public function __construct() {
 
-        set_error_handler([Exception::, 'errorHandlerCallback'], E_ALL);
+        set_error_handler([Exception::class, 'errorHandlerCallback'], E_ALL);
     }
 
     /**

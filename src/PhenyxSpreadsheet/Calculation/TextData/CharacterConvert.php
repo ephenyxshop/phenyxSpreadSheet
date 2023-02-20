@@ -23,7 +23,7 @@ class CharacterConvert {
     public static function character($character) {
 
         if (is_array($character)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $character);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $character);
         }
 
         $character = Helpers::validateInt($character);
@@ -51,7 +51,7 @@ class CharacterConvert {
     public static function code($characters) {
 
         if (is_array($characters)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $characters);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $characters);
         }
 
         $characters = Helpers::extractString($characters);

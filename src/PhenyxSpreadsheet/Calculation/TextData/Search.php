@@ -28,7 +28,7 @@ class Search {
     public static function sensitive($needle, $haystack, $offset = 1) {
 
         if (is_array($needle) || is_array($haystack) || is_array($offset)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $needle, $haystack, $offset);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $needle, $haystack, $offset);
         }
 
         try {
@@ -73,7 +73,7 @@ class Search {
     public static function insensitive($needle, $haystack, $offset = 1) {
 
         if (is_array($needle) || is_array($haystack) || is_array($offset)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $needle, $haystack, $offset);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $needle, $haystack, $offset);
         }
 
         try {

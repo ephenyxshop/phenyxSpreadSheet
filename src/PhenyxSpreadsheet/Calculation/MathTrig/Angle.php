@@ -23,7 +23,7 @@ class Angle {
     public static function toDegrees($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {
@@ -49,7 +49,7 @@ class Angle {
     public static function toRadians($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {

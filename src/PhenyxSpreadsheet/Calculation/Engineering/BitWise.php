@@ -44,7 +44,7 @@ class BitWise {
     public static function BITAND($number1, $number2) {
 
         if (is_array($number1) || is_array($number2)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number1, $number2);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number1, $number2);
         }
 
         try {
@@ -80,7 +80,7 @@ class BitWise {
     public static function BITOR($number1, $number2) {
 
         if (is_array($number1) || is_array($number2)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number1, $number2);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number1, $number2);
         }
 
         try {
@@ -116,7 +116,7 @@ class BitWise {
     public static function BITXOR($number1, $number2) {
 
         if (is_array($number1) || is_array($number2)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number1, $number2);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number1, $number2);
         }
 
         try {
@@ -152,7 +152,7 @@ class BitWise {
     public static function BITLSHIFT($number, $shiftAmount) {
 
         if (is_array($number) || is_array($shiftAmount)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $shiftAmount);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $shiftAmount);
         }
 
         try {
@@ -191,7 +191,7 @@ class BitWise {
     public static function BITRSHIFT($number, $shiftAmount) {
 
         if (is_array($number) || is_array($shiftAmount)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $number, $shiftAmount);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $shiftAmount);
         }
 
         try {

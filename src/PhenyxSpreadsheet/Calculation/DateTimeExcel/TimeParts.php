@@ -30,7 +30,7 @@ class TimeParts {
     public static function hour($timeValue) {
 
         if (is_array($timeValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $timeValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $timeValue);
         }
 
         try {
@@ -72,7 +72,7 @@ class TimeParts {
     public static function minute($timeValue) {
 
         if (is_array($timeValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $timeValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $timeValue);
         }
 
         try {
@@ -114,7 +114,7 @@ class TimeParts {
     public static function second($timeValue) {
 
         if (is_array($timeValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $timeValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $timeValue);
         }
 
         try {

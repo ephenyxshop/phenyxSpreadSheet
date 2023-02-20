@@ -25,7 +25,7 @@ class Gamma extends GammaBase {
     public static function gamma($value) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         try {
@@ -62,7 +62,7 @@ class Gamma extends GammaBase {
     public static function distribution($value, $a, $b, $cumulative) {
 
         if (is_array($value) || is_array($a) || is_array($b) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $a, $b, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $a, $b, $cumulative);
         }
 
         try {
@@ -100,7 +100,7 @@ class Gamma extends GammaBase {
     public static function inverse($probability, $alpha, $beta) {
 
         if (is_array($probability) || is_array($alpha) || is_array($beta)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $alpha, $beta);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $alpha, $beta);
         }
 
         try {
@@ -133,7 +133,7 @@ class Gamma extends GammaBase {
     public static function ln($value) {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         try {

@@ -21,7 +21,7 @@ class Text {
     public static function length($value = '') {
 
         if (is_array($value)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $value);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         $value = Helpers::extractString($value);
@@ -46,7 +46,7 @@ class Text {
     public static function exact($value1, $value2) {
 
         if (is_array($value1) || is_array($value2)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value1, $value2);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value1, $value2);
         }
 
         $value1 = Helpers::extractString($value1);
@@ -68,7 +68,7 @@ class Text {
     public static function test($testValue = '') {
 
         if (is_array($testValue)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $testValue);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $testValue);
         }
 
         if (is_string($testValue)) {

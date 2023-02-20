@@ -27,7 +27,7 @@ class Selection {
     public static function choose($chosenEntry, ...$chooseArgs) {
 
         if (is_array($chosenEntry)) {
-            return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $chosenEntry, ...$chooseArgs);
+            return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $chosenEntry, ...$chooseArgs);
         }
 
         $entryCount = count($chooseArgs) - 1;

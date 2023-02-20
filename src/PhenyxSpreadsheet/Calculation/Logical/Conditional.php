@@ -141,7 +141,7 @@ class Conditional {
     public static function IFERROR($testValue = '', $errorpart = '') {
 
         if (is_array($testValue)) {
-            return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $testValue, $errorpart);
+            return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $testValue, $errorpart);
         }
 
         $errorpart = $errorpart ?  ? '';
@@ -167,7 +167,7 @@ class Conditional {
     public static function IFNA($testValue = '', $napart = '') {
 
         if (is_array($testValue)) {
-            return self::evaluateArrayArgumentsSubset([self::, __FUNCTION__], 1, $testValue, $napart);
+            return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $testValue, $napart);
         }
 
         $napart = $napart ?  ? '';

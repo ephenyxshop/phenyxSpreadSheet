@@ -70,7 +70,7 @@ class Settings {
      */
     public static function setChartRenderer(string $rendererClassName): void {
 
-        if (!is_a($rendererClassName, IRenderer::, true)) {
+        if (!is_a($rendererClassName, IRenderer::class, true)) {
             throw new Exception('Chart renderer must implement ' . IRenderer::);
         }
 

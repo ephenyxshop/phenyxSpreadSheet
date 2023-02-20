@@ -36,7 +36,7 @@ class Normal {
     public static function distribution($value, $mean, $stdDev, $cumulative) {
 
         if (is_array($value) || is_array($mean) || is_array($stdDev) || is_array($cumulative)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $value, $mean, $stdDev, $cumulative);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev, $cumulative);
         }
 
         try {
@@ -78,7 +78,7 @@ class Normal {
     public static function inverse($probability, $mean, $stdDev) {
 
         if (is_array($probability) || is_array($mean) || is_array($stdDev)) {
-            return self::evaluateArrayArguments([self::, __FUNCTION__], $probability, $mean, $stdDev);
+            return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $mean, $stdDev);
         }
 
         try {

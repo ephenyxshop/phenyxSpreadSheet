@@ -24,7 +24,7 @@ class Sine {
     public static function sin($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {
@@ -50,7 +50,7 @@ class Sine {
     public static function sinh($angle) {
 
         if (is_array($angle)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $angle);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
 
         try {
@@ -76,7 +76,7 @@ class Sine {
     public static function asin($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {
@@ -102,7 +102,7 @@ class Sine {
     public static function asinh($number) {
 
         if (is_array($number)) {
-            return self::evaluateSingleArgumentArray([self::, __FUNCTION__], $number);
+            return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
 
         try {

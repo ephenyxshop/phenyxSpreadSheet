@@ -37,7 +37,7 @@ class NetworkDays {
 
         if (is_array($startDate) || is_array($endDate)) {
             return self::evaluateArrayArgumentsSubset(
-                [self::, __FUNCTION__],
+                [self::class, __FUNCTION__],
                 2,
                 $startDate,
                 $endDate,
