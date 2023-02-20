@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class CodePage {
 
@@ -99,7 +99,7 @@ class CodePage {
 
                 }
 
-                throw new PhpSpreadsheetException("Code page $codePage not implemented on this system.");
+                throw new PhenyxSpreadsheetException("Code page $codePage not implemented on this system.");
             } else {
                 return $value;
             }
@@ -107,10 +107,10 @@ class CodePage {
         }
 
         if ($codePage == 720 || $codePage == 32769) {
-            throw new PhpSpreadsheetException("Code page $codePage not supported."); //    OEM Arabic
+            throw new PhenyxSpreadsheetException("Code page $codePage not supported."); //    OEM Arabic
         }
 
-        throw new PhpSpreadsheetException('Unknown codepage: ' . $codePage);
+        throw new PhenyxSpreadsheetException('Unknown codepage: ' . $codePage);
     }
 
     public static function getEncodings(): array

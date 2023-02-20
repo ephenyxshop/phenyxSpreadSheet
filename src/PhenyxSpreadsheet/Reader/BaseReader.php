@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
 use Ephenyxshop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\File;
@@ -149,7 +149,7 @@ abstract class BaseReader implements IReader {
 
     protected function loadSpreadsheetFromFile(string $filename): Spreadsheet {
 
-        throw new PhpSpreadsheetException('Reader classes must implement their own loadSpreadsheetFromFile() method');
+        throw new PhenyxSpreadsheetException('Reader classes must implement their own loadSpreadsheetFromFile() method');
     }
 
     /**

@@ -6,7 +6,7 @@ abstract class BaseWriter implements IWriter {
 
     /**
      * Write charts that are defined in the workbook?
-     * Identifies whether the Writer should write definitions for any charts that exist in the PhpSpreadsheet object.
+     * Identifies whether the Writer should write definitions for any charts that exist in the PhenyxSpreadsheet object.
      *
      * @var bool
      */
@@ -14,7 +14,7 @@ abstract class BaseWriter implements IWriter {
 
     /**
      * Pre-calculate formulas
-     * Forces PhpSpreadsheet to recalculate all formulae in a workbook when saving, so that the pre-calculated values are
+     * Forces PhenyxSpreadsheet to recalculate all formulae in a workbook when saving, so that the pre-calculated values are
      * immediately available to MS Excel or other office spreadsheet viewer when opening the file.
      *
      * @var bool

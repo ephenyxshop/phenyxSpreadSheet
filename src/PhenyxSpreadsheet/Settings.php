@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
 use Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\IRenderer;
@@ -63,7 +63,7 @@ class Settings {
     }
 
     /**
-     * Identify to PhpSpreadsheet the external library to use for rendering charts.
+     * Identify to PhenyxSpreadsheet the external library to use for rendering charts.
      *
      * @param string $rendererClassName Class name of the chart renderer
      *    eg: Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\JpGraph
@@ -78,7 +78,7 @@ class Settings {
     }
 
     /**
-     * Return the Chart Rendering Library that PhpSpreadsheet is currently configured to use.
+     * Return the Chart Rendering Library that PhenyxSpreadsheet is currently configured to use.
      *
      * @return null|string Class name of the chart renderer
      *    eg: Ephenyxshop\PhenyxSpreadsheet\Chart\Renderer\JpGraph

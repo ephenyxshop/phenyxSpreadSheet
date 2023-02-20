@@ -68,7 +68,7 @@ class Style extends Supervisor {
      * Used when applying style on range of cells (column or row) and cleared when
      * all cells in range is styled.
      *
-     * PhpSpreadsheet will always minimize the amount of styles used. So cells with
+     * PhenyxSpreadsheet will always minimize the amount of styles used. So cells with
      * same styles will reference the same Style instance. To check if two styles
      * are similar Style::getHashCode() is used. This call is expensive. To minimize
      * the need to call this method we can cache the internal PHP object id of the

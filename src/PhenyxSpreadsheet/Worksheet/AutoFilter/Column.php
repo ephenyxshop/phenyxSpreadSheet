@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter;
 
 class Column {
@@ -185,11 +185,11 @@ class Column {
         $this->setEvaluatedFalse();
 
         if (!in_array($filterType, self::$filterTypes)) {
-            throw new PhpSpreadsheetException('Invalid filter type for column AutoFilter.');
+            throw new PhenyxSpreadsheetException('Invalid filter type for column AutoFilter.');
         }
 
         if ($filterType === self::AUTOFILTER_FILTERTYPE_CUSTOMFILTER && count($this->ruleset) > 2) {
-            throw new PhpSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
+            throw new PhenyxSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
         }
 
         $this->filterType = $filterType;
@@ -221,7 +221,7 @@ class Column {
         $join = strtolower($join);
 
         if (!in_array($join, self::$ruleJoins)) {
-            throw new PhpSpreadsheetException('Invalid rule connection for column AutoFilter.');
+            throw new PhenyxSpreadsheetException('Invalid rule connection for column AutoFilter.');
         }
 
         $this->join = $join;
@@ -327,7 +327,7 @@ class Column {
         $this->setEvaluatedFalse();
 
         if ($this->filterType === self::AUTOFILTER_FILTERTYPE_CUSTOMFILTER && count($this->ruleset) >= 2) {
-            throw new PhpSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
+            throw new PhenyxSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
         }
 
         $this->ruleset[] = new Column\Rule($this);

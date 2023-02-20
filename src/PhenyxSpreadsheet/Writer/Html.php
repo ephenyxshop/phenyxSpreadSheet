@@ -373,7 +373,7 @@ class Html extends BaseWriter {
         $html .= '<html xmlns="http://www.w3.org/1999/xhtml">' . PHP_EOL;
         $html .= '  <head>' . PHP_EOL;
         $html .= '      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . PHP_EOL;
-        $html .= '      <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet" />' . PHP_EOL;
+        $html .= '      <meta name="generator" content="PhenyxSpreadsheet, https://github.com/PHPOffice/PhenyxSpreadsheet" />' . PHP_EOL;
         $html .= '      <title>' . htmlspecialchars($properties->getTitle(), Settings::htmlEntityFlags()) . '</title>' . PHP_EOL;
         $html .= self::generateMeta($properties->getCreator(), 'author');
         $html .= self::generateMeta($properties->getTitle(), 'title');

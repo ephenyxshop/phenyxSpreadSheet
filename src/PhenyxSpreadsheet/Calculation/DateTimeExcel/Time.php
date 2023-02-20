@@ -19,7 +19,7 @@ class Time {
      * The TIME function returns a value that represents a particular time.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the time
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        TIME(hour,minute,second)

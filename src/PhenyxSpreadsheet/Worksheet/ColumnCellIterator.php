@@ -4,7 +4,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 /**
  * @extends CellIterator<int>
@@ -97,11 +97,11 @@ class ColumnCellIterator extends CellIterator {
     public function seek(int $row = 1) {
 
         if ($this->onlyExistingCells && !($this->worksheet->cellExistsByColumnAndRow($this->columnIndex, $row))) {
-            throw new PhpSpreadsheetException('In "IterateOnlyExistingCells" mode and Cell does not exist');
+            throw new PhenyxSpreadsheetException('In "IterateOnlyExistingCells" mode and Cell does not exist');
         }
 
         if (($row < $this->startRow) || ($row > $this->endRow)) {
-            throw new PhpSpreadsheetException("Row $row is out of range ({$this->startRow} - {$this->endRow})");
+            throw new PhenyxSpreadsheetException("Row $row is out of range ({$this->startRow} - {$this->endRow})");
         }
 
         $this->currentRow = $row;

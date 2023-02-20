@@ -16,8 +16,8 @@ interface IWriter {
 
     /**
      * Write charts in workbook?
-     *        If this is true, then the Writer will write definitions for any charts that exist in the PhpSpreadsheet object.
-     *        If false (the default) it will ignore any charts defined in the PhpSpreadsheet object.
+     *        If this is true, then the Writer will write definitions for any charts that exist in the PhenyxSpreadsheet object.
+     *        If false (the default) it will ignore any charts defined in the PhenyxSpreadsheet object.
      *
      * @return bool
      */
@@ -25,7 +25,7 @@ interface IWriter {
 
     /**
      * Set write charts in workbook
-     *        Set to true, to advise the Writer to include any charts that exist in the PhpSpreadsheet object.
+     *        Set to true, to advise the Writer to include any charts that exist in the PhenyxSpreadsheet object.
      *        Set to false (the default) to ignore charts.
      *
      * @param bool $includeCharts
@@ -39,7 +39,7 @@ interface IWriter {
      *     If this is true (the default), then the writer will recalculate all formulae in a workbook when saving,
      *        so that the pre-calculated values are immediately available to MS Excel or other office spreadsheet
      *        viewer when opening the file
-     *     If false, then formulae are not calculated on save. This is faster for saving in PhpSpreadsheet, but slower
+     *     If false, then formulae are not calculated on save. This is faster for saving in PhenyxSpreadsheet, but slower
      *        when opening the resulting file in MS Excel, because Excel has to recalculate the formulae itself.
      *
      * @return bool
@@ -58,7 +58,7 @@ interface IWriter {
     public function setPreCalculateFormulas($precalculateFormulas);
 
     /**
-     * Save PhpSpreadsheet to file.
+     * Save PhenyxSpreadsheet to file.
      *
      * @param resource|string $filename Name of the file to save
      */

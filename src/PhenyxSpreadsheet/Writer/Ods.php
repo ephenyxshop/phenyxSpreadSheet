@@ -18,7 +18,7 @@ use ZipStream\ZipStream;
 class Ods extends BaseWriter {
 
     /**
-     * Private PhpSpreadsheet.
+     * Private PhenyxSpreadsheet.
      *
      * @var Spreadsheet
      */
@@ -111,14 +111,14 @@ class Ods extends BaseWriter {
     }
 
     /**
-     * Save PhpSpreadsheet to file.
+     * Save PhenyxSpreadsheet to file.
      *
      * @param resource|string $filename
      */
     public function save($filename, int $flags = 0): void {
 
         if (!$this->spreadSheet) {
-            throw new WriterException('PhpSpreadsheet object unassigned.');
+            throw new WriterException('PhenyxSpreadsheet object unassigned.');
         }
 
         $this->processFlags($flags);
@@ -181,13 +181,13 @@ class Ods extends BaseWriter {
             return $this->spreadSheet;
         }
 
-        throw new WriterException('No PhpSpreadsheet assigned.');
+        throw new WriterException('No PhenyxSpreadsheet assigned.');
     }
 
     /**
      * Set Spreadsheet object.
      *
-     * @param Spreadsheet $spreadsheet PhpSpreadsheet object
+     * @param Spreadsheet $spreadsheet PhenyxSpreadsheet object
      *
      * @return $this
      */

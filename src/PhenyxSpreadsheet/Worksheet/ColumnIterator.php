@@ -4,7 +4,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
 use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Iterator;
 
 /**
@@ -119,7 +119,7 @@ class ColumnIterator implements Iterator {
         $column = Coordinate::columnIndexFromString($column);
 
         if (($column < $this->startColumnIndex) || ($column > $this->endColumnIndex)) {
-            throw new PhpSpreadsheetException(
+            throw new PhenyxSpreadsheetException(
                 "Column $column is out of range ({$this->startColumnIndex} - {$this->endColumnIndex})"
             );
         }

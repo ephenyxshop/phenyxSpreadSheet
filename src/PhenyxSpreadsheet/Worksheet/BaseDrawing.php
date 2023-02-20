@@ -3,7 +3,7 @@
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Hyperlink;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\IComparable;
 
 class BaseDrawing implements IComparable {
@@ -247,7 +247,7 @@ class BaseDrawing implements IComparable {
                 // Set new \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet
                 $this->setWorksheet($worksheet);
             } else {
-                throw new PhpSpreadsheetException('A Worksheet has already been assigned. Drawings can only exist on one \\PhpOffice\\PhenyxSpreadsheet\\Worksheet.');
+                throw new PhenyxSpreadsheetException('A Worksheet has already been assigned. Drawings can only exist on one \\PhpOffice\\PhenyxSpreadsheet\\Worksheet.');
             }
 
         }

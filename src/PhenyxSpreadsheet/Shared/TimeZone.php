@@ -3,7 +3,7 @@
 namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
 
 use DateTimeZone;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class TimeZone {
 
@@ -69,7 +69,7 @@ class TimeZone {
         $dtobj = Date::dateTimeFromTimestamp("$timestamp");
 
         if (!self::validateTimezone($timezoneName)) {
-            throw new PhpSpreadsheetException("Invalid timezone $timezoneName");
+            throw new PhenyxSpreadsheetException("Invalid timezone $timezoneName");
         }
 
         $dtobj->setTimeZone(new DateTimeZone($timezoneName));

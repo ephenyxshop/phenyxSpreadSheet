@@ -3116,7 +3116,7 @@ class Worksheet implements IComparable {
     }
 
     /**
-     * Run PhpSpreadsheet garbage collector.
+     * Run PhenyxSpreadsheet garbage collector.
      *
      * @return $this
      */

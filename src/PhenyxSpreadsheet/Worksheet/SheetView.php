@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class SheetView {
 
@@ -85,7 +85,7 @@ class SheetView {
         if (($zoomScale >= 1) || $zoomScale === null) {
             $this->zoomScale = $zoomScale;
         } else {
-            throw new PhpSpreadsheetException('Scale must be greater than or equal to 1.');
+            throw new PhenyxSpreadsheetException('Scale must be greater than or equal to 1.');
         }
 
         return $this;
@@ -114,7 +114,7 @@ class SheetView {
         if (($zoomScaleNormal >= 1) || $zoomScaleNormal === null) {
             $this->zoomScaleNormal = $zoomScaleNormal;
         } else {
-            throw new PhpSpreadsheetException('Scale must be greater than or equal to 1.');
+            throw new PhenyxSpreadsheetException('Scale must be greater than or equal to 1.');
         }
 
         return $this;
@@ -171,7 +171,7 @@ class SheetView {
         if (in_array($sheetViewType, self::$sheetViewTypes)) {
             $this->sheetviewType = $sheetViewType;
         } else {
-            throw new PhpSpreadsheetException('Invalid sheetview layout type.');
+            throw new PhenyxSpreadsheetException('Invalid sheetview layout type.');
         }
 
         return $this;

@@ -582,7 +582,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all styles.
      *
-     * @return \PhpOffice\PhenyxSpreadsheet\Style\Style[] All styles in PhpSpreadsheet
+     * @return \PhpOffice\PhenyxSpreadsheet\Style\Style[] All styles in PhenyxSpreadsheet
      */
     public function allStyles(Spreadsheet $spreadsheet) {
 
@@ -592,7 +592,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all conditional styles.
      *
-     * @return Conditional[] All conditional styles in PhpSpreadsheet
+     * @return Conditional[] All conditional styles in PhenyxSpreadsheet
      */
     public function allConditionalStyles(Spreadsheet $spreadsheet) {
 
@@ -619,7 +619,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all fills.
      *
-     * @return Fill[] All fills in PhpSpreadsheet
+     * @return Fill[] All fills in PhenyxSpreadsheet
      */
     public function allFills(Spreadsheet $spreadsheet) {
 
@@ -652,7 +652,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all fonts.
      *
-     * @return Font[] All fonts in PhpSpreadsheet
+     * @return Font[] All fonts in PhenyxSpreadsheet
      */
     public function allFonts(Spreadsheet $spreadsheet) {
 
@@ -676,7 +676,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all borders.
      *
-     * @return Borders[] All borders in PhpSpreadsheet
+     * @return Borders[] All borders in PhenyxSpreadsheet
      */
     public function allBorders(Spreadsheet $spreadsheet) {
 
@@ -700,7 +700,7 @@ class Style extends WriterPart {
     /**
      * Get an array of all number formats.
      *
-     * @return NumberFormat[] All number formats in PhpSpreadsheet
+     * @return NumberFormat[] All number formats in PhenyxSpreadsheet
      */
     public function allNumberFormats(Spreadsheet $spreadsheet) {
 

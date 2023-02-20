@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 
 class Rule {
@@ -243,7 +243,7 @@ class Rule {
         $this->setEvaluatedFalse();
 
         if (!in_array($ruleType, self::RULE_TYPES)) {
-            throw new PhpSpreadsheetException('Invalid rule type for column AutoFilter Rule.');
+            throw new PhenyxSpreadsheetException('Invalid rule type for column AutoFilter Rule.');
         }
 
         $this->ruleType = $ruleType;
@@ -289,7 +289,7 @@ class Rule {
             }
 
             if (count($value) == 0) {
-                throw new PhpSpreadsheetException('Invalid rule value for column AutoFilter Rule.');
+                throw new PhenyxSpreadsheetException('Invalid rule value for column AutoFilter Rule.');
             }
 
             //    Set the dateTime grouping that we've anticipated
@@ -330,7 +330,7 @@ class Rule {
             (!in_array($operator, self::OPERATORS)) &&
             (!in_array($operator, self::TOP_TEN_VALUE))
         ) {
-            throw new PhpSpreadsheetException('Invalid operator for column AutoFilter Rule.');
+            throw new PhenyxSpreadsheetException('Invalid operator for column AutoFilter Rule.');
         }
 
         $this->operator = $operator;
@@ -365,7 +365,7 @@ class Rule {
             (!in_array($grouping, self::DYNAMIC_TYPES)) &&
             (!in_array($grouping, self::TOP_TEN_TYPE))
         ) {
-            throw new PhpSpreadsheetException('Invalid grouping for column AutoFilter Rule.');
+            throw new PhenyxSpreadsheetException('Invalid grouping for column AutoFilter Rule.');
         }
 
         $this->grouping = $grouping;

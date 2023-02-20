@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 /**
  * @template T of IComparable

@@ -519,14 +519,14 @@ class Drawing extends WriterPart {
     /**
      * Get an array of all drawings.
      *
-     * @return BaseDrawing[] All drawings in PhpSpreadsheet
+     * @return BaseDrawing[] All drawings in PhenyxSpreadsheet
      */
     public function allDrawings(Spreadsheet $spreadsheet) {
 
         // Get an array of all drawings
         $aDrawings = [];
 
-        // Loop through PhpSpreadsheet
+        // Loop through PhenyxSpreadsheet
         $sheetCount = $spreadsheet->getSheetCount();
 
         for ($i = 0; $i < $sheetCount; ++$i) {

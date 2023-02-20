@@ -197,7 +197,7 @@ class Slk extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file.
+     * Loads PhenyxSpreadsheet from file.
      */
     protected function loadSpreadsheetFromFile(string $filename): Spreadsheet{
 
@@ -561,7 +561,7 @@ class Slk extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
+     * Loads PhenyxSpreadsheet from file into PhenyxSpreadsheet instance.
      *
      * @param string $filename
      *

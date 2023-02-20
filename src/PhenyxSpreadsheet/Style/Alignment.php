@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class Alignment extends Supervisor {
 
@@ -285,7 +285,7 @@ class Alignment extends Supervisor {
      */
     public function setTextRotation($angleInDegrees) {
 
-        // Excel2007 value 255 => PhpSpreadsheet value -165
+        // Excel2007 value 255 => PhenyxSpreadsheet value -165
 
         if ($angleInDegrees == self::TEXTROTATION_STACK_EXCEL) {
             $angleInDegrees = self::TEXTROTATION_STACK_PHPSPREADSHEET;
@@ -303,7 +303,7 @@ class Alignment extends Supervisor {
             }
 
         } else {
-            throw new PhpSpreadsheetException('Text rotation should be a value between -90 and 90.');
+            throw new PhenyxSpreadsheetException('Text rotation should be a value between -90 and 90.');
         }
 
         return $this;

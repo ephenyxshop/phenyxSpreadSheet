@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class Borders extends Supervisor {
 
@@ -299,7 +299,7 @@ class Borders extends Supervisor {
     public function getAllBorders() {
 
         if (!$this->isSupervisor) {
-            throw new PhpSpreadsheetException('Can only get pseudo-border for supervisor.');
+            throw new PhenyxSpreadsheetException('Can only get pseudo-border for supervisor.');
         }
 
         return $this->allBorders;
@@ -313,7 +313,7 @@ class Borders extends Supervisor {
     public function getOutline() {
 
         if (!$this->isSupervisor) {
-            throw new PhpSpreadsheetException('Can only get pseudo-border for supervisor.');
+            throw new PhenyxSpreadsheetException('Can only get pseudo-border for supervisor.');
         }
 
         return $this->outline;
@@ -327,7 +327,7 @@ class Borders extends Supervisor {
     public function getInside() {
 
         if (!$this->isSupervisor) {
-            throw new PhpSpreadsheetException('Can only get pseudo-border for supervisor.');
+            throw new PhenyxSpreadsheetException('Can only get pseudo-border for supervisor.');
         }
 
         return $this->inside;
@@ -341,7 +341,7 @@ class Borders extends Supervisor {
     public function getVertical() {
 
         if (!$this->isSupervisor) {
-            throw new PhpSpreadsheetException('Can only get pseudo-border for supervisor.');
+            throw new PhenyxSpreadsheetException('Can only get pseudo-border for supervisor.');
         }
 
         return $this->vertical;
@@ -355,7 +355,7 @@ class Borders extends Supervisor {
     public function getHorizontal() {
 
         if (!$this->isSupervisor) {
-            throw new PhpSpreadsheetException('Can only get pseudo-border for supervisor.');
+            throw new PhenyxSpreadsheetException('Can only get pseudo-border for supervisor.');
         }
 
         return $this->horizontal;

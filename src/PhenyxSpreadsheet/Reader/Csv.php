@@ -335,7 +335,7 @@ class Csv extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
+     * Loads PhenyxSpreadsheet from file into PhenyxSpreadsheet instance.
      */
     public function loadIntoExisting(string $filename, Spreadsheet $spreadsheet) : Spreadsheet{
 
@@ -351,7 +351,7 @@ class Csv extends BaseReader {
         $this->checkSeparator();
         $this->inferSeparator();
 
-        // Create new PhpSpreadsheet object
+        // Create new PhenyxSpreadsheet object
 
         while ($spreadsheet->getSheetCount() <= $this->sheetIndex) {
             $spreadsheet->createSheet();

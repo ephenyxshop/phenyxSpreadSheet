@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Iterator;
 
 /**
@@ -63,7 +63,7 @@ class RowIterator implements Iterator {
     public function resetStart(int $startRow = 1) {
 
         if ($startRow > $this->subject->getHighestRow()) {
-            throw new PhpSpreadsheetException(
+            throw new PhenyxSpreadsheetException(
                 "Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})"
             );
         }
@@ -103,7 +103,7 @@ class RowIterator implements Iterator {
     public function seek(int $row = 1) {
 
         if (($row < $this->startRow) || ($row > $this->endRow)) {
-            throw new PhpSpreadsheetException("Row $row is out of range ({$this->startRow} - {$this->endRow})");
+            throw new PhenyxSpreadsheetException("Row $row is out of range ({$this->startRow} - {$this->endRow})");
         }
 
         $this->position = $row;

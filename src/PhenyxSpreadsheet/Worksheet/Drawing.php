@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use ZipArchive;
 
 class Drawing extends BaseDrawing {
@@ -79,7 +79,7 @@ class Drawing extends BaseDrawing {
     public function getMediaFilename() {
 
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
-            throw new PhpSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
+            throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         return sprintf('image%d%s', $this->getImageIndex(), $this->getImageFileExtensionForSave());
@@ -138,7 +138,7 @@ class Drawing extends BaseDrawing {
                 }
 
             } else {
-                throw new PhpSpreadsheetException("File $path not found!");
+                throw new PhenyxSpreadsheetException("File $path not found!");
             }
 
         } else {
@@ -188,7 +188,7 @@ class Drawing extends BaseDrawing {
     public function getImageTypeForSave(): int {
 
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
-            throw new PhpSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
+            throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         return self::IMAGE_TYPES_CONVERTION_MAP[$this->type];
@@ -200,7 +200,7 @@ class Drawing extends BaseDrawing {
     public function getImageFileExtensionForSave(bool $includeDot = true): string {
 
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
-            throw new PhpSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
+            throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         $result = image_type_to_extension(self::IMAGE_TYPES_CONVERTION_MAP[$this->type], $includeDot);
@@ -214,7 +214,7 @@ class Drawing extends BaseDrawing {
     public function getImageMimeType(): string {
 
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
-            throw new PhpSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
+            throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         return image_type_to_mime_type(self::IMAGE_TYPES_CONVERTION_MAP[$this->type]);

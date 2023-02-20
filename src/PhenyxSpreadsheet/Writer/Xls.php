@@ -30,7 +30,7 @@ use Ephenyxshop\PhenyxSpreadsheet\Writer\Xls\Worksheet;
 class Xls extends BaseWriter {
 
     /**
-     * PhpSpreadsheet object.
+     * PhenyxSpreadsheet object.
      *
      * @var Spreadsheet
      */
@@ -105,7 +105,7 @@ class Xls extends BaseWriter {
     /**
      * Create a new Xls Writer.
      *
-     * @param Spreadsheet $spreadsheet PhpSpreadsheet object
+     * @param Spreadsheet $spreadsheet PhenyxSpreadsheet object
      */
     public function __construct(Spreadsheet $spreadsheet) {
 

@@ -4,7 +4,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressRange;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
 use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Table\TableStyle;
 
@@ -93,11 +93,11 @@ class Table {
         if (!empty($name)) {
 
             if (strlen($name) === 1 && in_array($name, ['C', 'c', 'R', 'r'])) {
-                throw new PhpSpreadsheetException('The table name is invalid');
+                throw new PhenyxSpreadsheetException('The table name is invalid');
             }
 
             if (strlen($name) > 255) {
-                throw new PhpSpreadsheetException('The table name cannot be longer than 255 characters');
+                throw new PhenyxSpreadsheetException('The table name cannot be longer than 255 characters');
             }
 
             // Check for A1 or R1C1 cell reference notation
@@ -106,15 +106,15 @@ class Table {
                 preg_match(Coordinate::A1_COORDINATE_REGEX, $name) ||
                 preg_match('/^R\[?\-?[0-9]*\]?C\[?\-?[0-9]*\]?$/i', $name)
             ) {
-                throw new PhpSpreadsheetException('The table name can\'t be the same as a cell reference');
+                throw new PhenyxSpreadsheetException('The table name can\'t be the same as a cell reference');
             }
 
             if (!preg_match('/^[\p{L}_\\\\]/iu', $name)) {
-                throw new PhpSpreadsheetException('The table name must begin a name with a letter, an underscore character (_), or a backslash (\)');
+                throw new PhenyxSpreadsheetException('The table name must begin a name with a letter, an underscore character (_), or a backslash (\)');
             }
 
             if (!preg_match('/^[\p{L}_\\\\][\p{L}\p{M}0-9\._]+$/iu', $name)) {
-                throw new PhpSpreadsheetException('The table name contains invalid characters');
+                throw new PhenyxSpreadsheetException('The table name contains invalid characters');
             }
 
         }
@@ -193,13 +193,13 @@ class Table {
         }
 
         if (strpos($range, ':') === false) {
-            throw new PhpSpreadsheetException('Table must be set on a range of cells.');
+            throw new PhenyxSpreadsheetException('Table must be set on a range of cells.');
         }
 
         [$width, $height] = Coordinate::rangeDimension($range);
 
         if ($width < 1 || $height < 2) {
-            throw new PhpSpreadsheetException('The table range must be at least 1 column and 2 rows');
+            throw new PhenyxSpreadsheetException('The table range must be at least 1 column and 2 rows');
         }
 
         $this->range = $range;
@@ -258,7 +258,7 @@ class Table {
                 foreach ($sheet->getTableCollection() as $table) {
 
                     if (StringHelper::strToUpper($table->getName()) === $tableName) {
-                        throw new PhpSpreadsheetException("Workbook already contains a table named '{$this->name}'");
+                        throw new PhenyxSpreadsheetException("Workbook already contains a table named '{$this->name}'");
                     }
 
                 }
@@ -293,14 +293,14 @@ class Table {
     public function isColumnInRange(string $column) : int {
 
         if (empty($this->range)) {
-            throw new PhpSpreadsheetException('No table range is defined.');
+            throw new PhenyxSpreadsheetException('No table range is defined.');
         }
 
         $columnIndex = Coordinate::columnIndexFromString($column);
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
 
         if (($rangeStart[0] > $columnIndex) || ($rangeEnd[0] < $columnIndex)) {
-            throw new PhpSpreadsheetException('Column is outside of current table range.');
+            throw new PhenyxSpreadsheetException('Column is outside of current table range.');
         }
 
         return $columnIndex - $rangeStart[0];
@@ -360,7 +360,7 @@ class Table {
         } else if (is_object($columnObjectOrString) && ($columnObjectOrString instanceof Table\Column)) {
             $column = $columnObjectOrString->getColumnIndex();
         } else {
-            throw new PhpSpreadsheetException('Column is not within the table range.');
+            throw new PhenyxSpreadsheetException('Column is not within the table range.');
         }
 
         $this->isColumnInRange($column);

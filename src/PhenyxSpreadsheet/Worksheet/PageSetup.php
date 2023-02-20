@@ -3,7 +3,7 @@
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 /**
  * <code>
@@ -385,7 +385,7 @@ class PageSetup {
             }
 
         } else {
-            throw new PhpSpreadsheetException('Scale must not be negative');
+            throw new PhenyxSpreadsheetException('Scale must not be negative');
         }
 
         return $this;
@@ -658,7 +658,7 @@ class PageSetup {
             return $printAreas[$index - 1];
         }
 
-        throw new PhpSpreadsheetException('Requested Print Area does not exist');
+        throw new PhenyxSpreadsheetException('Requested Print Area does not exist');
     }
 
     /**
@@ -734,11 +734,11 @@ class PageSetup {
     public function setPrintArea($value, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE) {
 
         if (strpos($value, '!') !== false) {
-            throw new PhpSpreadsheetException('Cell coordinate must not specify a worksheet.');
+            throw new PhenyxSpreadsheetException('Cell coordinate must not specify a worksheet.');
         } else if (strpos($value, ':') === false) {
-            throw new PhpSpreadsheetException('Cell coordinate must be a range of cells.');
+            throw new PhenyxSpreadsheetException('Cell coordinate must be a range of cells.');
         } else if (strpos($value, '$') !== false) {
-            throw new PhpSpreadsheetException('Cell coordinate must not be absolute.');
+            throw new PhenyxSpreadsheetException('Cell coordinate must not be absolute.');
         }
 
         $value = strtoupper($value);
@@ -760,7 +760,7 @@ class PageSetup {
                 }
 
                 if (($index <= 0) || ($index > count($printAreas))) {
-                    throw new PhpSpreadsheetException('Invalid index for setting print range.');
+                    throw new PhenyxSpreadsheetException('Invalid index for setting print range.');
                 }
 
                 $printAreas[$index - 1] = $value;
@@ -780,7 +780,7 @@ class PageSetup {
                 }
 
                 if ($index > count($printAreas)) {
-                    throw new PhpSpreadsheetException('Invalid index for setting print range.');
+                    throw new PhenyxSpreadsheetException('Invalid index for setting print range.');
                 }
 
                 $printAreas = array_merge(array_slice($printAreas, 0, $index), [$value], array_slice($printAreas, $index));
@@ -788,7 +788,7 @@ class PageSetup {
             }
 
         } else {
-            throw new PhpSpreadsheetException('Invalid method for setting print range.');
+            throw new PhenyxSpreadsheetException('Invalid method for setting print range.');
         }
 
         return $this;

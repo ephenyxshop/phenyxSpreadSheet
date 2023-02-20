@@ -5,7 +5,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
 use Ephenyxshop\PhenyxSpreadsheet\DefinedName;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
 use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
@@ -641,7 +641,7 @@ class Workbook extends BIFFwriter {
                     }
 
                     $chunk .= $this->writeData($this->writeDefinedNameBiff8($definedName->getName(), $formulaData, $scope, false));
-                } catch (PhpSpreadsheetException $e) {
+                } catch (PhenyxSpreadsheetException $e) {
                     // do nothing
                 }
 
@@ -872,12 +872,12 @@ class Workbook extends BIFFwriter {
 
         $grbit = 0x0038; // Option flags
 
-        // not supported by PhpSpreadsheet, so there is only one selected sheet, the active
+        // not supported by PhenyxSpreadsheet, so there is only one selected sheet, the active
         $ctabsel = 1; // Number of workbook tabs selected
 
         $wTabRatio = 0x0258; // Tab to scrollbar ratio
 
-        // not supported by PhpSpreadsheet, set to 0
+        // not supported by PhenyxSpreadsheet, set to 0
         $itabFirst = 0; // 1st displayed worksheet
         $itabCur = $this->spreadsheet->getActiveSheetIndex(); // Active worksheet
 

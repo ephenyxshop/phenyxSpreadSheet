@@ -3,7 +3,7 @@
 namespace Ephenyxshop\PhenyxSpreadsheet\Collection;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Settings;
 use Ephenyxshop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use Generator;
@@ -389,7 +389,7 @@ class Cells {
         if (!$stored) {
             $cells->__destruct();
 
-            throw new PhpSpreadsheetException($message);
+            throw new PhenyxSpreadsheetException($message);
         }
 
     }
@@ -442,7 +442,7 @@ class Cells {
         $cell = $this->cache->get($this->cachePrefix . $cellCoordinate);
 
         if ($cell === null) {
-            throw new PhpSpreadsheetException("Cell entry {$cellCoordinate} no longer exists in cache. This probably means that the cache was cleared by someone else.");
+            throw new PhenyxSpreadsheetException("Cell entry {$cellCoordinate} no longer exists in cache. This probably means that the cache was cleared by someone else.");
         }
 
         // Set current entry to the requested entry

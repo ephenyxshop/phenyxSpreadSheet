@@ -230,7 +230,7 @@ class Calculation {
         'NULL'  => null,
     ];
 
-    // PhpSpreadsheet functions
+    // PhenyxSpreadsheet functions
     private static $phpSpreadsheetFunctions = [
         'ABS'                      => [
             'category'      => Category::CATEGORY_MATH_AND_TRIG,
@@ -2787,7 +2787,7 @@ class Calculation {
     /**
      * Get an instance of this class.
      *
-     * @param ?Spreadsheet $spreadsheet Injected spreadsheet for working with a PhpSpreadsheet Spreadsheet object,
+     * @param ?Spreadsheet $spreadsheet Injected spreadsheet for working with a PhenyxSpreadsheet Spreadsheet object,
      *                                    or NULL to create a standalone calculation engine
      */
     public static function getInstance( ? Spreadsheet $spreadsheet = null) : self {

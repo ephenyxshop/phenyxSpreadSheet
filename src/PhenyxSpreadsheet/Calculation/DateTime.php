@@ -56,7 +56,7 @@ class DateTime {
      * open the worksheet.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the date
-     * and time format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * and time format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        NOW()
@@ -83,7 +83,7 @@ class DateTime {
      * open the worksheet.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the date
-     * and time format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * and time format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        TODAY()
@@ -107,7 +107,7 @@ class DateTime {
      * The DATE function returns a value that represents a particular date.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the date
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      *
      * Excel Function:
@@ -118,7 +118,7 @@ class DateTime {
      * @See DateTimeExcel\Date::fromYMD()
      *      Use the fromYMD method in the DateTimeExcel\Date class instead
      *
-     * PhpSpreadsheet is a lot more forgiving than MS Excel when passing non numeric values to this function.
+     * PhenyxSpreadsheet is a lot more forgiving than MS Excel when passing non numeric values to this function.
      * A Month name or abbreviation (English only at this point) such as 'January' or 'Jan' will still be accepted,
      *     as will a day value with a suffix (e.g. '21st' rather than simply 21); again only English language.
      *
@@ -167,7 +167,7 @@ class DateTime {
      * The TIME function returns a value that represents a particular time.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the time
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        TIME(hour,minute,second)
@@ -205,7 +205,7 @@ class DateTime {
      * value.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the date
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        DATEVALUE(dateValue)
@@ -240,7 +240,7 @@ class DateTime {
      * value.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the time
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        TIMEVALUE(timeValue)

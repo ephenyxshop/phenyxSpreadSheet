@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 interface IComparable {
     /**

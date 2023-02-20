@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;

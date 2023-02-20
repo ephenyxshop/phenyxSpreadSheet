@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Reader\IReader;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\File;

@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Style;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 class Border extends Supervisor {
 
@@ -91,7 +91,7 @@ class Border extends Supervisor {
             return $sharedComponent->getTop();
         }
 
-        throw new PhpSpreadsheetException('Cannot get shared component for a pseudo-border.');
+        throw new PhenyxSpreadsheetException('Cannot get shared component for a pseudo-border.');
     }
 
     /**

@@ -10,7 +10,7 @@ use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Cell;
 use Ephenyxshop\PhenyxSpreadsheet\Exception;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\Date as SharedDate;
 use Ephenyxshop\PhenyxSpreadsheet\Style\NumberFormat;
 
@@ -110,7 +110,7 @@ class Date {
             $timeZone = self::validateTimeZone($timeZone);
             self::$defaultTimeZone = $timeZone;
             $retval = true;
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
             $retval = false;
         }
 
@@ -158,7 +158,7 @@ class Date {
             return new DateTimeZone($timeZone);
         }
 
-        throw new PhpSpreadsheetException('Invalid timezone');
+        throw new PhenyxSpreadsheetException('Invalid timezone');
     }
 
     /**

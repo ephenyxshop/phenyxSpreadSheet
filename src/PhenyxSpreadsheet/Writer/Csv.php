@@ -8,7 +8,7 @@ use Ephenyxshop\PhenyxSpreadsheet\Spreadsheet;
 class Csv extends BaseWriter {
 
     /**
-     * PhpSpreadsheet object.
+     * PhenyxSpreadsheet object.
      *
      * @var Spreadsheet
      */
@@ -82,7 +82,7 @@ class Csv extends BaseWriter {
     }
 
     /**
-     * Save PhpSpreadsheet to file.
+     * Save PhenyxSpreadsheet to file.
      *
      * @param resource|string $filename
      */

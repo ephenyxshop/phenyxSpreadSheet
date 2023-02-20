@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Shared;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
 use Ephenyxshop\PhenyxSpreadsheet\Style\Alignment;
 use Ephenyxshop\PhenyxSpreadsheet\Style\Font as FontStyle;
@@ -269,7 +269,7 @@ class Font {
                 // Width of text in pixels excl. padding
                 // and addition because Excel adds some padding, just use approx width of 'n' glyph
                 $columnWidth = self::getTextWidthPixelsExact($cellText, $font, $rotation) + $columnWidthAdjust;
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 $approximate = true;
             }
 
@@ -299,7 +299,7 @@ class Font {
     public static function getTextWidthPixelsExact(string $text, FontStyle $font, int $rotation = 0) : int {
 
         if (!function_exists('imagettfbbox')) {
-            throw new PhpSpreadsheetException('GD library needs to be enabled');
+            throw new PhenyxSpreadsheetException('GD library needs to be enabled');
         }
 
         // font size should really be supplied in pixels in GD2,
@@ -422,7 +422,7 @@ class Font {
     public static function getTrueTypeFontFileFromFont(FontStyle $font) {
 
         if (!file_exists(self::$trueTypeFontPath) || !is_dir(self::$trueTypeFontPath)) {
-            throw new PhpSpreadsheetException('Valid directory to TrueType Font files not specified');
+            throw new PhenyxSpreadsheetException('Valid directory to TrueType Font files not specified');
         }
 
         $name = $font->getName();
@@ -528,7 +528,7 @@ class Font {
 
             break;
         default:
-            throw new PhpSpreadsheetException('Unknown font name "' . $name . '". Cannot map to TrueType font file');
+            throw new PhenyxSpreadsheetException('Unknown font name "' . $name . '". Cannot map to TrueType font file');
 
             break;
         }
@@ -538,7 +538,7 @@ class Font {
         // Check if file actually exists
 
         if (!file_exists($fontFile)) {
-            throw new PhpSpreadsheetException('TrueType Font file not found');
+            throw new PhenyxSpreadsheetException('TrueType Font file not found');
         }
 
         return $fontFile;

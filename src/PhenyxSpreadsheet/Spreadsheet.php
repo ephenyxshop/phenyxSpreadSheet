@@ -1,6 +1,6 @@
 <?php
 
-namespace Ephenyxshop\PhpSpreadsheet;
+namespace Ephenyxshop\PhenyxSpreadsheet;
 
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Calculation;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
@@ -479,7 +479,7 @@ class Spreadsheet {
     }
 
     /**
-     * Create a new PhpSpreadsheet with one Worksheet.
+     * Create a new PhenyxSpreadsheet with one Worksheet.
      */
     public function __construct() {
 
@@ -521,8 +521,8 @@ class Spreadsheet {
     }
 
     /**
-     * Disconnect all worksheets from this PhpSpreadsheet workbook object,
-     * typically so that the PhpSpreadsheet object can be unset.
+     * Disconnect all worksheets from this PhenyxSpreadsheet workbook object,
+     * typically so that the PhenyxSpreadsheet object can be unset.
      */
     public function disconnectWorksheets(): void {
 

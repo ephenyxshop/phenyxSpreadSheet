@@ -5,7 +5,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Reader;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\DataValidation;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\NamedRange;
 use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\ConditionalFormatting;
 use Ephenyxshop\PhenyxSpreadsheet\Reader\Xls\Style\CellFont;
@@ -440,7 +440,7 @@ class Xls extends BaseReader {
             $ole->read($filename);
 
             return true;
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
             return false;
         }
 
@@ -449,14 +449,14 @@ class Xls extends BaseReader {
     public function setCodepage(string $codepage): void {
 
         if (!CodePage::validate($codepage)) {
-            throw new PhpSpreadsheetException('Unknown codepage: ' . $codepage);
+            throw new PhenyxSpreadsheetException('Unknown codepage: ' . $codepage);
         }
 
         $this->codepage = $codepage;
     }
 
     /**
-     * Reads names of the worksheets from a file, without parsing the whole file to a PhpSpreadsheet object.
+     * Reads names of the worksheets from a file, without parsing the whole file to a PhenyxSpreadsheet object.
      *
      * @param string $filename
      *
@@ -634,7 +634,7 @@ class Xls extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file.
+     * Loads PhenyxSpreadsheet from file.
      */
     protected function loadSpreadsheetFromFile(string $filename): Spreadsheet{
 
@@ -849,7 +849,7 @@ class Xls extends BaseReader {
                 continue;
             }
 
-            // add sheet to PhpSpreadsheet object
+            // add sheet to PhenyxSpreadsheet object
             $this->phpSheet = $this->spreadsheet->createSheet();
             //    Use false for $updateFormulaCellReferences to prevent adjustment of worksheet references in formula
             //        cells... during the load, all formulae should be correct, and we're simply bringing the worksheet
@@ -1577,20 +1577,20 @@ class Xls extends BaseReader {
 
                 break;
             case 0x07: //    Template
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x08: //    Last Saved By (LastModifiedBy)
                 $this->spreadsheet->getProperties()->setLastModifiedBy("$value");
 
                 break;
             case 0x09: //    Revision
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0A: //    Total Editing Time
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0B: //    Last Printed
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0C: //    Created Date/Time
                 $this->spreadsheet->getProperties()->setCreated($value);
@@ -1601,22 +1601,22 @@ class Xls extends BaseReader {
 
                 break;
             case 0x0E: //    Number of Pages
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0F: //    Number of Words
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x10: //    Number of Characters
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x11: //    Thumbnail
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x12: //    Name of creating application
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x13: //    Security
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             }
 
@@ -1717,37 +1717,37 @@ class Xls extends BaseReader {
 
                 break;
             case 0x03: //    Presentation Target
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x04: //    Bytes
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x05: //    Lines
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x06: //    Paragraphs
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x07: //    Slides
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x08: //    Notes
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x09: //    Hidden Slides
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0A: //    MM Clips
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0B: //    Scale Crop
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0C: //    Heading Pairs
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0D: //    Titles of Parts
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             case 0x0E: //    Manager
                 $this->spreadsheet->getProperties()->setManager("$value");
@@ -1758,7 +1758,7 @@ class Xls extends BaseReader {
 
                 break;
             case 0x10: //    Links up-to-date
-                //    Not supported by PhpSpreadsheet
+                //    Not supported by PhenyxSpreadsheet
                 break;
             }
 
@@ -2771,7 +2771,7 @@ class Xls extends BaseReader {
 
             }
 
-            // user-defined; not supported by PhpSpreadsheet
+            // user-defined; not supported by PhenyxSpreadsheet
         }
 
     }
@@ -3051,7 +3051,7 @@ class Xls extends BaseReader {
 
             try {
                 $formula = $this->getFormulaFromStructure($formulaStructure);
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 $formula = '';
             }
 
@@ -4279,7 +4279,7 @@ class Xls extends BaseReader {
 
                     $formula = $this->getFormulaFromStructure($formulaStructure); // get formula in human language
                     $cell->setValueExplicit('=' . $formula, DataType::TYPE_FORMULA);
-                } catch (PhpSpreadsheetException $e) {
+                } catch (PhenyxSpreadsheetException $e) {
                     $cell->setValueExplicit($value, $dataType);
                 }
 
@@ -4791,7 +4791,7 @@ class Xls extends BaseReader {
                 $this->phpSheet->freezePane($cell, $topLeftCell);
             }
 
-            // unfrozen panes; split windows; not supported by PhpSpreadsheet core
+            // unfrozen panes; split windows; not supported by PhenyxSpreadsheet core
         }
 
     }
@@ -4928,7 +4928,7 @@ class Xls extends BaseReader {
             // offset: 0; size: 8; cell range address of all cells containing this hyperlink
             try {
                 $cellRange = $this->readBIFF8CellRangeAddressFixed($recordData);
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 return;
             }
 
@@ -5196,7 +5196,7 @@ class Xls extends BaseReader {
                 $formula1 = str_replace(chr(0), ',', $formula1);
             }
 
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
             return;
         }
 
@@ -5215,7 +5215,7 @@ class Xls extends BaseReader {
 
         try {
             $formula2 = $this->getFormulaFromStructure($formula2);
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
             return;
         }
 
@@ -5433,7 +5433,7 @@ class Xls extends BaseReader {
             for ($i = 0; $i < $cref; ++$i) {
                 try {
                     $cellRange = $this->readBIFF8CellRangeAddressFixed(substr($recordData, 27 + 8 * $i, 8));
-                } catch (PhpSpreadsheetException $e) {
+                } catch (PhenyxSpreadsheetException $e) {
                     return;
                 }
 
@@ -7341,7 +7341,7 @@ class Xls extends BaseReader {
                 $cellAddress = $this->readBIFF8CellAddress(substr($formulaData, 3, 4));
 
                 $data = "$sheetRange!$cellAddress";
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 // deleted sheet reference
                 $data = '#REF!';
             }
@@ -7360,7 +7360,7 @@ class Xls extends BaseReader {
                 $cellRangeAddress = $this->readBIFF8CellRangeAddress(substr($formulaData, 3, 8));
 
                 $data = "$sheetRange!$cellRangeAddress";
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 // deleted sheet reference
                 $data = '#REF!';
             }
@@ -7906,7 +7906,7 @@ class Xls extends BaseReader {
 
             break;
         default:
-            throw new PhpSpreadsheetException('Unsupported BIFF8 constant');
+            throw new PhenyxSpreadsheetException('Unsupported BIFF8 constant');
         }
 
         return [
@@ -8461,7 +8461,7 @@ class Xls extends BaseReader {
             }
 
             return $formula;
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
         }
 
         return null;

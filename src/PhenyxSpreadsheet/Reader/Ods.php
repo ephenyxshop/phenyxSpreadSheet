@@ -91,7 +91,7 @@ class Ods extends BaseReader {
     }
 
     /**
-     * Reads names of the worksheets from a file, without parsing the whole file to a PhpSpreadsheet object.
+     * Reads names of the worksheets from a file, without parsing the whole file to a PhenyxSpreadsheet object.
      *
      * @param string $filename
      *
@@ -266,7 +266,7 @@ class Ods extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file.
+     * Loads PhenyxSpreadsheet from file.
      */
     protected function loadSpreadsheetFromFile(string $filename): Spreadsheet{
 
@@ -278,7 +278,7 @@ class Ods extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
+     * Loads PhenyxSpreadsheet from file into PhenyxSpreadsheet instance.
      *
      * @param string $filename
      *

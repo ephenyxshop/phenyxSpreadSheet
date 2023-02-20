@@ -4,7 +4,7 @@ namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
 
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\DataType;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\RichText\RichText;
 use Ephenyxshop\PhenyxSpreadsheet\RichText\Run;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\StringHelper;
@@ -963,7 +963,7 @@ class Worksheet extends BIFFwriter {
             }
 
             return self::WRITE_FORMULA_NORMAL;
-        } catch (PhpSpreadsheetException $e) {
+        } catch (PhenyxSpreadsheetException $e) {
             return self::WRITE_FORMULA_EXCEPTION;
         }
 
@@ -1322,7 +1322,7 @@ class Worksheet extends BIFFwriter {
         $fArabic = $this->phpSheet->getRightToLeft() ? 1 : 0; // 6
         $fDspGuts = $this->outlineOn; // 7
         $fFrozenNoSplit = 0; // 0 - bit
-        // no support in PhpSpreadsheet for selected sheet, therefore sheet is only selected if it is the active sheet
+        // no support in PhenyxSpreadsheet for selected sheet, therefore sheet is only selected if it is the active sheet
         $fSelected = ($this->phpSheet === $this->phpSheet->getParent()->getActiveSheet()) ? 1 : 0;
         $fPageBreakPreview = $this->phpSheet->getSheetView()->getView() === SheetView::SHEETVIEW_PAGE_BREAK_PREVIEW;
 
@@ -2865,7 +2865,7 @@ class Worksheet extends BIFFwriter {
                     $this->parser->parse($formula1);
                     $formula1 = $this->parser->toReversePolish();
                     $sz1 = strlen($formula1);
-                } catch (PhpSpreadsheetException $e) {
+                } catch (PhenyxSpreadsheetException $e) {
                     $sz1 = 0;
                     $formula1 = '';
                 }
@@ -2884,7 +2884,7 @@ class Worksheet extends BIFFwriter {
                     $this->parser->parse($formula2);
                     $formula2 = $this->parser->toReversePolish();
                     $sz2 = strlen($formula2);
-                } catch (PhpSpreadsheetException $e) {
+                } catch (PhenyxSpreadsheetException $e) {
                     $sz2 = 0;
                     $formula2 = '';
                 }

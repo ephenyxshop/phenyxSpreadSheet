@@ -707,7 +707,7 @@ class Html extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from file into PhpSpreadsheet instance.
+     * Loads PhenyxSpreadsheet from file into PhenyxSpreadsheet instance.
      *
      * @param string $filename
      *
@@ -763,7 +763,7 @@ class Html extends BaseReader {
     }
 
     /**
-     * Loads PhpSpreadsheet from DOMDocument into PhpSpreadsheet instance.
+     * Loads PhenyxSpreadsheet from DOMDocument into PhenyxSpreadsheet instance.
      */
     private function loadDocument(DOMDocument $document, Spreadsheet $spreadsheet) : Spreadsheet {
 
@@ -1088,7 +1088,7 @@ class Html extends BaseReader {
     }
 
     /**
-     * Map html border style to PhpSpreadsheet border style.
+     * Map html border style to PhenyxSpreadsheet border style.
      *
      * @param  string $style
      *

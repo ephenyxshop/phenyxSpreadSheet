@@ -20,7 +20,7 @@ class TimeValue {
      * value.
      *
      * NOTE: When used in a Cell Formula, MS Excel changes the cell format so that it matches the time
-     * format of your regional settings. PhpSpreadsheet does not change cell formatting in this way.
+     * format of your regional settings. PhenyxSpreadsheet does not change cell formatting in this way.
      *
      * Excel Function:
      *        TIMEVALUE(timeValue)

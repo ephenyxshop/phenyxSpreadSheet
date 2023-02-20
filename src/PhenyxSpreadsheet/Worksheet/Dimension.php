@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Worksheet;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
 abstract class Dimension {
 
@@ -82,7 +82,7 @@ abstract class Dimension {
     public function setOutlineLevel(int $level) {
 
         if ($level < 0 || $level > 7) {
-            throw new PhpSpreadsheetException('Outline level must range between 0 and 7.');
+            throw new PhenyxSpreadsheetException('Outline level must range between 0 and 7.');
         }
 
         $this->outlineLevel = $level;

@@ -188,7 +188,7 @@ class Xlsx extends BaseWriter {
      */
     public function __construct(Spreadsheet $spreadsheet) {
 
-        // Assign PhpSpreadsheet
+        // Assign PhenyxSpreadsheet
         $this->setSpreadsheet($spreadsheet);
 
         $this->writerPartChart = new Chart($this);
@@ -294,7 +294,7 @@ class Xlsx extends BaseWriter {
     }
 
     /**
-     * Save PhpSpreadsheet to file.
+     * Save PhenyxSpreadsheet to file.
      *
      * @param resource|string $filename
      */
@@ -620,7 +620,7 @@ class Xlsx extends BaseWriter {
     /**
      * Set Spreadsheet object.
      *
-     * @param Spreadsheet $spreadsheet PhpSpreadsheet object
+     * @param Spreadsheet $spreadsheet PhenyxSpreadsheet object
      *
      * @return $this
      */

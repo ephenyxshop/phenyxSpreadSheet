@@ -2,7 +2,7 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Writer\Xls;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
 class ConditionalHelper {
@@ -56,7 +56,7 @@ class ConditionalHelper {
                 $this->parser->parse($formula);
                 $this->tokens = $this->parser->toReversePolish();
                 $this->size = strlen($this->tokens ?  ? '');
-            } catch (PhpSpreadsheetException $e) {
+            } catch (PhenyxSpreadsheetException $e) {
                 // In the event of a parser error with a formula value, we set the expression to ptgInt + 0
                 $this->tokens = pack('Cv', 0x1E, 0);
                 $this->size = 3;

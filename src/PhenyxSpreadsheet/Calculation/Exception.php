@@ -2,9 +2,9 @@
 
 namespace Ephenyxshop\PhenyxSpreadsheet\Calculation;
 
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
-class Exception extends PhpSpreadsheetException {
+class Exception extends PhenyxSpreadsheetException {
 
     /**
      * Error handler callback.

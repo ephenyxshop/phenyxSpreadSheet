@@ -120,7 +120,7 @@ interface IReader {
     public function setReadFilter(IReadFilter $readFilter);
 
     /**
-     * Loads PhpSpreadsheet from file.
+     * Loads PhenyxSpreadsheet from file.
      *
      * @return \PhpOffice\PhenyxSpreadsheet\Spreadsheet
      */

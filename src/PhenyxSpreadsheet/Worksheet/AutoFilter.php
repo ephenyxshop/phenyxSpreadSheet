@@ -9,7 +9,7 @@ use Ephenyxshop\PhenyxSpreadsheet\Calculation\Functions;
 use Ephenyxshop\PhenyxSpreadsheet\Calculation\Internal\WildcardMatch;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\AddressRange;
 use Ephenyxshop\PhenyxSpreadsheet\Cell\Coordinate;
-use Ephenyxshop\PhenyxSpreadsheet\Exception as PhpSpreadsheetException;
+use Ephenyxshop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use Ephenyxshop\PhenyxSpreadsheet\Shared\Date;
 use Ephenyxshop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column\Rule;
 
@@ -126,7 +126,7 @@ class AutoFilter {
         }
 
         if (strpos($range, ':') === false) {
-            throw new PhpSpreadsheetException('Autofilter must be set on a range of cells.');
+            throw new PhenyxSpreadsheetException('Autofilter must be set on a range of cells.');
         }
 
         $this->range = $range;
@@ -182,14 +182,14 @@ class AutoFilter {
     public function testColumnInRange($column) {
 
         if (empty($this->range)) {
-            throw new PhpSpreadsheetException('No autofilter range is defined.');
+            throw new PhenyxSpreadsheetException('No autofilter range is defined.');
         }
 
         $columnIndex = Coordinate::columnIndexFromString($column);
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
 
         if (($rangeStart[0] > $columnIndex) || ($rangeEnd[0] < $columnIndex)) {
-            throw new PhpSpreadsheetException('Column is outside of current autofilter range.');
+            throw new PhenyxSpreadsheetException('Column is outside of current autofilter range.');
         }
 
         return $columnIndex - $rangeStart[0];
@@ -257,7 +257,7 @@ class AutoFilter {
         } else if (is_object($columnObjectOrString) && ($columnObjectOrString instanceof AutoFilter\Column)) {
             $column = $columnObjectOrString->getColumnIndex();
         } else {
-            throw new PhpSpreadsheetException('Column is not within the autofilter range.');
+            throw new PhenyxSpreadsheetException('Column is not within the autofilter range.');
         }
 
         $this->testColumnInRange($column);
