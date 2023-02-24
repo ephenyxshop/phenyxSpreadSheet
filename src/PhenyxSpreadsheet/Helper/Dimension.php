@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Drawing;
 use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
-class Dimension {
-
+class Dimension
+{
     public const UOM_CENTIMETERS = 'cm';
     public const UOM_MILLIMETERS = 'mm';
     public const UOM_INCHES = 'in';
@@ -21,25 +21,25 @@ class Dimension {
     const ABSOLUTE_UNITS = [
         self::UOM_CENTIMETERS => 96.0 / 2.54,
         self::UOM_MILLIMETERS => 96.0 / 25.4,
-        self::UOM_INCHES      => 96.0,
-        self::UOM_PIXELS      => 1.0,
-        self::UOM_POINTS      => 96.0 / 72,
-        self::UOM_PICA        => 96.0 * 12 / 72,
+        self::UOM_INCHES => 96.0,
+        self::UOM_PIXELS => 1.0,
+        self::UOM_POINTS => 96.0 / 72,
+        self::UOM_PICA => 96.0 * 12 / 72,
     ];
 
     /**
      * Based on a standard column width of 8.54 units in MS Excel.
      */
     const RELATIVE_UNITS = [
-        'em'   => 10.0 / 8.54,
-        'ex'   => 10.0 / 8.54,
-        'ch'   => 10.0 / 8.54,
-        'rem'  => 10.0 / 8.54,
-        'vw'   => 8.54,
-        'vh'   => 8.54,
+        'em' => 10.0 / 8.54,
+        'ex' => 10.0 / 8.54,
+        'ch' => 10.0 / 8.54,
+        'rem' => 10.0 / 8.54,
+        'vw' => 8.54,
+        'vh' => 8.54,
         'vmin' => 8.54,
         'vmax' => 8.54,
-        '%'    => 8.54 / 100,
+        '%' => 8.54 / 100,
     ];
 
     /**
@@ -55,17 +55,28 @@ class Dimension {
      */
     protected $unit;
 
-    public function __construct(string $dimension) {
+    /**
+     * Phpstan bug has been fixed; this function allows us to
+     * pass Phpstan whether fixed or not.
+     *
+     * @param mixed $value
+     */
+    private static function stanBugFixed($value): array
+    {
+        return is_array($value) ? $value : [null, null];
+    }
 
-        [$size, $unit] = sscanf($dimension, '%[1234567890.]%s');
+    public function __construct(string $dimension)
+    {
+        [$size, $unit] = self::stanBugFixed(sscanf($dimension, '%[1234567890.]%s'));
         $unit = strtolower(trim($unit ?? ''));
+        $size = (float) $size;
 
         // If a UoM is specified, then convert the size to pixels for internal storage
-
         if (isset(self::ABSOLUTE_UNITS[$unit])) {
             $size *= self::ABSOLUTE_UNITS[$unit];
             $this->unit = self::UOM_PIXELS;
-        } else if (isset(self::RELATIVE_UNITS[$unit])) {
+        } elseif (isset(self::RELATIVE_UNITS[$unit])) {
             $size *= self::RELATIVE_UNITS[$unit];
             $size = round($size, 4);
         }
@@ -73,35 +84,32 @@ class Dimension {
         $this->size = $size;
     }
 
-    public function width() : float {
-
+    public function width(): float
+    {
         return (float) ($this->unit === null)
-        ? $this->size
-        : round(Drawing::pixelsToCellDimension((int) $this->size, new Font(false)), 4);
+            ? $this->size
+            : round(Drawing::pixelsToCellDimension((int) $this->size, new Font(false)), 4);
     }
 
-    public function height() : float {
-
+    public function height(): float
+    {
         return (float) ($this->unit === null)
-        ? $this->size
-        : $this->toUnit(self::UOM_POINTS);
+            ? $this->size
+            : $this->toUnit(self::UOM_POINTS);
     }
 
-    public function toUnit(string $unitOfMeasure): float{
-
+    public function toUnit(string $unitOfMeasure): float
+    {
         $unitOfMeasure = strtolower($unitOfMeasure);
-
         if (!array_key_exists($unitOfMeasure, self::ABSOLUTE_UNITS)) {
             throw new Exception("{$unitOfMeasure} is not a vaid unit of measure");
         }
 
         $size = $this->size;
-
         if ($this->unit === null) {
             $size = Drawing::cellDimensionToPixels($size, new Font(false));
         }
 
         return $size / self::ABSOLUTE_UNITS[$unitOfMeasure];
     }
-
 }

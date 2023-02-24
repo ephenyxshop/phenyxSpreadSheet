@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Standardize extends StatisticalValidations {
-
+class Standardize extends StatisticalValidations
+{
     use ArrayEnabled;
 
     /**
@@ -26,8 +26,8 @@ class Standardize extends StatisticalValidations {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function execute($value, $mean, $stdDev) {
-
+    public static function execute($value, $mean, $stdDev)
+    {
         if (is_array($value) || is_array($mean) || is_array($stdDev)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev);
         }
@@ -46,5 +46,4 @@ class Standardize extends StatisticalValidations {
 
         return ($value - $mean) / $stdDev;
     }
-
 }

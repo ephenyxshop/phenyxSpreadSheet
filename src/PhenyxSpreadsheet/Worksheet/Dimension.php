@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
-abstract class Dimension {
-
+abstract class Dimension
+{
     /**
      * Visible?
      *
@@ -39,8 +39,8 @@ abstract class Dimension {
      *
      * @param int $initialValue Numeric row index
      */
-    public function __construct($initialValue = null) {
-
+    public function __construct($initialValue = null)
+    {
         // set dimension as unformatted by default
         $this->xfIndex = $initialValue;
     }
@@ -48,8 +48,8 @@ abstract class Dimension {
     /**
      * Get Visible.
      */
-    public function getVisible(): bool {
-
+    public function getVisible(): bool
+    {
         return $this->visible;
     }
 
@@ -58,8 +58,8 @@ abstract class Dimension {
      *
      * @return $this
      */
-    public function setVisible(bool $visible) {
-
+    public function setVisible(bool $visible)
+    {
         $this->visible = $visible;
 
         return $this;
@@ -68,8 +68,8 @@ abstract class Dimension {
     /**
      * Get Outline Level.
      */
-    public function getOutlineLevel(): int {
-
+    public function getOutlineLevel(): int
+    {
         return $this->outlineLevel;
     }
 
@@ -79,8 +79,8 @@ abstract class Dimension {
      *
      * @return $this
      */
-    public function setOutlineLevel(int $level) {
-
+    public function setOutlineLevel(int $level)
+    {
         if ($level < 0 || $level > 7) {
             throw new PhenyxSpreadsheetException('Outline level must range between 0 and 7.');
         }
@@ -93,8 +93,8 @@ abstract class Dimension {
     /**
      * Get Collapsed.
      */
-    public function getCollapsed(): bool {
-
+    public function getCollapsed(): bool
+    {
         return $this->collapsed;
     }
 
@@ -103,8 +103,8 @@ abstract class Dimension {
      *
      * @return $this
      */
-    public function setCollapsed(bool $collapsed) {
-
+    public function setCollapsed(bool $collapsed)
+    {
         $this->collapsed = $collapsed;
 
         return $this;
@@ -115,8 +115,8 @@ abstract class Dimension {
      *
      * @return int
      */
-    public function getXfIndex():  ? int {
-
+    public function getXfIndex(): ?int
+    {
         return $this->xfIndex;
     }
 
@@ -125,11 +125,10 @@ abstract class Dimension {
      *
      * @return $this
      */
-    public function setXfIndex(int $XfIndex) {
-
+    public function setXfIndex(int $XfIndex)
+    {
         $this->xfIndex = $XfIndex;
 
         return $this;
     }
-
 }

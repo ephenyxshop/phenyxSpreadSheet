@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class BesselI {
-
+class BesselI
+{
     use ArrayEnabled;
 
     /**
@@ -35,8 +35,8 @@ class BesselI {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function BESSELI($x, $ord) {
-
+    public static function BESSELI($x, $ord)
+    {
         if (is_array($x) || is_array($ord)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $x, $ord);
         }
@@ -57,22 +57,21 @@ class BesselI {
         return (is_nan($fResult)) ? ExcelError::NAN() : $fResult;
     }
 
-    private static function calculate(float $x, int $ord): float {
-
+    private static function calculate(float $x, int $ord): float
+    {
         // special cases
-
         switch ($ord) {
-        case 0:
-            return self::besselI0($x);
-        case 1:
-            return self::besselI1($x);
+            case 0:
+                return self::besselI0($x);
+            case 1:
+                return self::besselI1($x);
         }
 
         return self::besselI2($x, $ord);
     }
 
-    private static function besselI0(float $x): float{
-
+    private static function besselI0(float $x): float
+    {
         $ax = abs($x);
 
         if ($ax < 3.75) {
@@ -80,25 +79,25 @@ class BesselI {
             $y = $y * $y;
 
             return 1.0 + $y * (3.5156229 + $y * (3.0899424 + $y * (1.2067492
-                 + $y * (0.2659732 + $y * (0.360768e-1 + $y * 0.45813e-2)))));
+                                + $y * (0.2659732 + $y * (0.360768e-1 + $y * 0.45813e-2)))));
         }
 
         $y = 3.75 / $ax;
 
         return (exp($ax) / sqrt($ax)) * (0.39894228 + $y * (0.1328592e-1 + $y * (0.225319e-2 + $y * (-0.157565e-2
-             + $y * (0.916281e-2 + $y * (-0.2057706e-1 + $y * (0.2635537e-1 +
-                $y * (-0.1647633e-1 + $y * 0.392377e-2))))))));
+                            + $y * (0.916281e-2 + $y * (-0.2057706e-1 + $y * (0.2635537e-1 +
+                                        $y * (-0.1647633e-1 + $y * 0.392377e-2))))))));
     }
 
-    private static function besselI1(float $x): float{
-
+    private static function besselI1(float $x): float
+    {
         $ax = abs($x);
 
         if ($ax < 3.75) {
             $y = $x / 3.75;
             $y = $y * $y;
             $ans = $ax * (0.5 + $y * (0.87890594 + $y * (0.51498869 + $y * (0.15084934 + $y * (0.2658733e-1 +
-                $y * (0.301532e-2 + $y * 0.32411e-3))))));
+                                    $y * (0.301532e-2 + $y * 0.32411e-3))))));
 
             return ($x < 0.0) ? -$ans : $ans;
         }
@@ -106,15 +105,22 @@ class BesselI {
         $y = 3.75 / $ax;
         $ans = 0.2282967e-1 + $y * (-0.2895312e-1 + $y * (0.1787654e-1 - $y * 0.420059e-2));
         $ans = 0.39894228 + $y * (-0.3988024e-1 + $y * (-0.362018e-2 + $y * (0.163801e-2 +
-            $y * (-0.1031555e-1 + $y * $ans))));
+                        $y * (-0.1031555e-1 + $y * $ans))));
         $ans *= exp($ax) / sqrt($ax);
 
         return ($x < 0.0) ? -$ans : $ans;
     }
 
-    private static function besselI2(float $x, int $ord): float {
+    /**
+     * Sop to Scrutinizer.
+     *
+     * @var float
+     */
+    private static $zeroPointZero = 0.0;
 
-        if ($x === 0.0) {
+    private static function besselI2(float $x, int $ord): float
+    {
+        if ($x === self::$zeroPointZero) {
             return 0.0;
         }
 
@@ -137,12 +143,10 @@ class BesselI {
             if ($j === $ord) {
                 $ans = $bip;
             }
-
         }
 
         $ans *= self::besselI0($x) / $bi;
 
         return ($x < 0.0 && (($ord % 2) === 1)) ? -$ans : $ans;
     }
-
 }

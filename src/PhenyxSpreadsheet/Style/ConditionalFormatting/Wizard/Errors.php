@@ -10,16 +10,16 @@ use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
  * @method Errors notError()
  * @method Errors isError()
  */
-class Errors extends WizardAbstract implements WizardInterface {
-
+class Errors extends WizardAbstract implements WizardInterface
+{
     protected const OPERATORS = [
         'notError' => false,
-        'isError'  => true,
+        'isError' => true,
     ];
 
     protected const EXPRESSIONS = [
         Wizard::NOT_ERRORS => 'NOT(ISERROR(%s))',
-        Wizard::ERRORS     => 'ISERROR(%s)',
+        Wizard::ERRORS => 'ISERROR(%s)',
     ];
 
     /**
@@ -27,27 +27,27 @@ class Errors extends WizardAbstract implements WizardInterface {
      */
     protected $inverse;
 
-    public function __construct(string $cellRange, bool $inverse = false) {
-
+    public function __construct(string $cellRange, bool $inverse = false)
+    {
         parent::__construct($cellRange);
         $this->inverse = $inverse;
     }
 
-    protected function inverse(bool $inverse): void{
-
+    protected function inverse(bool $inverse): void
+    {
         $this->inverse = $inverse;
     }
 
-    protected function getExpression(): void{
-
+    protected function getExpression(): void
+    {
         $this->expression = sprintf(
             self::EXPRESSIONS[$this->inverse ? Wizard::ERRORS : Wizard::NOT_ERRORS],
             $this->referenceCell
         );
     }
 
-    public function getConditional(): Conditional{
-
+    public function getConditional(): Conditional
+    {
         $this->getExpression();
 
         $conditional = new Conditional();
@@ -61,8 +61,8 @@ class Errors extends WizardAbstract implements WizardInterface {
         return $conditional;
     }
 
-    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface {
-
+    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface
+    {
         if (
             $conditional->getConditionType() !== Conditional::CONDITION_CONTAINSERRORS &&
             $conditional->getConditionType() !== Conditional::CONDITION_NOTCONTAINSERRORS
@@ -82,8 +82,8 @@ class Errors extends WizardAbstract implements WizardInterface {
      * @param string $methodName
      * @param mixed[] $arguments
      */
-    public function __call($methodName, $arguments): self {
-
+    public function __call($methodName, $arguments): self
+    {
         if (!array_key_exists($methodName, self::OPERATORS)) {
             throw new Exception('Invalid Operation for Errors CF Rule Wizard');
         }
@@ -92,5 +92,4 @@ class Errors extends WizardAbstract implements WizardInterface {
 
         return $this;
     }
-
 }

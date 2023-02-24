@@ -2,21 +2,23 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-class ExceptionHandler {
-
+class ExceptionHandler
+{
     /**
      * Register errorhandler.
      */
-    public function __construct() {
-
-        set_error_handler([Exception::class, 'errorHandlerCallback'], E_ALL);
+    public function __construct()
+    {
+        /** @var callable */
+        $callable = [Exception::class, 'errorHandlerCallback'];
+        set_error_handler($callable, E_ALL);
     }
 
     /**
      * Unregister errorhandler.
      */
-    public function __destruct() {
-
+    public function __destruct()
+    {
         restore_error_handler();
     }
 }

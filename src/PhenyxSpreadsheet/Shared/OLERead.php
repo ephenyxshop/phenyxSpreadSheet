@@ -4,8 +4,9 @@ namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
 use EphenyxShop\PhenyxSpreadsheet\Reader\Exception as ReaderException;
 
-class OLERead {
-
+class OLERead
+{
+    /** @var string */
     private $data = '';
 
     // Size of a sector = 512 bytes
@@ -34,10 +35,13 @@ class OLERead {
     const START_BLOCK_POS = 0x74;
     const SIZE_POS = 0x78;
 
+    /** @var int */
     public $wrkbook;
 
+    /** @var int */
     public $summaryInformation;
 
+    /** @var int */
     public $documentSummaryInformation;
 
     /**
@@ -93,23 +97,22 @@ class OLERead {
     /**
      * Read the file.
      */
-    public function read(string $filename): void{
-
+    public function read(string $filename): void
+    {
         File::assertFile($filename);
 
         // Get the file identifier
         // Don't bother reading the whole file until we know it's a valid OLE file
-        $this->data = file_get_contents($filename, false, null, 0, 8);
+        $this->data = (string) file_get_contents($filename, false, null, 0, 8);
 
         // Check OLE identifier
         $identifierOle = pack('CCCCCCCC', 0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1);
-
         if ($this->data != $identifierOle) {
             throw new ReaderException('The filename ' . $filename . ' is not recognised as an OLE file');
         }
 
         // Get the file data
-        $this->data = file_get_contents($filename);
+        $this->data = (string) file_get_contents($filename);
 
         // Total number of sectors used for the SAT
         $this->numBigBlockDepotBlocks = self::getInt4d($this->data, self::NUM_BIG_BLOCK_DEPOT_BLOCKS_POS);
@@ -150,17 +153,14 @@ class OLERead {
             }
 
             $bbdBlocks += $blocksToRead;
-
             if ($bbdBlocks < $this->numBigBlockDepotBlocks) {
                 $this->extensionBlock = self::getInt4d($this->data, $pos);
             }
-
         }
 
         $pos = 0;
         $this->bigBlockChain = '';
         $bbs = self::BIG_BLOCK_SIZE / 4;
-
         for ($i = 0; $i < $this->numBigBlockDepotBlocks; ++$i) {
             $pos = ($bigBlockDepotBlocks[$i] + 1) * self::BIG_BLOCK_SIZE;
 
@@ -168,10 +168,8 @@ class OLERead {
             $pos += 4 * $bbs;
         }
 
-        $pos = 0;
         $sbdBlock = $this->sbdStartBlock;
         $this->smallBlockChain = '';
-
         while ($sbdBlock != -2) {
             $pos = ($sbdBlock + 1) * self::BIG_BLOCK_SIZE;
 
@@ -191,12 +189,12 @@ class OLERead {
     /**
      * Extract binary stream data.
      *
-     * @param int $stream
+     * @param ?int $stream
      *
      * @return null|string
      */
-    public function getStream($stream) {
-
+    public function getStream($stream)
+    {
         if ($stream === null) {
             return null;
         }
@@ -217,9 +215,7 @@ class OLERead {
 
             return $streamData;
         }
-
         $numBlocks = $this->props[$stream]['size'] / self::BIG_BLOCK_SIZE;
-
         if ($this->props[$stream]['size'] % self::BIG_BLOCK_SIZE != 0) {
             ++$numBlocks;
         }
@@ -246,8 +242,8 @@ class OLERead {
      *
      * @return string Data for standard stream
      */
-    private function readData($block) {
-
+    private function readData($block)
+    {
         $data = '';
 
         while ($block != -2) {
@@ -262,13 +258,12 @@ class OLERead {
     /**
      * Read entries in the directory stream.
      */
-    private function readPropertySets(): void{
-
+    private function readPropertySets(): void
+    {
         $offset = 0;
 
         // loop through entires, each entry is 128 bytes
         $entryLen = strlen($this->entry);
-
         while ($offset < $entryLen) {
             // entry data (128 bytes)
             $d = substr($this->entry, $offset, self::PROPERTY_STORAGE_BLOCK_SIZE);
@@ -288,39 +283,35 @@ class OLERead {
             $name = str_replace("\x00", '', substr($d, 0, $nameSize));
 
             $this->props[] = [
-                'name'       => $name,
-                'type'       => $type,
+                'name' => $name,
+                'type' => $type,
                 'startBlock' => $startBlock,
-                'size'       => $size,
+                'size' => $size,
             ];
 
             // tmp helper to simplify checks
             $upName = strtoupper($name);
 
             // Workbook directory entry (BIFF5 uses Book, BIFF8 uses Workbook)
-
             if (($upName === 'WORKBOOK') || ($upName === 'BOOK')) {
                 $this->wrkbook = count($this->props) - 1;
-            } else if ($upName === 'ROOT ENTRY' || $upName === 'R') {
+            } elseif ($upName === 'ROOT ENTRY' || $upName === 'R') {
                 // Root entry
                 $this->rootentry = count($this->props) - 1;
             }
 
             // Summary information
-
             if ($name == chr(5) . 'SummaryInformation') {
                 $this->summaryInformation = count($this->props) - 1;
             }
 
             // Additional Document Summary information
-
             if ($name == chr(5) . 'DocumentSummaryInformation') {
                 $this->documentSummaryInformation = count($this->props) - 1;
             }
 
             $offset += self::PROPERTY_STORAGE_BLOCK_SIZE;
         }
-
     }
 
     /**
@@ -331,15 +322,14 @@ class OLERead {
      *
      * @return int
      */
-    private static function getInt4d($data, $pos) {
-
+    private static function getInt4d($data, $pos)
+    {
         if ($pos < 0) {
             // Invalid position
             throw new ReaderException('Parameter pos=' . $pos . ' is invalid.');
         }
 
         $len = strlen($data);
-
         if ($len < $pos + 4) {
             $data .= str_repeat("\0", $pos + 4 - $len);
         }
@@ -348,7 +338,6 @@ class OLERead {
         // http://sourceforge.net/tracker/index.php?func=detail&aid=1487372&group_id=99160&atid=623334
         // Changed by Andreas Rehm 2006 to ensure correct result of the <<24 block on 32 and 64bit systems
         $_or_24 = ord($data[$pos + 3]);
-
         if ($_or_24 >= 128) {
             // negative number
             $_ord_24 = -abs((256 - $_or_24) << 24);
@@ -358,5 +347,4 @@ class OLERead {
 
         return ord($data[$pos]) | (ord($data[$pos + 1]) << 8) | (ord($data[$pos + 2]) << 16) | $_ord_24;
     }
-
 }

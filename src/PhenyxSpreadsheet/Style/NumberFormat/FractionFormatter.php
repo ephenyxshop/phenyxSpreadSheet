@@ -4,13 +4,13 @@ namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 
-class FractionFormatter extends BaseFormatter {
-
+class FractionFormatter extends BaseFormatter
+{
     /**
      * @param mixed $value
      */
-    public static function format($value, string $format): string{
-
+    public static function format($value, string $format): string
+    {
         $format = self::stripQuotes($format);
         $value = (float) $value;
         $absValue = abs($value);
@@ -20,33 +20,34 @@ class FractionFormatter extends BaseFormatter {
         $integerPart = floor($absValue);
 
         $decimalPart = self::getDecimal((string) $absValue);
-
         if ($decimalPart === '0') {
             return "{$sign}{$integerPart}";
         }
-
         $decimalLength = strlen($decimalPart);
         $decimalDivisor = 10 ** $decimalLength;
 
-        /** @var float */
-        $GCD = MathTrig\Gcd::evaluate($decimalPart, $decimalDivisor);
-        /** @var float */
-        $decimalPartx = $decimalPart;
+        preg_match('/(#?.*\?)\/(\?+|\d+)/', $format, $matches);
+        $formatIntegerPart = $matches[1];
 
-        $adjustedDecimalPart = $decimalPartx / $GCD;
-        $adjustedDecimalDivisor = $decimalDivisor / $GCD;
+        if (is_numeric($matches[2])) {
+            $fractionDivisor = 100 / (int) $matches[2];
+        } else {
+            /** @var float */
+            $fractionDivisor = MathTrig\Gcd::evaluate((int) $decimalPart, $decimalDivisor);
+        }
 
-        if ((strpos($format, '0') !== false)) {
+        $adjustedDecimalPart = (int) round((int) $decimalPart / $fractionDivisor, 0);
+        $adjustedDecimalDivisor = $decimalDivisor / $fractionDivisor;
+
+        if ((strpos($formatIntegerPart, '0') !== false)) {
             return "{$sign}{$integerPart} {$adjustedDecimalPart}/{$adjustedDecimalDivisor}";
-        } else if ((strpos($format, '#') !== false)) {
-
+        } elseif ((strpos($formatIntegerPart, '#') !== false)) {
             if ($integerPart == 0) {
                 return "{$sign}{$adjustedDecimalPart}/{$adjustedDecimalDivisor}";
             }
 
             return "{$sign}{$integerPart} {$adjustedDecimalPart}/{$adjustedDecimalDivisor}";
-        } else if ((substr($format, 0, 3) == '??')) {
-
+        } elseif ((substr($formatIntegerPart, 0, 3) == '? ?')) {
             if ($integerPart == 0) {
                 $integerPart = '';
             }
@@ -59,15 +60,13 @@ class FractionFormatter extends BaseFormatter {
         return "{$sign}{$adjustedDecimalPart}/{$adjustedDecimalDivisor}";
     }
 
-    private static function getDecimal(string $value): string{
-
+    private static function getDecimal(string $value): string
+    {
         $decimalPart = '0';
-
         if (preg_match('/^\\d*[.](\\d*[1-9])0*$/', $value, $matches) === 1) {
             $decimalPart = $matches[1];
         }
 
         return $decimalPart;
     }
-
 }

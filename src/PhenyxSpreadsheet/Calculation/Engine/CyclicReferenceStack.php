@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engine;
 
-class CyclicReferenceStack {
-
+class CyclicReferenceStack
+{
     /**
      * The call stack for calculated cells.
      *
@@ -16,8 +16,8 @@ class CyclicReferenceStack {
      *
      * @return int
      */
-    public function count() {
-
+    public function count()
+    {
         return count($this->stack);
     }
 
@@ -26,8 +26,8 @@ class CyclicReferenceStack {
      *
      * @param mixed $value
      */
-    public function push($value): void{
-
+    public function push($value): void
+    {
         $this->stack[$value] = $value;
     }
 
@@ -36,8 +36,8 @@ class CyclicReferenceStack {
      *
      * @return mixed
      */
-    public function pop() {
-
+    public function pop()
+    {
         return array_pop($this->stack);
     }
 
@@ -48,16 +48,16 @@ class CyclicReferenceStack {
      *
      * @return bool
      */
-    public function onStack($value) {
-
+    public function onStack($value)
+    {
         return isset($this->stack[$value]);
     }
 
     /**
      * Clear the stack.
      */
-    public function clear(): void{
-
+    public function clear(): void
+    {
         $this->stack = [];
     }
 
@@ -66,8 +66,8 @@ class CyclicReferenceStack {
      *
      * @return mixed[]
      */
-    public function showStack() {
-
+    public function showStack()
+    {
         return $this->stack;
     }
 }

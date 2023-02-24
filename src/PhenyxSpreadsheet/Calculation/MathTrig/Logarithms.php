@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Logarithms {
-
+class Logarithms
+{
     use ArrayEnabled;
 
     /**
@@ -26,8 +26,8 @@ class Logarithms {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function withBase($number, $base = 10) {
-
+    public static function withBase($number, $base = 10)
+    {
         if (is_array($number) || is_array($base)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $base);
         }
@@ -56,8 +56,8 @@ class Logarithms {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function base10($number) {
-
+    public static function base10($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -84,8 +84,8 @@ class Logarithms {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function natural($number) {
-
+    public static function natural($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -99,5 +99,4 @@ class Logarithms {
 
         return log($number);
     }
-
 }

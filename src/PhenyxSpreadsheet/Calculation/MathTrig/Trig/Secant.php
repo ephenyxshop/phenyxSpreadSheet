@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Helpers;
 
-class Secant {
-
+class Secant
+{
     use ArrayEnabled;
 
     /**
@@ -21,8 +21,8 @@ class Secant {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function sec($angle) {
-
+    public static function sec($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -47,8 +47,8 @@ class Secant {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function sech($angle) {
-
+    public static function sech($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -61,5 +61,4 @@ class Secant {
 
         return Helpers::verySmallDenominator(1.0, cosh($angle));
     }
-
 }

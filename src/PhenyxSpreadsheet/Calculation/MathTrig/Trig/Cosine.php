@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Helpers;
 
-class Cosine {
-
+class Cosine
+{
     use ArrayEnabled;
 
     /**
@@ -21,8 +21,8 @@ class Cosine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function cos($number) {
-
+    public static function cos($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -47,8 +47,8 @@ class Cosine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function cosh($number) {
-
+    public static function cosh($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -73,8 +73,8 @@ class Cosine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function acos($number) {
-
+    public static function acos($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -99,8 +99,8 @@ class Cosine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function acosh($number) {
-
+    public static function acosh($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -113,5 +113,4 @@ class Cosine {
 
         return Helpers::numberOrNan(acosh($number));
     }
-
 }

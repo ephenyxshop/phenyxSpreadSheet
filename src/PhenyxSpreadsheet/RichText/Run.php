@@ -4,12 +4,12 @@ namespace EphenyxShop\PhenyxSpreadsheet\RichText;
 
 use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 
-class Run extends TextElement implements ITextElement {
-
+class Run extends TextElement implements ITextElement
+{
     /**
      * Font.
      *
-     * @var Font
+     * @var ?Font
      */
     private $font;
 
@@ -18,8 +18,8 @@ class Run extends TextElement implements ITextElement {
      *
      * @param string $text Text
      */
-    public function __construct($text = '') {
-
+    public function __construct($text = '')
+    {
         parent::__construct($text);
         // Initialise variables
         $this->font = new Font();
@@ -28,10 +28,10 @@ class Run extends TextElement implements ITextElement {
     /**
      * Get font.
      *
-     * @return null|\PhpOffice\PhenyxSpreadsheet\Style\Font
+     * @return null|\EphenyxShop\PhenyxSpreadsheet\Style\Font
      */
-    public function getFont() {
-
+    public function getFont()
+    {
         return $this->font;
     }
 
@@ -42,8 +42,8 @@ class Run extends TextElement implements ITextElement {
      *
      * @return $this
      */
-    public function setFont( ? Font $font = null) {
-
+    public function setFont(?Font $font = null)
+    {
         $this->font = $font;
 
         return $this;
@@ -54,11 +54,11 @@ class Run extends TextElement implements ITextElement {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->getText() .
-            $this->font->getHashCode() .
+            (($this->font === null) ? '' : $this->font->getHashCode()) .
             __CLASS__
         );
     }

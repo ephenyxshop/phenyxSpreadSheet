@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DgContainer\SpgrContainer;
 
-class SpContainer {
-
+class SpContainer
+{
     /**
      * Parent Shape Group Container.
      *
@@ -95,8 +95,8 @@ class SpContainer {
      *
      * @param SpgrContainer $parent
      */
-    public function setParent($parent): void{
-
+    public function setParent($parent): void
+    {
         $this->parent = $parent;
     }
 
@@ -105,8 +105,8 @@ class SpContainer {
      *
      * @return SpgrContainer
      */
-    public function getParent() {
-
+    public function getParent()
+    {
         return $this->parent;
     }
 
@@ -115,8 +115,8 @@ class SpContainer {
      *
      * @param bool $value
      */
-    public function setSpgr($value): void{
-
+    public function setSpgr($value): void
+    {
         $this->spgr = $value;
     }
 
@@ -125,8 +125,8 @@ class SpContainer {
      *
      * @return bool
      */
-    public function getSpgr() {
-
+    public function getSpgr()
+    {
         return $this->spgr;
     }
 
@@ -135,8 +135,8 @@ class SpContainer {
      *
      * @param int $value
      */
-    public function setSpType($value): void{
-
+    public function setSpType($value): void
+    {
         $this->spType = $value;
     }
 
@@ -145,8 +145,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getSpType() {
-
+    public function getSpType()
+    {
         return $this->spType;
     }
 
@@ -155,8 +155,8 @@ class SpContainer {
      *
      * @param int $value
      */
-    public function setSpFlag($value): void{
-
+    public function setSpFlag($value): void
+    {
         $this->spFlag = $value;
     }
 
@@ -165,8 +165,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getSpFlag() {
-
+    public function getSpFlag()
+    {
         return $this->spFlag;
     }
 
@@ -175,8 +175,8 @@ class SpContainer {
      *
      * @param int $value
      */
-    public function setSpId($value): void{
-
+    public function setSpId($value): void
+    {
         $this->spId = $value;
     }
 
@@ -185,8 +185,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getSpId() {
-
+    public function getSpId()
+    {
         return $this->spId;
     }
 
@@ -196,8 +196,8 @@ class SpContainer {
      * @param int $property The number specifies the option
      * @param mixed $value
      */
-    public function setOPT($property, $value): void{
-
+    public function setOPT($property, $value): void
+    {
         $this->OPT[$property] = $value;
     }
 
@@ -208,8 +208,8 @@ class SpContainer {
      *
      * @return mixed
      */
-    public function getOPT($property) {
-
+    public function getOPT($property)
+    {
         if (isset($this->OPT[$property])) {
             return $this->OPT[$property];
         }
@@ -222,8 +222,8 @@ class SpContainer {
      *
      * @return array
      */
-    public function getOPTCollection() {
-
+    public function getOPTCollection()
+    {
         return $this->OPT;
     }
 
@@ -232,8 +232,8 @@ class SpContainer {
      *
      * @param string $value eg: 'A1'
      */
-    public function setStartCoordinates($value): void{
-
+    public function setStartCoordinates($value): void
+    {
         $this->startCoordinates = $value;
     }
 
@@ -242,8 +242,8 @@ class SpContainer {
      *
      * @return string
      */
-    public function getStartCoordinates() {
-
+    public function getStartCoordinates()
+    {
         return $this->startCoordinates;
     }
 
@@ -252,8 +252,8 @@ class SpContainer {
      *
      * @param int $startOffsetX
      */
-    public function setStartOffsetX($startOffsetX): void{
-
+    public function setStartOffsetX($startOffsetX): void
+    {
         $this->startOffsetX = $startOffsetX;
     }
 
@@ -262,8 +262,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getStartOffsetX() {
-
+    public function getStartOffsetX()
+    {
         return $this->startOffsetX;
     }
 
@@ -272,8 +272,8 @@ class SpContainer {
      *
      * @param int $startOffsetY
      */
-    public function setStartOffsetY($startOffsetY): void{
-
+    public function setStartOffsetY($startOffsetY): void
+    {
         $this->startOffsetY = $startOffsetY;
     }
 
@@ -282,8 +282,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getStartOffsetY() {
-
+    public function getStartOffsetY()
+    {
         return $this->startOffsetY;
     }
 
@@ -292,8 +292,8 @@ class SpContainer {
      *
      * @param string $value eg: 'A1'
      */
-    public function setEndCoordinates($value): void{
-
+    public function setEndCoordinates($value): void
+    {
         $this->endCoordinates = $value;
     }
 
@@ -302,8 +302,8 @@ class SpContainer {
      *
      * @return string
      */
-    public function getEndCoordinates() {
-
+    public function getEndCoordinates()
+    {
         return $this->endCoordinates;
     }
 
@@ -312,8 +312,8 @@ class SpContainer {
      *
      * @param int $endOffsetX
      */
-    public function setEndOffsetX($endOffsetX): void{
-
+    public function setEndOffsetX($endOffsetX): void
+    {
         $this->endOffsetX = $endOffsetX;
     }
 
@@ -322,8 +322,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getEndOffsetX() {
-
+    public function getEndOffsetX()
+    {
         return $this->endOffsetX;
     }
 
@@ -332,8 +332,8 @@ class SpContainer {
      *
      * @param int $endOffsetY
      */
-    public function setEndOffsetY($endOffsetY): void{
-
+    public function setEndOffsetY($endOffsetY): void
+    {
         $this->endOffsetY = $endOffsetY;
     }
 
@@ -342,8 +342,8 @@ class SpContainer {
      *
      * @return int
      */
-    public function getEndOffsetY() {
-
+    public function getEndOffsetY()
+    {
         return $this->endOffsetY;
     }
 
@@ -354,12 +354,11 @@ class SpContainer {
      *
      * @return int Nesting level
      */
-    public function getNestingLevel() {
-
+    public function getNestingLevel()
+    {
         $nestingLevel = 0;
 
         $parent = $this->getParent();
-
         while ($parent instanceof SpgrContainer) {
             ++$nestingLevel;
             $parent = $parent->getParent();
@@ -367,5 +366,4 @@ class SpContainer {
 
         return $nestingLevel;
     }
-
 }

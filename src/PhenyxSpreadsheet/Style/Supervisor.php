@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\IComparable;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
-abstract class Supervisor implements IComparable {
-
+abstract class Supervisor implements IComparable
+{
     /**
      * Supervisor?
      *
@@ -36,8 +36,8 @@ abstract class Supervisor implements IComparable {
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
      */
-    public function __construct($isSupervisor = false) {
-
+    public function __construct($isSupervisor = false)
+    {
         // Supervisor?
         $this->isSupervisor = $isSupervisor;
     }
@@ -50,8 +50,8 @@ abstract class Supervisor implements IComparable {
      *
      * @return $this
      */
-    public function bindParent($parent, $parentPropertyName = null) {
-
+    public function bindParent($parent, $parentPropertyName = null)
+    {
         $this->parent = $parent;
         $this->parentPropertyName = $parentPropertyName;
 
@@ -63,8 +63,8 @@ abstract class Supervisor implements IComparable {
      *
      * @return bool
      */
-    public function getIsSupervisor() {
-
+    public function getIsSupervisor()
+    {
         return $this->isSupervisor;
     }
 
@@ -73,8 +73,8 @@ abstract class Supervisor implements IComparable {
      *
      * @return Worksheet
      */
-    public function getActiveSheet() {
-
+    public function getActiveSheet()
+    {
         return $this->parent->getActiveSheet();
     }
 
@@ -84,8 +84,8 @@ abstract class Supervisor implements IComparable {
      *
      * @return string E.g. 'A1'
      */
-    public function getSelectedCells() {
-
+    public function getSelectedCells()
+    {
         return $this->getActiveSheet()->getSelectedCells();
     }
 
@@ -95,28 +95,24 @@ abstract class Supervisor implements IComparable {
      *
      * @return string E.g. 'A1'
      */
-    public function getActiveCell() {
-
+    public function getActiveCell()
+    {
         return $this->getActiveSheet()->getActiveCell();
     }
 
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if ((is_object($value)) && ($key != 'parent')) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
     /**
@@ -128,7 +124,6 @@ abstract class Supervisor implements IComparable {
      */
     final public function exportArray(): array
     {
-
         return $this->exportArray1();
     }
 
@@ -152,14 +147,13 @@ abstract class Supervisor implements IComparable {
      *
      * @param mixed $objOrValue
      */
-    final protected function exportArray2(array &$exportedArray, string $index, $objOrValue): void {
-
+    final protected function exportArray2(array &$exportedArray, string $index, $objOrValue): void
+    {
         if ($objOrValue instanceof self) {
             $exportedArray[$index] = $objOrValue->exportArray();
         } else {
             $exportedArray[$index] = $objOrValue;
         }
-
     }
 
     /**

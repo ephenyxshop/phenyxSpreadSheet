@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-class IntOrFloat {
-
+class IntOrFloat
+{
     /**
      * Help some functions with large results operate correctly on 32-bit,
      * by returning result as int when possible, float otherwise.
@@ -12,8 +12,8 @@ class IntOrFloat {
      *
      * @return float|int
      */
-    public static function evaluate($value) {
-
+    public static function evaluate($value)
+    {
         $iValue = (int) $value;
 
         return ($value == $iValue) ? $iValue : $value;

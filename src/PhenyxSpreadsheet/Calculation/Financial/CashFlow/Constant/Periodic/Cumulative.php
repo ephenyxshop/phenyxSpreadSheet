@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialCo
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Cumulative {
-
+class Cumulative
+{
     /**
      * CUMIPMT.
      *
@@ -38,7 +38,6 @@ class Cumulative {
         $end,
         $type = FinancialConstants::PAYMENT_END_OF_PERIOD
     ) {
-
         $rate = Functions::flattenSingleValue($rate);
         $periods = Functions::flattenSingleValue($periods);
         $presentValue = Functions::flattenSingleValue($presentValue);
@@ -58,17 +57,14 @@ class Cumulative {
         }
 
         // Validate parameters
-
         if ($start < 1 || $start > $end) {
             return ExcelError::NAN();
         }
 
         // Calculate
         $interest = 0;
-
         for ($per = $start; $per <= $end; ++$per) {
             $ipmt = Interest::payment($rate, $per, $periods, $presentValue, 0, $type);
-
             if (is_string($ipmt)) {
                 return $ipmt;
             }
@@ -107,7 +103,6 @@ class Cumulative {
         $end,
         $type = FinancialConstants::PAYMENT_END_OF_PERIOD
     ) {
-
         $rate = Functions::flattenSingleValue($rate);
         $periods = Functions::flattenSingleValue($periods);
         $presentValue = Functions::flattenSingleValue($presentValue);
@@ -127,17 +122,14 @@ class Cumulative {
         }
 
         // Validate parameters
-
         if ($start < 1 || $start > $end) {
             return ExcelError::VALUE();
         }
 
         // Calculate
         $principal = 0;
-
         for ($per = $start; $per <= $end; ++$per) {
             $ppmt = Payments::interestPayment($rate, $per, $periods, $presentValue, 0, $type);
-
             if (is_string($ppmt)) {
                 return $ppmt;
             }
@@ -147,5 +139,4 @@ class Cumulative {
 
         return $principal;
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter;
 
-class Column {
-
+class Column
+{
     const AUTOFILTER_FILTERTYPE_FILTER = 'filters';
     const AUTOFILTER_FILTERTYPE_CUSTOMFILTER = 'customFilters';
     //    Supports no more than 2 rules, with an And/Or join criteria
@@ -94,18 +94,17 @@ class Column {
      * @param string $column Column (e.g. A)
      * @param AutoFilter $parent Autofilter for this column
      */
-    public function __construct($column,  ? AutoFilter $parent = null) {
-
+    public function __construct($column, ?AutoFilter $parent = null)
+    {
         $this->columnIndex = $column;
         $this->parent = $parent;
     }
 
-    public function setEvaluatedFalse() : void {
-
+    public function setEvaluatedFalse(): void
+    {
         if ($this->parent !== null) {
             $this->parent->setEvaluated(false);
         }
-
     }
 
     /**
@@ -113,8 +112,8 @@ class Column {
      *
      * @return string
      */
-    public function getColumnIndex() {
-
+    public function getColumnIndex()
+    {
         return $this->columnIndex;
     }
 
@@ -125,12 +124,11 @@ class Column {
      *
      * @return $this
      */
-    public function setColumnIndex($column) {
-
+    public function setColumnIndex($column)
+    {
         $this->setEvaluatedFalse();
         // Uppercase coordinate
         $column = strtoupper($column);
-
         if ($this->parent !== null) {
             $this->parent->testColumnInRange($column);
         }
@@ -145,8 +143,8 @@ class Column {
      *
      * @return null|AutoFilter
      */
-    public function getParent() {
-
+    public function getParent()
+    {
         return $this->parent;
     }
 
@@ -155,8 +153,8 @@ class Column {
      *
      * @return $this
      */
-    public function setParent( ? AutoFilter $parent = null) {
-
+    public function setParent(?AutoFilter $parent = null)
+    {
         $this->setEvaluatedFalse();
         $this->parent = $parent;
 
@@ -168,8 +166,8 @@ class Column {
      *
      * @return string
      */
-    public function getFilterType() {
-
+    public function getFilterType()
+    {
         return $this->filterType;
     }
 
@@ -180,14 +178,12 @@ class Column {
      *
      * @return $this
      */
-    public function setFilterType($filterType) {
-
+    public function setFilterType($filterType)
+    {
         $this->setEvaluatedFalse();
-
         if (!in_array($filterType, self::$filterTypes)) {
             throw new PhenyxSpreadsheetException('Invalid filter type for column AutoFilter.');
         }
-
         if ($filterType === self::AUTOFILTER_FILTERTYPE_CUSTOMFILTER && count($this->ruleset) > 2) {
             throw new PhenyxSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
         }
@@ -202,8 +198,8 @@ class Column {
      *
      * @return string
      */
-    public function getJoin() {
-
+    public function getJoin()
+    {
         return $this->join;
     }
 
@@ -214,12 +210,11 @@ class Column {
      *
      * @return $this
      */
-    public function setJoin($join) {
-
+    public function setJoin($join)
+    {
         $this->setEvaluatedFalse();
         // Lowercase And/Or
         $join = strtolower($join);
-
         if (!in_array($join, self::$ruleJoins)) {
             throw new PhenyxSpreadsheetException('Invalid rule connection for column AutoFilter.');
         }
@@ -236,8 +231,8 @@ class Column {
      *
      * @return $this
      */
-    public function setAttributes($attributes) {
-
+    public function setAttributes($attributes)
+    {
         $this->setEvaluatedFalse();
         $this->attributes = $attributes;
 
@@ -252,8 +247,8 @@ class Column {
      *
      * @return $this
      */
-    public function setAttribute($name, $value) {
-
+    public function setAttribute($name, $value)
+    {
         $this->setEvaluatedFalse();
         $this->attributes[$name] = $value;
 
@@ -265,8 +260,8 @@ class Column {
      *
      * @return int[]|string[]
      */
-    public function getAttributes() {
-
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
@@ -277,8 +272,8 @@ class Column {
      *
      * @return null|int|string
      */
-    public function getAttribute($name) {
-
+    public function getAttribute($name)
+    {
         if (isset($this->attributes[$name])) {
             return $this->attributes[$name];
         }
@@ -286,8 +281,8 @@ class Column {
         return null;
     }
 
-    public function ruleCount() : int {
-
+    public function ruleCount(): int
+    {
         return count($this->ruleset);
     }
 
@@ -296,8 +291,8 @@ class Column {
      *
      * @return Column\Rule[]
      */
-    public function getRules() {
-
+    public function getRules()
+    {
         return $this->ruleset;
     }
 
@@ -308,8 +303,8 @@ class Column {
      *
      * @return Column\Rule
      */
-    public function getRule($index) {
-
+    public function getRule($index)
+    {
         if (!isset($this->ruleset[$index])) {
             $this->ruleset[$index] = new Column\Rule($this);
         }
@@ -322,14 +317,12 @@ class Column {
      *
      * @return Column\Rule
      */
-    public function createRule() {
-
+    public function createRule()
+    {
         $this->setEvaluatedFalse();
-
         if ($this->filterType === self::AUTOFILTER_FILTERTYPE_CUSTOMFILTER && count($this->ruleset) >= 2) {
             throw new PhenyxSpreadsheetException('No more than 2 rules are allowed in a Custom Filter');
         }
-
         $this->ruleset[] = new Column\Rule($this);
 
         return end($this->ruleset);
@@ -340,8 +333,8 @@ class Column {
      *
      * @return $this
      */
-    public function addRule(Column\Rule $rule) {
-
+    public function addRule(Column\Rule $rule)
+    {
         $this->setEvaluatedFalse();
         $rule->setParent($this);
         $this->ruleset[] = $rule;
@@ -357,18 +350,15 @@ class Column {
      *
      * @return $this
      */
-    public function deleteRule($index) {
-
+    public function deleteRule($index)
+    {
         $this->setEvaluatedFalse();
-
         if (isset($this->ruleset[$index])) {
             unset($this->ruleset[$index]);
             //    If we've just deleted down to a single rule, then reset And/Or joining to Or
-
             if (count($this->ruleset) <= 1) {
                 $this->setJoin(self::AUTOFILTER_COLUMN_JOIN_OR);
             }
-
         }
 
         return $this;
@@ -379,8 +369,8 @@ class Column {
      *
      * @return $this
      */
-    public function clearRules() {
-
+    public function clearRules()
+    {
         $this->setEvaluatedFalse();
         $this->ruleset = [];
         $this->setJoin(self::AUTOFILTER_COLUMN_JOIN_OR);
@@ -391,31 +381,24 @@ class Column {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if ($key === 'parent') {
                 // Detach from autofilter parent
                 $this->parent = null;
-            } else if ($key === 'ruleset') {
-                // The columns array of \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet\AutoFilter objects
+            } elseif ($key === 'ruleset') {
+                // The columns array of \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet\AutoFilter objects
                 $this->ruleset = [];
-
                 foreach ($value as $k => $v) {
                     $cloned = clone $v;
                     $cloned->setParent($this); // attach the new cloned Rule to this new cloned Autofilter Cloned object
                     $this->ruleset[$k] = $cloned;
                 }
-
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
-
 }

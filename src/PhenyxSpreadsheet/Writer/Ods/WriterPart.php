@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
 use EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-abstract class WriterPart {
-
+abstract class WriterPart
+{
     /**
      * Parent Ods object.
      *
@@ -18,16 +18,16 @@ abstract class WriterPart {
      *
      * @return Ods
      */
-    public function getParentWriter() {
-
+    public function getParentWriter()
+    {
         return $this->parentWriter;
     }
 
     /**
      * Set parent Ods writer.
      */
-    public function __construct(Ods $writer) {
-
+    public function __construct(Ods $writer)
+    {
         $this->parentWriter = $writer;
     }
 

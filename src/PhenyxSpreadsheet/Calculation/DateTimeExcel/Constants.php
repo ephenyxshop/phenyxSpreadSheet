@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
 
-class Constants {
-
+class Constants
+{
     // Constants currently used by WeekNum; will eventually be used by WEEKDAY
     const STARTWEEK_SUNDAY = 1;
     const STARTWEEK_MONDAY = 2;
@@ -24,7 +24,7 @@ class Constants {
     const STARTWEEK_MONDAY_ISO = 21;
 
     const METHODARR = [
-        self::STARTWEEK_SUNDAY     => self::DOW_SUNDAY,
+        self::STARTWEEK_SUNDAY => self::DOW_SUNDAY,
         self::DOW_MONDAY,
         self::STARTWEEK_MONDAY_ALT => self::DOW_MONDAY,
         self::DOW_TUESDAY,

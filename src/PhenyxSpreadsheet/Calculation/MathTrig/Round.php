@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Round {
-
+class Round
+{
     use ArrayEnabled;
 
     /**
@@ -22,8 +22,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function round($number, $precision) {
-
+    public static function round($number, $precision)
+    {
         if (is_array($number) || is_array($precision)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $precision);
         }
@@ -50,8 +50,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function up($number, $digits) {
-
+    public static function up($number, $digits)
+    {
         if (is_array($number) || is_array($digits)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $digits);
         }
@@ -86,8 +86,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function down($number, $digits) {
-
+    public static function down($number, $digits)
+    {
         if (is_array($number) || is_array($digits)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $digits);
         }
@@ -122,8 +122,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function multiple($number, $multiple) {
-
+    public static function multiple($number, $multiple)
+    {
         if (is_array($number) || is_array($multiple)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $multiple);
         }
@@ -138,7 +138,6 @@ class Round {
         if ($number == 0 || $multiple == 0) {
             return 0;
         }
-
         if ((Helpers::returnSign($number)) == (Helpers::returnSign($multiple))) {
             $multiplier = 1 / $multiple;
 
@@ -166,8 +165,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function even($number) {
-
+    public static function even($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -192,8 +191,8 @@ class Round {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function odd($number) {
-
+    public static function odd($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -205,18 +204,15 @@ class Round {
         }
 
         $significance = Helpers::returnSign($number);
-
         if ($significance == 0) {
             return 1;
         }
 
         $result = ceil($number / $significance) * $significance;
-
         if ($result == Helpers::getEven($result)) {
             $result += $significance;
         }
 
         return $result;
     }
-
 }

@@ -2,6 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
+use GdImage;
+use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
@@ -16,7 +18,6 @@ use EphenyxShop\PhenyxSpreadsheet\Style\Protection;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\SheetView;
 use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
-use GdImage;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Worksheet (used as the base for this class):
 // -----------------------------------------------------------------------------------------
@@ -52,8 +53,8 @@ use GdImage;
 // *    License along with this library; if not, write to the Free Software
 // *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // */
-class Worksheet extends BIFFwriter {
-
+class Worksheet extends BIFFwriter
+{
     /** @var int */
     private static $always0 = 0;
 
@@ -63,16 +64,9 @@ class Worksheet extends BIFFwriter {
     /**
      * Formula parser.
      *
-     * @var \PhpOffice\PhenyxSpreadsheet\Writer\Xls\Parser
+     * @var \EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Parser
      */
     private $parser;
-
-    /**
-     * Maximum number of characters for a string (LABEL record in BIFF5).
-     *
-     * @var int
-     */
-    private $xlsStringMaxLength;
 
     /**
      * Array containing format information for columns.
@@ -80,13 +74,6 @@ class Worksheet extends BIFFwriter {
      * @var array
      */
     private $columnInfo;
-
-    /**
-     * Array containing the selected area for the worksheet.
-     *
-     * @var array
-     */
-    private $selection;
 
     /**
      * The active pane for the worksheet.
@@ -111,17 +98,19 @@ class Worksheet extends BIFFwriter {
 
     /**
      * Whether to have outline summary below.
+     * Not currently used.
      *
      * @var bool
      */
-    private $outlineBelow;
+    private $outlineBelow; //* @phpstan-ignore-line
 
     /**
      * Whether to have outline summary at the right.
+     * Not currently used.
      *
      * @var bool
      */
-    private $outlineRight;
+    private $outlineRight; //* @phpstan-ignore-line
 
     /**
      * Reference to the total number of strings in the workbook.
@@ -146,6 +135,8 @@ class Worksheet extends BIFFwriter {
 
     /**
      * Color cache.
+     *
+     * @var array
      */
     private $colors;
 
@@ -180,21 +171,14 @@ class Worksheet extends BIFFwriter {
     /**
      * Sheet object.
      *
-     * @var \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet
+     * @var \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet
      */
     public $phpSheet;
 
     /**
-     * Count cell style Xfs.
-     *
-     * @var int
-     */
-    private $countCellStyleXfs;
-
-    /**
      * Escher object corresponding to MSODRAWING.
      *
-     * @var null|\PhpOffice\PhenyxSpreadsheet\Shared\Escher
+     * @var null|\EphenyxShop\PhenyxSpreadsheet\Shared\Escher
      */
     private $escher;
 
@@ -224,10 +208,10 @@ class Worksheet extends BIFFwriter {
      * @param array $colors Colour Table
      * @param Parser $parser The formula parser created for the Workbook
      * @param bool $preCalculateFormulas Flag indicating whether formulas should be calculated or just written
-     * @param \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet $phpSheet The worksheet to write
+     * @param \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet $phpSheet The worksheet to write
      */
-    public function __construct(&$str_total, &$str_unique, &$str_table, &$colors, Parser $parser, $preCalculateFormulas, \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet $phpSheet) {
-
+    public function __construct(&$str_total, &$str_unique, &$str_table, &$colors, Parser $parser, $preCalculateFormulas, \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet $phpSheet)
+    {
         // It needs to call its parent's constructor explicitly
         parent::__construct();
 
@@ -240,9 +224,7 @@ class Worksheet extends BIFFwriter {
 
         $this->phpSheet = $phpSheet;
 
-        $this->xlsStringMaxLength = 255;
         $this->columnInfo = [];
-        $this->selection = [0, 0, 0, 0];
         $this->activePane = 3;
 
         $this->printHeaders = 0;
@@ -271,23 +253,21 @@ class Worksheet extends BIFFwriter {
         if ($this->lastColumnIndex > 255) {
             $this->lastColumnIndex = 255;
         }
-
-        $this->countCellStyleXfs = count($phpSheet->getParent()->getCellStyleXfCollection());
     }
 
     /**
      * Add data to the beginning of the workbook (note the reverse order)
      * and to the end of the workbook.
      *
-     * @see \PhpOffice\PhenyxSpreadsheet\Writer\Xls\Workbook::storeWorkbook()
+     * @see \EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Workbook::storeWorkbook()
      */
-    public function close(): void{
-
+    public function close(): void
+    {
         $phpSheet = $this->phpSheet;
 
         // Storing selected cells and active sheet because it changes while parsing cells with formulas.
         $selectedCells = $this->phpSheet->getSelectedCells();
-        $activeSheetIndex = $this->phpSheet->getParent()->getActiveSheetIndex();
+        $activeSheetIndex = $this->phpSheet->getParentOrThrow()->getActiveSheetIndex();
 
         // Write BOF record
         $this->storeBof(0x0010);
@@ -305,14 +285,12 @@ class Worksheet extends BIFFwriter {
         $phpSheet->calculateColumnWidths();
 
         // Column dimensions
-
         if (($defaultWidth = $phpSheet->getDefaultColumnDimension()->getWidth()) < 0) {
-            $defaultWidth = \PhpOffice\PhenyxSpreadsheet\Shared\Font::getDefaultColumnWidthByFont($phpSheet->getParent()->getDefaultStyle()->getFont());
+            $defaultWidth = \EphenyxShop\PhenyxSpreadsheet\Shared\Font::getDefaultColumnWidthByFont($phpSheet->getParentOrThrow()->getDefaultStyle()->getFont());
         }
 
         $columnDimensions = $phpSheet->getColumnDimensions();
         $maxCol = $this->lastColumnIndex - 1;
-
         for ($i = 0; $i <= $maxCol; ++$i) {
             $hidden = 0;
             $level = 0;
@@ -321,14 +299,11 @@ class Worksheet extends BIFFwriter {
             $width = $defaultWidth;
 
             $columnLetter = Coordinate::stringFromColumnIndex($i + 1);
-
             if (isset($columnDimensions[$columnLetter])) {
                 $columnDimension = $columnDimensions[$columnLetter];
-
                 if ($columnDimension->getWidth() >= 0) {
                     $width = $columnDimension->getWidth();
                 }
-
                 $hidden = $columnDimension->getVisible() ? 0 : 1;
                 $level = $columnDimension->getOutlineLevel();
                 $xfIndex = $columnDimension->getXfIndex() + 15; // there are 15 cell style Xfs
@@ -383,18 +358,13 @@ class Worksheet extends BIFFwriter {
         $this->writeDefcol();
 
         // Write the COLINFO records if they exist
-
         if (!empty($this->columnInfo)) {
             $colcount = count($this->columnInfo);
-
             for ($i = 0; $i < $colcount; ++$i) {
                 $this->writeColinfo($this->columnInfo[$i]);
             }
-
         }
-
         $autoFilterRange = $phpSheet->getAutoFilter()->getRange();
-
         if (!empty($autoFilterRange)) {
             // Write AUTOFILTERINFO
             $this->writeAutoFilterInfo();
@@ -404,7 +374,6 @@ class Worksheet extends BIFFwriter {
         $this->writeDimensions();
 
         // Row dimensions
-
         foreach ($phpSheet->getRowDimensions() as $rowDimension) {
             $xfIndex = $rowDimension->getXfIndex() + 15; // there are 15 cellXfs
             $this->writeRow(
@@ -417,14 +386,13 @@ class Worksheet extends BIFFwriter {
         }
 
         // Write Cells
-
-        foreach ($phpSheet->getCoordinates() as $coordinate) {
-            $cell = $phpSheet->getCell($coordinate);
+        foreach ($phpSheet->getCellCollection()->getSortedCoordinates() as $coordinate) {
+            /** @var Cell $cell */
+            $cell = $phpSheet->getCellCollection()->get($coordinate);
             $row = $cell->getRow() - 1;
             $column = Coordinate::columnIndexFromString($cell->getColumn()) - 1;
 
             // Don't break Excel break the code!
-
             if ($row > 65535 || $column > 255) {
                 throw new WriterException('Rows or columns overflow! Excel5 has limit to 65535 rows and 255 columns. Use XLSX instead.');
             }
@@ -433,97 +401,85 @@ class Worksheet extends BIFFwriter {
             $xfIndex = $cell->getXfIndex() + 15; // there are 15 cell style Xfs
 
             $cVal = $cell->getValue();
-
             if ($cVal instanceof RichText) {
                 $arrcRun = [];
                 $str_pos = 0;
                 $elements = $cVal->getRichTextElements();
-
                 foreach ($elements as $element) {
                     // FONT Index
-
+                    $str_fontidx = 0;
                     if ($element instanceof Run) {
-                        $str_fontidx = $this->fontHashIndex[$element->getFont()->getHashCode()];
-                    } else {
-                        $str_fontidx = 0;
+                        $getFont = $element->getFont();
+                        if ($getFont !== null) {
+                            $str_fontidx = $this->fontHashIndex[$getFont->getHashCode()];
+                        }
                     }
-
                     $arrcRun[] = ['strlen' => $str_pos, 'fontidx' => $str_fontidx];
                     // Position FROM
                     $str_pos += StringHelper::countCharacters($element->getText(), 'UTF-8');
                 }
-
                 $this->writeRichTextString($row, $column, $cVal->getPlainText(), $xfIndex, $arrcRun);
             } else {
-
                 switch ($cell->getDatatype()) {
-                case DataType::TYPE_STRING:
-                case DataType::TYPE_INLINE:
-                case DataType::TYPE_NULL:
-
-                    if ($cVal === '' || $cVal === null) {
-                        $this->writeBlank($row, $column, $xfIndex);
-                    } else {
-                        $this->writeString($row, $column, $cVal, $xfIndex);
-                    }
-
-                    break;
-                case DataType::TYPE_NUMERIC:
-                    $this->writeNumber($row, $column, $cVal, $xfIndex);
-
-                    break;
-                case DataType::TYPE_FORMULA:
-                    $calculatedValue = $this->preCalculateFormulas ?
-                    $cell->getCalculatedValue() : null;
-
-                    if (self::WRITE_FORMULA_EXCEPTION == $this->writeFormula($row, $column, $cVal, $xfIndex, $calculatedValue)) {
-
-                        if ($calculatedValue === null) {
-                            $calculatedValue = $cell->getCalculatedValue();
-                        }
-
-                        $calctype = gettype($calculatedValue);
-
-                        switch ($calctype) {
-                        case 'integer':
-                        case 'double':
-                            $this->writeNumber($row, $column, $calculatedValue, $xfIndex);
-
-                            break;
-                        case 'string':
-                            $this->writeString($row, $column, $calculatedValue, $xfIndex);
-
-                            break;
-                        case 'boolean':
-                            $this->writeBoolErr($row, $column, $calculatedValue, 0, $xfIndex);
-
-                            break;
-                        default:
+                    case DataType::TYPE_STRING:
+                    case DataType::TYPE_INLINE:
+                    case DataType::TYPE_NULL:
+                        if ($cVal === '' || $cVal === null) {
+                            $this->writeBlank($row, $column, $xfIndex);
+                        } else {
                             $this->writeString($row, $column, $cVal, $xfIndex);
                         }
 
-                    }
+                        break;
+                    case DataType::TYPE_NUMERIC:
+                        $this->writeNumber($row, $column, $cVal, $xfIndex);
 
-                    break;
-                case DataType::TYPE_BOOL:
-                    $this->writeBoolErr($row, $column, $cVal, 0, $xfIndex);
+                        break;
+                    case DataType::TYPE_FORMULA:
+                        $calculatedValue = $this->preCalculateFormulas ?
+                            $cell->getCalculatedValue() : null;
+                        if (self::WRITE_FORMULA_EXCEPTION == $this->writeFormula($row, $column, $cVal, $xfIndex, $calculatedValue)) {
+                            if ($calculatedValue === null) {
+                                $calculatedValue = $cell->getCalculatedValue();
+                            }
+                            $calctype = gettype($calculatedValue);
+                            switch ($calctype) {
+                                case 'integer':
+                                case 'double':
+                                    $this->writeNumber($row, $column, (float) $calculatedValue, $xfIndex);
 
-                    break;
-                case DataType::TYPE_ERROR:
-                    $this->writeBoolErr($row, $column, ErrorCode::error($cVal), 1, $xfIndex);
+                                    break;
+                                case 'string':
+                                    $this->writeString($row, $column, $calculatedValue, $xfIndex);
 
-                    break;
+                                    break;
+                                case 'boolean':
+                                    $this->writeBoolErr($row, $column, (int) $calculatedValue, 0, $xfIndex);
+
+                                    break;
+                                default:
+                                    $this->writeString($row, $column, $cVal, $xfIndex);
+                            }
+                        }
+
+                        break;
+                    case DataType::TYPE_BOOL:
+                        $this->writeBoolErr($row, $column, $cVal, 0, $xfIndex);
+
+                        break;
+                    case DataType::TYPE_ERROR:
+                        $this->writeBoolErr($row, $column, ErrorCode::error($cVal), 1, $xfIndex);
+
+                        break;
                 }
-
             }
-
         }
 
         // Append
         $this->writeMsoDrawing();
 
         // Restoring active sheet.
-        $this->phpSheet->getParent()->setActiveSheetIndex($activeSheetIndex);
+        $this->phpSheet->getParentOrThrow()->setActiveSheetIndex($activeSheetIndex);
 
         // Write WINDOW2 record
         $this->writeWindow2();
@@ -533,7 +489,6 @@ class Worksheet extends BIFFwriter {
 
         // Write ZOOM record
         $this->writeZoom();
-
         if ($phpSheet->getFreezePane()) {
             $this->writePanes();
         }
@@ -548,7 +503,6 @@ class Worksheet extends BIFFwriter {
         $this->writeMergedCells();
 
         // Hyperlinks
-
         foreach ($phpSheet->getHyperLinkCollection() as $coordinate => $hyperlink) {
             [$column, $row] = Coordinate::indexesFromString($coordinate);
 
@@ -557,7 +511,7 @@ class Worksheet extends BIFFwriter {
             if (strpos($url, 'sheet://') !== false) {
                 // internal to current workbook
                 $url = str_replace('sheet://', 'internal:', $url);
-            } else if (preg_match('/^(http:|https:|ftp:|mailto:)/', $url)) {
+            } elseif (preg_match('/^(http:|https:|ftp:|mailto:)/', $url)) {
                 // URL
             } else {
                 // external (local file)
@@ -580,33 +534,27 @@ class Worksheet extends BIFFwriter {
         $this->storeEof();
     }
 
-    private function writeConditionalFormatting(): void{
-
+    private function writeConditionalFormatting(): void
+    {
         $conditionalFormulaHelper = new ConditionalHelper($this->parser);
 
         $arrConditionalStyles = $this->phpSheet->getConditionalStylesCollection();
-
         if (!empty($arrConditionalStyles)) {
             $arrConditional = [];
 
             // Write ConditionalFormattingTable records
-
             foreach ($arrConditionalStyles as $cellCoordinate => $conditionalStyles) {
                 $cfHeaderWritten = false;
-
                 foreach ($conditionalStyles as $conditional) {
                     /** @var Conditional $conditional */
-
                     if (
                         $conditional->getConditionType() === Conditional::CONDITION_EXPRESSION ||
                         $conditional->getConditionType() === Conditional::CONDITION_CELLIS
                     ) {
                         // Write CFHEADER record (only if there are Conditional Styles that we are able to write)
-
                         if ($cfHeaderWritten === false) {
                             $cfHeaderWritten = $this->writeCFHeader($cellCoordinate, $conditionalStyles);
                         }
-
                         if ($cfHeaderWritten === true && !isset($arrConditional[$conditional->getHashCode()])) {
                             // This hash code has been handled
                             $arrConditional[$conditional->getHashCode()] = true;
@@ -614,15 +562,10 @@ class Worksheet extends BIFFwriter {
                             // Write CFRULE record
                             $this->writeCFRule($conditionalFormulaHelper, $conditional, $cellCoordinate);
                         }
-
                     }
-
                 }
-
             }
-
         }
-
     }
 
     /**
@@ -634,15 +577,14 @@ class Worksheet extends BIFFwriter {
      *
      * @return string Binary data
      */
-    private function writeBIFF8CellRangeAddressFixed($range) {
-
+    private function writeBIFF8CellRangeAddressFixed($range)
+    {
         $explodes = explode(':', $range);
 
         // extract first cell, e.g. 'A1'
         $firstCell = $explodes[0];
 
         // extract last cell, e.g. 'B6'
-
         if (count($explodes) == 1) {
             $lastCell = $firstCell;
         } else {
@@ -661,10 +603,9 @@ class Worksheet extends BIFFwriter {
      *
      * @return string The data
      */
-    public function getData() {
-
+    public function getData()
+    {
         // Return data stored in memory
-
         if (isset($this->_data)) {
             $tmp = $this->_data;
             $this->_data = null;
@@ -681,8 +622,8 @@ class Worksheet extends BIFFwriter {
      *
      * @param int $print Whether to print the headers or not. Defaults to 1 (print).
      */
-    public function printRowColHeaders($print = 1): void{
-
+    public function printRowColHeaders($print = 1): void
+    {
         $this->printHeaders = $print;
     }
 
@@ -695,8 +636,8 @@ class Worksheet extends BIFFwriter {
      * @param bool $symbols_right
      * @param bool $auto_style
      */
-    public function setOutline($visible = true, $symbols_below = true, $symbols_right = true, $auto_style = false): void{
-
+    public function setOutline($visible = true, $symbols_below = true, $symbols_right = true, $auto_style = false): void
+    {
         $this->outlineOn = $visible;
         $this->outlineBelow = $symbols_below;
         $this->outlineRight = $symbols_right;
@@ -718,17 +659,15 @@ class Worksheet extends BIFFwriter {
      *
      * @return int
      */
-    private function writeNumber($row, $col, $num, $xfIndex) {
-
+    private function writeNumber($row, $col, $num, $xfIndex)
+    {
         $record = 0x0203; // Record identifier
         $length = 0x000E; // Number of bytes to follow
 
         $header = pack('vv', $record, $length);
         $data = pack('vvv', $row, $col, $xfIndex);
         $xl_double = pack('d', $num);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $xl_double = strrev($xl_double);
         }
 
@@ -745,8 +684,8 @@ class Worksheet extends BIFFwriter {
      * @param string $str The string
      * @param int $xfIndex Index to XF record
      */
-    private function writeString($row, $col, $str, $xfIndex): void{
-
+    private function writeString($row, $col, $str, $xfIndex): void
+    {
         $this->writeLabelSst($row, $col, $str, $xfIndex);
     }
 
@@ -760,18 +699,16 @@ class Worksheet extends BIFFwriter {
      * @param int $xfIndex The XF format index for the cell
      * @param array $arrcRun Index to Font record and characters beginning
      */
-    private function writeRichTextString($row, $col, $str, $xfIndex, $arrcRun): void{
-
+    private function writeRichTextString($row, $col, $str, $xfIndex, $arrcRun): void
+    {
         $record = 0x00FD; // Record identifier
         $length = 0x000A; // Bytes to follow
         $str = StringHelper::UTF8toBIFF8UnicodeShort($str, $arrcRun);
 
         // check if string is already present
-
         if (!isset($this->stringTable[$str])) {
             $this->stringTable[$str] = $this->stringUnique++;
         }
-
         ++$this->stringTotal;
 
         $header = pack('vv', $record, $length);
@@ -789,19 +726,17 @@ class Worksheet extends BIFFwriter {
      * @param string $str The string to write
      * @param mixed $xfIndex The XF format index for the cell
      */
-    private function writeLabelSst($row, $col, $str, $xfIndex): void{
-
+    private function writeLabelSst($row, $col, $str, $xfIndex): void
+    {
         $record = 0x00FD; // Record identifier
         $length = 0x000A; // Bytes to follow
 
         $str = StringHelper::UTF8toBIFF8UnicodeLong($str);
 
         // check if string is already present
-
         if (!isset($this->stringTable[$str])) {
             $this->stringTable[$str] = $this->stringUnique++;
         }
-
         ++$this->stringTotal;
 
         $header = pack('vv', $record, $length);
@@ -827,8 +762,8 @@ class Worksheet extends BIFFwriter {
      *
      * @return int
      */
-    public function writeBlank($row, $col, $xfIndex) {
-
+    public function writeBlank($row, $col, $xfIndex)
+    {
         $record = 0x0201; // Record identifier
         $length = 0x0006; // Number of bytes to follow
 
@@ -845,13 +780,13 @@ class Worksheet extends BIFFwriter {
      * @param int $row Row index (0-based)
      * @param int $col Column index (0-based)
      * @param int $value
-     * @param bool $isError Error or Boolean?
+     * @param int $isError Error or Boolean?
      * @param int $xfIndex
      *
      * @return int
      */
-    private function writeBoolErr($row, $col, $value, $isError, $xfIndex) {
-
+    private function writeBoolErr($row, $col, $value, $isError, $xfIndex)
+    {
         $record = 0x0205;
         $length = 8;
 
@@ -885,31 +820,28 @@ class Worksheet extends BIFFwriter {
      *
      * @return int
      */
-    private function writeFormula($row, $col, $formula, $xfIndex, $calculatedValue) {
-
+    private function writeFormula($row, $col, $formula, $xfIndex, $calculatedValue)
+    {
         $record = 0x0006; // Record identifier
         // Initialize possible additional value for STRING record that should be written after the FORMULA record?
         $stringValue = null;
 
         // calculated value
-
         if (isset($calculatedValue)) {
             // Since we can't yet get the data type of the calculated value,
             // we use best effort to determine data type
-
             if (is_bool($calculatedValue)) {
                 // Boolean value
                 $num = pack('CCCvCv', 0x01, 0x00, (int) $calculatedValue, 0x00, 0x00, 0xFFFF);
-            } else if (is_int($calculatedValue) || is_float($calculatedValue)) {
+            } elseif (is_int($calculatedValue) || is_float($calculatedValue)) {
                 // Numeric value
                 $num = pack('d', $calculatedValue);
-            } else if (is_string($calculatedValue)) {
+            } elseif (is_string($calculatedValue)) {
                 $errorCodes = DataType::getErrorCodes();
-
                 if (isset($errorCodes[$calculatedValue])) {
                     // Error value
                     $num = pack('CCCvCv', 0x02, 0x00, ErrorCode::error($calculatedValue), 0x00, 0x00, 0xFFFF);
-                } else if ($calculatedValue === '') {
+                } elseif ($calculatedValue === '') {
                     // Empty string (and BIFF8)
                     $num = pack('CCCvCv', 0x03, 0x00, 0x00, 0x00, 0x00, 0xFFFF);
                 } else {
@@ -917,12 +849,10 @@ class Worksheet extends BIFFwriter {
                     $stringValue = $calculatedValue;
                     $num = pack('CCCvCv', 0x00, 0x00, 0x00, 0x00, 0x00, 0xFFFF);
                 }
-
             } else {
                 // We are really not supposed to reach here
                 $num = pack('d', 0x00);
             }
-
         } else {
             $num = pack('d', 0x00);
         }
@@ -931,7 +861,6 @@ class Worksheet extends BIFFwriter {
         $unknown = 0x0000; // Must be zero
 
         // Strip the '=' or '@' sign at the beginning of the formula string
-
         if ($formula[0] == '=') {
             $formula = substr($formula, 1);
         } else {
@@ -952,12 +881,11 @@ class Worksheet extends BIFFwriter {
             $header = pack('vv', $record, $length);
 
             $data = pack('vvv', $row, $col, $xfIndex)
-            . $num
-            . pack('vVv', $grbit, $unknown, $formlen);
+                . $num
+                . pack('vVv', $grbit, $unknown, $formlen);
             $this->append($header . $data . $formula);
 
             // Append also a STRING record if necessary
-
             if ($stringValue !== null) {
                 $this->writeStringRecord($stringValue);
             }
@@ -966,7 +894,6 @@ class Worksheet extends BIFFwriter {
         } catch (PhenyxSpreadsheetException $e) {
             return self::WRITE_FORMULA_EXCEPTION;
         }
-
     }
 
     /**
@@ -974,8 +901,8 @@ class Worksheet extends BIFFwriter {
      *
      * @param string $stringValue
      */
-    private function writeStringRecord($stringValue): void{
-
+    private function writeStringRecord($stringValue): void
+    {
         $record = 0x0207; // Record identifier
         $data = StringHelper::UTF8toBIFF8UnicodeLong($stringValue);
 
@@ -1000,8 +927,8 @@ class Worksheet extends BIFFwriter {
      * @param int $col Column
      * @param string $url URL string
      */
-    private function writeUrl($row, $col, $url): void{
-
+    private function writeUrl($row, $col, $url): void
+    {
         // Add start row and col to arg list
         $this->writeUrlRange($row, $col, $row, $col, $url);
     }
@@ -1020,14 +947,12 @@ class Worksheet extends BIFFwriter {
      *
      * @see writeUrl()
      */
-    private function writeUrlRange($row1, $col1, $row2, $col2, $url): void {
-
+    private function writeUrlRange($row1, $col1, $row2, $col2, $url): void
+    {
         // Check for internal/external sheet links or default to web link
-
         if (preg_match('[^internal:]', $url)) {
             $this->writeUrlInternal($row1, $col1, $row2, $col2, $url);
         }
-
         if (preg_match('[^external:]', $url)) {
             $this->writeUrlExternal($row1, $col1, $row2, $col2, $url);
         }
@@ -1048,8 +973,8 @@ class Worksheet extends BIFFwriter {
      *
      * @see writeUrl()
      */
-    public function writeUrlWeb($row1, $col1, $row2, $col2, $url): void{
-
+    public function writeUrlWeb($row1, $col1, $row2, $col2, $url): void
+    {
         $record = 0x01B8; // Record identifier
 
         // Pack the undocumented parts of the hyperlink stream
@@ -1090,12 +1015,12 @@ class Worksheet extends BIFFwriter {
      *
      * @see writeUrl()
      */
-    private function writeUrlInternal($row1, $col1, $row2, $col2, $url): void{
-
+    private function writeUrlInternal($row1, $col1, $row2, $col2, $url): void
+    {
         $record = 0x01B8; // Record identifier
 
         // Strip URL type
-        $url = preg_replace('/^internal:/', '', $url);
+        $url = (string) preg_replace('/^internal:/', '', $url);
 
         // Pack the undocumented parts of the hyperlink stream
         $unknown1 = pack('H*', 'D0C9EA79F9BACE118C8200AA004BA90B02000000');
@@ -1138,22 +1063,19 @@ class Worksheet extends BIFFwriter {
      *
      * @see writeUrl()
      */
-    private function writeUrlExternal($row1, $col1, $row2, $col2, $url): void {
-
+    private function writeUrlExternal($row1, $col1, $row2, $col2, $url): void
+    {
         // Network drives are different. We will handle them separately
         // MS/Novell network drives and shares start with \\
-
         if (preg_match('[^external:\\\\]', $url)) {
             return;
         }
 
         $record = 0x01B8; // Record identifier
-        $length = 0x00000; // Bytes to follow
 
         // Strip URL type and change Unix dir separator to Dos style (if needed)
         //
-        $url = preg_replace('/^external:/', '', $url);
-        $url = preg_replace('/\//', '\\', $url);
+        $url = (string) preg_replace(['/^external:/', '/\//'], ['', '\\'], $url);
 
         // Determine if the link is relative or absolute:
         //   relative if link contains no dir separator, "somefile.xls"
@@ -1161,18 +1083,15 @@ class Worksheet extends BIFFwriter {
         //   otherwise, absolute
 
         $absolute = 0x00; // relative path
-
         if (preg_match('/^[A-Z]:/', $url)) {
             $absolute = 0x02; // absolute path on Windows, e.g. C:\...
         }
-
         $link_type = 0x01 | $absolute;
 
         // Determine if the link contains a sheet reference and change some of the
         // parameters accordingly.
         // Split the dir name and sheet name (if it exists)
         $dir_long = $url;
-
         if (preg_match('/\\#/', $url)) {
             $link_type |= 0x08;
         }
@@ -1185,21 +1104,21 @@ class Worksheet extends BIFFwriter {
         $up_count = pack('v', $up_count);
 
         // Store the short dos dir name (null terminated)
-        $dir_short = preg_replace('/\\.\\.\\\\/', '', $dir_long) . "\0";
+        $dir_short = (string) preg_replace('/\\.\\.\\\\/', '', $dir_long) . "\0";
 
         // Store the long dir name as a wchar string (non-null terminated)
-        $dir_long = $dir_long . "\0";
+        //$dir_long = $dir_long . "\0";
 
         // Pack the lengths of the dir strings
         $dir_short_len = pack('V', strlen($dir_short));
-        $dir_long_len = pack('V', strlen($dir_long));
+        //$dir_long_len = pack('V', strlen($dir_long));
         $stream_len = pack('V', 0); //strlen($dir_long) + 0x06);
 
         // Pack the undocumented parts of the hyperlink stream
         $unknown1 = pack('H*', 'D0C9EA79F9BACE118C8200AA004BA90B02000000');
         $unknown2 = pack('H*', '0303000000000000C000000000000046');
         $unknown3 = pack('H*', 'FFFFADDE000000000000000000000000000000000000000');
-        $unknown4 = pack('v', 0x03);
+        //$unknown4 = pack('v', 0x03);
 
         // Pack the main data stream
         $data = pack('vvvv', $row1, $row2, $col1, $col2) .
@@ -1211,11 +1130,11 @@ class Worksheet extends BIFFwriter {
             $dir_short .
             $unknown3 .
             $stream_len; /*.
-                              $dir_long_len .
-                              $unknown4     .
-                              $dir_long     .
-                              $sheet_len    .
-*/
+                          $dir_long_len .
+                          $unknown4     .
+                          $dir_long     .
+                          $sheet_len    .
+                          $sheet        ;*/
 
         // Pack the header data
         $length = strlen($data);
@@ -1235,8 +1154,8 @@ class Worksheet extends BIFFwriter {
      * @param bool $hidden The optional hidden attribute
      * @param int $level The optional outline level for row, in range [0,7]
      */
-    private function writeRow($row, $height, $xfIndex, $hidden = false, $level = 0): void{
-
+    private function writeRow($row, $height, $xfIndex, $hidden = false, $level = 0): void
+    {
         $record = 0x0208; // Record identifier
         $length = 0x0010; // Number of bytes to follow
 
@@ -1252,7 +1171,6 @@ class Worksheet extends BIFFwriter {
         }
 
         // Use writeRow($row, null, $XF) to set XF format without setting height
-
         if ($height !== null) {
             $miyRw = $height * 20; // row height
         } else {
@@ -1266,19 +1184,15 @@ class Worksheet extends BIFFwriter {
         // collapsed. The zero height flag, 0x20, is used to collapse a row.
 
         $grbit |= $level;
-
         if ($hidden === true) {
             $grbit |= 0x0030;
         }
-
         if ($height !== null) {
             $grbit |= 0x0040; // fUnsynced
         }
-
         if ($xfIndex !== 0xF) {
             $grbit |= 0x0080;
         }
-
         $grbit |= 0x0100;
 
         $header = pack('vv', $record, $length);
@@ -1289,8 +1203,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Writes Excel DIMENSIONS to define the area in which there is data.
      */
-    private function writeDimensions(): void{
-
+    private function writeDimensions(): void
+    {
         $record = 0x0200; // Record identifier
 
         $length = 0x000E;
@@ -1303,12 +1217,11 @@ class Worksheet extends BIFFwriter {
     /**
      * Write BIFF record Window2.
      */
-    private function writeWindow2(): void{
-
+    private function writeWindow2(): void
+    {
         $record = 0x023E; // Record identifier
         $length = 0x0012;
 
-        $grbit = 0x00B6; // Option flags
         $rwTop = 0x0000; // Top row visible in window
         $colLeft = 0x0000; // Leftmost column visible in window
 
@@ -1323,7 +1236,7 @@ class Worksheet extends BIFFwriter {
         $fDspGuts = $this->outlineOn; // 7
         $fFrozenNoSplit = 0; // 0 - bit
         // no support in PhenyxSpreadsheet for selected sheet, therefore sheet is only selected if it is the active sheet
-        $fSelected = ($this->phpSheet === $this->phpSheet->getParent()->getActiveSheet()) ? 1 : 0;
+        $fSelected = ($this->phpSheet === $this->phpSheet->getParentOrThrow()->getActiveSheet()) ? 1 : 0;
         $fPageBreakPreview = $this->phpSheet->getSheetView()->getView() === SheetView::SHEETVIEW_PAGE_BREAK_PREVIEW;
 
         $grbit = $fDspFmla;
@@ -1355,8 +1268,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Write BIFF record DEFAULTROWHEIGHT.
      */
-    private function writeDefaultRowHeight(): void{
-
+    private function writeDefaultRowHeight(): void
+    {
         $defaultRowHeight = $this->phpSheet->getDefaultRowDimension()->getRowHeight();
 
         if ($defaultRowHeight < 0) {
@@ -1377,8 +1290,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Write BIFF record DEFCOLWIDTH if COLINFO records are in use.
      */
-    private function writeDefcol(): void{
-
+    private function writeDefcol(): void
+    {
         $defaultColWidth = 8;
 
         $record = 0x0055; // Record identifier
@@ -1403,8 +1316,8 @@ class Worksheet extends BIFFwriter {
      *                4 => Option flags.
      *                5 => Optional outline level
      */
-    private function writeColinfo($col_array): void{
-
+    private function writeColinfo($col_array): void
+    {
         $colFirst = $col_array[0] ?? null;
         $colLast = $col_array[1] ?? null;
         $coldx = $col_array[2] ?? 8.43;
@@ -1431,12 +1344,11 @@ class Worksheet extends BIFFwriter {
     /**
      * Write BIFF record SELECTION.
      */
-    private function writeSelection() : void{
-
+    private function writeSelection(): void
+    {
         // look up the selected cell range
         $selectedCells = Coordinate::splitRange($this->phpSheet->getSelectedCells());
         $selectedCells = $selectedCells[0];
-
         if (count($selectedCells) == 2) {
             [$first, $last] = $selectedCells;
         } else {
@@ -1469,7 +1381,6 @@ class Worksheet extends BIFFwriter {
         $cref = 1; // Number of refs
 
         // Swap last row/col for first row/col as necessary
-
         if ($rwFirst > $rwLast) {
             [$rwFirst, $rwLast] = [$rwLast, $rwFirst];
         }
@@ -1486,8 +1397,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the MERGEDCELLS records for all ranges of merged cells.
      */
-    private function writeMergedCells() : void{
-
+    private function writeMergedCells(): void
+    {
         $mergeCells = $this->phpSheet->getMergeCells();
         $countMergeCells = count($mergeCells);
 
@@ -1511,7 +1422,6 @@ class Worksheet extends BIFFwriter {
         $recordData = '';
 
         // loop through the merged cells
-
         foreach ($mergeCells as $mergeCell) {
             ++$i;
             ++$j;
@@ -1525,7 +1435,6 @@ class Worksheet extends BIFFwriter {
             $recordData .= pack('vvvv', $firstRow - 1, $lastRow - 1, $firstColumn - 1, $lastColumn - 1);
 
             // flush record if we have reached limit for number of merged cells, or reached final merged cell
-
             if ($j == $maxCountMergeCellsPerRecord || $i == $countMergeCells) {
                 $recordData = pack('v', $j) . $recordData;
                 $length = strlen($recordData);
@@ -1536,16 +1445,14 @@ class Worksheet extends BIFFwriter {
                 $recordData = '';
                 $j = 0;
             }
-
         }
-
     }
 
     /**
      * Write SHEETLAYOUT record.
      */
-    private function writeSheetLayout() : void {
-
+    private function writeSheetLayout(): void
+    {
         if (!$this->phpSheet->isTabColorSet()) {
             return;
         }
@@ -1558,7 +1465,7 @@ class Worksheet extends BIFFwriter {
             0x00000000, // unused
             0x00000014, // size of record data
             $this->colors[$this->phpSheet->getTabColor()->getRGB()], // color index
-            0x0000// unused
+            0x0000        // unused
         );
 
         $length = strlen($recordData);
@@ -1568,30 +1475,49 @@ class Worksheet extends BIFFwriter {
         $this->append($header . $recordData);
     }
 
+    private static function protectionBitsDefaultFalse(?bool $value, int $shift): int
+    {
+        if ($value === false) {
+            return 1 << $shift;
+        }
+
+        return 0;
+    }
+
+    private static function protectionBitsDefaultTrue(?bool $value, int $shift): int
+    {
+        if ($value !== false) {
+            return 1 << $shift;
+        }
+
+        return 0;
+    }
+
     /**
      * Write SHEETPROTECTION.
      */
-    private function writeSheetProtection() : void{
-
+    private function writeSheetProtection(): void
+    {
         // record identifier
         $record = 0x0867;
 
         // prepare options
-        $options = (int) !$this->phpSheet->getProtection()->getObjects()
-         | (int) !$this->phpSheet->getProtection()->getScenarios() << 1
-         | (int) !$this->phpSheet->getProtection()->getFormatCells() << 2
-         | (int) !$this->phpSheet->getProtection()->getFormatColumns() << 3
-         | (int) !$this->phpSheet->getProtection()->getFormatRows() << 4
-         | (int) !$this->phpSheet->getProtection()->getInsertColumns() << 5
-         | (int) !$this->phpSheet->getProtection()->getInsertRows() << 6
-         | (int) !$this->phpSheet->getProtection()->getInsertHyperlinks() << 7
-         | (int) !$this->phpSheet->getProtection()->getDeleteColumns() << 8
-         | (int) !$this->phpSheet->getProtection()->getDeleteRows() << 9
-         | (int) !$this->phpSheet->getProtection()->getSelectLockedCells() << 10
-         | (int) !$this->phpSheet->getProtection()->getSort() << 11
-         | (int) !$this->phpSheet->getProtection()->getAutoFilter() << 12
-         | (int) !$this->phpSheet->getProtection()->getPivotTables() << 13
-         | (int) !$this->phpSheet->getProtection()->getSelectUnlockedCells() << 14;
+        $protection = $this->phpSheet->getProtection();
+        $options = self::protectionBitsDefaultTrue($protection->getObjects(), 0)
+            | self::protectionBitsDefaultTrue($protection->getScenarios(), 1)
+            | self::protectionBitsDefaultFalse($protection->getFormatCells(), 2)
+            | self::protectionBitsDefaultFalse($protection->getFormatColumns(), 3)
+            | self::protectionBitsDefaultFalse($protection->getFormatRows(), 4)
+            | self::protectionBitsDefaultFalse($protection->getInsertColumns(), 5)
+            | self::protectionBitsDefaultFalse($protection->getInsertRows(), 6)
+            | self::protectionBitsDefaultFalse($protection->getInsertHyperlinks(), 7)
+            | self::protectionBitsDefaultFalse($protection->getDeleteColumns(), 8)
+            | self::protectionBitsDefaultFalse($protection->getDeleteRows(), 9)
+            | self::protectionBitsDefaultTrue($protection->getSelectLockedCells(), 10)
+            | self::protectionBitsDefaultFalse($protection->getSort(), 11)
+            | self::protectionBitsDefaultFalse($protection->getAutoFilter(), 12)
+            | self::protectionBitsDefaultFalse($protection->getPivotTables(), 13)
+            | self::protectionBitsDefaultTrue($protection->getSelectUnlockedCells(), 14);
 
         // record data
         $recordData = pack(
@@ -1603,7 +1529,7 @@ class Worksheet extends BIFFwriter {
             0x01000200, // unknown data
             0xFFFFFFFF, // unknown data
             $options, // options
-            0x0000// not used
+            0x0000 // not used
         );
 
         $length = strlen($recordData);
@@ -1618,8 +1544,8 @@ class Worksheet extends BIFFwriter {
      * Openoffice.org's Documentation of the Microsoft Excel File Format uses term RANGEPROTECTION for these records
      * Microsoft Office Excel 97-2007 Binary File Format Specification uses term FEAT for these records
      */
-    private function writeRangeProtection() : void {
-
+    private function writeRangeProtection(): void
+    {
         foreach ($this->phpSheet->getProtectedCells() as $range => $password) {
             // number of ranges, e.g. 'A1:B3 C20:D25'
             $cellRanges = explode(' ', $range);
@@ -1658,7 +1584,6 @@ class Worksheet extends BIFFwriter {
             $header = pack('vv', $record, $length);
             $this->append($header . $recordData);
         }
-
     }
 
     /**
@@ -1667,18 +1592,18 @@ class Worksheet extends BIFFwriter {
      * Frozen panes are specified in terms of an integer number of rows and columns.
      * Thawed panes are specified in terms of Excel's units for rows and columns.
      */
-    private function writePanes() : void {
-
+    private function writePanes(): void
+    {
         if (!$this->phpSheet->getFreezePane()) {
             // thaw panes
             return;
         }
 
-        [$column, $row] = Coordinate::indexesFromString($this->phpSheet->getFreezePane() ?? '');
+        [$column, $row] = Coordinate::indexesFromString($this->phpSheet->getFreezePane());
         $x = $column - 1;
         $y = $row - 1;
 
-        [$leftMostColumn, $topRow] = Coordinate::indexesFromString($this->phpSheet->getTopLeftCell());
+        [$leftMostColumn, $topRow] = Coordinate::indexesFromString($this->phpSheet->getTopLeftCell() ?? '');
         //Coordinates are zero-based in xls files
         $rwTop = $topRow - 1;
         $colLeft = $leftMostColumn - 1;
@@ -1688,20 +1613,16 @@ class Worksheet extends BIFFwriter {
 
         // Determine which pane should be active. There is also the undocumented
         // option to override this should it be necessary: may be removed later.
-        $pnnAct = null;
-
+        $pnnAct = 0;
         if ($x != 0 && $y != 0) {
             $pnnAct = 0; // Bottom right
         }
-
         if ($x != 0 && $y == 0) {
             $pnnAct = 1; // Top right
         }
-
         if ($x == 0 && $y != 0) {
             $pnnAct = 2; // Bottom left
         }
-
         if ($x == 0 && $y == 0) {
             $pnnAct = 3; // Top left
         }
@@ -1716,8 +1637,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the page setup SETUP BIFF record.
      */
-    private function writeSetup() : void{
-
+    private function writeSetup(): void
+    {
         $record = 0x00A1; // Record identifier
         $length = 0x0022; // Number of bytes to follow
 
@@ -1727,7 +1648,6 @@ class Worksheet extends BIFFwriter {
         $iPageStart = 0x01; // Starting page number
         $iFitWidth = (int) $this->phpSheet->getPageSetup()->getFitToWidth(); // Fit to number of pages wide
         $iFitHeight = (int) $this->phpSheet->getPageSetup()->getFitToHeight(); // Fit to number of pages high
-        $grbit = 0x00; // Option flags
         $iRes = 0x0258; // Print resolution
         $iVRes = 0x0258; // Vertical print resolution
 
@@ -1738,10 +1658,10 @@ class Worksheet extends BIFFwriter {
 
         // Order of printing pages
         $fLeftToRight = $this->phpSheet->getPageSetup()->getPageOrder() === PageSetup::PAGEORDER_DOWN_THEN_OVER
-        ? 0x1 : 0x0;
+            ? 0x0 : 0x1;
         // Page orientation
         $fLandscape = ($this->phpSheet->getPageSetup()->getOrientation() == PageSetup::ORIENTATION_LANDSCAPE)
-        ? 0x0 : 0x1;
+            ? 0x0 : 0x1;
 
         $fNoPls = 0x0; // Setup not read from printer
         $fNoColor = 0x0; // Print black and white
@@ -1761,9 +1681,7 @@ class Worksheet extends BIFFwriter {
 
         $numHdr = pack('d', $numHdr);
         $numFtr = pack('d', $numFtr);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $numHdr = strrev($numHdr);
             $numFtr = strrev($numFtr);
         }
@@ -1778,17 +1696,17 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the header caption BIFF record.
      */
-    private function writeHeader() : void{
-
+    private function writeHeader(): void
+    {
         $record = 0x0014; // Record identifier
 
         /* removing for now
-                    // need to fix character count (multibyte!)
-                    if (strlen($this->phpSheet->getHeaderFooter()->getOddHeader()) <= 255) {
-                        $str      = $this->phpSheet->getHeaderFooter()->getOddHeader();       // header string
-                    } else {
-                        $str = '';
-                    }
+        // need to fix character count (multibyte!)
+        if (strlen($this->phpSheet->getHeaderFooter()->getOddHeader()) <= 255) {
+            $str      = $this->phpSheet->getHeaderFooter()->getOddHeader();       // header string
+        } else {
+            $str = '';
+        }
         */
 
         $recordData = StringHelper::UTF8toBIFF8UnicodeLong($this->phpSheet->getHeaderFooter()->getOddHeader());
@@ -1802,17 +1720,17 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the footer caption BIFF record.
      */
-    private function writeFooter() : void{
-
+    private function writeFooter(): void
+    {
         $record = 0x0015; // Record identifier
 
         /* removing for now
-                    // need to fix character count (multibyte!)
-                    if (strlen($this->phpSheet->getHeaderFooter()->getOddFooter()) <= 255) {
-                        $str = $this->phpSheet->getHeaderFooter()->getOddFooter();
-                    } else {
-                        $str = '';
-                    }
+        // need to fix character count (multibyte!)
+        if (strlen($this->phpSheet->getHeaderFooter()->getOddFooter()) <= 255) {
+            $str = $this->phpSheet->getHeaderFooter()->getOddFooter();
+        } else {
+            $str = '';
+        }
         */
 
         $recordData = StringHelper::UTF8toBIFF8UnicodeLong($this->phpSheet->getHeaderFooter()->getOddFooter());
@@ -1826,8 +1744,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the horizontal centering HCENTER BIFF record.
      */
-    private function writeHcenter() : void{
-
+    private function writeHcenter(): void
+    {
         $record = 0x0083; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -1842,8 +1760,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the vertical centering VCENTER BIFF record.
      */
-    private function writeVcenter() : void{
-
+    private function writeVcenter(): void
+    {
         $record = 0x0084; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -1857,8 +1775,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the LEFTMARGIN BIFF record.
      */
-    private function writeMarginLeft() : void{
-
+    private function writeMarginLeft(): void
+    {
         $record = 0x0026; // Record identifier
         $length = 0x0008; // Bytes to follow
 
@@ -1866,9 +1784,7 @@ class Worksheet extends BIFFwriter {
 
         $header = pack('vv', $record, $length);
         $data = pack('d', $margin);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $data = strrev($data);
         }
 
@@ -1878,8 +1794,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the RIGHTMARGIN BIFF record.
      */
-    private function writeMarginRight() : void{
-
+    private function writeMarginRight(): void
+    {
         $record = 0x0027; // Record identifier
         $length = 0x0008; // Bytes to follow
 
@@ -1887,9 +1803,7 @@ class Worksheet extends BIFFwriter {
 
         $header = pack('vv', $record, $length);
         $data = pack('d', $margin);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $data = strrev($data);
         }
 
@@ -1899,8 +1813,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the TOPMARGIN BIFF record.
      */
-    private function writeMarginTop() : void{
-
+    private function writeMarginTop(): void
+    {
         $record = 0x0028; // Record identifier
         $length = 0x0008; // Bytes to follow
 
@@ -1908,9 +1822,7 @@ class Worksheet extends BIFFwriter {
 
         $header = pack('vv', $record, $length);
         $data = pack('d', $margin);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $data = strrev($data);
         }
 
@@ -1920,8 +1832,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Store the BOTTOMMARGIN BIFF record.
      */
-    private function writeMarginBottom(): void{
-
+    private function writeMarginBottom(): void
+    {
         $record = 0x0029; // Record identifier
         $length = 0x0008; // Bytes to follow
 
@@ -1929,9 +1841,7 @@ class Worksheet extends BIFFwriter {
 
         $header = pack('vv', $record, $length);
         $data = pack('d', $margin);
-
-        if (self::getByteOrder()) {
-            // if it's Big Endian
+        if (self::getByteOrder()) { // if it's Big Endian
             $data = strrev($data);
         }
 
@@ -1941,8 +1851,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Write the PRINTHEADERS BIFF record.
      */
-    private function writePrintHeaders(): void{
-
+    private function writePrintHeaders(): void
+    {
         $record = 0x002a; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -1957,8 +1867,8 @@ class Worksheet extends BIFFwriter {
      * Write the PRINTGRIDLINES BIFF record. Must be used in conjunction with the
      * GRIDSET record.
      */
-    private function writePrintGridlines(): void{
-
+    private function writePrintGridlines(): void
+    {
         $record = 0x002b; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -1973,8 +1883,8 @@ class Worksheet extends BIFFwriter {
      * Write the GRIDSET BIFF record. Must be used in conjunction with the
      * PRINTGRIDLINES record.
      */
-    private function writeGridset(): void{
-
+    private function writeGridset(): void
+    {
         $record = 0x0082; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -1988,8 +1898,8 @@ class Worksheet extends BIFFwriter {
     /**
      * Write the AUTOFILTERINFO BIFF record. This is used to configure the number of autofilter select used in the sheet.
      */
-    private function writeAutoFilterInfo(): void{
-
+    private function writeAutoFilterInfo(): void
+    {
         $record = 0x009D; // Record identifier
         $length = 0x0002; // Bytes to follow
 
@@ -2008,8 +1918,8 @@ class Worksheet extends BIFFwriter {
      *
      * @see writeWsbool()
      */
-    private function writeGuts(): void{
-
+    private function writeGuts(): void
+    {
         $record = 0x0080; // Record identifier
         $length = 0x0008; // Bytes to follow
 
@@ -2018,7 +1928,6 @@ class Worksheet extends BIFFwriter {
 
         // determine maximum row outline level
         $maxRowOutlineLevel = 0;
-
         foreach ($this->phpSheet->getRowDimensions() as $rowDimension) {
             $maxRowOutlineLevel = max($maxRowOutlineLevel, $rowDimension->getOutlineLevel());
         }
@@ -2028,7 +1937,6 @@ class Worksheet extends BIFFwriter {
         // Calculate the maximum column outline level. The equivalent calculation
         // for the row outline level is carried out in writeRow().
         $colcount = count($this->columnInfo);
-
         for ($i = 0; $i < $colcount; ++$i) {
             $col_level = max($this->columnInfo[$i][5], $col_level);
         }
@@ -2037,11 +1945,9 @@ class Worksheet extends BIFFwriter {
         $col_level = max(0, min($col_level, 7));
 
         // The displayed level is one greater than the max outline levels
-
         if ($maxRowOutlineLevel) {
             ++$maxRowOutlineLevel;
         }
-
         if ($col_level) {
             ++$col_level;
         }
@@ -2056,8 +1962,8 @@ class Worksheet extends BIFFwriter {
      * Write the WSBOOL BIFF record, mainly for fit-to-page. Used in conjunction
      * with the SETUP record.
      */
-    private function writeWsbool(): void{
-
+    private function writeWsbool(): void
+    {
         $record = 0x0081; // Record identifier
         $length = 0x0002; // Bytes to follow
         $grbit = 0x0000;
@@ -2067,23 +1973,18 @@ class Worksheet extends BIFFwriter {
         //
         // Set the option flags
         $grbit |= 0x0001; // Auto page breaks visible
-
         if ($this->outlineStyle) {
             $grbit |= 0x0020; // Auto outline styles
         }
-
         if ($this->phpSheet->getShowSummaryBelow()) {
             $grbit |= 0x0040; // Outline summary below
         }
-
         if ($this->phpSheet->getShowSummaryRight()) {
             $grbit |= 0x0080; // Outline summary right
         }
-
         if ($this->phpSheet->getPageSetup()->getFitToPage()) {
             $grbit |= 0x0100; // Page setup fit to page
         }
-
         if ($this->outlineOn) {
             $grbit |= 0x0400; // Outline symbols displayed
         }
@@ -2096,45 +1997,28 @@ class Worksheet extends BIFFwriter {
     /**
      * Write the HORIZONTALPAGEBREAKS and VERTICALPAGEBREAKS BIFF records.
      */
-    private function writeBreaks(): void{
-
+    private function writeBreaks(): void
+    {
         // initialize
         $vbreaks = [];
         $hbreaks = [];
 
-        foreach ($this->phpSheet->getBreaks() as $cell => $breakType) {
+        foreach ($this->phpSheet->getRowBreaks() as $cell => $break) {
             // Fetch coordinates
             $coordinates = Coordinate::coordinateFromString($cell);
-
-            // Decide what to do by the type of break
-
-            switch ($breakType) {
-            case \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet::BREAK_COLUMN:
-                // Add to list of vertical breaks
-                $vbreaks[] = Coordinate::columnIndexFromString($coordinates[0]) - 1;
-
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet::BREAK_ROW:
-                // Add to list of horizontal breaks
-                $hbreaks[] = $coordinates[1];
-
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet::BREAK_NONE:
-            default:
-                // Nothing to do
-                break;
-            }
-
+            $hbreaks[] = $coordinates[1];
+        }
+        foreach ($this->phpSheet->getColumnBreaks() as $cell => $break) {
+            // Fetch coordinates
+            $coordinates = Coordinate::indexesFromString($cell);
+            $vbreaks[] = $coordinates[0] - 1;
         }
 
         //horizontal page breaks
-
         if (!empty($hbreaks)) {
             // Sort and filter array of page breaks
             sort($hbreaks, SORT_NUMERIC);
-
-            if ($hbreaks[0] == 0) {
-                // don't use first break if it's 0
+            if ($hbreaks[0] == 0) { // don't use first break if it's 0
                 array_shift($hbreaks);
             }
 
@@ -2146,7 +2030,6 @@ class Worksheet extends BIFFwriter {
             $data = pack('v', $cbrk);
 
             // Append each page break
-
             foreach ($hbreaks as $hbreak) {
                 $data .= pack('vvv', $hbreak, 0x0000, 0x00ff);
             }
@@ -2155,7 +2038,6 @@ class Worksheet extends BIFFwriter {
         }
 
         // vertical page breaks
-
         if (!empty($vbreaks)) {
             // 1000 vertical pagebreaks appears to be an internal Excel 5 limit.
             // It is slightly higher in Excel 97/200, approx. 1026
@@ -2163,9 +2045,7 @@ class Worksheet extends BIFFwriter {
 
             // Sort and filter array of page breaks
             sort($vbreaks, SORT_NUMERIC);
-
-            if ($vbreaks[0] == 0) {
-                // don't use first break if it's 0
+            if ($vbreaks[0] == 0) { // don't use first break if it's 0
                 array_shift($vbreaks);
             }
 
@@ -2177,24 +2057,21 @@ class Worksheet extends BIFFwriter {
             $data = pack('v', $cbrk);
 
             // Append each page break
-
             foreach ($vbreaks as $vbreak) {
                 $data .= pack('vvv', $vbreak, 0x0000, 0xffff);
             }
 
             $this->append($header . $data);
         }
-
     }
 
     /**
      * Set the Biff PROTECT record to indicate that the worksheet is protected.
      */
-    private function writeProtect(): void {
-
+    private function writeProtect(): void
+    {
         // Exit unless sheet protection has been specified
-
-        if (!$this->phpSheet->getProtection()->getSheet()) {
+        if ($this->phpSheet->getProtection()->getSheet() !== true) {
             return;
         }
 
@@ -2212,17 +2089,15 @@ class Worksheet extends BIFFwriter {
     /**
      * Write SCENPROTECT.
      */
-    private function writeScenProtect(): void {
-
+    private function writeScenProtect(): void
+    {
         // Exit if sheet protection is not active
-
-        if (!$this->phpSheet->getProtection()->getSheet()) {
+        if ($this->phpSheet->getProtection()->getSheet() !== true) {
             return;
         }
 
         // Exit if scenarios are not protected
-
-        if (!$this->phpSheet->getProtection()->getScenarios()) {
+        if ($this->phpSheet->getProtection()->getScenarios() !== true) {
             return;
         }
 
@@ -2238,17 +2113,15 @@ class Worksheet extends BIFFwriter {
     /**
      * Write OBJECTPROTECT.
      */
-    private function writeObjectProtect(): void {
-
+    private function writeObjectProtect(): void
+    {
         // Exit if sheet protection is not active
-
-        if (!$this->phpSheet->getProtection()->getSheet()) {
+        if ($this->phpSheet->getProtection()->getSheet() !== true) {
             return;
         }
 
         // Exit if objects are not protected
-
-        if (!$this->phpSheet->getProtection()->getObjects()) {
+        if ($this->phpSheet->getProtection()->getObjects() !== true) {
             return;
         }
 
@@ -2264,11 +2137,10 @@ class Worksheet extends BIFFwriter {
     /**
      * Write the worksheet PASSWORD record.
      */
-    private function writePassword(): void {
-
+    private function writePassword(): void
+    {
         // Exit unless sheet protection and password have been specified
-
-        if (!$this->phpSheet->getProtection()->getSheet() || !$this->phpSheet->getProtection()->getPassword() || $this->phpSheet->getProtection()->getAlgorithm() !== '') {
+        if ($this->phpSheet->getProtection()->getSheet() !== true || !$this->phpSheet->getProtection()->getPassword() || $this->phpSheet->getProtection()->getAlgorithm() !== '') {
             return;
         }
 
@@ -2294,8 +2166,8 @@ class Worksheet extends BIFFwriter {
      * @param float $scale_x The horizontal scale
      * @param float $scale_y The vertical scale
      */
-    public function insertBitmap($row, $col, $bitmap, $x = 0, $y = 0, $scale_x = 1, $scale_y = 1): void{
-
+    public function insertBitmap($row, $col, $bitmap, $x = 0, $y = 0, $scale_x = 1, $scale_y = 1): void
+    {
         $bitmap_array = (is_resource($bitmap) || $bitmap instanceof GdImage
             ? $this->processBitmapGd($bitmap)
             : $this->processBitmap($bitmap));
@@ -2306,7 +2178,7 @@ class Worksheet extends BIFFwriter {
         $height *= $scale_y;
 
         // Calculate the vertices of the image and write the OBJ record
-        $this->positionImage($col, $row, $x, $y, $width, $height);
+        $this->positionImage($col, $row, $x, $y, (int) $width, (int) $height);
 
         // Write the IMDATA record to store the bitmap data
         $record = 0x007f;
@@ -2369,18 +2241,16 @@ class Worksheet extends BIFFwriter {
      * @param int $width Width of image frame
      * @param int $height Height of image frame
      */
-    public function positionImage($col_start, $row_start, $x1, $y1, $width, $height): void{
-
+    public function positionImage($col_start, $row_start, $x1, $y1, $width, $height): void
+    {
         // Initialise end cell to the same as the start cell
         $col_end = $col_start; // Col containing lower right corner of object
         $row_end = $row_start; // Row containing bottom right corner of object
 
         // Zero the specified offset if greater than the cell dimensions
-
         if ($x1 >= Xls::sizeCol($this->phpSheet, Coordinate::stringFromColumnIndex($col_start + 1))) {
             $x1 = 0;
         }
-
         if ($y1 >= Xls::sizeRow($this->phpSheet, $row_start + 1)) {
             $y1 = 0;
         }
@@ -2389,14 +2259,12 @@ class Worksheet extends BIFFwriter {
         $height = $height + $y1 - 1;
 
         // Subtract the underlying cell widths to find the end cell of the image
-
         while ($width >= Xls::sizeCol($this->phpSheet, Coordinate::stringFromColumnIndex($col_end + 1))) {
             $width -= Xls::sizeCol($this->phpSheet, Coordinate::stringFromColumnIndex($col_end + 1));
             ++$col_end;
         }
 
         // Subtract the underlying cell heights to find the end cell of the image
-
         while ($height >= Xls::sizeRow($this->phpSheet, $row_end + 1)) {
             $height -= Xls::sizeRow($this->phpSheet, $row_end + 1);
             ++$row_end;
@@ -2405,19 +2273,15 @@ class Worksheet extends BIFFwriter {
         // Bitmap isn't allowed to start or finish in a hidden cell, i.e. a cell
         // with zero eight or width.
         //
-
         if (Xls::sizeCol($this->phpSheet, Coordinate::stringFromColumnIndex($col_start + 1)) == 0) {
             return;
         }
-
         if (Xls::sizeCol($this->phpSheet, Coordinate::stringFromColumnIndex($col_end + 1)) == 0) {
             return;
         }
-
         if (Xls::sizeRow($this->phpSheet, $row_start + 1) == 0) {
             return;
         }
-
         if (Xls::sizeRow($this->phpSheet, $row_end + 1) == 0) {
             return;
         }
@@ -2444,8 +2308,8 @@ class Worksheet extends BIFFwriter {
      * @param int $rwB Row containing bottom right corner of object
      * @param int $dyB Distance from bottom of cell
      */
-    private function writeObjPicture($colL, $dxL, $rwT, $dyT, $colR, $dxR, $rwB, $dyB): void{
-
+    private function writeObjPicture($colL, $dxL, $rwT, $dyT, $colR, $dxR, $rwB, $dyB): void
+    {
         $record = 0x005d; // Record identifier
         $length = 0x003c; // Bytes to follow
 
@@ -2516,30 +2380,26 @@ class Worksheet extends BIFFwriter {
      *
      * @return array Array with data and properties of the bitmap
      */
-    public function processBitmapGd($image) {
-
+    public function processBitmapGd($image)
+    {
         $width = imagesx($image);
         $height = imagesy($image);
 
         $data = pack('Vvvvv', 0x000c, $width, $height, 0x01, 0x18);
-
         for ($j = $height; --$j;) {
-
             for ($i = 0; $i < $width; ++$i) {
                 /** @phpstan-ignore-next-line */
                 $color = imagecolorsforindex($image, imagecolorat($image, $i, $j));
-
-                foreach (['red', 'green', 'blue'] as $key) {
-                    $color[$key] = $color[$key] + (int) round((255 - $color[$key]) * $color['alpha'] / 127);
+                if ($color !== false) {
+                    foreach (['red', 'green', 'blue'] as $key) {
+                        $color[$key] = $color[$key] + (int) round((255 - $color[$key]) * $color['alpha'] / 127);
+                    }
+                    $data .= chr($color['blue']) . chr($color['green']) . chr($color['red']);
                 }
-
-                $data .= chr($color['blue']) . chr($color['green']) . chr($color['red']);
             }
-
             if (3 * $width % 4) {
                 $data .= str_repeat("\x00", 4 - 3 * $width % 4);
             }
-
         }
 
         return [$width, $height, strlen($data), $data];
@@ -2554,30 +2414,26 @@ class Worksheet extends BIFFwriter {
      *
      * @return array Array with data and properties of the bitmap
      */
-    public function processBitmap($bitmap) {
-
+    public function processBitmap($bitmap)
+    {
         // Open file.
         $bmp_fd = @fopen($bitmap, 'rb');
-
-        if (!$bmp_fd) {
+        if ($bmp_fd === false) {
             throw new WriterException("Couldn't import $bitmap");
         }
 
         // Slurp the file into a string.
-        $data = fread($bmp_fd, filesize($bitmap));
+        $data = (string) fread($bmp_fd, (int) filesize($bitmap));
 
         // Check that the file is big enough to be a bitmap.
-
         if (strlen($data) <= 0x36) {
             throw new WriterException("$bitmap doesn't contain enough data.\n");
         }
 
         // The first 2 bytes are used to identify the bitmap.
 
-        /** @phpstan-ignore-next-line */
         $identity = unpack('A2ident', $data);
-
-        if ($identity['ident'] != 'BM') {
+        if ($identity === false || $identity['ident'] != 'BM') {
             throw new WriterException("$bitmap doesn't appear to be a valid bitmap image.\n");
         }
 
@@ -2587,7 +2443,7 @@ class Worksheet extends BIFFwriter {
         // Read and remove the bitmap size. This is more reliable than reading
         // the data size at offset 0x22.
         //
-        $size_array = unpack('Vsa', substr($data, 0, 4));
+        $size_array = unpack('Vsa', substr($data, 0, 4)) ?: [];
         $size = $size_array['sa'];
         $data = substr($data, 4);
         $size -= 0x36; // Subtract size of bitmap header.
@@ -2597,15 +2453,13 @@ class Worksheet extends BIFFwriter {
         $data = substr($data, 12);
 
         // Read and remove the bitmap width and height. Verify the sizes.
-        $width_and_height = unpack('V2', substr($data, 0, 8));
+        $width_and_height = unpack('V2', substr($data, 0, 8)) ?: [];
         $width = $width_and_height[1];
         $height = $width_and_height[2];
         $data = substr($data, 8);
-
         if ($width > 0xFFFF) {
             throw new WriterException("$bitmap: largest image width supported is 65k.\n");
         }
-
         if ($height > 0xFFFF) {
             throw new WriterException("$bitmap: largest image height supported is 65k.\n");
         }
@@ -2613,12 +2467,9 @@ class Worksheet extends BIFFwriter {
         // Read and remove the bitmap planes and bpp data. Verify them.
         $planes_and_bitcount = unpack('v2', substr($data, 0, 4));
         $data = substr($data, 4);
-
-        if ($planes_and_bitcount[2] != 24) {
-            // Bitcount
+        if ($planes_and_bitcount === false || $planes_and_bitcount[2] != 24) { // Bitcount
             throw new WriterException("$bitmap isn't a 24bit true color bitmap.\n");
         }
-
         if ($planes_and_bitcount[1] != 1) {
             throw new WriterException("$bitmap: only 1 plane supported in bitmap image.\n");
         }
@@ -2627,7 +2478,7 @@ class Worksheet extends BIFFwriter {
         $compression = unpack('Vcomp', substr($data, 0, 4));
         $data = substr($data, 4);
 
-        if ($compression['comp'] != 0) {
+        if ($compression === false || $compression['comp'] != 0) {
             throw new WriterException("$bitmap: compression not supported in bitmap image.\n");
         }
 
@@ -2645,10 +2496,9 @@ class Worksheet extends BIFFwriter {
      * Store the window zoom factor. This should be a reduced fraction but for
      * simplicity we will store all fractions with a numerator of 100.
      */
-    private function writeZoom(): void {
-
+    private function writeZoom(): void
+    {
         // If scale is 100 we don't need to write a record
-
         if ($this->phpSheet->getSheetView()->getZoomScale() == 100) {
             return;
         }
@@ -2664,26 +2514,25 @@ class Worksheet extends BIFFwriter {
     /**
      * Get Escher object.
      */
-    public function getEscher():  ? \PhpOffice\PhenyxSpreadsheet\Shared\Escher {
-
+    public function getEscher(): ?\EphenyxShop\PhenyxSpreadsheet\Shared\Escher
+    {
         return $this->escher;
     }
 
     /**
      * Set Escher object.
      */
-    public function setEscher( ? \PhpOffice\PhenyxSpreadsheet\Shared\Escher $escher) : void{
-
+    public function setEscher(?\EphenyxShop\PhenyxSpreadsheet\Shared\Escher $escher): void
+    {
         $this->escher = $escher;
     }
 
     /**
      * Write MSODRAWING record.
      */
-    private function writeMsoDrawing() : void {
-
+    private function writeMsoDrawing(): void
+    {
         // write the Escher stream if necessary
-
         if (isset($this->escher)) {
             $writer = new Escher($this->escher);
             $data = $writer->close();
@@ -2694,7 +2543,6 @@ class Worksheet extends BIFFwriter {
             // split the Escher stream
             $spOffsets[0] = 0;
             $nm = count($spOffsets) - 1; // number of shapes excluding first shape
-
             for ($i = 1; $i <= $nm; ++$i) {
                 // MSODRAWING record
                 $record = 0x00EC; // Record identifier
@@ -2712,21 +2560,20 @@ class Worksheet extends BIFFwriter {
                 $objData = '';
 
                 // ftCmo
-
                 if ($spTypes[$i] == 0x00C9) {
                     // Add ftCmo (common object data) subobject
                     $objData .=
-                    pack(
-                        'vvvvvVVV',
-                        0x0015, // 0x0015 = ftCmo
-                        0x0012, // length of ftCmo data
-                        0x0014, // object type, 0x0014 = filter
-                        $i, // object id number, Excel seems to use 1-based index, local for the sheet
-                        0x2101, // option flags, 0x2001 is what OpenOffice.org uses
-                        0, // reserved
-                        0, // reserved
-                        0// reserved
-                    );
+                        pack(
+                            'vvvvvVVV',
+                            0x0015, // 0x0015 = ftCmo
+                            0x0012, // length of ftCmo data
+                            0x0014, // object type, 0x0014 = filter
+                            $i, // object id number, Excel seems to use 1-based index, local for the sheet
+                            0x2101, // option flags, 0x2001 is what OpenOffice.org uses
+                            0, // reserved
+                            0, // reserved
+                            0  // reserved
+                        );
 
                     // Add ftSbs Scroll bar subobject
                     $objData .= pack('vv', 0x00C, 0x0014);
@@ -2737,46 +2584,43 @@ class Worksheet extends BIFFwriter {
                 } else {
                     // Add ftCmo (common object data) subobject
                     $objData .=
-                    pack(
-                        'vvvvvVVV',
-                        0x0015, // 0x0015 = ftCmo
-                        0x0012, // length of ftCmo data
-                        0x0008, // object type, 0x0008 = picture
-                        $i, // object id number, Excel seems to use 1-based index, local for the sheet
-                        0x6011, // option flags, 0x6011 is what OpenOffice.org uses
-                        0, // reserved
-                        0, // reserved
-                        0// reserved
-                    );
+                        pack(
+                            'vvvvvVVV',
+                            0x0015, // 0x0015 = ftCmo
+                            0x0012, // length of ftCmo data
+                            0x0008, // object type, 0x0008 = picture
+                            $i, // object id number, Excel seems to use 1-based index, local for the sheet
+                            0x6011, // option flags, 0x6011 is what OpenOffice.org uses
+                            0, // reserved
+                            0, // reserved
+                            0  // reserved
+                        );
                 }
 
                 // ftEnd
                 $objData .=
-                pack(
-                    'vv',
-                    0x0000, // 0x0000 = ftEnd
-                    0x0000// length of ftEnd data
-                );
+                    pack(
+                        'vv',
+                        0x0000, // 0x0000 = ftEnd
+                        0x0000  // length of ftEnd data
+                    );
 
                 $length = strlen($objData);
                 $header = pack('vv', $record, $length);
                 $this->append($header . $objData);
             }
-
         }
-
     }
 
     /**
      * Store the DATAVALIDATIONS and DATAVALIDATION records.
      */
-    private function writeDataValidity(): void{
-
+    private function writeDataValidity(): void
+    {
         // Datavalidation collection
         $dataValidationCollection = $this->phpSheet->getDataValidationCollection();
 
         // Write data validations?
-
         if (!empty($dataValidationCollection)) {
             // DATAVALIDATIONS record
             $record = 0x01B2; // Record identifier
@@ -2809,7 +2653,6 @@ class Worksheet extends BIFFwriter {
                 $options |= $errorStyle << 4;
 
                 // explicit formula?
-
                 if ($type == 0x03 && preg_match('/^\".*\"$/', $dataValidation->getFormula1())) {
                     $options |= 0x01 << 7;
                 }
@@ -2835,33 +2678,30 @@ class Worksheet extends BIFFwriter {
 
                 // prompt title
                 $promptTitle = $dataValidation->getPromptTitle() !== '' ?
-                $dataValidation->getPromptTitle() : chr(0);
+                    $dataValidation->getPromptTitle() : chr(0);
                 $data .= StringHelper::UTF8toBIFF8UnicodeLong($promptTitle);
 
                 // error title
                 $errorTitle = $dataValidation->getErrorTitle() !== '' ?
-                $dataValidation->getErrorTitle() : chr(0);
+                    $dataValidation->getErrorTitle() : chr(0);
                 $data .= StringHelper::UTF8toBIFF8UnicodeLong($errorTitle);
 
                 // prompt text
                 $prompt = $dataValidation->getPrompt() !== '' ?
-                $dataValidation->getPrompt() : chr(0);
+                    $dataValidation->getPrompt() : chr(0);
                 $data .= StringHelper::UTF8toBIFF8UnicodeLong($prompt);
 
                 // error text
                 $error = $dataValidation->getError() !== '' ?
-                $dataValidation->getError() : chr(0);
+                    $dataValidation->getError() : chr(0);
                 $data .= StringHelper::UTF8toBIFF8UnicodeLong($error);
 
                 // formula 1
                 try {
                     $formula1 = $dataValidation->getFormula1();
-
-                    if ($type == 0x03) {
-                        // list type
+                    if ($type == 0x03) { // list type
                         $formula1 = str_replace(',', chr(0), $formula1);
                     }
-
                     $this->parser->parse($formula1);
                     $formula1 = $this->parser->toReversePolish();
                     $sz1 = strlen($formula1);
@@ -2869,18 +2709,15 @@ class Worksheet extends BIFFwriter {
                     $sz1 = 0;
                     $formula1 = '';
                 }
-
                 $data .= pack('vv', $sz1, 0x0000);
                 $data .= $formula1;
 
                 // formula 2
                 try {
                     $formula2 = $dataValidation->getFormula2();
-
                     if ($formula2 === '') {
                         throw new WriterException('No formula2');
                     }
-
                     $this->parser->parse($formula2);
                     $formula2 = $this->parser->toReversePolish();
                     $sz2 = strlen($formula2);
@@ -2888,7 +2725,6 @@ class Worksheet extends BIFFwriter {
                     $sz2 = 0;
                     $formula2 = '';
                 }
-
                 $data .= pack('vv', $sz2, 0x0000);
                 $data .= $formula2;
 
@@ -2901,32 +2737,28 @@ class Worksheet extends BIFFwriter {
 
                 $this->append($header . $data);
             }
-
         }
-
     }
 
     /**
      * Write PLV Record.
      */
-    private function writePageLayoutView(): void{
-
+    private function writePageLayoutView(): void
+    {
         $record = 0x088B; // Record identifier
         $length = 0x0010; // Bytes to follow
 
         $rt = 0x088B; // 2
         $grbitFrt = 0x0000; // 2
-        $reserved = 0x0000000000000000; // 8
+        //$reserved = 0x0000000000000000; // 8
         $wScalvePLV = $this->phpSheet->getSheetView()->getZoomScale(); // 2
 
         // The options flags that comprise $grbit
-
         if ($this->phpSheet->getSheetView()->getView() == SheetView::SHEETVIEW_PAGE_LAYOUT) {
             $fPageLayoutView = 1;
         } else {
             $fPageLayoutView = 0;
         }
-
         $fRulerVisible = 0;
         $fWhitespaceHidden = 0;
 
@@ -2946,8 +2778,7 @@ class Worksheet extends BIFFwriter {
         ConditionalHelper $conditionalFormulaHelper,
         Conditional $conditional,
         string $cellRange
-    ): void{
-
+    ): void {
         $record = 0x01B1; // Record identifier
         $type = null; // Type of the CF
         $operatorType = null; // Comparison operator
@@ -2955,45 +2786,44 @@ class Worksheet extends BIFFwriter {
         if ($conditional->getConditionType() == Conditional::CONDITION_EXPRESSION) {
             $type = 0x02;
             $operatorType = 0x00;
-        } else if ($conditional->getConditionType() == Conditional::CONDITION_CELLIS) {
+        } elseif ($conditional->getConditionType() == Conditional::CONDITION_CELLIS) {
             $type = 0x01;
 
             switch ($conditional->getOperatorType()) {
-            case Conditional::OPERATOR_NONE:
-                $operatorType = 0x00;
+                case Conditional::OPERATOR_NONE:
+                    $operatorType = 0x00;
 
-                break;
-            case Conditional::OPERATOR_EQUAL:
-                $operatorType = 0x03;
+                    break;
+                case Conditional::OPERATOR_EQUAL:
+                    $operatorType = 0x03;
 
-                break;
-            case Conditional::OPERATOR_GREATERTHAN:
-                $operatorType = 0x05;
+                    break;
+                case Conditional::OPERATOR_GREATERTHAN:
+                    $operatorType = 0x05;
 
-                break;
-            case Conditional::OPERATOR_GREATERTHANOREQUAL:
-                $operatorType = 0x07;
+                    break;
+                case Conditional::OPERATOR_GREATERTHANOREQUAL:
+                    $operatorType = 0x07;
 
-                break;
-            case Conditional::OPERATOR_LESSTHAN:
-                $operatorType = 0x06;
+                    break;
+                case Conditional::OPERATOR_LESSTHAN:
+                    $operatorType = 0x06;
 
-                break;
-            case Conditional::OPERATOR_LESSTHANOREQUAL:
-                $operatorType = 0x08;
+                    break;
+                case Conditional::OPERATOR_LESSTHANOREQUAL:
+                    $operatorType = 0x08;
 
-                break;
-            case Conditional::OPERATOR_NOTEQUAL:
-                $operatorType = 0x04;
+                    break;
+                case Conditional::OPERATOR_NOTEQUAL:
+                    $operatorType = 0x04;
 
-                break;
-            case Conditional::OPERATOR_BETWEEN:
-                $operatorType = 0x01;
+                    break;
+                case Conditional::OPERATOR_BETWEEN:
+                    $operatorType = 0x01;
 
-                break;
-                // not OPERATOR_NOTBETWEEN 0x02
+                    break;
+                    // not OPERATOR_NOTBETWEEN 0x02
             }
-
         }
 
         // $szValue1 : size of the formula data for first value or formula
@@ -3010,7 +2840,7 @@ class Worksheet extends BIFFwriter {
             $conditionalFormulaHelper->processCondition($arrConditions[0], $cellRange);
             $szValue1 = $conditionalFormulaHelper->size();
             $operand1 = $conditionalFormulaHelper->tokens();
-        } else if ($numConditions === 2 && ($conditional->getOperatorType() === Conditional::OPERATOR_BETWEEN)) {
+        } elseif ($numConditions === 2 && ($conditional->getOperatorType() === Conditional::OPERATOR_BETWEEN)) {
             $conditionalFormulaHelper->processCondition($arrConditions[0], $cellRange);
             $szValue1 = $conditionalFormulaHelper->size();
             $operand1 = $conditionalFormulaHelper->tokens();
@@ -3027,52 +2857,43 @@ class Worksheet extends BIFFwriter {
         $bTxRotation = ($conditional->getStyle()->getAlignment()->getTextRotation() === null ? 1 : 0);
         $bIndent = ($conditional->getStyle()->getAlignment()->getIndent() === 0 ? 1 : 0);
         $bShrinkToFit = ($conditional->getStyle()->getAlignment()->getShrinkToFit() === false ? 1 : 0);
-
         if ($bAlignHz == 0 || $bAlignVt == 0 || $bAlignWrapTx == 0 || $bTxRotation == 0 || $bIndent == 0 || $bShrinkToFit == 0) {
             $bFormatAlign = 1;
         } else {
             $bFormatAlign = 0;
         }
-
         // Protection
         $bProtLocked = ($conditional->getStyle()->getProtection()->getLocked() == null ? 1 : 0);
         $bProtHidden = ($conditional->getStyle()->getProtection()->getHidden() == null ? 1 : 0);
-
         if ($bProtLocked == 0 || $bProtHidden == 0) {
             $bFormatProt = 1;
         } else {
             $bFormatProt = 0;
         }
-
         // Border
         $bBorderLeft = ($conditional->getStyle()->getBorders()->getLeft()->getColor()->getARGB() == Color::COLOR_BLACK
-            && $conditional->getStyle()->getBorders()->getLeft()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
+        && $conditional->getStyle()->getBorders()->getLeft()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
         $bBorderRight = ($conditional->getStyle()->getBorders()->getRight()->getColor()->getARGB() == Color::COLOR_BLACK
-            && $conditional->getStyle()->getBorders()->getRight()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
+        && $conditional->getStyle()->getBorders()->getRight()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
         $bBorderTop = ($conditional->getStyle()->getBorders()->getTop()->getColor()->getARGB() == Color::COLOR_BLACK
-            && $conditional->getStyle()->getBorders()->getTop()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
+        && $conditional->getStyle()->getBorders()->getTop()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
         $bBorderBottom = ($conditional->getStyle()->getBorders()->getBottom()->getColor()->getARGB() == Color::COLOR_BLACK
-            && $conditional->getStyle()->getBorders()->getBottom()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
-
+        && $conditional->getStyle()->getBorders()->getBottom()->getBorderStyle() == Border::BORDER_NONE ? 1 : 0);
         if ($bBorderLeft == 0 || $bBorderRight == 0 || $bBorderTop == 0 || $bBorderBottom == 0) {
             $bFormatBorder = 1;
         } else {
             $bFormatBorder = 0;
         }
-
         // Pattern
         $bFillStyle = ($conditional->getStyle()->getFill()->getFillType() === null ? 0 : 1);
-        $bFillColor = ($conditional->getStyle()->getFill()->getStartColor()->getARGB() == null ? 0 : 1);
-        $bFillColorBg = ($conditional->getStyle()->getFill()->getEndColor()->getARGB() == null ? 0 : 1);
-
+        $bFillColor = ($conditional->getStyle()->getFill()->getStartColor()->getARGB() === null ? 0 : 1);
+        $bFillColorBg = ($conditional->getStyle()->getFill()->getEndColor()->getARGB() === null ? 0 : 1);
         if ($bFillStyle == 0 || $bFillColor == 0 || $bFillColorBg == 0) {
             $bFormatFill = 1;
         } else {
             $bFormatFill = 0;
         }
-
         // Font
-
         if (
             $conditional->getStyle()->getFont()->getName() !== null
             || $conditional->getStyle()->getFont()->getSize() !== null
@@ -3082,13 +2903,12 @@ class Worksheet extends BIFFwriter {
             || $conditional->getStyle()->getFont()->getSubscript() !== null
             || $conditional->getStyle()->getFont()->getUnderline() !== null
             || $conditional->getStyle()->getFont()->getStrikethrough() !== null
-            || $conditional->getStyle()->getFont()->getColor()->getARGB() != null
+            || $conditional->getStyle()->getFont()->getColor()->getARGB() !== null
         ) {
             $bFormatFont = 1;
         } else {
             $bFormatFont = 0;
         }
-
         // Alignment
         $flags = 0;
         $flags |= (1 == $bAlignHz ? 0x00000001 : 0);
@@ -3135,83 +2955,72 @@ class Worksheet extends BIFFwriter {
         $dataBlockFill = null;
 
         // Data Blocks
-
         if ($bFormatFont == 1) {
             // Font Name
-
             if ($conditional->getStyle()->getFont()->getName() === null) {
                 $dataBlockFont = pack('VVVVVVVV', 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000);
                 $dataBlockFont .= pack('VVVVVVVV', 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000);
             } else {
                 $dataBlockFont = StringHelper::UTF8toBIFF8UnicodeLong($conditional->getStyle()->getFont()->getName());
             }
-
             // Font Size
-
             if ($conditional->getStyle()->getFont()->getSize() === null) {
                 $dataBlockFont .= pack('V', 20 * 11);
             } else {
                 $dataBlockFont .= pack('V', 20 * $conditional->getStyle()->getFont()->getSize());
             }
-
             // Font Options
             $dataBlockFont .= pack('V', 0);
             // Font weight
-
             if ($conditional->getStyle()->getFont()->getBold() === true) {
                 $dataBlockFont .= pack('v', 0x02BC);
             } else {
                 $dataBlockFont .= pack('v', 0x0190);
             }
-
             // Escapement type
-
             if ($conditional->getStyle()->getFont()->getSubscript() === true) {
                 $dataBlockFont .= pack('v', 0x02);
                 $fontEscapement = 0;
-            } else if ($conditional->getStyle()->getFont()->getSuperscript() === true) {
+            } elseif ($conditional->getStyle()->getFont()->getSuperscript() === true) {
                 $dataBlockFont .= pack('v', 0x01);
                 $fontEscapement = 0;
             } else {
                 $dataBlockFont .= pack('v', 0x00);
                 $fontEscapement = 1;
             }
-
             // Underline type
-
             switch ($conditional->getStyle()->getFont()->getUnderline()) {
-            case \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_NONE:
-                $dataBlockFont .= pack('C', 0x00);
-                $fontUnderline = 0;
+                case \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_NONE:
+                    $dataBlockFont .= pack('C', 0x00);
+                    $fontUnderline = 0;
 
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLE:
-                $dataBlockFont .= pack('C', 0x02);
-                $fontUnderline = 0;
+                    break;
+                case \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLE:
+                    $dataBlockFont .= pack('C', 0x02);
+                    $fontUnderline = 0;
 
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLEACCOUNTING:
-                $dataBlockFont .= pack('C', 0x22);
-                $fontUnderline = 0;
+                    break;
+                case \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLEACCOUNTING:
+                    $dataBlockFont .= pack('C', 0x22);
+                    $fontUnderline = 0;
 
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLE:
-                $dataBlockFont .= pack('C', 0x01);
-                $fontUnderline = 0;
+                    break;
+                case \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLE:
+                    $dataBlockFont .= pack('C', 0x01);
+                    $fontUnderline = 0;
 
-                break;
-            case \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLEACCOUNTING:
-                $dataBlockFont .= pack('C', 0x21);
-                $fontUnderline = 0;
+                    break;
+                case \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLEACCOUNTING:
+                    $dataBlockFont .= pack('C', 0x21);
+                    $fontUnderline = 0;
 
-                break;
-            default:
-                $dataBlockFont .= pack('C', 0x00);
-                $fontUnderline = 1;
+                    break;
+                default:
+                    $dataBlockFont .= pack('C', 0x00);
+                    $fontUnderline = 1;
 
-                break;
+                    break;
             }
-
             // Not used (3)
             $dataBlockFont .= pack('vC', 0x0000, 0x00);
             // Font color index
@@ -3242,7 +3051,6 @@ class Worksheet extends BIFFwriter {
             // Always
             $dataBlockFont .= pack('v', 0x0001);
         }
-
         if ($bFormatAlign === 1) {
             // Alignment and text break
             $blockAlign = Style\CellAlignment::horizontal($conditional->getStyle()->getAlignment());
@@ -3255,13 +3063,11 @@ class Worksheet extends BIFFwriter {
 
             // Indentation
             $blockIndent = $conditional->getStyle()->getAlignment()->getIndent();
-
             if ($conditional->getStyle()->getAlignment()->getShrinkToFit() === true) {
                 $blockIndent |= 1 << 4;
             } else {
                 $blockIndent |= 0 << 4;
             }
-
             $blockIndent |= 0 << 6;
 
             // Relative indentation
@@ -3269,7 +3075,6 @@ class Worksheet extends BIFFwriter {
 
             $dataBlockAlign = pack('CCvvv', $blockAlign, $blockRotation, $blockIndent, $blockIndentRelative, 0x0000);
         }
-
         if ($bFormatBorder === 1) {
             $blockLineStyle = Style\CellBorder::style($conditional->getStyle()->getBorders()->getLeft());
             $blockLineStyle |= Style\CellBorder::style($conditional->getStyle()->getBorders()->getRight()) << 4;
@@ -3287,7 +3092,6 @@ class Worksheet extends BIFFwriter {
             $blockColor |= Style\CellBorder::style($conditional->getStyle()->getBorders()->getDiagonal()) << 21;
             $dataBlockBorder = pack('vv', $blockLineStyle, $blockColor);
         }
-
         if ($bFormatFill === 1) {
             // Fill Pattern Style
             $blockFillPatternStyle = Style\CellFill::style($conditional->getStyle()->getFill());
@@ -3301,37 +3105,27 @@ class Worksheet extends BIFFwriter {
         }
 
         $data = pack('CCvvVv', $type, $operatorType, $szValue1, $szValue2, $flags, 0x0000);
-
-        if ($bFormatFont === 1) {
-            // Block Formatting : OK
+        if ($bFormatFont === 1) { // Block Formatting : OK
             $data .= $dataBlockFont;
         }
-
         if ($bFormatAlign === 1) {
             $data .= $dataBlockAlign;
         }
-
         if ($bFormatBorder === 1) {
             $data .= $dataBlockBorder;
         }
-
-        if ($bFormatFill === 1) {
-            // Block Formatting : OK
+        if ($bFormatFill === 1) { // Block Formatting : OK
             $data .= $dataBlockFill;
         }
-
         if ($bFormatProt == 1) {
             $data .= $this->getDataBlockProtection($conditional);
         }
-
         if ($operand1 !== null) {
             $data .= $operand1;
         }
-
         if ($operand2 !== null) {
             $data .= $operand2;
         }
-
         $header = pack('vv', $record, strlen($data));
         $this->append($header . $data);
     }
@@ -3341,8 +3135,8 @@ class Worksheet extends BIFFwriter {
      *
      * @param Conditional[] $conditionalStyles
      */
-    private function writeCFHeader(string $cellCoordinate, array $conditionalStyles): bool{
-
+    private function writeCFHeader(string $cellCoordinate, array $conditionalStyles): bool
+    {
         $record = 0x01B0; // Record identifier
         $length = 0x0016; // Bytes to follow
 
@@ -3352,32 +3146,24 @@ class Worksheet extends BIFFwriter {
         $numRowMax = null;
 
         $arrConditional = [];
-
         foreach ($conditionalStyles as $conditional) {
-
             if (!in_array($conditional->getHashCode(), $arrConditional)) {
                 $arrConditional[] = $conditional->getHashCode();
             }
-
             // Cells
             $rangeCoordinates = Coordinate::rangeBoundaries($cellCoordinate);
-
             if ($numColumnMin === null || ($numColumnMin > $rangeCoordinates[0][0])) {
                 $numColumnMin = $rangeCoordinates[0][0];
             }
-
             if ($numColumnMax === null || ($numColumnMax < $rangeCoordinates[1][0])) {
                 $numColumnMax = $rangeCoordinates[1][0];
             }
-
             if ($numRowMin === null || ($numRowMin > $rangeCoordinates[0][1])) {
                 $numRowMin = (int) $rangeCoordinates[0][1];
             }
-
             if ($numRowMax === null || ($numRowMax < $rangeCoordinates[1][1])) {
                 $numRowMax = (int) $rangeCoordinates[1][1];
             }
-
         }
 
         if (count($arrConditional) === 0) {
@@ -3397,19 +3183,16 @@ class Worksheet extends BIFFwriter {
         return true;
     }
 
-    private function getDataBlockProtection(Conditional $conditional): int{
-
+    private function getDataBlockProtection(Conditional $conditional): int
+    {
         $dataBlockProtection = 0;
-
         if ($conditional->getStyle()->getProtection()->getLocked() == Protection::PROTECTION_PROTECTED) {
             $dataBlockProtection = 1;
         }
-
         if ($conditional->getStyle()->getProtection()->getHidden() == Protection::PROTECTION_PROTECTED) {
             $dataBlockProtection = 1 << 1;
         }
 
         return $dataBlockProtection;
     }
-
 }

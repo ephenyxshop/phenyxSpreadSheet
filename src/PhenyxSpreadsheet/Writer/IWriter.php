@@ -4,8 +4,11 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer;
 
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-interface IWriter {
+interface IWriter
+{
     public const SAVE_WITH_CHARTS = 1;
+
+    public const DISABLE_PRECALCULATE_FORMULAE = 2;
 
     /**
      * IWriter constructor.
@@ -61,6 +64,11 @@ interface IWriter {
      * Save PhenyxSpreadsheet to file.
      *
      * @param resource|string $filename Name of the file to save
+     * @param int $flags Flags that can change the behaviour of the Writer:
+     *            self::SAVE_WITH_CHARTS                Save any charts that are defined (if the Writer supports Charts)
+     *            self::DISABLE_PRECALCULATE_FORMULAE   Don't Precalculate formulae before saving the file
+     *
+     * @throws Exception
      */
     public function save($filename, int $flags = 0): void;
 

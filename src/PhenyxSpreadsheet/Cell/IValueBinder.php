@@ -2,7 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-interface IValueBinder {
+interface IValueBinder
+{
     /**
      * Bind value to a cell.
      *

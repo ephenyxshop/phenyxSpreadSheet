@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Token;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Engine\BranchPruner;
 
-class Stack {
-
+class Stack
+{
     /**
      * @var BranchPruner
      */
@@ -26,16 +26,16 @@ class Stack {
      */
     private $count = 0;
 
-    public function __construct(BranchPruner $branchPruner) {
-
+    public function __construct(BranchPruner $branchPruner)
+    {
         $this->branchPruner = $branchPruner;
     }
 
     /**
      * Return the number of entries on the stack.
      */
-    public function count(): int {
-
+    public function count(): int
+    {
         return $this->count;
     }
 
@@ -44,56 +44,49 @@ class Stack {
      *
      * @param mixed $value
      */
-    public function push(string $type, $value,  ? string $reference = null) : void{
-
+    public function push(string $type, $value, ?string $reference = null): void
+    {
         $stackItem = $this->getStackItem($type, $value, $reference);
         $this->stack[$this->count++] = $stackItem;
 
-        if ($type == 'Function') {
+        if ($type === 'Function') {
             $localeFunction = Calculation::localeFunc($value);
-
             if ($localeFunction != $value) {
                 $this->stack[($this->count - 1)]['localeValue'] = $localeFunction;
             }
-
         }
-
     }
 
-    public function pushStackItem(array $stackItem): void{
-
+    public function pushStackItem(array $stackItem): void
+    {
         $this->stack[$this->count++] = $stackItem;
     }
 
     /**
      * @param mixed $value
      */
-    public function getStackItem(string $type, $value,  ? string $reference = null) : array
+    public function getStackItem(string $type, $value, ?string $reference = null): array
     {
-
         $stackItem = [
-            'type'      => $type,
-            'value'     => $value,
+            'type' => $type,
+            'value' => $value,
             'reference' => $reference,
         ];
 
         // will store the result under this alias
         $storeKey = $this->branchPruner->currentCondition();
-
         if (isset($storeKey) || $reference === 'NULL') {
             $stackItem['storeKey'] = $storeKey;
         }
 
         // will only run computation if the matching store key is true
         $onlyIf = $this->branchPruner->currentOnlyIf();
-
         if (isset($onlyIf) || $reference === 'NULL') {
             $stackItem['onlyIf'] = $onlyIf;
         }
 
         // will only run computation if the matching store key is false
         $onlyIfNot = $this->branchPruner->currentOnlyIfNot();
-
         if (isset($onlyIfNot) || $reference === 'NULL') {
             $stackItem['onlyIfNot'] = $onlyIfNot;
         }
@@ -104,9 +97,8 @@ class Stack {
     /**
      * Pop the last entry from the stack.
      */
-    public function pop():  ? array
+    public function pop(): ?array
     {
-
         if ($this->count > 0) {
             return $this->stack[--$this->count];
         }
@@ -117,9 +109,8 @@ class Stack {
     /**
      * Return an entry from the stack without removing it.
      */
-    public function last(int $n = 1) :  ? array
+    public function last(int $n = 1): ?array
     {
-
         if ($this->count - $n < 0) {
             return null;
         }
@@ -130,10 +121,9 @@ class Stack {
     /**
      * Clear the stack.
      */
-    public function clear() : void{
-
+    public function clear(): void
+    {
         $this->stack = [];
         $this->count = 0;
     }
-
 }

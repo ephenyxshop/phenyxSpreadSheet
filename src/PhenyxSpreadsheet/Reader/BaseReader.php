@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Reader\Security\XmlScanner;
 use EphenyxShop\PhenyxSpreadsheet\Shared\File;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-abstract class BaseReader implements IReader {
-
+abstract class BaseReader implements IReader
+{
     /**
      * Read data only?
      * Identifies whether the Reader should only read data values for cells, and ignore any formatting information;
@@ -51,61 +51,62 @@ abstract class BaseReader implements IReader {
      */
     protected $readFilter;
 
+    /** @var resource */
     protected $fileHandle;
 
     /**
-     * @var XmlScanner
+     * @var ?XmlScanner
      */
     protected $securityScanner;
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->readFilter = new DefaultReadFilter();
     }
 
-    public function getReadDataOnly() {
-
+    public function getReadDataOnly()
+    {
         return $this->readDataOnly;
     }
 
-    public function setReadDataOnly($readCellValuesOnly) {
-
+    public function setReadDataOnly($readCellValuesOnly)
+    {
         $this->readDataOnly = (bool) $readCellValuesOnly;
 
         return $this;
     }
 
-    public function getReadEmptyCells() {
-
+    public function getReadEmptyCells()
+    {
         return $this->readEmptyCells;
     }
 
-    public function setReadEmptyCells($readEmptyCells) {
-
+    public function setReadEmptyCells($readEmptyCells)
+    {
         $this->readEmptyCells = (bool) $readEmptyCells;
 
         return $this;
     }
 
-    public function getIncludeCharts() {
-
+    public function getIncludeCharts()
+    {
         return $this->includeCharts;
     }
 
-    public function setIncludeCharts($includeCharts) {
-
+    public function setIncludeCharts($includeCharts)
+    {
         $this->includeCharts = (bool) $includeCharts;
 
         return $this;
     }
 
-    public function getLoadSheetsOnly() {
-
+    public function getLoadSheetsOnly()
+    {
         return $this->loadSheetsOnly;
     }
 
-    public function setLoadSheetsOnly($sheetList) {
-
+    public function setLoadSheetsOnly($sheetList)
+    {
         if ($sheetList === null) {
             return $this->setLoadAllSheets();
         }
@@ -115,40 +116,54 @@ abstract class BaseReader implements IReader {
         return $this;
     }
 
-    public function setLoadAllSheets() {
-
+    public function setLoadAllSheets()
+    {
         $this->loadSheetsOnly = null;
 
         return $this;
     }
 
-    public function getReadFilter() {
-
+    public function getReadFilter()
+    {
         return $this->readFilter;
     }
 
-    public function setReadFilter(IReadFilter $readFilter) {
-
+    public function setReadFilter(IReadFilter $readFilter)
+    {
         $this->readFilter = $readFilter;
 
         return $this;
     }
 
-    public function getSecurityScanner() {
+    public function getSecurityScanner(): ?XmlScanner
+    {
+        return $this->securityScanner;
+    }
+
+    public function getSecurityScannerOrThrow(): XmlScanner
+    {
+        if ($this->securityScanner === null) {
+            throw new ReaderException('Security scanner is unexpectedly null');
+        }
 
         return $this->securityScanner;
     }
 
-    protected function processFlags(int $flags): void {
-
+    protected function processFlags(int $flags): void
+    {
         if (((bool) ($flags & self::LOAD_WITH_CHARTS)) === true) {
             $this->setIncludeCharts(true);
         }
-
+        if (((bool) ($flags & self::READ_DATA_ONLY)) === true) {
+            $this->setReadDataOnly(true);
+        }
+        if (((bool) ($flags & self::SKIP_EMPTY_CELLS) || (bool) ($flags & self::IGNORE_EMPTY_CELLS)) === true) {
+            $this->setReadEmptyCells(false);
+        }
     }
 
-    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet {
-
+    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet
+    {
         throw new PhenyxSpreadsheetException('Reader classes must implement their own loadSpreadsheetFromFile() method');
     }
 
@@ -159,8 +174,8 @@ abstract class BaseReader implements IReader {
      *                       that should be loaded, but which won't be loaded by default, using these values:
      *                            IReader::LOAD_WITH_CHARTS - Include any charts that are defined in the loaded file
      */
-    public function load(string $filename, int $flags = 0): Spreadsheet{
-
+    public function load(string $filename, int $flags = 0): Spreadsheet
+    {
         $this->processFlags($flags);
 
         try {
@@ -168,28 +183,24 @@ abstract class BaseReader implements IReader {
         } catch (ReaderException $e) {
             throw $e;
         }
-
     }
 
     /**
      * Open file for reading.
      */
-    protected function openFile(string $filename): void{
-
+    protected function openFile(string $filename): void
+    {
         $fileHandle = false;
-
         if ($filename) {
             File::assertFile($filename);
 
             // Open file
             $fileHandle = fopen($filename, 'rb');
         }
-
         if ($fileHandle === false) {
             throw new ReaderException('Could not open file ' . $filename . ' for reading.');
         }
 
         $this->fileHandle = $fileHandle;
     }
-
 }

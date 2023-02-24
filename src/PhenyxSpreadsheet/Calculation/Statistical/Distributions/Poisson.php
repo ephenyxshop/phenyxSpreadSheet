@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 
-class Poisson {
-
+class Poisson
+{
     use ArrayEnabled;
 
     /**
@@ -29,8 +29,8 @@ class Poisson {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $mean, $cumulative) {
-
+    public static function distribution($value, $mean, $cumulative)
+    {
         if (is_array($value) || is_array($mean) || is_array($cumulative)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $cumulative);
         }
@@ -50,7 +50,6 @@ class Poisson {
         if ($cumulative) {
             $summer = 0;
             $floor = floor($value);
-
             for ($i = 0; $i <= $floor; ++$i) {
                 /** @var float */
                 $fact = MathTrig\Factorial::fact($i);
@@ -59,11 +58,9 @@ class Poisson {
 
             return exp(0 - $mean) * $summer;
         }
-
         /** @var float */
         $fact = MathTrig\Factorial::fact($value);
 
         return (exp(0 - $mean) * $mean ** $value) / $fact;
     }
-
 }

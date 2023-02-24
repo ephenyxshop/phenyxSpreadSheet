@@ -4,18 +4,20 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
 use EphenyxShop\PhenyxSpreadsheet\Cell\AddressRange;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
+use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Table\TableStyle;
 
-class Table {
-
+class Table
+{
     /**
      * Table Name.
      *
      * @var string
      */
-    private $name = '';
+    private $name;
 
     /**
      * Show Header Row.
@@ -46,6 +48,13 @@ class Table {
     private $workSheet;
 
     /**
+     * Table allow filter.
+     *
+     * @var bool
+     */
+    private $allowFilter = true;
+
+    /**
      * Table Column.
      *
      * @var Table\Column[]
@@ -60,6 +69,13 @@ class Table {
     private $style;
 
     /**
+     * Table AutoFilter.
+     *
+     * @var AutoFilter
+     */
+    private $autoFilter;
+
+    /**
      * Create a new Table.
      *
      * @param AddressRange|array<int>|string $range
@@ -68,55 +84,54 @@ class Table {
      *              or an AddressRange object.
      * @param string $name (e.g. Table1)
      */
-    public function __construct($range = '', string $name = '') {
-
+    public function __construct($range = '', string $name = '')
+    {
+        $this->style = new TableStyle();
+        $this->autoFilter = new AutoFilter($range);
         $this->setRange($range);
         $this->setName($name);
-        $this->style = new TableStyle();
     }
 
     /**
      * Get Table name.
      */
-    public function getName(): string {
-
+    public function getName(): string
+    {
         return $this->name;
     }
 
     /**
      * Set Table name.
+     *
+     * @throws PhenyxSpreadsheetException
      */
-    public function setName(string $name): self{
-
+    public function setName(string $name): self
+    {
         $name = trim($name);
 
         if (!empty($name)) {
-
             if (strlen($name) === 1 && in_array($name, ['C', 'c', 'R', 'r'])) {
                 throw new PhenyxSpreadsheetException('The table name is invalid');
             }
-
-            if (strlen($name) > 255) {
+            if (StringHelper::countCharacters($name) > 255) {
                 throw new PhenyxSpreadsheetException('The table name cannot be longer than 255 characters');
             }
-
             // Check for A1 or R1C1 cell reference notation
-
             if (
                 preg_match(Coordinate::A1_COORDINATE_REGEX, $name) ||
                 preg_match('/^R\[?\-?[0-9]*\]?C\[?\-?[0-9]*\]?$/i', $name)
             ) {
                 throw new PhenyxSpreadsheetException('The table name can\'t be the same as a cell reference');
             }
-
             if (!preg_match('/^[\p{L}_\\\\]/iu', $name)) {
                 throw new PhenyxSpreadsheetException('The table name must begin a name with a letter, an underscore character (_), or a backslash (\)');
             }
-
             if (!preg_match('/^[\p{L}_\\\\][\p{L}\p{M}0-9\._]+$/iu', $name)) {
                 throw new PhenyxSpreadsheetException('The table name contains invalid characters');
             }
 
+            $this->checkForDuplicateTableNames($name, $this->workSheet);
+            $this->updateStructuredReferences($name);
         }
 
         $this->name = $name;
@@ -125,18 +140,86 @@ class Table {
     }
 
     /**
+     * @throws PhenyxSpreadsheetException
+     */
+    private function checkForDuplicateTableNames(string $name, ?Worksheet $worksheet): void
+    {
+        // Remember that table names are case-insensitive
+        $tableName = StringHelper::strToLower($name);
+
+        if ($worksheet !== null && StringHelper::strToLower($this->name) !== $name) {
+            $spreadsheet = $worksheet->getParentOrThrow();
+
+            foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
+                foreach ($sheet->getTableCollection() as $table) {
+                    if (StringHelper::strToLower($table->getName()) === $tableName && $table != $this) {
+                        throw new PhenyxSpreadsheetException("Spreadsheet already contains a table named '{$this->name}'");
+                    }
+                }
+            }
+        }
+    }
+
+    private function updateStructuredReferences(string $name): void
+    {
+        if ($this->workSheet === null || $this->name === null || $this->name === '') {
+            return;
+        }
+
+        // Remember that table names are case-insensitive
+        if (StringHelper::strToLower($this->name) !== StringHelper::strToLower($name)) {
+            // We need to check all formula cells that might contain fully-qualified Structured References
+            //    that refer to this table, and update those formulae to reference the new table name
+            $spreadsheet = $this->workSheet->getParentOrThrow();
+            foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
+                $this->updateStructuredReferencesInCells($sheet, $name);
+            }
+            $this->updateStructuredReferencesInNamedFormulae($spreadsheet, $name);
+        }
+    }
+
+    private function updateStructuredReferencesInCells(Worksheet $worksheet, string $newName): void
+    {
+        $pattern = '/' . preg_quote($this->name) . '\[/mui';
+
+        foreach ($worksheet->getCoordinates(false) as $coordinate) {
+            $cell = $worksheet->getCell($coordinate);
+            if ($cell->getDataType() === DataType::TYPE_FORMULA) {
+                $formula = $cell->getValue();
+                if (preg_match($pattern, $formula) === 1) {
+                    $formula = preg_replace($pattern, "{$newName}[", $formula);
+                    $cell->setValueExplicit($formula, DataType::TYPE_FORMULA);
+                }
+            }
+        }
+    }
+
+    private function updateStructuredReferencesInNamedFormulae(Spreadsheet $spreadsheet, string $newName): void
+    {
+        $pattern = '/' . preg_quote($this->name) . '\[/mui';
+
+        foreach ($spreadsheet->getNamedFormulae() as $namedFormula) {
+            $formula = $namedFormula->getValue();
+            if (preg_match($pattern, $formula) === 1) {
+                $formula = preg_replace($pattern, "{$newName}[", $formula);
+                $namedFormula->setValue($formula); // @phpstan-ignore-line
+            }
+        }
+    }
+
+    /**
      * Get show Header Row.
      */
-    public function getShowHeaderRow(): bool {
-
+    public function getShowHeaderRow(): bool
+    {
         return $this->showHeaderRow;
     }
 
     /**
      * Set show Header Row.
      */
-    public function setShowHeaderRow(bool $showHeaderRow): self{
-
+    public function setShowHeaderRow(bool $showHeaderRow): self
+    {
         $this->showHeaderRow = $showHeaderRow;
 
         return $this;
@@ -145,17 +228,37 @@ class Table {
     /**
      * Get show Totals Row.
      */
-    public function getShowTotalsRow(): bool {
-
+    public function getShowTotalsRow(): bool
+    {
         return $this->showTotalsRow;
     }
 
     /**
      * Set show Totals Row.
      */
-    public function setShowTotalsRow(bool $showTotalsRow): self{
-
+    public function setShowTotalsRow(bool $showTotalsRow): self
+    {
         $this->showTotalsRow = $showTotalsRow;
+
+        return $this;
+    }
+
+    /**
+     * Get allow filter.
+     * If false, autofiltering is disabled for the table, if true it is enabled.
+     */
+    public function getAllowFilter(): bool
+    {
+        return $this->allowFilter;
+    }
+
+    /**
+     * Set show Autofiltering.
+     * Disabling autofiltering has the same effect as hiding the filter button on all the columns in the table.
+     */
+    public function setAllowFilter(bool $allowFilter): self
+    {
+        $this->allowFilter = $allowFilter;
 
         return $this;
     }
@@ -163,8 +266,8 @@ class Table {
     /**
      * Get Table Range.
      */
-    public function getRange(): string {
-
+    public function getRange(): string
+    {
         return $this->range;
     }
 
@@ -176,14 +279,12 @@ class Table {
      *              or passing in an array of [$fromColumnIndex, $fromRow, $toColumnIndex, $toRow] (e.g. [3, 5, 6, 8]),
      *              or an AddressRange object.
      */
-    public function setRange($range = ''): self {
-
+    public function setRange($range = ''): self
+    {
         // extract coordinate
-
         if ($range !== '') {
             [, $range] = Worksheet::extractSheetTitle(Validations::validateCellRange($range), true);
         }
-
         if (empty($range)) {
             //    Discard all column rules
             $this->columns = [];
@@ -197,22 +298,20 @@ class Table {
         }
 
         [$width, $height] = Coordinate::rangeDimension($range);
-
-        if ($width < 1 || $height < 2) {
-            throw new PhenyxSpreadsheetException('The table range must be at least 1 column and 2 rows');
+        if ($width < 1 || $height < 1) {
+            throw new PhenyxSpreadsheetException('The table range must be at least 1 column and row');
         }
 
         $this->range = $range;
-        //    Discard any column ruless that are no longer valid within this range
-        [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
+        $this->autoFilter->setRange($range);
 
+        //    Discard any column rules that are no longer valid within this range
+        [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
         foreach ($this->columns as $key => $value) {
             $colIndex = Coordinate::columnIndexFromString($key);
-
             if (($rangeStart[0] > $colIndex) || ($rangeEnd[0] < $colIndex)) {
                 unset($this->columns[$key]);
             }
-
         }
 
         return $this;
@@ -221,16 +320,14 @@ class Table {
     /**
      * Set Table Cell Range to max row.
      */
-    public function setRangeToMaxRow(): self {
-
+    public function setRangeToMaxRow(): self
+    {
         if ($this->workSheet !== null) {
             $thisrange = $this->range;
-            $range = preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange) ?? '';
-
+            $range = (string) preg_replace('/\\d+$/', (string) $this->workSheet->getHighestRow(), $thisrange);
             if ($range !== $thisrange) {
                 $this->setRange($range);
             }
-
         }
 
         return $this;
@@ -239,35 +336,31 @@ class Table {
     /**
      * Get Table's Worksheet.
      */
-    public function getWorksheet() :  ? Worksheet {
-
+    public function getWorksheet(): ?Worksheet
+    {
         return $this->workSheet;
     }
 
     /**
      * Set Table's Worksheet.
      */
-    public function setWorksheet( ? Worksheet $worksheet = null) : self {
-
+    public function setWorksheet(?Worksheet $worksheet = null): self
+    {
         if ($this->name !== '' && $worksheet !== null) {
-            $spreadsheet = $worksheet->getParent();
+            $spreadsheet = $worksheet->getParentOrThrow();
             $tableName = StringHelper::strToUpper($this->name);
 
             foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
-
                 foreach ($sheet->getTableCollection() as $table) {
-
                     if (StringHelper::strToUpper($table->getName()) === $tableName) {
                         throw new PhenyxSpreadsheetException("Workbook already contains a table named '{$this->name}'");
                     }
-
                 }
-
             }
-
         }
 
         $this->workSheet = $worksheet;
+        $this->autoFilter->setParent($worksheet);
 
         return $this;
     }
@@ -277,9 +370,8 @@ class Table {
      *
      * @return Table\Column[]
      */
-    public function getColumns() : array
+    public function getColumns(): array
     {
-
         return $this->columns;
     }
 
@@ -290,15 +382,14 @@ class Table {
      *
      * @return int The column offset within the table range
      */
-    public function isColumnInRange(string $column) : int {
-
+    public function isColumnInRange(string $column): int
+    {
         if (empty($this->range)) {
             throw new PhenyxSpreadsheetException('No table range is defined.');
         }
 
         $columnIndex = Coordinate::columnIndexFromString($column);
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
-
         if (($rangeStart[0] > $columnIndex) || ($rangeEnd[0] < $columnIndex)) {
             throw new PhenyxSpreadsheetException('Column is outside of current table range.');
         }
@@ -313,8 +404,8 @@ class Table {
      *
      * @return int The offset of the specified column within the table range
      */
-    public function getColumnOffset($column): int {
-
+    public function getColumnOffset($column): int
+    {
         return $this->isColumnInRange($column);
     }
 
@@ -323,8 +414,8 @@ class Table {
      *
      * @param string $column Column name (e.g. A)
      */
-    public function getColumn($column): Table\Column{
-
+    public function getColumn($column): Table\Column
+    {
         $this->isColumnInRange($column);
 
         if (!isset($this->columns[$column])) {
@@ -339,8 +430,8 @@ class Table {
      *
      * @param int $columnOffset Column offset within range (starting from 0)
      */
-    public function getColumnByOffset($columnOffset): Table\Column {
-
+    public function getColumnByOffset($columnOffset): Table\Column
+    {
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($this->range);
         $pColumn = Coordinate::stringFromColumnIndex($rangeStart[0] + $columnOffset);
 
@@ -353,16 +444,15 @@ class Table {
      * @param string|Table\Column $columnObjectOrString
      *            A simple string containing a Column ID like 'A' is permitted
      */
-    public function setColumn($columnObjectOrString): self {
-
+    public function setColumn($columnObjectOrString): self
+    {
         if ((is_string($columnObjectOrString)) && (!empty($columnObjectOrString))) {
             $column = $columnObjectOrString;
-        } else if (is_object($columnObjectOrString) && ($columnObjectOrString instanceof Table\Column)) {
+        } elseif (is_object($columnObjectOrString) && ($columnObjectOrString instanceof Table\Column)) {
             $column = $columnObjectOrString->getColumnIndex();
         } else {
             throw new PhenyxSpreadsheetException('Column is not within the table range.');
         }
-
         $this->isColumnInRange($column);
 
         if (is_string($columnObjectOrString)) {
@@ -371,7 +461,6 @@ class Table {
             $columnObjectOrString->setTable($this);
             $this->columns[$column] = $columnObjectOrString;
         }
-
         ksort($this->columns);
 
         return $this;
@@ -382,8 +471,8 @@ class Table {
      *
      * @param string $column Column name (e.g. A)
      */
-    public function clearColumn($column): self{
-
+    public function clearColumn($column): self
+    {
         $this->isColumnInRange($column);
 
         if (isset($this->columns[$column])) {
@@ -403,8 +492,8 @@ class Table {
      * @param string $fromColumn Column name (e.g. A)
      * @param string $toColumn Column name (e.g. B)
      */
-    public function shiftColumn($fromColumn, $toColumn): self{
-
+    public function shiftColumn($fromColumn, $toColumn): self
+    {
         $fromColumn = strtoupper($fromColumn);
         $toColumn = strtoupper($toColumn);
 
@@ -424,17 +513,35 @@ class Table {
     /**
      * Get table Style.
      */
-    public function getStyle(): Table\TableStyle {
-
+    public function getStyle(): Table\TableStyle
+    {
         return $this->style;
     }
 
     /**
      * Set table Style.
      */
-    public function setStyle(TableStyle $style): self{
-
+    public function setStyle(TableStyle $style): self
+    {
         $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get AutoFilter.
+     */
+    public function getAutoFilter(): AutoFilter
+    {
+        return $this->autoFilter;
+    }
+
+    /**
+     * Set AutoFilter.
+     */
+    public function setAutoFilter(AutoFilter $autoFilter): self
+    {
+        $this->autoFilter = $autoFilter;
 
         return $this;
     }
@@ -442,52 +549,37 @@ class Table {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
-
                 if ($key === 'workSheet') {
                     //    Detach from worksheet
-                    $this->{$key}
-                    = null;
+                    $this->{$key} = null;
                 } else {
-                    $this->{$key}
-                    = clone $value;
+                    $this->{$key} = clone $value;
                 }
-
-            } else if ((is_array($value)) && ($key === 'columns')) {
-                //    The columns array of \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet\Table objects
-                $this->{$key}
-                = [];
-
+            } elseif ((is_array($value)) && ($key === 'columns')) {
+                //    The columns array of \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet\Table objects
+                $this->{$key} = [];
                 foreach ($value as $k => $v) {
-                    $this->{$key}
-                    [$k] = clone $v;
+                    $this->{$key}[$k] = clone $v;
                     // attach the new cloned Column to this new cloned Table object
-                    $this->{$key}
-                    [$k]->setTable($this);
+                    $this->{$key}[$k]->setTable($this);
                 }
-
             } else {
-                $this->{$key}
-                = $value;
+                $this->{$key} = $value;
             }
-
         }
-
     }
 
     /**
      * toString method replicates previous behavior by returning the range if object is
      * referenced as a property of its worksheet.
      */
-    public function __toString() {
-
+    public function __toString()
+    {
         return (string) $this->range;
     }
-
 }

@@ -77,8 +77,8 @@ use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
  * 68 = A3 extra transverse paper (322 mm by 445 mm)
  * </code>
  */
-class PageSetup {
-
+class PageSetup
+{
     // Paper size
     const PAPERSIZE_LETTER = 1;
     const PAPERSIZE_LETTER_SMALL = 2;
@@ -259,17 +259,18 @@ class PageSetup {
     /**
      * First page number.
      *
-     * @var int
+     * @var ?int
      */
     private $firstPageNumber;
 
+    /** @var string */
     private $pageOrder = self::PAGEORDER_DOWN_THEN_OVER;
 
     /**
      * Create a new PageSetup.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->orientation = self::$orientationDefault;
     }
 
@@ -278,8 +279,8 @@ class PageSetup {
      *
      * @return int
      */
-    public function getPaperSize() {
-
+    public function getPaperSize()
+    {
         return $this->paperSize ?? self::$paperSizeDefault;
     }
 
@@ -290,8 +291,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setPaperSize($paperSize) {
-
+    public function setPaperSize($paperSize)
+    {
         $this->paperSize = $paperSize;
 
         return $this;
@@ -300,16 +301,16 @@ class PageSetup {
     /**
      * Get Paper Size default.
      */
-    public static function getPaperSizeDefault() : int {
-
+    public static function getPaperSizeDefault(): int
+    {
         return self::$paperSizeDefault;
     }
 
     /**
      * Set Paper Size Default.
      */
-    public static function setPaperSizeDefault(int $paperSize) : void{
-
+    public static function setPaperSizeDefault(int $paperSize): void
+    {
         self::$paperSizeDefault = $paperSize;
     }
 
@@ -318,8 +319,8 @@ class PageSetup {
      *
      * @return string
      */
-    public function getOrientation() {
-
+    public function getOrientation()
+    {
         return $this->orientation;
     }
 
@@ -330,8 +331,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setOrientation($orientation) {
-
+    public function setOrientation($orientation)
+    {
         if ($orientation === self::ORIENTATION_LANDSCAPE || $orientation === self::ORIENTATION_PORTRAIT || $orientation === self::ORIENTATION_DEFAULT) {
             $this->orientation = $orientation;
         }
@@ -339,17 +340,16 @@ class PageSetup {
         return $this;
     }
 
-    public static function getOrientationDefault(): string {
-
+    public static function getOrientationDefault(): string
+    {
         return self::$orientationDefault;
     }
 
-    public static function setOrientationDefault(string $orientation): void {
-
+    public static function setOrientationDefault(string $orientation): void
+    {
         if ($orientation === self::ORIENTATION_LANDSCAPE || $orientation === self::ORIENTATION_PORTRAIT || $orientation === self::ORIENTATION_DEFAULT) {
             self::$orientationDefault = $orientation;
         }
-
     }
 
     /**
@@ -357,8 +357,8 @@ class PageSetup {
      *
      * @return null|int
      */
-    public function getScale() {
-
+    public function getScale()
+    {
         return $this->scale;
     }
 
@@ -372,18 +372,15 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setScale($scale, $update = true) {
-
+    public function setScale($scale, $update = true)
+    {
         // Microsoft Office Excel 2007 only allows setting a scale between 10 and 400 via the user interface,
         // but it is apparently still able to handle any scale >= 0, where 0 results in 100
-
-        if (($scale >= 0) || $scale === null) {
+        if ($scale === null || $scale >= 0) {
             $this->scale = $scale;
-
             if ($update) {
                 $this->fitToPage = false;
             }
-
         } else {
             throw new PhenyxSpreadsheetException('Scale must not be negative');
         }
@@ -396,8 +393,8 @@ class PageSetup {
      *
      * @return bool
      */
-    public function getFitToPage() {
-
+    public function getFitToPage()
+    {
         return $this->fitToPage;
     }
 
@@ -408,8 +405,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setFitToPage($fitToPage) {
-
+    public function setFitToPage($fitToPage)
+    {
         $this->fitToPage = $fitToPage;
 
         return $this;
@@ -420,8 +417,8 @@ class PageSetup {
      *
      * @return null|int
      */
-    public function getFitToHeight() {
-
+    public function getFitToHeight()
+    {
         return $this->fitToHeight;
     }
 
@@ -433,10 +430,9 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setFitToHeight($fitToHeight, $update = true) {
-
+    public function setFitToHeight($fitToHeight, $update = true)
+    {
         $this->fitToHeight = $fitToHeight;
-
         if ($update) {
             $this->fitToPage = true;
         }
@@ -449,8 +445,8 @@ class PageSetup {
      *
      * @return null|int
      */
-    public function getFitToWidth() {
-
+    public function getFitToWidth()
+    {
         return $this->fitToWidth;
     }
 
@@ -462,10 +458,9 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setFitToWidth($value, $update = true) {
-
+    public function setFitToWidth($value, $update = true)
+    {
         $this->fitToWidth = $value;
-
         if ($update) {
             $this->fitToPage = true;
         }
@@ -478,14 +473,12 @@ class PageSetup {
      *
      * @return bool
      */
-    public function isColumnsToRepeatAtLeftSet() {
-
-        if (is_array($this->columnsToRepeatAtLeft)) {
-
+    public function isColumnsToRepeatAtLeftSet()
+    {
+        if (!empty($this->columnsToRepeatAtLeft)) {
             if ($this->columnsToRepeatAtLeft[0] != '' && $this->columnsToRepeatAtLeft[1] != '') {
                 return true;
             }
-
         }
 
         return false;
@@ -496,8 +489,8 @@ class PageSetup {
      *
      * @return array Containing start column and end column, empty array if option unset
      */
-    public function getColumnsToRepeatAtLeft() {
-
+    public function getColumnsToRepeatAtLeft()
+    {
         return $this->columnsToRepeatAtLeft;
     }
 
@@ -508,8 +501,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setColumnsToRepeatAtLeft(array $columnsToRepeatAtLeft) {
-
+    public function setColumnsToRepeatAtLeft(array $columnsToRepeatAtLeft)
+    {
         $this->columnsToRepeatAtLeft = $columnsToRepeatAtLeft;
 
         return $this;
@@ -523,8 +516,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setColumnsToRepeatAtLeftByStartAndEnd($start, $end) {
-
+    public function setColumnsToRepeatAtLeftByStartAndEnd($start, $end)
+    {
         $this->columnsToRepeatAtLeft = [$start, $end];
 
         return $this;
@@ -535,14 +528,12 @@ class PageSetup {
      *
      * @return bool
      */
-    public function isRowsToRepeatAtTopSet() {
-
-        if (is_array($this->rowsToRepeatAtTop)) {
-
+    public function isRowsToRepeatAtTopSet()
+    {
+        if (!empty($this->rowsToRepeatAtTop)) {
             if ($this->rowsToRepeatAtTop[0] != 0 && $this->rowsToRepeatAtTop[1] != 0) {
                 return true;
             }
-
         }
 
         return false;
@@ -553,8 +544,8 @@ class PageSetup {
      *
      * @return array Containing start column and end column, empty array if option unset
      */
-    public function getRowsToRepeatAtTop() {
-
+    public function getRowsToRepeatAtTop()
+    {
         return $this->rowsToRepeatAtTop;
     }
 
@@ -565,8 +556,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setRowsToRepeatAtTop(array $rowsToRepeatAtTop) {
-
+    public function setRowsToRepeatAtTop(array $rowsToRepeatAtTop)
+    {
         $this->rowsToRepeatAtTop = $rowsToRepeatAtTop;
 
         return $this;
@@ -580,8 +571,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setRowsToRepeatAtTopByStartAndEnd($start, $end) {
-
+    public function setRowsToRepeatAtTopByStartAndEnd($start, $end)
+    {
         $this->rowsToRepeatAtTop = [$start, $end];
 
         return $this;
@@ -592,8 +583,8 @@ class PageSetup {
      *
      * @return bool
      */
-    public function getHorizontalCentered() {
-
+    public function getHorizontalCentered()
+    {
         return $this->horizontalCentered;
     }
 
@@ -604,8 +595,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setHorizontalCentered($value) {
-
+    public function setHorizontalCentered($value)
+    {
         $this->horizontalCentered = $value;
 
         return $this;
@@ -616,8 +607,8 @@ class PageSetup {
      *
      * @return bool
      */
-    public function getVerticalCentered() {
-
+    public function getVerticalCentered()
+    {
         return $this->verticalCentered;
     }
 
@@ -628,8 +619,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setVerticalCentered($value) {
-
+    public function setVerticalCentered($value)
+    {
         $this->verticalCentered = $value;
 
         return $this;
@@ -645,15 +636,12 @@ class PageSetup {
      *
      * @return string
      */
-    public function getPrintArea($index = 0) {
-
+    public function getPrintArea($index = 0)
+    {
         if ($index == 0) {
-            return $this->printArea;
+            return (string) $this->printArea;
         }
-
-        /** @phpstan-ignore-next-line */
-        $printAreas = explode(',', $this->printArea);
-
+        $printAreas = explode(',', (string) $this->printArea);
         if (isset($printAreas[$index - 1])) {
             return $printAreas[$index - 1];
         }
@@ -671,14 +659,12 @@ class PageSetup {
      *
      * @return bool
      */
-    public function isPrintAreaSet($index = 0) {
-
+    public function isPrintAreaSet($index = 0)
+    {
         if ($index == 0) {
             return $this->printArea !== null;
         }
-
-        /** @phpstan-ignore-next-line */
-        $printAreas = explode(',', $this->printArea);
+        $printAreas = explode(',', (string) $this->printArea);
 
         return isset($printAreas[$index - 1]);
     }
@@ -693,19 +679,16 @@ class PageSetup {
      *
      * @return $this
      */
-    public function clearPrintArea($index = 0) {
-
+    public function clearPrintArea($index = 0)
+    {
         if ($index == 0) {
             $this->printArea = null;
         } else {
-            /** @phpstan-ignore-next-line */
-            $printAreas = explode(',', $this->printArea);
-
+            $printAreas = explode(',', (string) $this->printArea);
             if (isset($printAreas[$index - 1])) {
                 unset($printAreas[$index - 1]);
                 $this->printArea = implode(',', $printAreas);
             }
-
         }
 
         return $this;
@@ -731,62 +714,48 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setPrintArea($value, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE) {
-
+    public function setPrintArea($value, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE)
+    {
         if (strpos($value, '!') !== false) {
             throw new PhenyxSpreadsheetException('Cell coordinate must not specify a worksheet.');
-        } else if (strpos($value, ':') === false) {
+        } elseif (strpos($value, ':') === false) {
             throw new PhenyxSpreadsheetException('Cell coordinate must be a range of cells.');
-        } else if (strpos($value, '$') !== false) {
+        } elseif (strpos($value, '$') !== false) {
             throw new PhenyxSpreadsheetException('Cell coordinate must not be absolute.');
         }
-
         $value = strtoupper($value);
-
         if (!$this->printArea) {
             $index = 0;
         }
 
         if ($method == self::SETPRINTRANGE_OVERWRITE) {
-
             if ($index == 0) {
                 $this->printArea = $value;
             } else {
-                /** @phpstan-ignore-next-line */
-                $printAreas = explode(',', $this->printArea);
-
+                $printAreas = explode(',', (string) $this->printArea);
                 if ($index < 0) {
                     $index = count($printAreas) - abs($index) + 1;
                 }
-
                 if (($index <= 0) || ($index > count($printAreas))) {
                     throw new PhenyxSpreadsheetException('Invalid index for setting print range.');
                 }
-
                 $printAreas[$index - 1] = $value;
                 $this->printArea = implode(',', $printAreas);
             }
-
-        } else if ($method == self::SETPRINTRANGE_INSERT) {
-
+        } elseif ($method == self::SETPRINTRANGE_INSERT) {
             if ($index == 0) {
                 $this->printArea = $this->printArea ? ($this->printArea . ',' . $value) : $value;
             } else {
-                /** @phpstan-ignore-next-line */
-                $printAreas = explode(',', $this->printArea);
-
+                $printAreas = explode(',', (string) $this->printArea);
                 if ($index < 0) {
-                    $index = abs($index) - 1;
+                    $index = (int) abs($index) - 1;
                 }
-
                 if ($index > count($printAreas)) {
                     throw new PhenyxSpreadsheetException('Invalid index for setting print range.');
                 }
-
                 $printAreas = array_merge(array_slice($printAreas, 0, $index), [$value], array_slice($printAreas, $index));
                 $this->printArea = implode(',', $printAreas);
             }
-
         } else {
             throw new PhenyxSpreadsheetException('Invalid method for setting print range.');
         }
@@ -807,8 +776,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function addPrintArea($value, $index = -1) {
-
+    public function addPrintArea($value, $index = -1)
+    {
         return $this->setPrintArea($value, $index, self::SETPRINTRANGE_INSERT);
     }
 
@@ -835,8 +804,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function setPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE) {
-
+    public function setPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE)
+    {
         return $this->setPrintArea(
             Coordinate::stringFromColumnIndex($column1) . $row1 . ':' . Coordinate::stringFromColumnIndex($column2) . $row2,
             $index,
@@ -860,8 +829,8 @@ class PageSetup {
      *
      * @return $this
      */
-    public function addPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = -1) {
-
+    public function addPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = -1)
+    {
         return $this->setPrintArea(
             Coordinate::stringFromColumnIndex($column1) . $row1 . ':' . Coordinate::stringFromColumnIndex($column2) . $row2,
             $index,
@@ -872,22 +841,22 @@ class PageSetup {
     /**
      * Get first page number.
      *
-     * @return int
+     * @return ?int
      */
-    public function getFirstPageNumber() {
-
+    public function getFirstPageNumber()
+    {
         return $this->firstPageNumber;
     }
 
     /**
      * Set first page number.
      *
-     * @param int $value
+     * @param ?int $value
      *
      * @return $this
      */
-    public function setFirstPageNumber($value) {
-
+    public function setFirstPageNumber($value)
+    {
         $this->firstPageNumber = $value;
 
         return $this;
@@ -898,18 +867,18 @@ class PageSetup {
      *
      * @return $this
      */
-    public function resetFirstPageNumber() {
-
+    public function resetFirstPageNumber()
+    {
         return $this->setFirstPageNumber(null);
     }
 
-    public function getPageOrder(): string {
-
+    public function getPageOrder(): string
+    {
         return $this->pageOrder;
     }
 
-    public function setPageOrder( ? string $pageOrder) : self {
-
+    public function setPageOrder(?string $pageOrder): self
+    {
         if ($pageOrder === null || $pageOrder === self::PAGEORDER_DOWN_THEN_OVER || $pageOrder === self::PAGEORDER_OVER_THEN_DOWN) {
             $this->pageOrder = $pageOrder ?? self::PAGEORDER_DOWN_THEN_OVER;
         }
@@ -920,20 +889,15 @@ class PageSetup {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
-
 }

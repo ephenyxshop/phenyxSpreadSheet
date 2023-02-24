@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Style;
 
-class NumberFormat extends Supervisor {
-
+class NumberFormat extends Supervisor
+{
     // Pre-defined formats
     const FORMAT_GENERAL = 'General';
 
@@ -19,6 +19,7 @@ class NumberFormat extends Supervisor {
     const FORMAT_PERCENTAGE_0 = '0.0%';
     const FORMAT_PERCENTAGE_00 = '0.00%';
 
+    /** @deprecated 1.26 use FORMAT_DATE_YYYYMMDD instead */
     const FORMAT_DATE_YYYYMMDD2 = 'yyyy-mm-dd';
     const FORMAT_DATE_YYYYMMDD = 'yyyy-mm-dd';
     const FORMAT_DATE_DDMMYYYY = 'dd/mm/yyyy';
@@ -42,10 +43,50 @@ class NumberFormat extends Supervisor {
     const FORMAT_DATE_TIME8 = 'h:mm:ss;@';
     const FORMAT_DATE_YYYYMMDDSLASH = 'yyyy/mm/dd;@';
 
-    const FORMAT_CURRENCY_USD_SIMPLE = '"$"#,##0.00_-';
-    const FORMAT_CURRENCY_USD = '$#,##0_-';
-    const FORMAT_CURRENCY_EUR_SIMPLE = '#,##0.00_-"€"';
-    const FORMAT_CURRENCY_EUR = '#,##0_-"€"';
+    const DATE_TIME_OR_DATETIME_ARRAY = [
+        self::FORMAT_DATE_YYYYMMDD,
+        self::FORMAT_DATE_DDMMYYYY,
+        self::FORMAT_DATE_DMYSLASH,
+        self::FORMAT_DATE_DMYMINUS,
+        self::FORMAT_DATE_DMMINUS,
+        self::FORMAT_DATE_MYMINUS,
+        self::FORMAT_DATE_XLSX14,
+        self::FORMAT_DATE_XLSX15,
+        self::FORMAT_DATE_XLSX16,
+        self::FORMAT_DATE_XLSX17,
+        self::FORMAT_DATE_XLSX22,
+        self::FORMAT_DATE_DATETIME,
+        self::FORMAT_DATE_TIME1,
+        self::FORMAT_DATE_TIME2,
+        self::FORMAT_DATE_TIME3,
+        self::FORMAT_DATE_TIME4,
+        self::FORMAT_DATE_TIME5,
+        self::FORMAT_DATE_TIME6,
+        self::FORMAT_DATE_TIME7,
+        self::FORMAT_DATE_TIME8,
+        self::FORMAT_DATE_YYYYMMDDSLASH,
+    ];
+    const TIME_OR_DATETIME_ARRAY = [
+        self::FORMAT_DATE_XLSX22,
+        self::FORMAT_DATE_DATETIME,
+        self::FORMAT_DATE_TIME1,
+        self::FORMAT_DATE_TIME2,
+        self::FORMAT_DATE_TIME3,
+        self::FORMAT_DATE_TIME4,
+        self::FORMAT_DATE_TIME5,
+        self::FORMAT_DATE_TIME6,
+        self::FORMAT_DATE_TIME7,
+        self::FORMAT_DATE_TIME8,
+    ];
+
+    /** @deprecated 1.28 use FORMAT_CURRENCY_USD_INTEGER instead */
+    const FORMAT_CURRENCY_USD_SIMPLE = '"$"#,##0_-';
+    const FORMAT_CURRENCY_USD_INTEGER = '$#,##0_-';
+    const FORMAT_CURRENCY_USD = '$#,##0.00_-';
+    /** @deprecated 1.28 use FORMAT_CURRENCY_EUR_INTEGER instead */
+    const FORMAT_CURRENCY_EUR_SIMPLE = '#,##0_-"€"';
+    const FORMAT_CURRENCY_EUR_INTEGER = '#,##0_-[$€]';
+    const FORMAT_CURRENCY_EUR = '#,##0.00_-[$€]';
     const FORMAT_ACCOUNTING_USD = '_("$"* #,##0.00_);_("$"* \(#,##0.00\);_("$"* "-"??_);_(@_)';
     const FORMAT_ACCOUNTING_EUR = '_("€"* #,##0.00_);_("€"* \(#,##0.00\);_("€"* "-"??_);_(@_)';
 
@@ -87,8 +128,8 @@ class NumberFormat extends Supervisor {
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
      */
-    public function __construct($isSupervisor = false, $isConditional = false) {
-
+    public function __construct($isSupervisor = false, $isConditional = false)
+    {
         // Supervisor?
         parent::__construct($isSupervisor);
 
@@ -96,7 +137,6 @@ class NumberFormat extends Supervisor {
             $this->formatCode = null;
             $this->builtInFormatCode = false;
         }
-
     }
 
     /**
@@ -105,8 +145,8 @@ class NumberFormat extends Supervisor {
      *
      * @return NumberFormat
      */
-    public function getSharedComponent() {
-
+    public function getSharedComponent()
+    {
         /** @var Style */
         $parent = $this->parent;
 
@@ -120,8 +160,8 @@ class NumberFormat extends Supervisor {
      *
      * @return array
      */
-    public function getStyleArray($array) {
-
+    public function getStyleArray($array)
+    {
         return ['numberFormat' => $array];
     }
 
@@ -140,16 +180,14 @@ class NumberFormat extends Supervisor {
      *
      * @return $this
      */
-    public function applyFromArray(array $styleArray) {
-
+    public function applyFromArray(array $styleArray)
+    {
         if ($this->isSupervisor) {
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($styleArray));
         } else {
-
             if (isset($styleArray['formatCode'])) {
                 $this->setFormatCode($styleArray['formatCode']);
             }
-
         }
 
         return $this;
@@ -160,12 +198,11 @@ class NumberFormat extends Supervisor {
      *
      * @return null|string
      */
-    public function getFormatCode() {
-
+    public function getFormatCode()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getFormatCode();
         }
-
         if (is_int($this->builtInFormatCode)) {
             return self::builtInFormatCode($this->builtInFormatCode);
         }
@@ -180,12 +217,11 @@ class NumberFormat extends Supervisor {
      *
      * @return $this
      */
-    public function setFormatCode($formatCode) {
-
+    public function setFormatCode(string $formatCode)
+    {
         if ($formatCode == '') {
             $formatCode = self::FORMAT_GENERAL;
         }
-
         if ($this->isSupervisor) {
             $styleArray = $this->getStyleArray(['formatCode' => $formatCode]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
@@ -202,24 +238,25 @@ class NumberFormat extends Supervisor {
      *
      * @return false|int
      */
-    public function getBuiltInFormatCode() {
-
+    public function getBuiltInFormatCode()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getBuiltInFormatCode();
         }
 
+        // Scrutinizer says this could return true. It is wrong.
         return $this->builtInFormatCode;
     }
 
     /**
      * Set Built-In Format Code.
      *
-     * @param int $formatCodeIndex
+     * @param int $formatCodeIndex Id of the built-in format code to use
      *
      * @return $this
      */
-    public function setBuiltInFormatCode($formatCodeIndex) {
-
+    public function setBuiltInFormatCode(int $formatCodeIndex)
+    {
         if ($this->isSupervisor) {
             $styleArray = $this->getStyleArray(['formatCode' => self::builtInFormatCode($formatCodeIndex)]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
@@ -234,8 +271,8 @@ class NumberFormat extends Supervisor {
     /**
      * Fill built-in format codes.
      */
-    private static function fillBuiltInFormatCodes(): void {
-
+    private static function fillBuiltInFormatCodes(): void
+    {
         //  [MS-OI29500: Microsoft Office Implementation Information for ISO/IEC-29500 Standard Compliance]
         //  18.8.30. numFmt (Number Format)
         //
@@ -259,8 +296,7 @@ class NumberFormat extends Supervisor {
         //      KOR fmt 55: "yyyy/mm/dd"
 
         // Built-in format codes
-
-        if (self::$builtInFormats === null) {
+        if (empty(self::$builtInFormats)) {
             self::$builtInFormats = [];
 
             // General
@@ -333,7 +369,6 @@ class NumberFormat extends Supervisor {
             // Flip array (for faster lookups)
             self::$flippedBuiltInFormats = array_flip(self::$builtInFormats);
         }
-
     }
 
     /**
@@ -343,8 +378,8 @@ class NumberFormat extends Supervisor {
      *
      * @return string
      */
-    public static function builtInFormatCode($index) {
-
+    public static function builtInFormatCode($index)
+    {
         // Clean parameter
         $index = (int) $index;
 
@@ -352,7 +387,6 @@ class NumberFormat extends Supervisor {
         self::fillBuiltInFormatCodes();
 
         // Lookup format code
-
         if (isset(self::$builtInFormats[$index])) {
             return self::$builtInFormats[$index];
         }
@@ -367,13 +401,12 @@ class NumberFormat extends Supervisor {
      *
      * @return false|int
      */
-    public static function builtInFormatCodeIndex($formatCodeIndex) {
-
+    public static function builtInFormatCodeIndex($formatCodeIndex)
+    {
         // Ensure built-in format codes are available
         self::fillBuiltInFormatCodes();
 
         // Lookup format code
-
         if (array_key_exists($formatCodeIndex, self::$flippedBuiltInFormats)) {
             return self::$flippedBuiltInFormats[$formatCodeIndex];
         }
@@ -386,8 +419,8 @@ class NumberFormat extends Supervisor {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getHashCode();
         }
@@ -403,23 +436,22 @@ class NumberFormat extends Supervisor {
      * Convert a value in a pre-defined format to a PHP string.
      *
      * @param mixed $value Value to format
-     * @param string $format Format code, see = self::FORMAT_*
+     * @param string $format Format code: see = self::FORMAT_* for predefined values;
+     *                          or can be any valid MS Excel custom format string
      * @param array $callBack Callback function for additional formatting of string
      *
      * @return string Formatted string
      */
-    public static function toFormattedString($value, $format, $callBack = null) {
-
+    public static function toFormattedString($value, $format, $callBack = null)
+    {
         return NumberFormat\Formatter::toFormattedString($value, $format, $callBack);
     }
 
     protected function exportArray1(): array
     {
-
         $exportedArray = [];
         $this->exportArray2($exportedArray, 'formatCode', $this->getFormatCode());
 
         return $exportedArray;
     }
-
 }

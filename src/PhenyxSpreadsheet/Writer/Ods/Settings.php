@@ -8,15 +8,15 @@ use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
-class Settings extends WriterPart {
-
+class Settings extends WriterPart
+{
     /**
      * Write settings.xml to XML format.
      *
      * @return string XML Output
      */
-    public function write(): string {
-
+    public function write(): string
+    {
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -70,8 +70,8 @@ class Settings extends WriterPart {
         return $objWriter->getData();
     }
 
-    private function writeAllWorksheetSettings(XMLWriter $objWriter, Spreadsheet $spreadsheet): void{
-
+    private function writeAllWorksheetSettings(XMLWriter $objWriter, Spreadsheet $spreadsheet): void
+    {
         $objWriter->writeAttribute('config:name', 'Tables');
 
         foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
@@ -81,13 +81,12 @@ class Settings extends WriterPart {
         $objWriter->endElement(); // config:config-item-map-entry Tables
     }
 
-    private function writeWorksheetSettings(XMLWriter $objWriter, Worksheet $worksheet): void{
-
+    private function writeWorksheetSettings(XMLWriter $objWriter, Worksheet $worksheet): void
+    {
         $objWriter->startElement('config:config-item-map-entry');
         $objWriter->writeAttribute('config:name', $worksheet->getTitle());
 
         $this->writeSelectedCells($objWriter, $worksheet);
-
         if ($worksheet->getFreezePane() !== null) {
             $this->writeFreezePane($objWriter, $worksheet);
         }
@@ -95,10 +94,9 @@ class Settings extends WriterPart {
         $objWriter->endElement(); // config:config-item-map-entry Worksheet
     }
 
-    private function writeSelectedCells(XMLWriter $objWriter, Worksheet $worksheet): void{
-
+    private function writeSelectedCells(XMLWriter $objWriter, Worksheet $worksheet): void
+    {
         $selected = $worksheet->getSelectedCells();
-
         if (preg_match('/^([a-z]+)([0-9]+)/i', $selected, $matches) === 1) {
             $colSel = Coordinate::columnIndexFromString($matches[1]) - 1;
             $rowSel = (int) $matches[2] - 1;
@@ -113,11 +111,10 @@ class Settings extends WriterPart {
             $objWriter->text((string) $rowSel);
             $objWriter->endElement();
         }
-
     }
 
-    private function writeSplitValue(XMLWriter $objWriter, string $splitMode, string $type, string $value): void{
-
+    private function writeSplitValue(XMLWriter $objWriter, string $splitMode, string $type, string $value): void
+    {
         $objWriter->startElement('config:config-item');
         $objWriter->writeAttribute('config:name', $splitMode);
         $objWriter->writeAttribute('config:type', $type);
@@ -125,10 +122,9 @@ class Settings extends WriterPart {
         $objWriter->endElement();
     }
 
-    private function writeFreezePane(XMLWriter $objWriter, Worksheet $worksheet): void{
-
+    private function writeFreezePane(XMLWriter $objWriter, Worksheet $worksheet): void
+    {
         $freezePane = CellAddress::fromCellAddress($worksheet->getFreezePane());
-
         if ($freezePane->cellAddress() === 'A1') {
             return;
         }
@@ -153,5 +149,4 @@ class Settings extends WriterPart {
 
         $this->writeSplitValue($objWriter, 'ActiveSplitRange', 'short', '3');
     }
-
 }

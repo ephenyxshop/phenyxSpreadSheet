@@ -2,15 +2,15 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
-class Mimetype extends WriterPart {
-
+class Mimetype extends WriterPart
+{
     /**
      * Write mimetype to plain text format.
      *
      * @return string XML Output
      */
-    public function write(): string {
-
+    public function write(): string
+    {
         return 'application/vnd.oasis.opendocument.spreadsheet';
     }
 }

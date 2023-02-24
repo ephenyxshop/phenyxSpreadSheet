@@ -56,7 +56,7 @@
         "ext-xmlwriter": "*",
         "ext-zip": "*",
         "ext-zlib": "*",
-        "ephenyxshop/htmlpurifier": "^4",
+        "ephenyxshop/htmlpurifier": "^1",
         "maennchen/zipstream-php": "^2.1",
         "markbaker/complex": "^3.0",
         "markbaker/matrix": "^3.0",

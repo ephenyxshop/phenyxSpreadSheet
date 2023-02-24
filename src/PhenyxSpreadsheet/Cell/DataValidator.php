@@ -9,8 +9,8 @@ use EphenyxShop\PhenyxSpreadsheet\Exception;
 /**
  * Validate a cell value according to its validation rules.
  */
-class DataValidator {
-
+class DataValidator
+{
     /**
      * Does this cell contain valid value?
      *
@@ -18,8 +18,8 @@ class DataValidator {
      *
      * @return bool
      */
-    public function isValid(Cell $cell) {
-
+    public function isValid(Cell $cell)
+    {
         if (!$cell->hasDataValidation()) {
             return true;
         }
@@ -32,10 +32,9 @@ class DataValidator {
         }
 
         // TODO: write check on all cases
-
         switch ($dataValidation->getType()) {
-        case DataValidation::TYPE_LIST:
-            return $this->isValueInList($cell);
+            case DataValidation::TYPE_LIST:
+                return $this->isValueInList($cell);
         }
 
         return false;
@@ -48,26 +47,23 @@ class DataValidator {
      *
      * @return bool
      */
-    private function isValueInList(Cell $cell) {
-
+    private function isValueInList(Cell $cell)
+    {
         $cellValue = $cell->getValue();
         $dataValidation = $cell->getDataValidation();
 
         $formula1 = $dataValidation->getFormula1();
-
         if (!empty($formula1)) {
             // inline values list
-
             if ($formula1[0] === '"') {
                 return in_array(strtolower($cellValue), explode(',', strtolower(trim($formula1, '"'))), true);
-            } else if (strpos($formula1, ':') > 0) {
+            } elseif (strpos($formula1, ':') > 0) {
                 // values list cells
                 $matchFormula = '=MATCH(' . $cell->getCoordinate() . ', ' . $formula1 . ', 0)';
                 $calculation = Calculation::getInstance($cell->getWorksheet()->getParent());
 
                 try {
                     $result = $calculation->calculateFormula($matchFormula, $cell->getCoordinate(), $cell);
-
                     while (is_array($result)) {
                         $result = array_pop($result);
                     }
@@ -76,12 +72,9 @@ class DataValidator {
                 } catch (Exception $ex) {
                     return false;
                 }
-
             }
-
         }
 
         return true;
     }
-
 }

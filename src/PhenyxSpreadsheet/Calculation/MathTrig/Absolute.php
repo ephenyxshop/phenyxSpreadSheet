@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Absolute {
-
+class Absolute
+{
     use ArrayEnabled;
 
     /**
@@ -20,8 +20,8 @@ class Absolute {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function evaluate($number) {
-
+    public static function evaluate($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -34,5 +34,4 @@ class Absolute {
 
         return abs($number);
     }
-
 }

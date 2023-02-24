@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Helpers;
 
-class Cotangent {
-
+class Cotangent
+{
     use ArrayEnabled;
 
     /**
@@ -21,8 +21,8 @@ class Cotangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function cot($angle) {
-
+    public static function cot($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -47,8 +47,8 @@ class Cotangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function coth($angle) {
-
+    public static function coth($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -73,8 +73,8 @@ class Cotangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function acot($number) {
-
+    public static function acot($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -99,8 +99,8 @@ class Cotangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function acoth($number) {
-
+    public static function acoth($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -115,5 +115,4 @@ class Cotangent {
 
         return Helpers::numberOrNan($result);
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 
-class ConditionalHelper {
-
+class ConditionalHelper
+{
     /**
      * Formula parser.
      *
@@ -34,16 +34,16 @@ class ConditionalHelper {
      */
     protected $size;
 
-    public function __construct(Parser $parser) {
-
+    public function __construct(Parser $parser)
+    {
         $this->parser = $parser;
     }
 
     /**
      * @param mixed $condition
      */
-    public function processCondition($condition, string $cellRange): void{
-
+    public function processCondition($condition, string $cellRange): void
+    {
         $this->condition = $condition;
         $this->cellRange = $cellRange;
 
@@ -61,19 +61,16 @@ class ConditionalHelper {
                 $this->tokens = pack('Cv', 0x1E, 0);
                 $this->size = 3;
             }
-
         }
-
     }
 
-    public function tokens() :  ? string {
-
+    public function tokens(): ?string
+    {
         return $this->tokens;
     }
 
-    public function size() : int {
-
+    public function size(): int
+    {
         return $this->size;
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher;
 
-class DggContainer {
-
+class DggContainer
+{
     /**
      * Maximum shape index of all shapes in all drawings increased by one.
      *
@@ -28,7 +28,7 @@ class DggContainer {
     /**
      * BLIP Store Container.
      *
-     * @var DggContainer\BstoreContainer
+     * @var ?DggContainer\BstoreContainer
      */
     private $bstoreContainer;
 
@@ -51,8 +51,8 @@ class DggContainer {
      *
      * @return int
      */
-    public function getSpIdMax() {
-
+    public function getSpIdMax()
+    {
         return $this->spIdMax;
     }
 
@@ -61,8 +61,8 @@ class DggContainer {
      *
      * @param int $value
      */
-    public function setSpIdMax($value): void{
-
+    public function setSpIdMax($value): void
+    {
         $this->spIdMax = $value;
     }
 
@@ -71,8 +71,8 @@ class DggContainer {
      *
      * @return int
      */
-    public function getCDgSaved() {
-
+    public function getCDgSaved()
+    {
         return $this->cDgSaved;
     }
 
@@ -81,8 +81,8 @@ class DggContainer {
      *
      * @param int $value
      */
-    public function setCDgSaved($value): void{
-
+    public function setCDgSaved($value): void
+    {
         $this->cDgSaved = $value;
     }
 
@@ -91,8 +91,8 @@ class DggContainer {
      *
      * @return int
      */
-    public function getCSpSaved() {
-
+    public function getCSpSaved()
+    {
         return $this->cSpSaved;
     }
 
@@ -101,18 +101,18 @@ class DggContainer {
      *
      * @param int $value
      */
-    public function setCSpSaved($value): void{
-
+    public function setCSpSaved($value): void
+    {
         $this->cSpSaved = $value;
     }
 
     /**
      * Get BLIP Store Container.
      *
-     * @return DggContainer\BstoreContainer
+     * @return ?DggContainer\BstoreContainer
      */
-    public function getBstoreContainer() {
-
+    public function getBstoreContainer()
+    {
         return $this->bstoreContainer;
     }
 
@@ -121,8 +121,8 @@ class DggContainer {
      *
      * @param DggContainer\BstoreContainer $bstoreContainer
      */
-    public function setBstoreContainer($bstoreContainer): void{
-
+    public function setBstoreContainer($bstoreContainer): void
+    {
         $this->bstoreContainer = $bstoreContainer;
     }
 
@@ -132,8 +132,8 @@ class DggContainer {
      * @param int $property The number specifies the option
      * @param mixed $value
      */
-    public function setOPT($property, $value): void{
-
+    public function setOPT($property, $value): void
+    {
         $this->OPT[$property] = $value;
     }
 
@@ -144,8 +144,8 @@ class DggContainer {
      *
      * @return mixed
      */
-    public function getOPT($property) {
-
+    public function getOPT($property)
+    {
         if (isset($this->OPT[$property])) {
             return $this->OPT[$property];
         }
@@ -158,8 +158,8 @@ class DggContainer {
      *
      * @return array
      */
-    public function getIDCLs() {
-
+    public function getIDCLs()
+    {
         return $this->IDCLs;
     }
 
@@ -168,9 +168,8 @@ class DggContainer {
      *
      * @param array $IDCLs
      */
-    public function setIDCLs($IDCLs): void{
-
+    public function setIDCLs($IDCLs): void
+    {
         $this->IDCLs = $IDCLs;
     }
-
 }

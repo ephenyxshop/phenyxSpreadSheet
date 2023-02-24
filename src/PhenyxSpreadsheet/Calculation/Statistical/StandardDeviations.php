@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
-class StandardDeviations {
-
+class StandardDeviations
+{
     /**
      * STDEV.
      *
@@ -17,10 +17,9 @@ class StandardDeviations {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function STDEV(...$args) {
-
-        $result = Variances::VAR (...$args);
-
+    public static function STDEV(...$args)
+    {
+        $result = Variances::VAR(...$args);
         if (!is_numeric($result)) {
             return $result;
         }
@@ -40,10 +39,9 @@ class StandardDeviations {
      *
      * @return float|string
      */
-    public static function STDEVA(...$args) {
-
+    public static function STDEVA(...$args)
+    {
         $result = Variances::VARA(...$args);
-
         if (!is_numeric($result)) {
             return $result;
         }
@@ -63,10 +61,9 @@ class StandardDeviations {
      *
      * @return float|string
      */
-    public static function STDEVP(...$args) {
-
+    public static function STDEVP(...$args)
+    {
         $result = Variances::VARP(...$args);
-
         if (!is_numeric($result)) {
             return $result;
         }
@@ -86,15 +83,13 @@ class StandardDeviations {
      *
      * @return float|string
      */
-    public static function STDEVPA(...$args) {
-
+    public static function STDEVPA(...$args)
+    {
         $result = Variances::VARPA(...$args);
-
         if (!is_numeric($result)) {
             return $result;
         }
 
         return sqrt((float) $result);
     }
-
 }

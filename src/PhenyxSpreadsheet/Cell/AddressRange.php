@@ -2,10 +2,13 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-interface AddressRange {
+interface AddressRange
+{
     public const MAX_ROW = 1048576;
 
     public const MAX_COLUMN = 'XFD';
+
+    public const MAX_COLUMN_INT = 16384;
 
     /**
      * @return mixed

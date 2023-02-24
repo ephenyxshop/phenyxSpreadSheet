@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Combinations;
 
-class HyperGeometric {
-
+class HyperGeometric
+{
     use ArrayEnabled;
 
     /**
@@ -30,8 +30,8 @@ class HyperGeometric {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($sampleSuccesses, $sampleNumber, $populationSuccesses, $populationNumber) {
-
+    public static function distribution($sampleSuccesses, $sampleNumber, $populationSuccesses, $populationNumber)
+    {
         if (
             is_array($sampleSuccesses) || is_array($sampleNumber) ||
             is_array($populationSuccesses) || is_array($populationNumber)
@@ -57,11 +57,9 @@ class HyperGeometric {
         if (($sampleSuccesses < 0) || ($sampleSuccesses > $sampleNumber) || ($sampleSuccesses > $populationSuccesses)) {
             return ExcelError::NAN();
         }
-
         if (($sampleNumber <= 0) || ($sampleNumber > $populationNumber)) {
             return ExcelError::NAN();
         }
-
         if (($populationSuccesses <= 0) || ($populationSuccesses > $populationNumber)) {
             return ExcelError::NAN();
         }
@@ -75,5 +73,4 @@ class HyperGeometric {
 
         return $successesPopulationAndSample * $adjustedPopulationAndSample / $numbersPopulationAndSample;
     }
-
 }

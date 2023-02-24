@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Compare {
-
+class Compare
+{
     use ArrayEnabled;
 
     /**
@@ -29,8 +29,8 @@ class Compare {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function DELTA($a, $b = 0.0) {
-
+    public static function DELTA($a, $b = 0.0)
+    {
         if (is_array($a) || is_array($b)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $a, $b);
         }
@@ -57,27 +57,26 @@ class Compare {
      *
      * @param array|float $number the value to test against step
      *                      Or can be an array of values
-     * @param array|float $step The threshold value. If you omit a value for step, GESTEP uses zero.
+     * @param null|array|float $step The threshold value. If you omit a value for step, GESTEP uses zero.
      *                      Or can be an array of values
      *
      * @return array|int|string (string in the event of an error)
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function GESTEP($number, $step = 0.0) {
-
+    public static function GESTEP($number, $step = 0.0)
+    {
         if (is_array($number) || is_array($step)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $step);
         }
 
         try {
             $number = EngineeringValidations::validateFloat($number);
-            $step = EngineeringValidations::validateFloat($step);
+            $step = EngineeringValidations::validateFloat($step ?? 0.0);
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         return (int) ($number >= $step);
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Size {
-
+class Size
+{
     /**
      * LARGE.
      *
@@ -20,8 +20,8 @@ class Size {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function large(...$args) {
-
+    public static function large(...$args)
+    {
         $aArgs = Functions::flattenArray($args);
         $entry = array_pop($aArgs);
 
@@ -31,11 +31,9 @@ class Size {
             $mArgs = self::filter($aArgs);
             $count = Counts::COUNT($mArgs);
             --$entry;
-
             if ($count === 0 || $entry < 0 || $entry >= $count) {
                 return ExcelError::NAN();
             }
-
             rsort($mArgs);
 
             return $mArgs[$entry];
@@ -57,8 +55,8 @@ class Size {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function small(...$args) {
-
+    public static function small(...$args)
+    {
         $aArgs = Functions::flattenArray($args);
 
         $entry = array_pop($aArgs);
@@ -69,11 +67,9 @@ class Size {
             $mArgs = self::filter($aArgs);
             $count = Counts::COUNT($mArgs);
             --$entry;
-
             if ($count === 0 || $entry < 0 || $entry >= $count) {
                 return ExcelError::NAN();
             }
-
             sort($mArgs);
 
             return $mArgs[$entry];
@@ -87,19 +83,15 @@ class Size {
      */
     protected static function filter(array $args): array
     {
-
         $mArgs = [];
 
         foreach ($args as $arg) {
             // Is it a numeric value?
-
             if ((is_numeric($arg)) && (!is_string($arg))) {
                 $mArgs[] = $arg;
             }
-
         }
 
         return $mArgs;
     }
-
 }

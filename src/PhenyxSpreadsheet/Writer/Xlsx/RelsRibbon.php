@@ -2,21 +2,21 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-class RelsRibbon extends WriterPart {
-
+class RelsRibbon extends WriterPart
+{
     /**
      * Write relationships for additional objects of custom UI (ribbon).
      *
      * @return string XML Output
      */
-    public function writeRibbonRelationships(Spreadsheet $spreadsheet) {
-
+    public function writeRibbonRelationships(Spreadsheet $spreadsheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -28,24 +28,19 @@ class RelsRibbon extends WriterPart {
 
         // Relationships
         $objWriter->startElement('Relationships');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/package/2006/relationships');
+        $objWriter->writeAttribute('xmlns', Namespaces::RELATIONSHIPS);
         $localRels = $spreadsheet->getRibbonBinObjects('names');
-
         if (is_array($localRels)) {
-
             foreach ($localRels as $aId => $aTarget) {
                 $objWriter->startElement('Relationship');
                 $objWriter->writeAttribute('Id', $aId);
-                $objWriter->writeAttribute('Type', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image');
+                $objWriter->writeAttribute('Type', Namespaces::IMAGE);
                 $objWriter->writeAttribute('Target', $aTarget);
                 $objWriter->endElement();
             }
-
         }
-
         $objWriter->endElement();
 
         return $objWriter->getData();
     }
-
 }

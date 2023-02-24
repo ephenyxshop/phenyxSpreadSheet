@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-class Hyperlink {
-
+class Hyperlink
+{
     /**
      * URL to link the cell to.
      *
@@ -24,8 +24,8 @@ class Hyperlink {
      * @param string $url Url to link the cell to
      * @param string $tooltip Tooltip to display on the hyperlink
      */
-    public function __construct($url = '', $tooltip = '') {
-
+    public function __construct($url = '', $tooltip = '')
+    {
         // Initialise member variables
         $this->url = $url;
         $this->tooltip = $tooltip;
@@ -36,8 +36,8 @@ class Hyperlink {
      *
      * @return string
      */
-    public function getUrl() {
-
+    public function getUrl()
+    {
         return $this->url;
     }
 
@@ -48,8 +48,8 @@ class Hyperlink {
      *
      * @return $this
      */
-    public function setUrl($url) {
-
+    public function setUrl($url)
+    {
         $this->url = $url;
 
         return $this;
@@ -60,8 +60,8 @@ class Hyperlink {
      *
      * @return string
      */
-    public function getTooltip() {
-
+    public function getTooltip()
+    {
         return $this->tooltip;
     }
 
@@ -72,8 +72,8 @@ class Hyperlink {
      *
      * @return $this
      */
-    public function setTooltip($tooltip) {
-
+    public function setTooltip($tooltip)
+    {
         $this->tooltip = $tooltip;
 
         return $this;
@@ -84,16 +84,16 @@ class Hyperlink {
      *
      * @return bool
      */
-    public function isInternal() {
-
+    public function isInternal()
+    {
         return strpos($this->url, 'sheet://') !== false;
     }
 
     /**
      * @return string
      */
-    public function getTypeHyperlink() {
-
+    public function getTypeHyperlink()
+    {
         return $this->isInternal() ? '' : 'External';
     }
 
@@ -102,8 +102,8 @@ class Hyperlink {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->url .
             $this->tooltip .

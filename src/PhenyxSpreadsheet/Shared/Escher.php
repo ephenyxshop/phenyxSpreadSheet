@@ -2,29 +2,29 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-class Escher {
-
+class Escher
+{
     /**
      * Drawing Group Container.
      *
-     * @var Escher\DggContainer
+     * @var ?Escher\DggContainer
      */
     private $dggContainer;
 
     /**
      * Drawing Container.
      *
-     * @var Escher\DgContainer
+     * @var ?Escher\DgContainer
      */
     private $dgContainer;
 
     /**
      * Get Drawing Group Container.
      *
-     * @return Escher\DggContainer
+     * @return ?Escher\DggContainer
      */
-    public function getDggContainer() {
-
+    public function getDggContainer()
+    {
         return $this->dggContainer;
     }
 
@@ -35,18 +35,18 @@ class Escher {
      *
      * @return Escher\DggContainer
      */
-    public function setDggContainer($dggContainer) {
-
+    public function setDggContainer($dggContainer)
+    {
         return $this->dggContainer = $dggContainer;
     }
 
     /**
      * Get Drawing Container.
      *
-     * @return Escher\DgContainer
+     * @return ?Escher\DgContainer
      */
-    public function getDgContainer() {
-
+    public function getDgContainer()
+    {
         return $this->dgContainer;
     }
 
@@ -57,8 +57,8 @@ class Escher {
      *
      * @return Escher\DgContainer
      */
-    public function setDgContainer($dgContainer) {
-
+    public function setDgContainer($dgContainer)
+    {
         return $this->dgContainer = $dgContainer;
     }
 }

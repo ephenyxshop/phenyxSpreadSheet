@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\Table;
 
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Table;
 
-class TableStyle {
-
+class TableStyle
+{
     const TABLE_STYLE_NONE = '';
     const TABLE_STYLE_LIGHT1 = 'TableStyleLight1';
     const TABLE_STYLE_LIGHT2 = 'TableStyleLight2';
@@ -115,24 +115,24 @@ class TableStyle {
      *
      * @param string $theme (e.g. TableStyle::TABLE_STYLE_MEDIUM2)
      */
-    public function __construct(string $theme = self::TABLE_STYLE_MEDIUM2) {
-
+    public function __construct(string $theme = self::TABLE_STYLE_MEDIUM2)
+    {
         $this->theme = $theme;
     }
 
     /**
      * Get theme.
      */
-    public function getTheme(): string {
-
+    public function getTheme(): string
+    {
         return $this->theme;
     }
 
     /**
      * Set theme.
      */
-    public function setTheme(string $theme): self{
-
+    public function setTheme(string $theme): self
+    {
         $this->theme = $theme;
 
         return $this;
@@ -141,16 +141,16 @@ class TableStyle {
     /**
      * Get show First Column.
      */
-    public function getShowFirstColumn(): bool {
-
+    public function getShowFirstColumn(): bool
+    {
         return $this->showFirstColumn;
     }
 
     /**
      * Set show First Column.
      */
-    public function setShowFirstColumn(bool $showFirstColumn): self{
-
+    public function setShowFirstColumn(bool $showFirstColumn): self
+    {
         $this->showFirstColumn = $showFirstColumn;
 
         return $this;
@@ -159,16 +159,16 @@ class TableStyle {
     /**
      * Get show Last Column.
      */
-    public function getShowLastColumn(): bool {
-
+    public function getShowLastColumn(): bool
+    {
         return $this->showLastColumn;
     }
 
     /**
      * Set show Last Column.
      */
-    public function setShowLastColumn(bool $showLastColumn): self{
-
+    public function setShowLastColumn(bool $showLastColumn): self
+    {
         $this->showLastColumn = $showLastColumn;
 
         return $this;
@@ -177,16 +177,16 @@ class TableStyle {
     /**
      * Get show Row Stripes.
      */
-    public function getShowRowStripes(): bool {
-
+    public function getShowRowStripes(): bool
+    {
         return $this->showRowStripes;
     }
 
     /**
      * Set show Row Stripes.
      */
-    public function setShowRowStripes(bool $showRowStripes): self{
-
+    public function setShowRowStripes(bool $showRowStripes): self
+    {
         $this->showRowStripes = $showRowStripes;
 
         return $this;
@@ -195,16 +195,16 @@ class TableStyle {
     /**
      * Get show Column Stripes.
      */
-    public function getShowColumnStripes(): bool {
-
+    public function getShowColumnStripes(): bool
+    {
         return $this->showColumnStripes;
     }
 
     /**
      * Set show Column Stripes.
      */
-    public function setShowColumnStripes(bool $showColumnStripes): self{
-
+    public function setShowColumnStripes(bool $showColumnStripes): self
+    {
         $this->showColumnStripes = $showColumnStripes;
 
         return $this;
@@ -213,16 +213,16 @@ class TableStyle {
     /**
      * Get this Style's Table.
      */
-    public function getTable():  ? Table {
-
+    public function getTable(): ?Table
+    {
         return $this->table;
     }
 
     /**
      * Set this Style's Table.
      */
-    public function setTable( ? Table $table = null) : self{
-
+    public function setTable(?Table $table = null): self
+    {
         $this->table = $table;
 
         return $this;

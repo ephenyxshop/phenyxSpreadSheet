@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Trunc {
-
+class Trunc
+{
     use ArrayEnabled;
 
     /**
@@ -23,8 +23,8 @@ class Trunc {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function evaluate($value = 0, $digits = 0) {
-
+    public static function evaluate($value = 0, $digits = 0)
+    {
         if (is_array($value) || is_array($digits)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $digits);
         }
@@ -47,5 +47,4 @@ class Trunc {
 
         return ((int) ($value * $adjust)) / $adjust;
     }
-
 }

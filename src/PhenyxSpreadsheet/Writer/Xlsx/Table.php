@@ -3,11 +3,12 @@
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Table as WorksheetTable;
 
-class Table extends WriterPart {
-
+class Table extends WriterPart
+{
     /**
      * Write Table to XML format.
      *
@@ -15,11 +16,10 @@ class Table extends WriterPart {
      *
      * @return string XML Output
      */
-    public function writeTable(WorksheetTable $table, $tableRef): string{
-
+    public function writeTable(WorksheetTable $table, $tableRef): string
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -35,7 +35,7 @@ class Table extends WriterPart {
 
         $objWriter->startElement('table');
         $objWriter->writeAttribute('xml:space', 'preserve');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
+        $objWriter->writeAttribute('xmlns', Namespaces::MAIN);
         $objWriter->writeAttribute('id', (string) $tableRef);
         $objWriter->writeAttribute('name', $name);
         $objWriter->writeAttribute('displayName', $table->getName() ?: $name);
@@ -47,11 +47,10 @@ class Table extends WriterPart {
         [$rangeStart, $rangeEnd] = Coordinate::rangeBoundaries($table->getRange());
 
         // Table Auto Filter
-
-        if ($table->getShowHeaderRow()) {
+        if ($table->getShowHeaderRow() && $table->getAllowFilter() === true) {
             $objWriter->startElement('autoFilter');
             $objWriter->writeAttribute('ref', $range);
-
+            $objWriter->endElement();
             foreach (range($rangeStart[0], $rangeEnd[0]) as $offset => $columnIndex) {
                 $column = $table->getColumnByOffset($offset);
 
@@ -60,50 +59,43 @@ class Table extends WriterPart {
                     $objWriter->writeAttribute('colId', (string) $offset);
                     $objWriter->writeAttribute('hiddenButton', '1');
                     $objWriter->endElement();
+                } else {
+                    $column = $table->getAutoFilter()->getColumnByOffset($offset);
+                    AutoFilter::writeAutoFilterColumn($objWriter, $column, $offset);
                 }
-
             }
-
-            $objWriter->endElement();
         }
 
         // Table Columns
         $objWriter->startElement('tableColumns');
         $objWriter->writeAttribute('count', (string) ($rangeEnd[0] - $rangeStart[0] + 1));
-
         foreach (range($rangeStart[0], $rangeEnd[0]) as $offset => $columnIndex) {
             $worksheet = $table->getWorksheet();
-
             if (!$worksheet) {
                 continue;
             }
 
             $column = $table->getColumnByOffset($offset);
-            $cell = $worksheet->getCellByColumnAndRow($columnIndex, $rangeStart[1]);
+            $cell = $worksheet->getCell([$columnIndex, $rangeStart[1]]);
 
             $objWriter->startElement('tableColumn');
             $objWriter->writeAttribute('id', (string) ($offset + 1));
             $objWriter->writeAttribute('name', $table->getShowHeaderRow() ? $cell->getValue() : 'Column' . ($offset + 1));
 
             if ($table->getShowTotalsRow()) {
-
                 if ($column->getTotalsRowLabel()) {
                     $objWriter->writeAttribute('totalsRowLabel', $column->getTotalsRowLabel());
                 }
-
                 if ($column->getTotalsRowFunction()) {
                     $objWriter->writeAttribute('totalsRowFunction', $column->getTotalsRowFunction());
                 }
-
             }
-
             if ($column->getColumnFormula()) {
                 $objWriter->writeElement('calculatedColumnFormula', $column->getColumnFormula());
             }
 
             $objWriter->endElement();
         }
-
         $objWriter->endElement();
 
         // Table Styles
@@ -120,5 +112,4 @@ class Table extends WriterPart {
         // Return
         return $objWriter->getData();
     }
-
 }

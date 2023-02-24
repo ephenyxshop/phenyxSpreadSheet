@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
-class AutoFilters {
-
+class AutoFilters
+{
     /**
      * @var XMLWriter
      */
@@ -19,28 +19,27 @@ class AutoFilters {
      */
     private $spreadsheet;
 
-    public function __construct(XMLWriter $objWriter, Spreadsheet $spreadsheet) {
-
+    public function __construct(XMLWriter $objWriter, Spreadsheet $spreadsheet)
+    {
         $this->objWriter = $objWriter;
         $this->spreadsheet = $spreadsheet;
     }
 
-    public function write(): void{
+    /** @var mixed */
+    private static $scrutinizerFalse = false;
 
-        $wrapperWritten = false;
+    public function write(): void
+    {
+        $wrapperWritten = self::$scrutinizerFalse;
         $sheetCount = $this->spreadsheet->getSheetCount();
-
         for ($i = 0; $i < $sheetCount; ++$i) {
             $worksheet = $this->spreadsheet->getSheet($i);
             $autofilter = $worksheet->getAutoFilter();
-
             if ($autofilter !== null && !empty($autofilter->getRange())) {
-
                 if ($wrapperWritten === false) {
                     $this->objWriter->startElement('table:database-ranges');
                     $wrapperWritten = true;
                 }
-
                 $this->objWriter->startElement('table:database-range');
                 $this->objWriter->writeAttribute('table:orientation', 'column');
                 $this->objWriter->writeAttribute('table:display-filter-buttons', 'true');
@@ -50,21 +49,18 @@ class AutoFilters {
                 );
                 $this->objWriter->endElement();
             }
-
         }
 
         if ($wrapperWritten === true) {
             $this->objWriter->endElement();
         }
-
     }
 
-    protected function formatRange(Worksheet $worksheet, Autofilter $autofilter): string{
-
+    protected function formatRange(Worksheet $worksheet, Autofilter $autofilter): string
+    {
         $title = $worksheet->getTitle();
         $range = $autofilter->getRange();
 
         return "'{$title}'.{$range}";
     }
-
 }

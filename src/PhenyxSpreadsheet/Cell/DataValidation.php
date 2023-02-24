@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
-class DataValidation {
-
+class DataValidation
+{
     // Data validation types
     const TYPE_NONE = 'none';
     const TYPE_CUSTOM = 'custom';
@@ -123,15 +123,17 @@ class DataValidation {
     /**
      * Create a new DataValidation.
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Get Formula 1.
      *
      * @return string
      */
-    public function getFormula1() {
-
+    public function getFormula1()
+    {
         return $this->formula1;
     }
 
@@ -142,8 +144,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setFormula1($formula) {
-
+    public function setFormula1($formula)
+    {
         $this->formula1 = $formula;
 
         return $this;
@@ -154,8 +156,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getFormula2() {
-
+    public function getFormula2()
+    {
         return $this->formula2;
     }
 
@@ -166,8 +168,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setFormula2($formula) {
-
+    public function setFormula2($formula)
+    {
         $this->formula2 = $formula;
 
         return $this;
@@ -178,8 +180,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getType() {
-
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -190,8 +192,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setType($type) {
-
+    public function setType($type)
+    {
         $this->type = $type;
 
         return $this;
@@ -202,8 +204,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getErrorStyle() {
-
+    public function getErrorStyle()
+    {
         return $this->errorStyle;
     }
 
@@ -214,8 +216,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setErrorStyle($errorStyle) {
-
+    public function setErrorStyle($errorStyle)
+    {
         $this->errorStyle = $errorStyle;
 
         return $this;
@@ -226,8 +228,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getOperator() {
-
+    public function getOperator()
+    {
         return $this->operator;
     }
 
@@ -238,8 +240,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setOperator($operator) {
-
+    public function setOperator($operator)
+    {
         $this->operator = $operator;
 
         return $this;
@@ -250,8 +252,8 @@ class DataValidation {
      *
      * @return bool
      */
-    public function getAllowBlank() {
-
+    public function getAllowBlank()
+    {
         return $this->allowBlank;
     }
 
@@ -262,8 +264,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setAllowBlank($allowBlank) {
-
+    public function setAllowBlank($allowBlank)
+    {
         $this->allowBlank = $allowBlank;
 
         return $this;
@@ -274,8 +276,8 @@ class DataValidation {
      *
      * @return bool
      */
-    public function getShowDropDown() {
-
+    public function getShowDropDown()
+    {
         return $this->showDropDown;
     }
 
@@ -286,8 +288,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setShowDropDown($showDropDown) {
-
+    public function setShowDropDown($showDropDown)
+    {
         $this->showDropDown = $showDropDown;
 
         return $this;
@@ -298,8 +300,8 @@ class DataValidation {
      *
      * @return bool
      */
-    public function getShowInputMessage() {
-
+    public function getShowInputMessage()
+    {
         return $this->showInputMessage;
     }
 
@@ -310,8 +312,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setShowInputMessage($showInputMessage) {
-
+    public function setShowInputMessage($showInputMessage)
+    {
         $this->showInputMessage = $showInputMessage;
 
         return $this;
@@ -322,8 +324,8 @@ class DataValidation {
      *
      * @return bool
      */
-    public function getShowErrorMessage() {
-
+    public function getShowErrorMessage()
+    {
         return $this->showErrorMessage;
     }
 
@@ -334,8 +336,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setShowErrorMessage($showErrorMessage) {
-
+    public function setShowErrorMessage($showErrorMessage)
+    {
         $this->showErrorMessage = $showErrorMessage;
 
         return $this;
@@ -346,8 +348,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getErrorTitle() {
-
+    public function getErrorTitle()
+    {
         return $this->errorTitle;
     }
 
@@ -358,8 +360,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setErrorTitle($errorTitle) {
-
+    public function setErrorTitle($errorTitle)
+    {
         $this->errorTitle = $errorTitle;
 
         return $this;
@@ -370,8 +372,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getError() {
-
+    public function getError()
+    {
         return $this->error;
     }
 
@@ -382,8 +384,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setError($error) {
-
+    public function setError($error)
+    {
         $this->error = $error;
 
         return $this;
@@ -394,8 +396,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getPromptTitle() {
-
+    public function getPromptTitle()
+    {
         return $this->promptTitle;
     }
 
@@ -406,8 +408,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setPromptTitle($promptTitle) {
-
+    public function setPromptTitle($promptTitle)
+    {
         $this->promptTitle = $promptTitle;
 
         return $this;
@@ -418,8 +420,8 @@ class DataValidation {
      *
      * @return string
      */
-    public function getPrompt() {
-
+    public function getPrompt()
+    {
         return $this->prompt;
     }
 
@@ -430,8 +432,8 @@ class DataValidation {
      *
      * @return $this
      */
-    public function setPrompt($prompt) {
-
+    public function setPrompt($prompt)
+    {
         $this->prompt = $prompt;
 
         return $this;
@@ -442,8 +444,8 @@ class DataValidation {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->formula1 .
             $this->formula2 .
@@ -466,35 +468,30 @@ class DataValidation {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
     /** @var ?string */
     private $sqref;
 
-    public function getSqref():  ? string {
-
+    public function getSqref(): ?string
+    {
         return $this->sqref;
     }
 
-    public function setSqref( ? string $str) : self{
-
+    public function setSqref(?string $str): self
+    {
         $this->sqref = $str;
 
         return $this;
     }
-
 }

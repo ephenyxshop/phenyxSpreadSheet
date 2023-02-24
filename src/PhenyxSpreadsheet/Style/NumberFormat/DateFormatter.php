@@ -4,42 +4,42 @@ namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
 
-class DateFormatter {
-
+class DateFormatter
+{
     /**
      * Search/replace values to convert Excel date/time format masks to PHP format masks.
      */
     private const DATE_FORMAT_REPLACEMENTS = [
         // first remove escapes related to non-format characters
-        '\\'    => '',
+        '\\' => '',
         //    12-hour suffix
         'am/pm' => 'A',
         //    4-digit year
-        'e'     => 'Y',
-        'yyyy'  => 'Y',
+        'e' => 'Y',
+        'yyyy' => 'Y',
         //    2-digit year
-        'yy'    => 'y',
+        'yy' => 'y',
         //    first letter of month - no php equivalent
         'mmmmm' => 'M',
         //    full month name
-        'mmmm'  => 'F',
+        'mmmm' => 'F',
         //    short month name
-        'mmm'   => 'M',
+        'mmm' => 'M',
         //    mm is minutes if time, but can also be month w/leading zero
         //    so we try to identify times be the inclusion of a : separator in the mask
         //    It isn't perfect, but the best way I know how
-        ':mm'   => ':i',
-        'mm:'   => 'i:',
+        ':mm' => ':i',
+        'mm:' => 'i:',
         //    full day of week name
-        'dddd'  => 'l',
+        'dddd' => 'l',
         //    short day of week name
-        'ddd'   => 'D',
+        'ddd' => 'D',
         //    days leading zero
-        'dd'    => 'd',
+        'dd' => 'd',
         //    days no leading zero
-        'd'     => 'j',
+        'd' => 'j',
         //    fractional seconds - no php equivalent
-        '.s'    => '',
+        '.s' => '',
     ];
 
     /**
@@ -47,11 +47,11 @@ class DateFormatter {
      */
     private const DATE_FORMAT_REPLACEMENTS24 = [
         'hh' => 'H',
-        'h'  => 'G',
+        'h' => 'G',
         //    month leading zero
         'mm' => 'm',
         //    month no leading zero
-        'm'  => 'n',
+        'm' => 'n',
         //    seconds
         'ss' => 's',
     ];
@@ -61,11 +61,11 @@ class DateFormatter {
      */
     private const DATE_FORMAT_REPLACEMENTS12 = [
         'hh' => 'h',
-        'h'  => 'g',
+        'h' => 'g',
         //    month leading zero
         'mm' => 'm',
         //    month no leading zero
-        'm'  => 'n',
+        'm' => 'n',
         //    seconds
         'ss' => 's',
     ];
@@ -81,49 +81,44 @@ class DateFormatter {
     ];
     private const INTERVAL_ROUND_PRECISION = [
         // hours and minutes truncate
-        '[h]'  => self::INTERVAL_PRECISION,
+        '[h]' => self::INTERVAL_PRECISION,
         '[hh]' => self::INTERVAL_PRECISION,
-        '[m]'  => self::INTERVAL_PRECISION,
+        '[m]' => self::INTERVAL_PRECISION,
         '[mm]' => self::INTERVAL_PRECISION,
         // seconds round
-        '[s]'  => 0,
+        '[s]' => 0,
         '[ss]' => 0,
     ];
     private const INTERVAL_MULTIPLIER = [
-        '[h]'  => self::HOURS_IN_DAY,
+        '[h]' => self::HOURS_IN_DAY,
         '[hh]' => self::HOURS_IN_DAY,
-        '[m]'  => self::MINUTES_IN_DAY,
+        '[m]' => self::MINUTES_IN_DAY,
         '[mm]' => self::MINUTES_IN_DAY,
-        '[s]'  => self::SECONDS_IN_DAY,
+        '[s]' => self::SECONDS_IN_DAY,
         '[ss]' => self::SECONDS_IN_DAY,
     ];
 
     /** @param mixed $value */
-    private static function tryInterval(bool &$seekingBracket, string &$block, $value, string $format): void {
-
+    private static function tryInterval(bool &$seekingBracket, string &$block, $value, string $format): void
+    {
         if ($seekingBracket) {
-
             if (false !== strpos($block, $format)) {
                 $hours = (string) (int) round(
                     self::INTERVAL_MULTIPLIER[$format] * $value,
                     self::INTERVAL_ROUND_PRECISION[$format]
                 );
-
                 if (strlen($hours) === 1 && in_array($format, self::INTERVAL_LEADING_ZERO, true)) {
                     $hours = "0$hours";
                 }
-
                 $block = str_replace($format, $hours, $block);
                 $seekingBracket = false;
             }
-
         }
-
     }
 
     /** @param mixed $value */
-    public static function format($value, string $format): string{
-
+    public static function format($value, string $format): string
+    {
         // strip off first part containing e.g. [$-F800] or [$USD-409]
         // general syntax: [$<Currency string>-<language info>]
         // language info is in hexadecimal
@@ -134,18 +129,14 @@ class DateFormatter {
         //    but we don't want to change any quoted strings
         /** @var callable */
         $callable = [self::class, 'setLowercaseCallback'];
-        $format = preg_replace_callback('/(?:^|")([^"]*)(?:$|")/', $callable, $format);
+        $format = (string) preg_replace_callback('/(?:^|")([^"]*)(?:$|")/', $callable, $format);
 
         // Only process the non-quoted blocks for date format characters
 
-        /** @phpstan-ignore-next-line */
         $blocks = explode('"', $format);
-
         foreach ($blocks as $key => &$block) {
-
             if ($key % 2 == 0) {
                 $block = strtr($block, self::DATE_FORMAT_REPLACEMENTS);
-
                 if (!strpos($block, 'A')) {
                     // 24-hour time format
                     // when [h]:mm format, the [h] should replace to the hours of the value * 24
@@ -161,11 +152,8 @@ class DateFormatter {
                     // 12-hour time format
                     $block = strtr($block, self::DATE_FORMAT_REPLACEMENTS12);
                 }
-
             }
-
         }
-
         $format = implode('"', $blocks);
 
         // escape any quoted characters so that DateTime format() will render them correctly
@@ -182,14 +170,13 @@ class DateFormatter {
         return $dateObj->format($format);
     }
 
-    private static function setLowercaseCallback(array $matches): string {
-
+    private static function setLowercaseCallback(array $matches): string
+    {
         return mb_strtolower($matches[0]);
     }
 
-    private static function escapeQuotesCallback(array $matches): string {
-
-        return '\\' . implode('\\', str_split($matches[1]));
+    private static function escapeQuotesCallback(array $matches): string
+    {
+        return '\\' . implode('\\', /** @scrutinizer ignore-type */ str_split($matches[1]));
     }
-
 }

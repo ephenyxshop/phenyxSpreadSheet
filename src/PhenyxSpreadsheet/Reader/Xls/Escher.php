@@ -57,7 +57,7 @@ class Escher
     /**
      * The object to be returned by the reader. Modified during load.
      *
-     * @var BSE|BstoreContainer|DgContainer|DggContainer|\PhpOffice\PhenyxSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
+     * @var BSE|BstoreContainer|DgContainer|DggContainer|\EphenyxShop\PhenyxSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
      */
     private $object;
 
@@ -97,7 +97,7 @@ class Escher
      *
      * @param string $data
      *
-     * @return BSE|BstoreContainer|DgContainer|DggContainer|\PhpOffice\PhenyxSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
+     * @return BSE|BstoreContainer|DgContainer|DggContainer|\EphenyxShop\PhenyxSpreadsheet\Shared\Escher|SpContainer|SpgrContainer
      */
     public function load($data)
     {

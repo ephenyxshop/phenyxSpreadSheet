@@ -37,12 +37,12 @@ use EphenyxShop\PhenyxSpreadsheet\Writer\Exception as WriterException;
 // *    License along with this library; if not, write to the Free Software
 // *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 // */
-class BIFFwriter {
-
+class BIFFwriter
+{
     /**
      * The byte order of this architecture. 0 => little endian, 1 => big endian.
      *
-     * @var int
+     * @var ?int
      */
     private static $byteOrder;
 
@@ -72,8 +72,8 @@ class BIFFwriter {
     /**
      * Constructor.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->_data = '';
         $this->_datasize = 0;
     }
@@ -84,22 +84,20 @@ class BIFFwriter {
      *
      * @return int
      */
-    public static function getByteOrder() {
-
+    public static function getByteOrder()
+    {
         if (!isset(self::$byteOrder)) {
             // Check if "pack" gives the required IEEE 64bit float
             $teststr = pack('d', 1.2345);
             $number = pack('C8', 0x8D, 0x97, 0x6E, 0x12, 0x83, 0xC0, 0xF3, 0x3F);
-
             if ($number == $teststr) {
                 $byte_order = 0; // Little Endian
-            } else if ($number == strrev($teststr)) {
+            } elseif ($number == strrev($teststr)) {
                 $byte_order = 1; // Big Endian
             } else {
                 // Give up. I'll fix this in a later version.
                 throw new WriterException('Required floating point format not supported on this platform.');
             }
-
             self::$byteOrder = $byte_order;
         }
 
@@ -111,12 +109,11 @@ class BIFFwriter {
      *
      * @param string $data binary data to append
      */
-    protected function append($data): void {
-
+    protected function append($data): void
+    {
         if (strlen($data) - 4 > $this->limit) {
             $data = $this->addContinue($data);
         }
-
         $this->_data .= $data;
         $this->_datasize += strlen($data);
     }
@@ -128,12 +125,11 @@ class BIFFwriter {
      *
      * @return string
      */
-    public function writeData($data) {
-
+    public function writeData($data)
+    {
         if (strlen($data) - 4 > $this->limit) {
             $data = $this->addContinue($data);
         }
-
         $this->_datasize += strlen($data);
 
         return $data;
@@ -146,8 +142,8 @@ class BIFFwriter {
      * @param int $type type of BIFF file to write: 0x0005 Workbook,
      *                       0x0010 Worksheet
      */
-    protected function storeBof($type): void{
-
+    protected function storeBof($type): void
+    {
         $record = 0x0809; // Record identifier    (BIFF5-BIFF8)
         $length = 0x0010;
 
@@ -167,8 +163,8 @@ class BIFFwriter {
     /**
      * Writes Excel EOF record to indicate the end of a BIFF stream.
      */
-    protected function storeEof(): void{
-
+    protected function storeEof(): void
+    {
         $record = 0x000A; // Record identifier
         $length = 0x0000; // Number of bytes to follow
 
@@ -179,8 +175,8 @@ class BIFFwriter {
     /**
      * Writes Excel EOF record to indicate the end of a BIFF stream.
      */
-    public function writeEof() {
-
+    public function writeEof(): string
+    {
         $record = 0x000A; // Record identifier
         $length = 0x0000; // Number of bytes to follow
         $header = pack('vv', $record, $length);
@@ -200,8 +196,8 @@ class BIFFwriter {
      *
      * @return string A very convenient string of continue blocks
      */
-    private function addContinue($data) {
-
+    private function addContinue($data)
+    {
         $limit = $this->limit;
         $record = 0x003C; // Record identifier
 
@@ -213,7 +209,6 @@ class BIFFwriter {
 
         // Retrieve chunks of 2080/8224 bytes +4 for the header.
         $data_length = strlen($data);
-
         for ($i = $limit + 4; $i < ($data_length - $limit); $i += $limit) {
             $tmp .= $header;
             $tmp .= substr($data, $i, $limit);
@@ -226,5 +221,4 @@ class BIFFwriter {
 
         return $tmp;
     }
-
 }

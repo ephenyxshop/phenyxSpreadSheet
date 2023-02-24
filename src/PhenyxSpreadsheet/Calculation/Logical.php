@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Logical\Boolean;
 /**
  * @deprecated 1.17.0
  */
-class Logical {
-
+class Logical
+{
     /**
      * TRUE.
      *
@@ -17,15 +17,14 @@ class Logical {
      * Excel Function:
      *        =TRUE()
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Boolean::TRUE()
+     * @deprecated 1.17.0
      * Use the TRUE() method in the Logical\Boolean class instead
+     * @see Logical\Boolean::TRUE()
      *
      * @return bool True
      */
-    public static function true(): bool {
-
+    public static function true(): bool
+    {
         return Boolean::true();
     }
 
@@ -37,15 +36,14 @@ class Logical {
      * Excel Function:
      *        =FALSE()
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Boolean::FALSE()
+     * @deprecated 1.17.0
      * Use the FALSE() method in the Logical\Boolean class instead
+     * @see Logical\Boolean::FALSE()
      *
      * @return bool False
      */
-    public static function false(): bool {
-
+    public static function false(): bool
+    {
         return Boolean::false();
     }
 
@@ -65,17 +63,16 @@ class Logical {
      *        If any argument value is a string, or a Null, the function returns a #VALUE! error, unless the string
      *            holds the value TRUE or FALSE, in which case it is evaluated as the corresponding boolean value
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Operations::logicalAnd()
+     * @deprecated 1.17.0
      * Use the logicalAnd() method in the Logical\Operations class instead
+     * @see Logical\Operations::logicalAnd()
      *
      * @param mixed ...$args Data values
      *
      * @return bool|string the logical AND of the arguments
      */
-    public static function logicalAnd(...$args) {
-
+    public static function logicalAnd(...$args)
+    {
         return Logical\Operations::logicalAnd(...$args);
     }
 
@@ -95,17 +92,16 @@ class Logical {
      *        If any argument value is a string, or a Null, the function returns a #VALUE! error, unless the string
      *            holds the value TRUE or FALSE, in which case it is evaluated as the corresponding boolean value
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Operations::logicalOr()
+     * @deprecated 1.17.0
      * Use the logicalOr() method in the Logical\Operations class instead
+     * @see Logical\Operations::logicalOr()
      *
      * @param mixed $args Data values
      *
      * @return bool|string the logical OR of the arguments
      */
-    public static function logicalOr(...$args) {
-
+    public static function logicalOr(...$args)
+    {
         return Logical\Operations::logicalOr(...$args);
     }
 
@@ -127,17 +123,16 @@ class Logical {
      *        If any argument value is a string, or a Null, the function returns a #VALUE! error, unless the string
      *            holds the value TRUE or FALSE, in which case it is evaluated as the corresponding boolean value
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Operations::logicalXor()
+     * @deprecated 1.17.0
      * Use the logicalXor() method in the Logical\Operations class instead
+     * @see Logical\Operations::logicalXor()
      *
      * @param mixed $args Data values
      *
      * @return bool|string the logical XOR of the arguments
      */
-    public static function logicalXor(...$args) {
-
+    public static function logicalXor(...$args)
+    {
         return Logical\Operations::logicalXor(...$args);
     }
 
@@ -156,17 +151,16 @@ class Logical {
      *        If any argument value is a string, or a Null, the function returns a #VALUE! error, unless the string
      *            holds the value TRUE or FALSE, in which case it is evaluated as the corresponding boolean value
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Operations::NOT()
+     * @deprecated 1.17.0
      * Use the NOT() method in the Logical\Operations class instead
+     * @see Logical\Operations::NOT()
      *
      * @param mixed $logical A value or expression that can be evaluated to TRUE or FALSE
      *
      * @return array|bool|string the boolean inverse of the argument
      */
-    public static function NOT($logical = false) {
-
+    public static function NOT($logical = false)
+    {
         return Logical\Operations::NOT($logical);
     }
 
@@ -195,10 +189,9 @@ class Logical {
      *            If condition is FALSE and ReturnIfFalse is blank, then the value 0 (zero) is returned.
      *            ReturnIfFalse can be another formula.
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Conditional::statementIf()
+     * @deprecated 1.17.0
      * Use the statementIf() method in the Logical\Conditional class instead
+     * @see Logical\Conditional::statementIf()
      *
      * @param mixed $condition Condition to evaluate
      * @param mixed $returnIfTrue Value to return when condition is true
@@ -206,8 +199,8 @@ class Logical {
      *
      * @return mixed The value of returnIfTrue or returnIfFalse determined by condition
      */
-    public static function statementIf($condition = true, $returnIfTrue = 0, $returnIfFalse = false) {
-
+    public static function statementIf($condition = true, $returnIfTrue = 0, $returnIfFalse = false)
+    {
         return Logical\Conditional::statementIf($condition, $returnIfTrue, $returnIfFalse);
     }
 
@@ -231,17 +224,16 @@ class Logical {
      *              Optional. It is the default to return if expression does not match any of the values
      *              (value1, value2, ... value_n).
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Conditional::statementSwitch()
+     * @deprecated 1.17.0
      * Use the statementSwitch() method in the Logical\Conditional class instead
+     * @see Logical\Conditional::statementSwitch()
      *
      * @param mixed $arguments Statement arguments
      *
      * @return mixed The value of matched expression
      */
-    public static function statementSwitch(...$arguments) {
-
+    public static function statementSwitch(...$arguments)
+    {
         return Logical\Conditional::statementSwitch(...$arguments);
     }
 
@@ -251,18 +243,17 @@ class Logical {
      * Excel Function:
      *        =IFERROR(testValue,errorpart)
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Conditional::IFERROR()
+     * @deprecated 1.17.0
      * Use the IFERROR() method in the Logical\Conditional class instead
+     * @see Logical\Conditional::IFERROR()
      *
      * @param mixed $testValue Value to check, is also the value returned when no error
      * @param mixed $errorpart Value to return when testValue is an error condition
      *
      * @return mixed The value of errorpart or testValue determined by error condition
      */
-    public static function IFERROR($testValue = '', $errorpart = '') {
-
+    public static function IFERROR($testValue = '', $errorpart = '')
+    {
         return Logical\Conditional::IFERROR($testValue, $errorpart);
     }
 
@@ -272,18 +263,17 @@ class Logical {
      * Excel Function:
      *        =IFNA(testValue,napart)
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Conditional::IFNA()
+     * @deprecated 1.17.0
      * Use the IFNA() method in the Logical\Conditional class instead
+     * @see Logical\Conditional::IFNA()
      *
      * @param mixed $testValue Value to check, is also the value returned when not an NA
      * @param mixed $napart Value to return when testValue is an NA condition
      *
      * @return mixed The value of errorpart or testValue determined by error condition
      */
-    public static function IFNA($testValue = '', $napart = '') {
-
+    public static function IFNA($testValue = '', $napart = '')
+    {
         return Logical\Conditional::IFNA($testValue, $napart);
     }
 
@@ -298,17 +288,16 @@ class Logical {
      *         returnIfTrue1 ... returnIfTrue_n
      *             Value returned if corresponding testValue (nth) was true
      *
-     * @Deprecated 1.17.0
-     *
-     * @see Logical\Conditional::IFS()
+     * @deprecated 1.17.0
      * Use the IFS() method in the Logical\Conditional class instead
+     * @see Logical\Conditional::IFS()
      *
      * @param mixed ...$arguments Statement arguments
      *
      * @return mixed|string The value of returnIfTrue_n, if testValue_n was true. #N/A if none of testValues was true
      */
-    public static function IFS(...$arguments) {
-
+    public static function IFS(...$arguments)
+    {
         return Logical\Conditional::IFS(...$arguments);
     }
 }

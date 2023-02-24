@@ -4,11 +4,13 @@ namespace EphenyxShop\PhenyxSpreadsheet\Reader\Xls;
 
 class RC4
 {
-    // Context
-    protected $s = [];
+    /** @var int[] */
+    protected $s = []; // Context
 
+    /** @var int */
     protected $i = 0;
 
+    /** @var int */
     protected $j = 0;
 
     /**

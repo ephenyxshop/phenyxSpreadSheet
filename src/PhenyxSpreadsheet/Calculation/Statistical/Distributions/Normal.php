@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Normal {
-
+class Normal
+{
     use ArrayEnabled;
 
     public const SQRT2PI = 2.5066282746310005024157652848110452530069867406099;
@@ -33,8 +33,8 @@ class Normal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $mean, $stdDev, $cumulative) {
-
+    public static function distribution($value, $mean, $stdDev, $cumulative)
+    {
         if (is_array($value) || is_array($mean) || is_array($stdDev) || is_array($cumulative)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $mean, $stdDev, $cumulative);
         }
@@ -75,8 +75,8 @@ class Normal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function inverse($probability, $mean, $stdDev) {
-
+    public static function inverse($probability, $mean, $stdDev)
+    {
         if (is_array($probability) || is_array($mean) || is_array($stdDev)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $mean, $stdDev);
         }
@@ -97,15 +97,15 @@ class Normal {
     }
 
     /*
-             *                                inverse_ncdf.php
-             *                            -------------------
-             *    begin                : Friday, January 16, 2004
-             *    copyright            : (C) 2004 Michael Nickerson
-             *    email                : nickersonm@yahoo.com
-             *
-    */
-    private static function inverseNcdf($p) {
-
+     *                                inverse_ncdf.php
+     *                            -------------------
+     *    begin                : Friday, January 16, 2004
+     *    copyright            : (C) 2004 Michael Nickerson
+     *    email                : nickersonm@yahoo.com
+     *
+     */
+    private static function inverseNcdf(float $p): float
+    {
         //    Inverse ncdf approximation by Peter J. Acklam, implementation adapted to
         //    PHP by Michael Nickerson, using Dr. Thomas Ziegler's C implementation as
         //    a guide. http://home.online.no/~pjacklam/notes/invnorm/index.html
@@ -162,7 +162,7 @@ class Normal {
 
             return ((((($c[1] * $q + $c[2]) * $q + $c[3]) * $q + $c[4]) * $q + $c[5]) * $q + $c[6]) /
                 (((($d[1] * $q + $d[2]) * $q + $d[3]) * $q + $d[4]) * $q + 1);
-        } else if ($p_high < $p && $p < 1) {
+        } elseif ($p_high < $p && $p < 1) {
             //    Rational approximation for upper region.
             $q = sqrt(-2 * log(1 - $p));
 
@@ -175,7 +175,6 @@ class Normal {
         $r = $q * $q;
 
         return ((((($a[1] * $r + $a[2]) * $r + $a[3]) * $r + $a[4]) * $r + $a[5]) * $r + $a[6]) * $q /
-            ((((($b[1] * $r + $b[2]) * $r + $b[3]) * $r + $b[4]) * $r + $b[5]) * $r + 1);
+                ((((($b[1] * $r + $b[2]) * $r + $b[3]) * $r + $b[4]) * $r + $b[5]) * $r + 1);
     }
-
 }

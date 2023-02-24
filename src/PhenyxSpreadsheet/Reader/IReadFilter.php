@@ -2,7 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-interface IReadFilter {
+interface IReadFilter
+{
     /**
      * Should this cell be read?
      *

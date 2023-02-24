@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Reader;
 
-class DefaultReadFilter implements IReadFilter {
-
+class DefaultReadFilter implements IReadFilter
+{
     /**
      * Should this cell be read?
      *
@@ -13,8 +13,8 @@ class DefaultReadFilter implements IReadFilter {
      *
      * @return bool
      */
-    public function readCell($columnAddress, $row, $worksheetName = '') {
-
+    public function readCell($columnAddress, $row, $worksheetName = '')
+    {
         return true;
     }
 }

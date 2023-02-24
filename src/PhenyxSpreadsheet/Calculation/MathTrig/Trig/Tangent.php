@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Helpers;
 
-class Tangent {
-
+class Tangent
+{
     use ArrayEnabled;
 
     /**
@@ -22,8 +22,8 @@ class Tangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function tan($angle) {
-
+    public static function tan($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -48,8 +48,8 @@ class Tangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function tanh($angle) {
-
+    public static function tanh($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -74,8 +74,8 @@ class Tangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function atan($number) {
-
+    public static function atan($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -100,8 +100,8 @@ class Tangent {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function atanh($number) {
-
+    public static function atanh($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -139,8 +139,8 @@ class Tangent {
      *         If an array of numbers is passed as one of the arguments, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function atan2($xCoordinate, $yCoordinate) {
-
+    public static function atan2($xCoordinate, $yCoordinate)
+    {
         if (is_array($xCoordinate) || is_array($yCoordinate)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $xCoordinate, $yCoordinate);
         }
@@ -158,5 +158,4 @@ class Tangent {
 
         return atan2($yCoordinate, $xCoordinate);
     }
-
 }

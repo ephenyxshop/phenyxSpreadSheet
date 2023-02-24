@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Settings;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class Service {
-
+class Service
+{
     /**
      * WEBSERVICE.
      *
@@ -18,10 +18,9 @@ class Service {
      *
      * @return string the output resulting from a call to the webservice
      */
-    public static function webService(string $url) {
-
+    public static function webService(string $url)
+    {
         $url = trim($url);
-
         if (strlen($url) > 2048) {
             return ExcelError::VALUE(); // Invalid URL length
         }
@@ -46,7 +45,6 @@ class Service {
         }
 
         $output = $response->getBody()->getContents();
-
         if (strlen($output) > 32767) {
             return ExcelError::VALUE(); // Output not a string or too long
         }
@@ -66,13 +64,12 @@ class Service {
      *
      * @return string the url encoded output
      */
-    public static function urlEncode($text) {
-
+    public static function urlEncode($text)
+    {
         if (!is_string($text)) {
             return ExcelError::VALUE();
         }
 
         return str_replace('+', '%20', urlencode($text));
     }
-
 }

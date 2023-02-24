@@ -2,21 +2,26 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting;
 
-class ConditionalFormatValueObject {
-
+class ConditionalFormatValueObject
+{
+    /** @var mixed */
     private $type;
 
+    /** @var mixed */
     private $value;
 
+    /** @var mixed */
     private $cellFormula;
 
     /**
      * ConditionalFormatValueObject constructor.
      *
+     * @param mixed $type
+     * @param mixed $value
      * @param null|mixed $cellFormula
      */
-    public function __construct($type, $value = null, $cellFormula = null) {
-
+    public function __construct($type, $value = null, $cellFormula = null)
+    {
         $this->type = $type;
         $this->value = $value;
         $this->cellFormula = $cellFormula;
@@ -25,16 +30,16 @@ class ConditionalFormatValueObject {
     /**
      * @return mixed
      */
-    public function getType() {
-
+    public function getType()
+    {
         return $this->type;
     }
 
     /**
      * @param mixed $type
      */
-    public function setType($type) {
-
+    public function setType($type): self
+    {
         $this->type = $type;
 
         return $this;
@@ -43,16 +48,16 @@ class ConditionalFormatValueObject {
     /**
      * @return mixed
      */
-    public function getValue() {
-
+    public function getValue()
+    {
         return $this->value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value) {
-
+    public function setValue($value): self
+    {
         $this->value = $value;
 
         return $this;
@@ -61,16 +66,16 @@ class ConditionalFormatValueObject {
     /**
      * @return mixed
      */
-    public function getCellFormula() {
-
+    public function getCellFormula()
+    {
         return $this->cellFormula;
     }
 
     /**
      * @param mixed $cellFormula
      */
-    public function setCellFormula($cellFormula) {
-
+    public function setCellFormula($cellFormula): self
+    {
         $this->cellFormula = $cellFormula;
 
         return $this;

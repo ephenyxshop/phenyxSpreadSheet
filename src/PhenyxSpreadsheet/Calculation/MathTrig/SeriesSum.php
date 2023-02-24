@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
-class SeriesSum {
-
+class SeriesSum
+{
     use ArrayEnabled;
 
     /**
@@ -22,8 +22,8 @@ class SeriesSum {
      *
      * @return array|float|string The result, or a string containing an error
      */
-    public static function evaluate($x, $n, $m, ...$args) {
-
+    public static function evaluate($x, $n, $m, ...$args)
+    {
         if (is_array($x) || is_array($n) || is_array($m)) {
             return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 3, $x, $n, $m, ...$args);
         }
@@ -37,22 +37,17 @@ class SeriesSum {
             $aArgs = Functions::flattenArray($args);
             $returnValue = 0;
             $i = 0;
-
             foreach ($aArgs as $argx) {
-
                 if ($argx !== null) {
                     $arg = Helpers::validateNumericNullSubstitution($argx, 0);
                     $returnValue += $arg * $x ** ($n + ($m * $i));
                     ++$i;
                 }
-
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         return $returnValue;
     }
-
 }

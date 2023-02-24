@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class ConvertHex extends ConvertBase {
-
+class ConvertHex extends ConvertBase
+{
     /**
      * toBinary.
      *
@@ -38,8 +38,8 @@ class ConvertHex extends ConvertBase {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function toBinary($value, $places = null) {
-
+    public static function toBinary($value, $places = null)
+    {
         if (is_array($value) || is_array($places)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $places);
         }
@@ -78,8 +78,8 @@ class ConvertHex extends ConvertBase {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function toDecimal($value) {
-
+    public static function toDecimal($value)
+    {
         if (is_array($value)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
@@ -96,13 +96,10 @@ class ConvertHex extends ConvertBase {
         }
 
         $binX = '';
-
         foreach (str_split($value) as $char) {
             $binX .= str_pad(base_convert($char, 16, 2), 4, '0', STR_PAD_LEFT);
         }
-
         if (strlen($binX) == 40 && $binX[0] == '1') {
-
             for ($i = 0; $i < 40; ++$i) {
                 $binX[$i] = ($binX[$i] == '1' ? '0' : '1');
             }
@@ -148,8 +145,8 @@ class ConvertHex extends ConvertBase {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function toOctal($value, $places = null) {
-
+    public static function toOctal($value, $places = null)
+    {
         if (is_array($value) || is_array($places)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $places);
         }
@@ -167,13 +164,12 @@ class ConvertHex extends ConvertBase {
         return ConvertDecimal::toOctal($decimal, $places);
     }
 
-    protected static function validateHex(string $value): string {
-
+    protected static function validateHex(string $value): string
+    {
         if (strlen($value) > preg_match_all('/[0123456789ABCDEF]/', $value)) {
             throw new Exception(ExcelError::NAN());
         }
 
         return $value;
     }
-
 }

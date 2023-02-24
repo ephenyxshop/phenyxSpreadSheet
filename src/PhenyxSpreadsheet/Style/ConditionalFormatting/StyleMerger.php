@@ -8,25 +8,25 @@ use EphenyxShop\PhenyxSpreadsheet\Style\Fill;
 use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
-class StyleMerger {
-
+class StyleMerger
+{
     /**
      * @var Style
      */
     protected $baseStyle;
 
-    public function __construct(Style $baseStyle) {
-
+    public function __construct(Style $baseStyle)
+    {
         $this->baseStyle = $baseStyle;
     }
 
-    public function getStyle(): Style {
-
+    public function getStyle(): Style
+    {
         return $this->baseStyle;
     }
 
-    public function mergeStyle(Style $style): void {
-
+    public function mergeStyle(Style $style): void
+    {
         if ($style->getNumberFormat() !== null && $style->getNumberFormat()->getFormatCode() !== null) {
             $this->baseStyle->getNumberFormat()->setFormatCode($style->getNumberFormat()->getFormatCode());
         }
@@ -42,11 +42,10 @@ class StyleMerger {
         if ($style->getBorders() !== null) {
             $this->mergeBordersStyle($this->baseStyle->getBorders(), $style->getBorders());
         }
-
     }
 
-    protected function mergeFontStyle(Font $baseFontStyle, Font $fontStyle): void {
-
+    protected function mergeFontStyle(Font $baseFontStyle, Font $fontStyle): void
+    {
         if ($fontStyle->getBold() !== null) {
             $baseFontStyle->setBold($fontStyle->getBold());
         }
@@ -66,18 +65,17 @@ class StyleMerger {
         if ($fontStyle->getColor() !== null && $fontStyle->getColor()->getARGB() !== null) {
             $baseFontStyle->setColor($fontStyle->getColor());
         }
-
     }
 
-    protected function mergeFillStyle(Fill $baseFillStyle, Fill $fillStyle): void {
-
+    protected function mergeFillStyle(Fill $baseFillStyle, Fill $fillStyle): void
+    {
         if ($fillStyle->getFillType() !== null) {
             $baseFillStyle->setFillType($fillStyle->getFillType());
         }
 
-        if ($fillStyle->getRotation() !== null) {
-            $baseFillStyle->setRotation($fillStyle->getRotation());
-        }
+        //if ($fillStyle->getRotation() !== null) {
+        $baseFillStyle->setRotation($fillStyle->getRotation());
+        //}
 
         if ($fillStyle->getStartColor() !== null && $fillStyle->getStartColor()->getARGB() !== null) {
             $baseFillStyle->setStartColor($fillStyle->getStartColor());
@@ -86,11 +84,10 @@ class StyleMerger {
         if ($fillStyle->getEndColor() !== null && $fillStyle->getEndColor()->getARGB() !== null) {
             $baseFillStyle->setEndColor($fillStyle->getEndColor());
         }
-
     }
 
-    protected function mergeBordersStyle(Borders $baseBordersStyle, Borders $bordersStyle): void {
-
+    protected function mergeBordersStyle(Borders $baseBordersStyle, Borders $bordersStyle): void
+    {
         if ($bordersStyle->getTop() !== null) {
             $this->mergeBorderStyle($baseBordersStyle->getTop(), $bordersStyle->getTop());
         }
@@ -106,19 +103,16 @@ class StyleMerger {
         if ($bordersStyle->getRight() !== null) {
             $this->mergeBorderStyle($baseBordersStyle->getRight(), $bordersStyle->getRight());
         }
-
     }
 
-    protected function mergeBorderStyle(Border $baseBorderStyle, Border $borderStyle): void {
-
-        if ($borderStyle->getBorderStyle() !== null) {
-            $baseBorderStyle->setBorderStyle($borderStyle->getBorderStyle());
-        }
+    protected function mergeBorderStyle(Border $baseBorderStyle, Border $borderStyle): void
+    {
+        //if ($borderStyle->getBorderStyle() !== null) {
+        $baseBorderStyle->setBorderStyle($borderStyle->getBorderStyle());
+        //}
 
         if ($borderStyle->getColor() !== null && $borderStyle->getColor()->getARGB() !== null) {
             $baseBorderStyle->setColor($borderStyle->getColor());
         }
-
     }
-
 }

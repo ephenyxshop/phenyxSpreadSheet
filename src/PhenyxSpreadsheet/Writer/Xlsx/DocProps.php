@@ -3,22 +3,22 @@
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
 use EphenyxShop\PhenyxSpreadsheet\Document\Properties;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-class DocProps extends WriterPart {
-
+class DocProps extends WriterPart
+{
     /**
      * Write docProps/app.xml to XML format.
      *
      * @return string XML Output
      */
-    public function writeDocPropsApp(Spreadsheet $spreadsheet) {
-
+    public function writeDocPropsApp(Spreadsheet $spreadsheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -30,8 +30,8 @@ class DocProps extends WriterPart {
 
         // Properties
         $objWriter->startElement('Properties');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/officeDocument/2006/extended-properties');
-        $objWriter->writeAttribute('xmlns:vt', 'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes');
+        $objWriter->writeAttribute('xmlns', Namespaces::EXTENDED_PROPERTIES);
+        $objWriter->writeAttribute('xmlns:vt', Namespaces::PROPERTIES_VTYPES);
 
         // Application
         $objWriter->writeElement('Application', 'Microsoft Excel');
@@ -57,7 +57,7 @@ class DocProps extends WriterPart {
 
         // Variant
         $objWriter->startElement('vt:variant');
-        $objWriter->writeElement('vt:i4', $spreadsheet->getSheetCount());
+        $objWriter->writeElement('vt:i4', (string) $spreadsheet->getSheetCount());
         $objWriter->endElement();
 
         $objWriter->endElement();
@@ -69,11 +69,10 @@ class DocProps extends WriterPart {
 
         // Vector
         $objWriter->startElement('vt:vector');
-        $objWriter->writeAttribute('size', $spreadsheet->getSheetCount());
+        $objWriter->writeAttribute('size', (string) $spreadsheet->getSheetCount());
         $objWriter->writeAttribute('baseType', 'lpstr');
 
         $sheetCount = $spreadsheet->getSheetCount();
-
         for ($i = 0; $i < $sheetCount; ++$i) {
             $objWriter->writeElement('vt:lpstr', $spreadsheet->getSheet($i)->getTitle());
         }
@@ -111,11 +110,10 @@ class DocProps extends WriterPart {
      *
      * @return string XML Output
      */
-    public function writeDocPropsCore(Spreadsheet $spreadsheet) {
-
+    public function writeDocPropsCore(Spreadsheet $spreadsheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -127,11 +125,11 @@ class DocProps extends WriterPart {
 
         // cp:coreProperties
         $objWriter->startElement('cp:coreProperties');
-        $objWriter->writeAttribute('xmlns:cp', 'http://schemas.openxmlformats.org/package/2006/metadata/core-properties');
-        $objWriter->writeAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
-        $objWriter->writeAttribute('xmlns:dcterms', 'http://purl.org/dc/terms/');
-        $objWriter->writeAttribute('xmlns:dcmitype', 'http://purl.org/dc/dcmitype/');
-        $objWriter->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $objWriter->writeAttribute('xmlns:cp', Namespaces::CORE_PROPERTIES2);
+        $objWriter->writeAttribute('xmlns:dc', Namespaces::DC_ELEMENTS);
+        $objWriter->writeAttribute('xmlns:dcterms', Namespaces::DC_TERMS);
+        $objWriter->writeAttribute('xmlns:dcmitype', Namespaces::DC_DCMITYPE);
+        $objWriter->writeAttribute('xmlns:xsi', Namespaces::SCHEMA_INSTANCE);
 
         // dc:creator
         $objWriter->writeElement('dc:creator', $spreadsheet->getProperties()->getCreator());
@@ -181,17 +179,15 @@ class DocProps extends WriterPart {
      *
      * @return null|string XML Output
      */
-    public function writeDocPropsCustom(Spreadsheet $spreadsheet) {
-
+    public function writeDocPropsCustom(Spreadsheet $spreadsheet)
+    {
         $customPropertyList = $spreadsheet->getProperties()->getCustomProperties();
-
         if (empty($customPropertyList)) {
             return null;
         }
 
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -203,8 +199,8 @@ class DocProps extends WriterPart {
 
         // cp:coreProperties
         $objWriter->startElement('Properties');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/officeDocument/2006/custom-properties');
-        $objWriter->writeAttribute('xmlns:vt', 'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes');
+        $objWriter->writeAttribute('xmlns', Namespaces::CUSTOM_PROPERTIES);
+        $objWriter->writeAttribute('xmlns:vt', Namespaces::PROPERTIES_VTYPES);
 
         foreach ($customPropertyList as $key => $customProperty) {
             $propertyValue = $spreadsheet->getProperties()->getCustomPropertyValue($customProperty);
@@ -212,33 +208,33 @@ class DocProps extends WriterPart {
 
             $objWriter->startElement('property');
             $objWriter->writeAttribute('fmtid', '{D5CDD505-2E9C-101B-9397-08002B2CF9AE}');
-            $objWriter->writeAttribute('pid', $key + 2);
+            $objWriter->writeAttribute('pid', (string) ($key + 2));
             $objWriter->writeAttribute('name', $customProperty);
 
             switch ($propertyType) {
-            case Properties::PROPERTY_TYPE_INTEGER:
-                $objWriter->writeElement('vt:i4', $propertyValue);
+                case Properties::PROPERTY_TYPE_INTEGER:
+                    $objWriter->writeElement('vt:i4', $propertyValue);
 
-                break;
-            case Properties::PROPERTY_TYPE_FLOAT:
-                $objWriter->writeElement('vt:r8', $propertyValue);
+                    break;
+                case Properties::PROPERTY_TYPE_FLOAT:
+                    $objWriter->writeElement('vt:r8', sprintf('%F', $propertyValue));
 
-                break;
-            case Properties::PROPERTY_TYPE_BOOLEAN:
-                $objWriter->writeElement('vt:bool', ($propertyValue) ? 'true' : 'false');
+                    break;
+                case Properties::PROPERTY_TYPE_BOOLEAN:
+                    $objWriter->writeElement('vt:bool', ($propertyValue) ? 'true' : 'false');
 
-                break;
-            case Properties::PROPERTY_TYPE_DATE:
-                $objWriter->startElement('vt:filetime');
-                $date = Date::dateTimeFromTimestamp("$propertyValue");
-                $objWriter->writeRawData($date->format(DATE_W3C));
-                $objWriter->endElement();
+                    break;
+                case Properties::PROPERTY_TYPE_DATE:
+                    $objWriter->startElement('vt:filetime');
+                    $date = Date::dateTimeFromTimestamp("$propertyValue");
+                    $objWriter->writeRawData($date->format(DATE_W3C));
+                    $objWriter->endElement();
 
-                break;
-            default:
-                $objWriter->writeElement('vt:lpwstr', $propertyValue);
+                    break;
+                default:
+                    $objWriter->writeElement('vt:lpwstr', $propertyValue);
 
-                break;
+                    break;
             }
 
             $objWriter->endElement();
@@ -248,5 +244,4 @@ class DocProps extends WriterPart {
 
         return $objWriter->getData();
     }
-
 }

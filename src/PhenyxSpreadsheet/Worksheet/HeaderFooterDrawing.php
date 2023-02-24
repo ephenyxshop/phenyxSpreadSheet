@@ -2,15 +2,15 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-class HeaderFooterDrawing extends Drawing {
-
+class HeaderFooterDrawing extends Drawing
+{
     /**
      * Get hash code.
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->getPath() .
             $this->name .

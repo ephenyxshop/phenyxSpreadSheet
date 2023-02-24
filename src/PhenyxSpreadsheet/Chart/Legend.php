@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Chart;
 
-class Legend {
-
+class Legend
+{
     /** Legend positions */
     const XL_LEGEND_POSITION_BOTTOM = -4107; //    Below the chart.
     const XL_LEGEND_POSITION_CORNER = 2; //    In the upper right-hand corner of the chart border.
@@ -18,13 +18,13 @@ class Legend {
     const POSITION_TOP = 't';
     const POSITION_TOPRIGHT = 'tr';
 
-    private static $positionXLref = [
+    const POSITION_XLREF = [
         self::XL_LEGEND_POSITION_BOTTOM => self::POSITION_BOTTOM,
         self::XL_LEGEND_POSITION_CORNER => self::POSITION_TOPRIGHT,
         self::XL_LEGEND_POSITION_CUSTOM => '??',
-        self::XL_LEGEND_POSITION_LEFT   => self::POSITION_LEFT,
-        self::XL_LEGEND_POSITION_RIGHT  => self::POSITION_RIGHT,
-        self::XL_LEGEND_POSITION_TOP    => self::POSITION_TOP,
+        self::XL_LEGEND_POSITION_LEFT => self::POSITION_LEFT,
+        self::XL_LEGEND_POSITION_RIGHT => self::POSITION_RIGHT,
+        self::XL_LEGEND_POSITION_TOP => self::POSITION_TOP,
     ];
 
     /**
@@ -44,7 +44,7 @@ class Legend {
     /**
      * Legend Layout.
      *
-     * @var Layout
+     * @var ?Layout
      */
     private $layout;
 
@@ -52,10 +52,11 @@ class Legend {
      * Create a new Legend.
      *
      * @param string $position
+     * @param ?Layout $layout
      * @param bool $overlay
      */
-    public function __construct($position = self::POSITION_RIGHT,  ? Layout $layout = null, $overlay = false) {
-
+    public function __construct($position = self::POSITION_RIGHT, ?Layout $layout = null, $overlay = false)
+    {
         $this->setPosition($position);
         $this->layout = $layout;
         $this->setOverlay($overlay);
@@ -66,8 +67,8 @@ class Legend {
      *
      * @return string
      */
-    public function getPosition() {
-
+    public function getPosition()
+    {
         return $this->position;
     }
 
@@ -78,9 +79,9 @@ class Legend {
      *
      * @return bool
      */
-    public function setPosition($position) {
-
-        if (!in_array($position, self::$positionXLref)) {
+    public function setPosition($position)
+    {
+        if (!in_array($position, self::POSITION_XLREF)) {
             return false;
         }
 
@@ -92,11 +93,12 @@ class Legend {
     /**
      * Get legend position as an Excel internal numeric value.
      *
-     * @return int
+     * @return false|int
      */
-    public function getPositionXL() {
-
-        return array_search($this->position, self::$positionXLref);
+    public function getPositionXL()
+    {
+        // Scrutinizer thinks the following could return string. It is wrong.
+        return array_search($this->position, self::POSITION_XLREF);
     }
 
     /**
@@ -106,13 +108,13 @@ class Legend {
      *
      * @return bool
      */
-    public function setPositionXL($positionXL) {
-
-        if (!isset(self::$positionXLref[$positionXL])) {
+    public function setPositionXL($positionXL)
+    {
+        if (!isset(self::POSITION_XLREF[$positionXL])) {
             return false;
         }
 
-        $this->position = self::$positionXLref[$positionXL];
+        $this->position = self::POSITION_XLREF[$positionXL];
 
         return true;
     }
@@ -122,8 +124,8 @@ class Legend {
      *
      * @return bool
      */
-    public function getOverlay() {
-
+    public function getOverlay()
+    {
         return $this->overlay;
     }
 
@@ -132,19 +134,18 @@ class Legend {
      *
      * @param bool $overlay
      */
-    public function setOverlay($overlay) : void{
-
+    public function setOverlay($overlay): void
+    {
         $this->overlay = $overlay;
     }
 
     /**
      * Get Layout.
      *
-     * @return Layout
+     * @return ?Layout
      */
-    public function getLayout() {
-
+    public function getLayout()
+    {
         return $this->layout;
     }
-
 }

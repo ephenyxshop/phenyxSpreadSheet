@@ -27,8 +27,8 @@ use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
  *
  * @author   Xavier Noguer <xnoguer@php.net>
  */
-class PPS {
-
+class PPS
+{
     /**
      * The PPS index.
      *
@@ -88,7 +88,7 @@ class PPS {
     /**
      * Starting block (small or big) for this PPS's data  inside the container.
      *
-     * @var int
+     * @var ?int
      */
     public $startBlock;
 
@@ -104,7 +104,7 @@ class PPS {
      *
      * @var string
      */
-    public $_data;
+    public $_data = '';
 
     /**
      * Array of child PPS's (only used by Root and Dir PPS's).
@@ -123,36 +123,30 @@ class PPS {
     /**
      * The constructor.
      *
-     * @param int $No The PPS index
-     * @param string $name The PPS name
-     * @param int $type The PPS type. Dir, Root or File
-     * @param int $prev The index of the previous PPS
-     * @param int $next The index of the next PPS
-     * @param int $dir The index of it's first child if this is a Dir or Root PPS
+     * @param ?int $No The PPS index
+     * @param ?string $name The PPS name
+     * @param ?int $type The PPS type. Dir, Root or File
+     * @param ?int $prev The index of the previous PPS
+     * @param ?int $next The index of the next PPS
+     * @param ?int $dir The index of it's first child if this is a Dir or Root PPS
      * @param null|float|int $time_1st A timestamp
      * @param null|float|int $time_2nd A timestamp
-     * @param string $data The (usually binary) source data of the PPS
+     * @param ?string $data The (usually binary) source data of the PPS
      * @param array $children Array containing children PPS for this PPS
      */
-    public function __construct($No, $name, $type, $prev, $next, $dir, $time_1st, $time_2nd, $data, $children) {
-
-        $this->No = $No;
-        $this->Name = $name;
-        $this->Type = $type;
-        $this->PrevPps = $prev;
-        $this->NextPps = $next;
-        $this->DirPps = $dir;
+    public function __construct($No, $name, $type, $prev, $next, $dir, $time_1st, $time_2nd, $data, $children)
+    {
+        $this->No = (int) $No;
+        $this->Name = (string) $name;
+        $this->Type = (int) $type;
+        $this->PrevPps = (int) $prev;
+        $this->NextPps = (int) $next;
+        $this->DirPps = (int) $dir;
         $this->Time1st = $time_1st ?? 0;
         $this->Time2nd = $time_2nd ?? 0;
-        $this->_data = $data;
+        $this->_data = (string) $data;
         $this->children = $children;
-
-        if ($data != '') {
-            $this->Size = strlen($data);
-        } else {
-            $this->Size = 0;
-        }
-
+        $this->Size = strlen((string) $data);
     }
 
     /**
@@ -160,11 +154,11 @@ class PPS {
      *
      * @return int The amount of data (in bytes)
      */
-    public function getDataLen() {
-
-        if (!isset($this->_data)) {
-            return 0;
-        }
+    public function getDataLen()
+    {
+        //if (!isset($this->_data)) {
+        //    return 0;
+        //}
 
         return strlen($this->_data);
     }
@@ -174,26 +168,26 @@ class PPS {
      *
      * @return string The binary string
      */
-    public function getPpsWk() {
-
+    public function getPpsWk()
+    {
         $ret = str_pad($this->Name, 64, "\x00");
 
-        $ret .= pack('v', strlen($this->Name) + 2) // 66
-         . pack('c', $this->Type) // 67
-         . pack('c', 0x00) //UK                // 68
-         . pack('V', $this->PrevPps) //Prev    // 72
-         . pack('V', $this->NextPps) //Next    // 76
-         . pack('V', $this->DirPps) //Dir     // 80
-         . "\x00\x09\x02\x00" // 84
-         . "\x00\x00\x00\x00" // 88
-         . "\xc0\x00\x00\x00" // 92
-         . "\x00\x00\x00\x46" // 96 // Seems to be ok only for Root
-         . "\x00\x00\x00\x00" // 100
-         . OLE::localDateToOLE($this->Time1st) // 108
-         . OLE::localDateToOLE($this->Time2nd) // 116
-         . pack('V', $this->startBlock ?? 0) // 120
-         . pack('V', $this->Size) // 124
-         . pack('V', 0); // 128
+        $ret .= pack('v', strlen($this->Name) + 2)  // 66
+            . pack('c', $this->Type)              // 67
+            . pack('c', 0x00) //UK                // 68
+            . pack('V', $this->PrevPps) //Prev    // 72
+            . pack('V', $this->NextPps) //Next    // 76
+            . pack('V', $this->DirPps)  //Dir     // 80
+            . "\x00\x09\x02\x00"                  // 84
+            . "\x00\x00\x00\x00"                  // 88
+            . "\xc0\x00\x00\x00"                  // 92
+            . "\x00\x00\x00\x46"                  // 96 // Seems to be ok only for Root
+            . "\x00\x00\x00\x00"                  // 100
+            . OLE::localDateToOLE($this->Time1st)          // 108
+            . OLE::localDateToOLE($this->Time2nd)          // 116
+            . pack('V', $this->startBlock ?? 0)  // 120
+            . pack('V', $this->Size)               // 124
+            . pack('V', 0); // 128
 
         return $ret;
     }
@@ -209,11 +203,11 @@ class PPS {
      *
      * @return int The index for this PPS
      */
-    public static function savePpsSetPnt(&$raList, $to_save, $depth = 0) {
-
+    public static function savePpsSetPnt(&$raList, $to_save, $depth = 0)
+    {
         if (!is_array($to_save) || (empty($to_save))) {
             return 0xFFFFFFFF;
-        } else if (count($to_save) == 1) {
+        } elseif (count($to_save) == 1) {
             $cnt = count($raList);
             // If the first entry, it's the root... Don't clone it!
             $raList[$cnt] = ($depth == 0) ? $to_save[0] : clone $to_save[0];
@@ -222,7 +216,7 @@ class PPS {
             $raList[$cnt]->NextPps = 0xFFFFFFFF;
             $raList[$cnt]->DirPps = self::savePpsSetPnt($raList, @$raList[$cnt]->children, $depth++);
         } else {
-            $iPos = floor(count($to_save) / 2);
+            $iPos = (int) floor(count($to_save) / 2);
             $aPrev = array_slice($to_save, 0, $iPos);
             $aNext = array_slice($to_save, $iPos + 1);
             $cnt = count($raList);
@@ -236,5 +230,4 @@ class PPS {
 
         return $cnt;
     }
-
 }

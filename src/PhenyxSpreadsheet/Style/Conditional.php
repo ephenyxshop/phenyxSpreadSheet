@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Style;
 use EphenyxShop\PhenyxSpreadsheet\IComparable;
 use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\ConditionalDataBar;
 
-class Conditional implements IComparable {
-
+class Conditional implements IComparable
+{
     // Condition types
     const CONDITION_NONE = 'none';
     const CONDITION_BEGINSWITH = 'beginsWith';
@@ -118,8 +118,8 @@ class Conditional implements IComparable {
     /**
      * Create a new Conditional.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Initialise values
         $this->style = new Style(false, true);
     }
@@ -129,8 +129,8 @@ class Conditional implements IComparable {
      *
      * @return string
      */
-    public function getConditionType() {
-
+    public function getConditionType()
+    {
         return $this->conditionType;
     }
 
@@ -141,8 +141,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setConditionType($type) {
-
+    public function setConditionType($type)
+    {
         $this->conditionType = $type;
 
         return $this;
@@ -153,8 +153,8 @@ class Conditional implements IComparable {
      *
      * @return string
      */
-    public function getOperatorType() {
-
+    public function getOperatorType()
+    {
         return $this->operatorType;
     }
 
@@ -165,8 +165,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setOperatorType($type) {
-
+    public function setOperatorType($type)
+    {
         $this->operatorType = $type;
 
         return $this;
@@ -177,8 +177,8 @@ class Conditional implements IComparable {
      *
      * @return string
      */
-    public function getText() {
-
+    public function getText()
+    {
         return $this->text;
     }
 
@@ -189,8 +189,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setText($text) {
-
+    public function setText($text)
+    {
         $this->text = $text;
 
         return $this;
@@ -201,8 +201,8 @@ class Conditional implements IComparable {
      *
      * @return bool
      */
-    public function getStopIfTrue() {
-
+    public function getStopIfTrue()
+    {
         return $this->stopIfTrue;
     }
 
@@ -213,8 +213,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setStopIfTrue($stopIfTrue) {
-
+    public function setStopIfTrue($stopIfTrue)
+    {
         $this->stopIfTrue = $stopIfTrue;
 
         return $this;
@@ -225,8 +225,8 @@ class Conditional implements IComparable {
      *
      * @return (bool|float|int|string)[]
      */
-    public function getConditions() {
-
+    public function getConditions()
+    {
         return $this->condition;
     }
 
@@ -237,12 +237,11 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setConditions($conditions) {
-
+    public function setConditions($conditions)
+    {
         if (!is_array($conditions)) {
             $conditions = [$conditions];
         }
-
         $this->condition = $conditions;
 
         return $this;
@@ -255,8 +254,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function addCondition($condition) {
-
+    public function addCondition($condition)
+    {
         $this->condition[] = $condition;
 
         return $this;
@@ -267,8 +266,8 @@ class Conditional implements IComparable {
      *
      * @return Style
      */
-    public function getStyle() {
-
+    public function getStyle()
+    {
         return $this->style;
     }
 
@@ -277,8 +276,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setStyle(Style $style) {
-
+    public function setStyle(Style $style)
+    {
         $this->style = $style;
 
         return $this;
@@ -289,8 +288,8 @@ class Conditional implements IComparable {
      *
      * @return null|ConditionalDataBar
      */
-    public function getDataBar() {
-
+    public function getDataBar()
+    {
         return $this->dataBar;
     }
 
@@ -299,8 +298,8 @@ class Conditional implements IComparable {
      *
      * @return $this
      */
-    public function setDataBar(ConditionalDataBar $dataBar) {
-
+    public function setDataBar(ConditionalDataBar $dataBar)
+    {
         $this->dataBar = $dataBar;
 
         return $this;
@@ -311,8 +310,8 @@ class Conditional implements IComparable {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->conditionType .
             $this->operatorType .
@@ -325,28 +324,23 @@ class Conditional implements IComparable {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
     /**
      * Verify if param is valid condition type.
      */
-    public static function isValidConditionType(string $type): bool {
-
+    public static function isValidConditionType(string $type): bool
+    {
         return in_array($type, self::CONDITION_TYPES);
     }
-
 }

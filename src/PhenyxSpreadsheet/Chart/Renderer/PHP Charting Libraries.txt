@@ -5,7 +5,10 @@ GraPHPite
 	http://graphpite.sourceforge.net/
 
 JpGraph
-	http://www.aditus.nu/jpgraph/
+	https://jpgraph.net/
+	Used composer packages:
+        https://packagist.org/packages/jpgraph/jpgraph (\EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\JpGraph)
+        https://packagist.org/packages/mitoteam/jpgraph (\EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\MtJpGraphRenderer)
 
 LibChart
 	https://naku.dohcrew.com/libchart/pages/introduction/

@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
-class ColumnRange implements AddressRange {
-
+class ColumnRange implements AddressRange
+{
     /**
      * @var ?Worksheet
      */
@@ -21,8 +21,8 @@ class ColumnRange implements AddressRange {
      */
     protected $to;
 
-    public function __construct(string $from,  ? string $to = null,  ? Worksheet $worksheet = null) {
-
+    public function __construct(string $from, ?string $to = null, ?Worksheet $worksheet = null)
+    {
         $this->validateFromTo(
             Coordinate::columnIndexFromString($from),
             Coordinate::columnIndexFromString($to ?? $from)
@@ -30,20 +30,19 @@ class ColumnRange implements AddressRange {
         $this->worksheet = $worksheet;
     }
 
-    public static function fromColumnIndexes(int $from, int $to,  ? Worksheet $worksheet = null) : self {
-
+    public static function fromColumnIndexes(int $from, int $to, ?Worksheet $worksheet = null): self
+    {
         return new self(Coordinate::stringFromColumnIndex($from), Coordinate::stringFromColumnIndex($to), $worksheet);
     }
 
     /**
      * @param array<int|string> $array
      */
-    public static function fromArray(array $array,  ? Worksheet $worksheet = null) : self{
-
+    public static function fromArray(array $array, ?Worksheet $worksheet = null): self
+    {
         array_walk(
             $array,
-            function (&$column) : void{
-
+            function (&$column): void {
                 $column = is_numeric($column) ? Coordinate::stringFromColumnIndex((int) $column) : $column;
             }
         );
@@ -54,20 +53,20 @@ class ColumnRange implements AddressRange {
         return new self($from, $to, $worksheet);
     }
 
-    private function validateFromTo(int $from, int $to) : void{
-
+    private function validateFromTo(int $from, int $to): void
+    {
         // Identify actual top and bottom values (in case we've been given bottom and top)
         $this->from = min($from, $to);
         $this->to = max($from, $to);
     }
 
-    public function columnCount() : int {
-
+    public function columnCount(): int
+    {
         return $this->to - $this->from + 1;
     }
 
-    public function shiftDown(int $offset = 1) : self{
-
+    public function shiftDown(int $offset = 1): self
+    {
         $newFrom = $this->from + $offset;
         $newFrom = ($newFrom < 1) ? 1 : $newFrom;
 
@@ -77,41 +76,41 @@ class ColumnRange implements AddressRange {
         return self::fromColumnIndexes($newFrom, $newTo, $this->worksheet);
     }
 
-    public function shiftUp(int $offset = 1): self {
-
+    public function shiftUp(int $offset = 1): self
+    {
         return $this->shiftDown(0 - $offset);
     }
 
-    public function from(): string {
-
+    public function from(): string
+    {
         return Coordinate::stringFromColumnIndex($this->from);
     }
 
-    public function to(): string {
-
+    public function to(): string
+    {
         return Coordinate::stringFromColumnIndex($this->to);
     }
 
-    public function fromIndex(): int {
-
+    public function fromIndex(): int
+    {
         return $this->from;
     }
 
-    public function toIndex(): int {
-
+    public function toIndex(): int
+    {
         return $this->to;
     }
 
-    public function toCellRange(): CellRange {
-
+    public function toCellRange(): CellRange
+    {
         return new CellRange(
             CellAddress::fromColumnAndRow($this->from, 1, $this->worksheet),
             CellAddress::fromColumnAndRow($this->to, AddressRange::MAX_ROW)
         );
     }
 
-    public function __toString(): string{
-
+    public function __toString(): string
+    {
         $from = $this->from();
         $to = $this->to();
 
@@ -123,5 +122,4 @@ class ColumnRange implements AddressRange {
 
         return "{$from}:{$to}";
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\RichText;
 
-class TextElement implements ITextElement {
-
+class TextElement implements ITextElement
+{
     /**
      * Text.
      *
@@ -16,8 +16,8 @@ class TextElement implements ITextElement {
      *
      * @param string $text Text
      */
-    public function __construct($text = '') {
-
+    public function __construct($text = '')
+    {
         // Initialise variables
         $this->text = $text;
     }
@@ -27,8 +27,8 @@ class TextElement implements ITextElement {
      *
      * @return string Text
      */
-    public function getText() {
-
+    public function getText()
+    {
         return $this->text;
     }
 
@@ -39,8 +39,8 @@ class TextElement implements ITextElement {
      *
      * @return $this
      */
-    public function setText($text) {
-
+    public function setText($text)
+    {
         $this->text = $text;
 
         return $this;
@@ -49,10 +49,10 @@ class TextElement implements ITextElement {
     /**
      * Get font.
      *
-     * @return null|\PhpOffice\PhenyxSpreadsheet\Style\Font
+     * @return null|\EphenyxShop\PhenyxSpreadsheet\Style\Font
      */
-    public function getFont() {
-
+    public function getFont()
+    {
         return null;
     }
 
@@ -61,31 +61,11 @@ class TextElement implements ITextElement {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->text .
             __CLASS__
         );
     }
-
-    /**
-     * Implement PHP __clone to create a deep clone, not just a shallow copy.
-     */
-    public function __clone() {
-
-        $vars = get_object_vars($this);
-
-        foreach ($vars as $key => $value) {
-
-            if (is_object($value)) {
-                $this->$key = clone $value;
-            } else {
-                $this->$key = $value;
-            }
-
-        }
-
-    }
-
 }

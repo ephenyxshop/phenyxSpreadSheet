@@ -5,10 +5,11 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
-class Factorial {
-
+class Factorial
+{
     use ArrayEnabled;
 
     /**
@@ -26,8 +27,8 @@ class Factorial {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function fact($factVal) {
-
+    public static function fact($factVal)
+    {
         if (is_array($factVal)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $factVal);
         }
@@ -40,17 +41,13 @@ class Factorial {
         }
 
         $factLoop = floor($factVal);
-
         if ($factVal > $factLoop) {
-
             if (Functions::getCompatibilityMode() == Functions::COMPATIBILITY_GNUMERIC) {
                 return Statistical\Distributions\Gamma::gammaValue($factVal + 1);
             }
-
         }
 
         $factorial = 1;
-
         while ($factLoop > 1) {
             $factorial *= $factLoop--;
         }
@@ -72,8 +69,8 @@ class Factorial {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function factDouble($factVal) {
-
+    public static function factDouble($factVal)
+    {
         if (is_array($factVal)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $factVal);
         }
@@ -87,7 +84,6 @@ class Factorial {
 
         $factLoop = floor($factVal);
         $factorial = 1;
-
         while ($factLoop > 1) {
             $factorial *= $factLoop;
             $factLoop -= 2;
@@ -105,14 +101,13 @@ class Factorial {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function multinomial(...$args) {
-
+    public static function multinomial(...$args)
+    {
         $summer = 0;
         $divisor = 1;
 
         try {
             // Loop through arguments
-
             foreach (Functions::flattenArray($args) as $argx) {
                 $arg = Helpers::validateNumericNullSubstitution($argx, null);
                 Helpers::validateNotNegative($arg);
@@ -120,14 +115,12 @@ class Factorial {
                 $summer += $arg;
                 $divisor *= self::fact($arg);
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         $summer = self::fact($summer);
 
-        return $summer / $divisor;
+        return is_numeric($summer) ? ($summer / $divisor) : ExcelError::VALUE();
     }
-
 }

@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
-class AccruedInterest {
-
+class AccruedInterest
+{
     public const ACCRINT_CALCMODE_ISSUE_TO_SETTLEMENT = true;
 
     public const ACCRINT_CALCMODE_FIRST_INTEREST_TO_SETTLEMENT = false;
@@ -54,18 +54,18 @@ class AccruedInterest {
         $basis = FinancialConstants::BASIS_DAYS_PER_YEAR_NASD,
         $calcMethod = self::ACCRINT_CALCMODE_ISSUE_TO_SETTLEMENT
     ) {
-
+        self::doNothing($calcMethod);
         $issue = Functions::flattenSingleValue($issue);
         $firstInterest = Functions::flattenSingleValue($firstInterest);
         $settlement = Functions::flattenSingleValue($settlement);
         $rate = Functions::flattenSingleValue($rate);
         $parValue = ($parValue === null) ? 1000 : Functions::flattenSingleValue($parValue);
         $frequency = ($frequency === null)
-        ? FinancialConstants::FREQUENCY_ANNUAL
-        : Functions::flattenSingleValue($frequency);
+            ? FinancialConstants::FREQUENCY_ANNUAL
+            : Functions::flattenSingleValue($frequency);
         $basis = ($basis === null)
-        ? FinancialConstants::BASIS_DAYS_PER_YEAR_NASD
-        : Functions::flattenSingleValue($basis);
+            ? FinancialConstants::BASIS_DAYS_PER_YEAR_NASD
+            : Functions::flattenSingleValue($basis);
 
         try {
             $issue = SecurityValidations::validateIssueDate($issue);
@@ -74,20 +74,18 @@ class AccruedInterest {
             $rate = SecurityValidations::validateRate($rate);
             $parValue = SecurityValidations::validateParValue($parValue);
             $frequency = SecurityValidations::validateFrequency($frequency);
+            self::doNothing($frequency);
             $basis = SecurityValidations::validateBasis($basis);
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         $daysBetweenIssueAndSettlement = Functions::scalar(YearFrac::fraction($issue, $settlement, $basis));
-
         if (!is_numeric($daysBetweenIssueAndSettlement)) {
             //    return date error
             return $daysBetweenIssueAndSettlement;
         }
-
         $daysBetweenFirstInterestAndSettlement = Functions::scalar(YearFrac::fraction($firstInterest, $settlement, $basis));
-
         if (!is_numeric($daysBetweenFirstInterestAndSettlement)) {
             //    return date error
             return $daysBetweenFirstInterestAndSettlement;
@@ -125,14 +123,13 @@ class AccruedInterest {
         $parValue = 1000,
         $basis = FinancialConstants::BASIS_DAYS_PER_YEAR_NASD
     ) {
-
         $issue = Functions::flattenSingleValue($issue);
         $settlement = Functions::flattenSingleValue($settlement);
         $rate = Functions::flattenSingleValue($rate);
         $parValue = ($parValue === null) ? 1000 : Functions::flattenSingleValue($parValue);
         $basis = ($basis === null)
-        ? FinancialConstants::BASIS_DAYS_PER_YEAR_NASD
-        : Functions::flattenSingleValue($basis);
+            ? FinancialConstants::BASIS_DAYS_PER_YEAR_NASD
+            : Functions::flattenSingleValue($basis);
 
         try {
             $issue = SecurityValidations::validateIssueDate($issue);
@@ -146,7 +143,6 @@ class AccruedInterest {
         }
 
         $daysBetweenIssueAndSettlement = Functions::scalar(YearFrac::fraction($issue, $settlement, $basis));
-
         if (!is_numeric($daysBetweenIssueAndSettlement)) {
             //    return date error
             return $daysBetweenIssueAndSettlement;
@@ -155,4 +151,9 @@ class AccruedInterest {
         return $parValue * $rate * $daysBetweenIssueAndSettlement;
     }
 
+    /** @param mixed $arg */
+    private static function doNothing($arg): bool
+    {
+        return (bool) $arg;
+    }
 }

@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Information;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 
-class ErrorValue {
-
+class ErrorValue
+{
     use ArrayEnabled;
 
     /**
@@ -18,8 +18,8 @@ class ErrorValue {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function isErr($value = '') {
-
+    public static function isErr($value = '')
+    {
         if (is_array($value)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
@@ -37,8 +37,8 @@ class ErrorValue {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function isError($value = '') {
-
+    public static function isError($value = '')
+    {
         if (is_array($value)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
@@ -47,7 +47,7 @@ class ErrorValue {
             return false;
         }
 
-        return in_array($value, ExcelError::$errorCodes) || $value === ExcelError::CALC();
+        return in_array($value, ExcelError::ERROR_CODES, true);
     }
 
     /**
@@ -60,13 +60,12 @@ class ErrorValue {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function isNa($value = '') {
-
+    public static function isNa($value = '')
+    {
         if (is_array($value)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
 
         return $value === ExcelError::NA();
     }
-
 }

@@ -28,8 +28,8 @@ use EphenyxShop\PhenyxSpreadsheet\Shared\OLE\PPS;
  *
  * @author   Xavier Noguer <xnoguer@php.net>
  */
-class File extends PPS {
-
+class File extends PPS
+{
     /**
      * The constructor.
      *
@@ -37,8 +37,8 @@ class File extends PPS {
      *
      * @see OLE::ascToUcs()
      */
-    public function __construct($name) {
-
+    public function __construct($name)
+    {
         parent::__construct(null, $name, OLE::OLE_PPS_TYPE_FILE, null, null, null, null, null, '', []);
     }
 
@@ -47,8 +47,8 @@ class File extends PPS {
      *
      * @return mixed true on success
      */
-    public function init() {
-
+    public function init()
+    {
         return true;
     }
 
@@ -57,8 +57,8 @@ class File extends PPS {
      *
      * @param string $data The data to append
      */
-    public function append($data): void{
-
+    public function append($data): void
+    {
         $this->_data .= $data;
     }
 }

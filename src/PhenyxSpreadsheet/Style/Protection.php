@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Style;
 
-class Protection extends Supervisor {
-
+class Protection extends Supervisor
+{
     /** Protection styles */
     const PROTECTION_INHERIT = 'inherit';
     const PROTECTION_PROTECTED = 'protected';
@@ -33,18 +33,16 @@ class Protection extends Supervisor {
      *                                    Leave this value at default unless you understand exactly what
      *                                        its ramifications are
      */
-    public function __construct($isSupervisor = false, $isConditional = false) {
-
+    public function __construct($isSupervisor = false, $isConditional = false)
+    {
         // Supervisor?
         parent::__construct($isSupervisor);
 
         // Initialise values
-
         if (!$isConditional) {
             $this->locked = self::PROTECTION_INHERIT;
             $this->hidden = self::PROTECTION_INHERIT;
         }
-
     }
 
     /**
@@ -53,8 +51,8 @@ class Protection extends Supervisor {
      *
      * @return Protection
      */
-    public function getSharedComponent() {
-
+    public function getSharedComponent()
+    {
         /** @var Style */
         $parent = $this->parent;
 
@@ -68,8 +66,8 @@ class Protection extends Supervisor {
      *
      * @return array
      */
-    public function getStyleArray($array) {
-
+    public function getStyleArray($array)
+    {
         return ['protection' => $array];
     }
 
@@ -89,20 +87,17 @@ class Protection extends Supervisor {
      *
      * @return $this
      */
-    public function applyFromArray(array $styleArray) {
-
+    public function applyFromArray(array $styleArray)
+    {
         if ($this->isSupervisor) {
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($styleArray));
         } else {
-
             if (isset($styleArray['locked'])) {
                 $this->setLocked($styleArray['locked']);
             }
-
             if (isset($styleArray['hidden'])) {
                 $this->setHidden($styleArray['hidden']);
             }
-
         }
 
         return $this;
@@ -113,8 +108,8 @@ class Protection extends Supervisor {
      *
      * @return string
      */
-    public function getLocked() {
-
+    public function getLocked()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getLocked();
         }
@@ -129,8 +124,8 @@ class Protection extends Supervisor {
      *
      * @return $this
      */
-    public function setLocked($lockType) {
-
+    public function setLocked($lockType)
+    {
         if ($this->isSupervisor) {
             $styleArray = $this->getStyleArray(['locked' => $lockType]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
@@ -146,8 +141,8 @@ class Protection extends Supervisor {
      *
      * @return string
      */
-    public function getHidden() {
-
+    public function getHidden()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getHidden();
         }
@@ -162,8 +157,8 @@ class Protection extends Supervisor {
      *
      * @return $this
      */
-    public function setHidden($hiddenType) {
-
+    public function setHidden($hiddenType)
+    {
         if ($this->isSupervisor) {
             $styleArray = $this->getStyleArray(['hidden' => $hiddenType]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
@@ -179,8 +174,8 @@ class Protection extends Supervisor {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getHashCode();
         }
@@ -194,12 +189,10 @@ class Protection extends Supervisor {
 
     protected function exportArray1(): array
     {
-
         $exportedArray = [];
         $this->exportArray2($exportedArray, 'locked', $this->getLocked());
         $this->exportArray2($exportedArray, 'hidden', $this->getHidden());
 
         return $exportedArray;
     }
-
 }

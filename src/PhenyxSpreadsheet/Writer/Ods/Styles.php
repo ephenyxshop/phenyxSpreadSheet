@@ -4,17 +4,16 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Ods;
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 
-class Styles extends WriterPart {
-
+class Styles extends WriterPart
+{
     /**
      * Write styles.xml to XML format.
      *
      * @return string XML Output
      */
-    public function write(): string{
-
+    public function write(): string
+    {
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -63,5 +62,4 @@ class Styles extends WriterPart {
 
         return $objWriter->getData();
     }
-
 }

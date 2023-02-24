@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared\Trend;
 
-class LinearBestFit extends BestFit {
-
+class LinearBestFit extends BestFit
+{
     /**
      * Algorithm type to use for best-fit
      * (Name of this Trend class).
@@ -19,8 +19,8 @@ class LinearBestFit extends BestFit {
      *
      * @return float Y-Value
      */
-    public function getValueOfYForX($xValue) {
-
+    public function getValueOfYForX($xValue)
+    {
         return $this->getIntersect() + $this->getSlope() * $xValue;
     }
 
@@ -31,8 +31,8 @@ class LinearBestFit extends BestFit {
      *
      * @return float X-Value
      */
-    public function getValueOfXForY($yValue) {
-
+    public function getValueOfXForY($yValue)
+    {
         return ($yValue - $this->getIntersect()) / $this->getSlope();
     }
 
@@ -43,8 +43,8 @@ class LinearBestFit extends BestFit {
      *
      * @return string
      */
-    public function getEquation($dp = 0) {
-
+    public function getEquation($dp = 0)
+    {
         $slope = $this->getSlope($dp);
         $intersect = $this->getIntersect($dp);
 
@@ -57,8 +57,8 @@ class LinearBestFit extends BestFit {
      * @param float[] $yValues The set of Y-values for this regression
      * @param float[] $xValues The set of X-values for this regression
      */
-    private function linearRegression(array $yValues, array $xValues, bool $const): void{
-
+    private function linearRegression(array $yValues, array $xValues, bool $const): void
+    {
         $this->leastSquareFit($yValues, $xValues, $const);
     }
 
@@ -69,14 +69,12 @@ class LinearBestFit extends BestFit {
      * @param float[] $xValues The set of X-values for this regression
      * @param bool $const
      */
-    public function __construct($yValues, $xValues = [], $const = true) {
-
+    public function __construct($yValues, $xValues = [], $const = true)
+    {
         parent::__construct($yValues, $xValues);
 
         if (!$this->error) {
             $this->linearRegression($yValues, $xValues, (bool) $const);
         }
-
     }
-
 }

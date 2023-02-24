@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls\Style;
 
 use EphenyxShop\PhenyxSpreadsheet\Style\Color;
 
-class ColorMap {
-
+class ColorMap
+{
     /**
      * @var array<string, int>
      */
@@ -68,25 +68,23 @@ class ColorMap {
         '#333333' => 0x3F,
     ];
 
-    public static function lookup(Color $color, int $defaultIndex = 0x00): int{
-
+    public static function lookup(Color $color, int $defaultIndex = 0x00): int
+    {
         $colorRgb = $color->getRGB();
-
         if (is_string($colorRgb) && array_key_exists("#{$colorRgb}", self::$colorMap)) {
             return self::$colorMap["#{$colorRgb}"];
         }
 
 //      TODO Try and map RGB value to nearest colour within the define pallette
-        //        $red =  Color::getRed($colorRgb, false);
-        //        $green = Color::getGreen($colorRgb, false);
-        //        $blue = Color::getBlue($colorRgb, false);
+//        $red =  Color::getRed($colorRgb, false);
+//        $green = Color::getGreen($colorRgb, false);
+//        $blue = Color::getBlue($colorRgb, false);
 
 //        $paletteSpace = 3;
-        //        $newColor = ($red * $paletteSpace / 256) * ($paletteSpace * $paletteSpace) +
-        //            ($green * $paletteSpace / 256) * $paletteSpace +
-        //            ($blue * $paletteSpace / 256);
+//        $newColor = ($red * $paletteSpace / 256) * ($paletteSpace * $paletteSpace) +
+//            ($green * $paletteSpace / 256) * $paletteSpace +
+//            ($blue * $paletteSpace / 256);
 
         return $defaultIndex;
     }
-
 }

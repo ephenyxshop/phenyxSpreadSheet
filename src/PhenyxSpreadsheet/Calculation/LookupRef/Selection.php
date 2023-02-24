@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Selection {
-
+class Selection
+{
     use ArrayEnabled;
 
     /**
@@ -24,8 +24,8 @@ class Selection {
      *
      * @return mixed The selected value
      */
-    public static function choose($chosenEntry, ...$chooseArgs) {
-
+    public static function choose($chosenEntry, ...$chooseArgs)
+    {
         if (is_array($chosenEntry)) {
             return self::evaluateArrayArgumentsSubset([self::class, __FUNCTION__], 1, $chosenEntry, ...$chooseArgs);
         }
@@ -37,9 +37,7 @@ class Selection {
         } else {
             return ExcelError::VALUE();
         }
-
         $chosenEntry = floor($chosenEntry);
-
         if (($chosenEntry < 0) || ($chosenEntry > $entryCount)) {
             return ExcelError::VALUE();
         }
@@ -50,5 +48,4 @@ class Selection {
 
         return $chooseArgs[$chosenEntry];
     }
-
 }

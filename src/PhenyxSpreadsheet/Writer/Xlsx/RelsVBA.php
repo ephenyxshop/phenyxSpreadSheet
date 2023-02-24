@@ -2,21 +2,20 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
-use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-class RelsVBA extends WriterPart {
-
+class RelsVBA extends WriterPart
+{
     /**
      * Write relationships for a signed VBA Project.
      *
      * @return string XML Output
      */
-    public function writeVBARelationships(Spreadsheet $spreadsheet) {
-
+    public function writeVBARelationships()
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -28,15 +27,14 @@ class RelsVBA extends WriterPart {
 
         // Relationships
         $objWriter->startElement('Relationships');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/package/2006/relationships');
+        $objWriter->writeAttribute('xmlns', Namespaces::RELATIONSHIPS);
         $objWriter->startElement('Relationship');
         $objWriter->writeAttribute('Id', 'rId1');
-        $objWriter->writeAttribute('Type', 'http://schemas.microsoft.com/office/2006/relationships/vbaProjectSignature');
+        $objWriter->writeAttribute('Type', Namespaces::VBA_SIGNATURE);
         $objWriter->writeAttribute('Target', 'vbaProjectSignature.bin');
         $objWriter->endElement();
         $objWriter->endElement();
 
         return $objWriter->getData();
     }
-
 }

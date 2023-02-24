@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Ceiling {
-
+class Ceiling
+{
     use ArrayEnabled;
 
     /**
@@ -31,8 +31,8 @@ class Ceiling {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function ceiling($number, $significance = null) {
-
+    public static function ceiling($number, $significance = null)
+    {
         if (is_array($number) || is_array($significance)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance);
         }
@@ -70,8 +70,8 @@ class Ceiling {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function math($number, $significance = null, $mode = 0) {
-
+    public static function math($number, $significance = null, $mode = 0)
+    {
         if (is_array($number) || is_array($significance) || is_array($mode)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance, $mode);
         }
@@ -87,7 +87,6 @@ class Ceiling {
         if (empty($significance * $number)) {
             return 0.0;
         }
-
         if (self::ceilingMathTest((float) $significance, (float) $number, (int) $mode)) {
             return floor($number / $significance) * $significance;
         }
@@ -112,8 +111,8 @@ class Ceiling {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function precise($number, $significance = 1) {
-
+    public static function precise($number, $significance = 1)
+    {
         if (is_array($number) || is_array($significance)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $number, $significance);
         }
@@ -128,7 +127,6 @@ class Ceiling {
         if (!$significance) {
             return 0.0;
         }
-
         $result = $number / abs($significance);
 
         return ceil($result) * $significance * (($significance < 0) ? -1 : 1);
@@ -137,8 +135,8 @@ class Ceiling {
     /**
      * Let CEILINGMATH complexity pass Scrutinizer.
      */
-    private static function ceilingMathTest(float $significance, float $number, int $mode): bool {
-
+    private static function ceilingMathTest(float $significance, float $number, int $mode): bool
+    {
         return ((float) $significance < 0) || ((float) $number < 0 && !empty($mode));
     }
 
@@ -147,12 +145,11 @@ class Ceiling {
      *
      * @return float|string
      */
-    private static function argumentsOk(float $number, float $significance) {
-
+    private static function argumentsOk(float $number, float $significance)
+    {
         if (empty($number * $significance)) {
             return 0.0;
         }
-
         if (Helpers::returnSign($number) == Helpers::returnSign($significance)) {
             return ceil($number / $significance) * $significance;
         }
@@ -160,14 +157,11 @@ class Ceiling {
         return ExcelError::NAN();
     }
 
-    private static function floorCheck1Arg(): void{
-
+    private static function floorCheck1Arg(): void
+    {
         $compatibility = Functions::getCompatibilityMode();
-
         if ($compatibility === Functions::COMPATIBILITY_EXCEL) {
             throw new Exception('Excel requires 2 arguments for CEILING');
         }
-
     }
-
 }

@@ -9,11 +9,11 @@ use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
  * @method Errors duplicates()
  * @method Errors unique()
  */
-class Duplicates extends WizardAbstract implements WizardInterface {
-
+class Duplicates extends WizardAbstract implements WizardInterface
+{
     protected const OPERATORS = [
         'duplicates' => false,
-        'unique'     => true,
+        'unique' => true,
     ];
 
     /**
@@ -21,19 +21,19 @@ class Duplicates extends WizardAbstract implements WizardInterface {
      */
     protected $inverse;
 
-    public function __construct(string $cellRange, bool $inverse = false) {
-
+    public function __construct(string $cellRange, bool $inverse = false)
+    {
         parent::__construct($cellRange);
         $this->inverse = $inverse;
     }
 
-    protected function inverse(bool $inverse): void{
-
+    protected function inverse(bool $inverse): void
+    {
         $this->inverse = $inverse;
     }
 
-    public function getConditional(): Conditional{
-
+    public function getConditional(): Conditional
+    {
         $conditional = new Conditional();
         $conditional->setConditionType(
             $this->inverse ? Conditional::CONDITION_UNIQUE : Conditional::CONDITION_DUPLICATES
@@ -44,8 +44,8 @@ class Duplicates extends WizardAbstract implements WizardInterface {
         return $conditional;
     }
 
-    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface {
-
+    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface
+    {
         if (
             $conditional->getConditionType() !== Conditional::CONDITION_DUPLICATES &&
             $conditional->getConditionType() !== Conditional::CONDITION_UNIQUE
@@ -65,8 +65,8 @@ class Duplicates extends WizardAbstract implements WizardInterface {
      * @param string $methodName
      * @param mixed[] $arguments
      */
-    public function __call($methodName, $arguments): self {
-
+    public function __call($methodName, $arguments): self
+    {
         if (!array_key_exists($methodName, self::OPERATORS)) {
             throw new Exception('Invalid Operation for Errors CF Rule Wizard');
         }
@@ -75,5 +75,4 @@ class Duplicates extends WizardAbstract implements WizardInterface {
 
         return $this;
     }
-
 }

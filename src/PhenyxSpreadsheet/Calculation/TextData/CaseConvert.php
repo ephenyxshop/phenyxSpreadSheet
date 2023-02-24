@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\TextData;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class CaseConvert {
-
+class CaseConvert
+{
     use ArrayEnabled;
 
     /**
@@ -21,8 +21,8 @@ class CaseConvert {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function lower($mixedCaseValue) {
-
+    public static function lower($mixedCaseValue)
+    {
         if (is_array($mixedCaseValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
@@ -44,8 +44,8 @@ class CaseConvert {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function upper($mixedCaseValue) {
-
+    public static function upper($mixedCaseValue)
+    {
         if (is_array($mixedCaseValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
@@ -67,8 +67,8 @@ class CaseConvert {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function proper($mixedCaseValue) {
-
+    public static function proper($mixedCaseValue)
+    {
         if (is_array($mixedCaseValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $mixedCaseValue);
         }
@@ -77,5 +77,4 @@ class CaseConvert {
 
         return StringHelper::strToTitle($mixedCaseValue);
     }
-
 }

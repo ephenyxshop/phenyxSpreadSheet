@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
 use EphenyxShop\PhenyxSpreadsheet\IComparable;
 use EphenyxShop\PhenyxSpreadsheet\Style\Color;
 
-class Shadow implements IComparable {
-
+class Shadow implements IComparable
+{
     // Shadow alignment
     const SHADOW_BOTTOM = 'b';
     const SHADOW_BOTTOM_LEFT = 'bl';
@@ -73,8 +73,8 @@ class Shadow implements IComparable {
     /**
      * Create a new Shadow.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Initialise values
         $this->visible = false;
         $this->blurRadius = 6;
@@ -90,8 +90,8 @@ class Shadow implements IComparable {
      *
      * @return bool
      */
-    public function getVisible() {
-
+    public function getVisible()
+    {
         return $this->visible;
     }
 
@@ -102,8 +102,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setVisible($visible) {
-
+    public function setVisible($visible)
+    {
         $this->visible = $visible;
 
         return $this;
@@ -114,8 +114,8 @@ class Shadow implements IComparable {
      *
      * @return int
      */
-    public function getBlurRadius() {
-
+    public function getBlurRadius()
+    {
         return $this->blurRadius;
     }
 
@@ -126,8 +126,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setBlurRadius($blurRadius) {
-
+    public function setBlurRadius($blurRadius)
+    {
         $this->blurRadius = $blurRadius;
 
         return $this;
@@ -138,8 +138,8 @@ class Shadow implements IComparable {
      *
      * @return int
      */
-    public function getDistance() {
-
+    public function getDistance()
+    {
         return $this->distance;
     }
 
@@ -150,8 +150,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setDistance($distance) {
-
+    public function setDistance($distance)
+    {
         $this->distance = $distance;
 
         return $this;
@@ -162,8 +162,8 @@ class Shadow implements IComparable {
      *
      * @return int
      */
-    public function getDirection() {
-
+    public function getDirection()
+    {
         return $this->direction;
     }
 
@@ -174,8 +174,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setDirection($direction) {
-
+    public function setDirection($direction)
+    {
         $this->direction = $direction;
 
         return $this;
@@ -186,8 +186,8 @@ class Shadow implements IComparable {
      *
      * @return string
      */
-    public function getAlignment() {
-
+    public function getAlignment()
+    {
         return $this->alignment;
     }
 
@@ -198,8 +198,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setAlignment($alignment) {
-
+    public function setAlignment($alignment)
+    {
         $this->alignment = $alignment;
 
         return $this;
@@ -210,8 +210,8 @@ class Shadow implements IComparable {
      *
      * @return Color
      */
-    public function getColor() {
-
+    public function getColor()
+    {
         return $this->color;
     }
 
@@ -220,8 +220,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setColor( ? Color $color = null) {
-
+    public function setColor(Color $color)
+    {
         $this->color = $color;
 
         return $this;
@@ -232,8 +232,8 @@ class Shadow implements IComparable {
      *
      * @return int
      */
-    public function getAlpha() {
-
+    public function getAlpha()
+    {
         return $this->alpha;
     }
 
@@ -244,8 +244,8 @@ class Shadow implements IComparable {
      *
      * @return $this
      */
-    public function setAlpha($alpha) {
-
+    public function setAlpha($alpha)
+    {
         $this->alpha = $alpha;
 
         return $this;
@@ -256,8 +256,8 @@ class Shadow implements IComparable {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             ($this->visible ? 't' : 'f') .
             $this->blurRadius .
@@ -273,20 +273,15 @@ class Shadow implements IComparable {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
-
 }

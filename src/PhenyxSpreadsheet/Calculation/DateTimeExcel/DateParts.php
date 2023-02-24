@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDateHelper;
 
-class DateParts {
-
+class DateParts
+{
     use ArrayEnabled;
 
     /**
@@ -28,14 +28,13 @@ class DateParts {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function day($dateValue) {
-
+    public static function day($dateValue)
+    {
         if (is_array($dateValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
 
         $weirdResult = self::weirdCondition($dateValue);
-
         if ($weirdResult >= 0) {
             return $weirdResult;
         }
@@ -69,8 +68,8 @@ class DateParts {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function month($dateValue) {
-
+    public static function month($dateValue)
+    {
         if (is_array($dateValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
@@ -80,7 +79,6 @@ class DateParts {
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
         if ($dateValue < 1 && SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_WINDOWS_1900) {
             return 1;
         }
@@ -108,8 +106,8 @@ class DateParts {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function year($dateValue) {
-
+    public static function year($dateValue)
+    {
         if (is_array($dateValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
@@ -123,7 +121,6 @@ class DateParts {
         if ($dateValue < 1 && SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_WINDOWS_1900) {
             return 1900;
         }
-
         // Execute function
         $PHPDateObject = SharedDateHelper::excelToDateTimeObject($dateValue);
 
@@ -134,27 +131,21 @@ class DateParts {
      * @param mixed $dateValue Excel date serial value (float), PHP date timestamp (integer),
      *                                    PHP DateTime object, or a standard date string
      */
-    private static function weirdCondition($dateValue): int {
-
+    private static function weirdCondition($dateValue): int
+    {
         // Excel does not treat 0 consistently for DAY vs. (MONTH or YEAR)
-
         if (SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_WINDOWS_1900 && Functions::getCompatibilityMode() == Functions::COMPATIBILITY_EXCEL) {
-
             if (is_bool($dateValue)) {
                 return (int) $dateValue;
             }
-
             if ($dateValue === null) {
                 return 0;
             }
-
             if (is_numeric($dateValue) && $dateValue < 1 && $dateValue >= 0) {
                 return 0;
             }
-
         }
 
         return -1;
     }
-
 }

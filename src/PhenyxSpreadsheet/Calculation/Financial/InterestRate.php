@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class InterestRate {
-
+class InterestRate
+{
     /**
      * EFFECT.
      *
@@ -22,8 +22,8 @@ class InterestRate {
      *
      * @return float|string
      */
-    public static function effective($nominalRate = 0, $periodsPerYear = 0) {
-
+    public static function effective($nominalRate = 0, $periodsPerYear = 0)
+    {
         $nominalRate = Functions::flattenSingleValue($nominalRate);
         $periodsPerYear = Functions::flattenSingleValue($periodsPerYear);
 
@@ -51,8 +51,8 @@ class InterestRate {
      *
      * @return float|string Result, or a string containing an error
      */
-    public static function nominal($effectiveRate = 0, $periodsPerYear = 0) {
-
+    public static function nominal($effectiveRate = 0, $periodsPerYear = 0)
+    {
         $effectiveRate = Functions::flattenSingleValue($effectiveRate);
         $periodsPerYear = Functions::flattenSingleValue($periodsPerYear);
 
@@ -70,5 +70,4 @@ class InterestRate {
         // Calculate
         return $periodsPerYear * (($effectiveRate + 1) ** (1 / $periodsPerYear) - 1);
     }
-
 }

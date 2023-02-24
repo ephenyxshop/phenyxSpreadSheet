@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class DGet extends DatabaseAbstract {
-
+class DGet extends DatabaseAbstract
+{
     /**
      * DGET.
      *
@@ -32,16 +32,14 @@ class DGet extends DatabaseAbstract {
      *
      * @return mixed
      */
-    public static function evaluate($database, $field, $criteria) {
-
+    public static function evaluate($database, $field, $criteria)
+    {
         $field = self::fieldExtract($database, $field);
-
         if ($field === null) {
-            return null;
+            return ExcelError::VALUE();
         }
 
         $columnData = self::getFilteredColumn($database, $field, $criteria);
-
         if (count($columnData) > 1) {
             return ExcelError::NAN();
         }
@@ -50,5 +48,4 @@ class DGet extends DatabaseAbstract {
 
         return array_pop($row);
     }
-
 }

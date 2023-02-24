@@ -2,7 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet;
 
-interface IComparable {
+interface IComparable
+{
     /**
      * Get hash code.
      *

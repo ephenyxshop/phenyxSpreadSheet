@@ -2,14 +2,14 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
+use Iterator as NativeIterator;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Iterator;
 
 /**
- * @implements Iterator<int, Row>
+ * @implements NativeIterator<int, Row>
  */
-class RowIterator implements Iterator {
-
+class RowIterator implements NativeIterator
+{
     /**
      * Worksheet to iterate.
      *
@@ -45,12 +45,17 @@ class RowIterator implements Iterator {
      * @param int $startRow The row number at which to start iterating
      * @param int $endRow Optionally, the row number at which to stop iterating
      */
-    public function __construct(Worksheet $subject, $startRow = 1, $endRow = null) {
-
+    public function __construct(Worksheet $subject, $startRow = 1, $endRow = null)
+    {
         // Set subject
         $this->subject = $subject;
         $this->resetEnd($endRow);
         $this->resetStart($startRow);
+    }
+
+    public function __destruct()
+    {
+        $this->subject = null; // @phpstan-ignore-line
     }
 
     /**
@@ -60,8 +65,8 @@ class RowIterator implements Iterator {
      *
      * @return $this
      */
-    public function resetStart(int $startRow = 1) {
-
+    public function resetStart(int $startRow = 1)
+    {
         if ($startRow > $this->subject->getHighestRow()) {
             throw new PhenyxSpreadsheetException(
                 "Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})"
@@ -69,11 +74,9 @@ class RowIterator implements Iterator {
         }
 
         $this->startRow = $startRow;
-
         if ($this->endRow < $this->startRow) {
             $this->endRow = $this->startRow;
         }
-
         $this->seek($startRow);
 
         return $this;
@@ -86,8 +89,8 @@ class RowIterator implements Iterator {
      *
      * @return $this
      */
-    public function resetEnd($endRow = null) {
-
+    public function resetEnd($endRow = null)
+    {
         $this->endRow = $endRow ?: $this->subject->getHighestRow();
 
         return $this;
@@ -100,12 +103,11 @@ class RowIterator implements Iterator {
      *
      * @return $this
      */
-    public function seek(int $row = 1) {
-
+    public function seek(int $row = 1)
+    {
         if (($row < $this->startRow) || ($row > $this->endRow)) {
             throw new PhenyxSpreadsheetException("Row $row is out of range ({$this->startRow} - {$this->endRow})");
         }
-
         $this->position = $row;
 
         return $this;
@@ -114,49 +116,48 @@ class RowIterator implements Iterator {
     /**
      * Rewind the iterator to the starting row.
      */
-    public function rewind(): void{
-
+    public function rewind(): void
+    {
         $this->position = $this->startRow;
     }
 
     /**
      * Return the current row in this worksheet.
      */
-    public function current(): Row {
-
+    public function current(): Row
+    {
         return new Row($this->subject, $this->position);
     }
 
     /**
      * Return the current iterator key.
      */
-    public function key(): int {
-
+    public function key(): int
+    {
         return $this->position;
     }
 
     /**
      * Set the iterator to its next value.
      */
-    public function next(): void {
-
+    public function next(): void
+    {
         ++$this->position;
     }
 
     /**
      * Set the iterator to its previous value.
      */
-    public function prev(): void {
-
+    public function prev(): void
+    {
         --$this->position;
     }
 
     /**
      * Indicate if more rows exist in the worksheet range of rows that we're iterating.
      */
-    public function valid(): bool {
-
+    public function valid(): bool
+    {
         return $this->position <= $this->endRow && $this->position >= $this->startRow;
     }
-
 }

@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 
-class WorkDay {
-
+class WorkDay
+{
     use ArrayEnabled;
 
     /**
@@ -35,8 +35,8 @@ class WorkDay {
      *         If an array of values is passed for the $startDate or $endDays,arguments, then the returned result
      *            will also be an array with matching dimensions
      */
-    public static function date($startDate, $endDays, ...$dateArgs) {
-
+    public static function date($startDate, $endDays, ...$dateArgs)
+    {
         if (is_array($startDate) || is_array($endDays)) {
             return self::evaluateArrayArgumentsSubset(
                 [self::class, __FUNCTION__],
@@ -59,11 +59,9 @@ class WorkDay {
         $startDate = (float) floor($startDate);
         $endDays = (int) floor($endDays);
         //    If endDays is 0, we always return startDate
-
         if ($endDays == 0) {
             return $startDate;
         }
-
         if ($endDays < 0) {
             return self::decrementing($startDate, $endDays, $holidayArray);
         }
@@ -76,11 +74,10 @@ class WorkDay {
      *
      * @return mixed
      */
-    private static function incrementing(float $startDate, int $endDays, array $holidayArray) {
-
+    private static function incrementing(float $startDate, int $endDays, array $holidayArray)
+    {
         //    Adjust the start date if it falls over a weekend
         $startDoW = self::getWeekDay($startDate, 3);
-
         if ($startDoW >= 5) {
             $startDate += 7 - $startDoW;
             --$endDays;
@@ -89,21 +86,17 @@ class WorkDay {
         //    Add endDays
         $endDate = (float) $startDate + ((int) ($endDays / 5) * 7);
         $endDays = $endDays % 5;
-
         while ($endDays > 0) {
             ++$endDate;
             //    Adjust the calculated end date if it falls over a weekend
             $endDow = self::getWeekDay($endDate, 3);
-
             if ($endDow >= 5) {
                 $endDate += 7 - $endDow;
             }
-
             --$endDays;
         }
 
         //    Test any extra holiday parameters
-
         if (!empty($holidayArray)) {
             $endDate = self::incrementingArray($startDate, $endDate, $holidayArray);
         }
@@ -111,38 +104,27 @@ class WorkDay {
         return Helpers::returnIn3FormatsFloat($endDate);
     }
 
-    private static function incrementingArray(float $startDate, float $endDate, array $holidayArray): float{
-
+    private static function incrementingArray(float $startDate, float $endDate, array $holidayArray): float
+    {
         $holidayCountedArray = $holidayDates = [];
-
         foreach ($holidayArray as $holidayDate) {
-
             if (self::getWeekDay($holidayDate, 3) < 5) {
                 $holidayDates[] = $holidayDate;
             }
-
         }
-
         sort($holidayDates, SORT_NUMERIC);
-
         foreach ($holidayDates as $holidayDate) {
-
             if (($holidayDate >= $startDate) && ($holidayDate <= $endDate)) {
-
                 if (!in_array($holidayDate, $holidayCountedArray)) {
                     ++$endDate;
                     $holidayCountedArray[] = $holidayDate;
                 }
-
             }
-
             //    Adjust the calculated end date if it falls over a weekend
             $endDoW = self::getWeekDay($endDate, 3);
-
             if ($endDoW >= 5) {
                 $endDate += 7 - $endDoW;
             }
-
         }
 
         return $endDate;
@@ -153,11 +135,10 @@ class WorkDay {
      *
      * @return mixed
      */
-    private static function decrementing(float $startDate, int $endDays, array $holidayArray) {
-
+    private static function decrementing(float $startDate, int $endDays, array $holidayArray)
+    {
         //    Adjust the start date if it falls over a weekend
         $startDoW = self::getWeekDay($startDate, 3);
-
         if ($startDoW >= 5) {
             $startDate += -$startDoW + 4;
             ++$endDays;
@@ -166,21 +147,17 @@ class WorkDay {
         //    Add endDays
         $endDate = (float) $startDate + ((int) ($endDays / 5) * 7);
         $endDays = $endDays % 5;
-
         while ($endDays < 0) {
             --$endDate;
             //    Adjust the calculated end date if it falls over a weekend
             $endDow = self::getWeekDay($endDate, 3);
-
             if ($endDow >= 5) {
                 $endDate += 4 - $endDow;
             }
-
             ++$endDays;
         }
 
         //    Test any extra holiday parameters
-
         if (!empty($holidayArray)) {
             $endDate = self::decrementingArray($startDate, $endDate, $holidayArray);
         }
@@ -188,49 +165,37 @@ class WorkDay {
         return Helpers::returnIn3FormatsFloat($endDate);
     }
 
-    private static function decrementingArray(float $startDate, float $endDate, array $holidayArray): float{
-
+    private static function decrementingArray(float $startDate, float $endDate, array $holidayArray): float
+    {
         $holidayCountedArray = $holidayDates = [];
-
         foreach ($holidayArray as $holidayDate) {
-
             if (self::getWeekDay($holidayDate, 3) < 5) {
                 $holidayDates[] = $holidayDate;
             }
-
         }
-
         rsort($holidayDates, SORT_NUMERIC);
-
         foreach ($holidayDates as $holidayDate) {
-
             if (($holidayDate <= $startDate) && ($holidayDate >= $endDate)) {
-
                 if (!in_array($holidayDate, $holidayCountedArray)) {
                     --$endDate;
                     $holidayCountedArray[] = $holidayDate;
                 }
-
             }
-
             //    Adjust the calculated end date if it falls over a weekend
             $endDoW = self::getWeekDay($endDate, 3);
             /** int $endDoW */
-
             if ($endDoW >= 5) {
                 $endDate += -$endDoW + 4;
             }
-
         }
 
         return $endDate;
     }
 
-    private static function getWeekDay(float $date, int $wd): int{
-
+    private static function getWeekDay(float $date, int $wd): int
+    {
         $result = Functions::scalar(Week::day($date, $wd));
 
         return is_int($result) ? $result : -1;
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Internal;
 
-class WildcardMatch {
-
+class WildcardMatch
+{
     private const SEARCH_SET = [
         '~~', // convert double tilde to unprintable value
         '~\\*', // convert tilde backslash asterisk to [*] (matches literal asterisk in regexp)
@@ -22,19 +22,18 @@ class WildcardMatch {
         '~',
     ];
 
-    public static function wildcard(string $wildcard): string {
-
+    public static function wildcard(string $wildcard): string
+    {
         // Preg Escape the wildcard, but protecting the Excel * and ? search characters
         return str_replace(self::SEARCH_SET, self::REPLACEMENT_SET, preg_quote($wildcard, '/'));
     }
 
-    public static function compare( ? string $value, string $wildcard) : bool {
-
+    public static function compare(?string $value, string $wildcard): bool
+    {
         if ($value === '' || $value === null) {
             return false;
         }
 
         return (bool) preg_match("/^{$wildcard}\$/mui", $value);
     }
-
 }

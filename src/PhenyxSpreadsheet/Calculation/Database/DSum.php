@@ -2,10 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 
-class DSum extends DatabaseAbstract {
-
+class DSum extends DatabaseAbstract
+{
     /**
      * DSUM.
      *
@@ -31,17 +32,15 @@ class DSum extends DatabaseAbstract {
      *
      * @return null|float|string
      */
-    public static function evaluate($database, $field, $criteria) {
-
+    public static function evaluate($database, $field, $criteria, bool $returnNull = false)
+    {
         $field = self::fieldExtract($database, $field);
-
         if ($field === null) {
-            return null;
+            return $returnNull ? null : ExcelError::VALUE();
         }
 
         return MathTrig\Sum::sumIgnoringStrings(
             self::getFilteredColumn($database, $field, $criteria)
         );
     }
-
 }

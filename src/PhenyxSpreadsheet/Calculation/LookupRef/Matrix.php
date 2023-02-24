@@ -6,23 +6,23 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Matrix {
-
+class Matrix
+{
     use ArrayEnabled;
 
     /**
      * Helper function; NOT an implementation of any Excel Function.
      */
-    public static function isColumnVector(array $values): bool {
-
+    public static function isColumnVector(array $values): bool
+    {
         return count($values, COUNT_RECURSIVE) === (count($values, COUNT_NORMAL) * 2);
     }
 
     /**
      * Helper function; NOT an implementation of any Excel Function.
      */
-    public static function isRowVector(array $values): bool {
-
+    public static function isRowVector(array $values): bool
+    {
         return count($values, COUNT_RECURSIVE) > 1 &&
             (count($values, COUNT_NORMAL) === 1 || count($values, COUNT_RECURSIVE) === count($values, COUNT_NORMAL));
     }
@@ -34,24 +34,20 @@ class Matrix {
      *
      * @return array
      */
-    public static function transpose($matrixData) {
-
+    public static function transpose($matrixData)
+    {
         $returnMatrix = [];
-
         if (!is_array($matrixData)) {
             $matrixData = [[$matrixData]];
         }
 
         $column = 0;
-
         foreach ($matrixData as $matrixRow) {
             $row = 0;
-
             foreach ($matrixRow as $matrixCell) {
                 $returnMatrix[$row][$column] = $matrixCell;
                 ++$row;
             }
-
             ++$column;
         }
 
@@ -80,13 +76,14 @@ class Matrix {
      *         If an array of values is passed as the $rowNum and/or $columnNum arguments, then the returned result
      *            will also be an array with the same dimensions
      */
-    public static function index($matrix, $rowNum = 0, $columnNum = 0) {
-
+    public static function index($matrix, $rowNum = 0, $columnNum = null)
+    {
         if (is_array($rowNum) || is_array($columnNum)) {
             return self::evaluateArrayArgumentsSubsetFrom([self::class, __FUNCTION__], 1, $matrix, $rowNum, $columnNum);
         }
 
         $rowNum = $rowNum ?? 0;
+        $originalColumnNum = $columnNum;
         $columnNum = $columnNum ?? 0;
 
         try {
@@ -106,42 +103,41 @@ class Matrix {
         if ($columnNum > count($columnKeys)) {
             return ExcelError::REF();
         }
+        if ($originalColumnNum === null && 1 < count($columnKeys)) {
+            return ExcelError::REF();
+        }
 
         if ($columnNum === 0) {
             return self::extractRowValue($matrix, $rowKeys, $rowNum);
         }
 
         $columnNum = $columnKeys[--$columnNum];
-
         if ($rowNum === 0) {
             return array_map(
                 function ($value) {
-
                     return [$value];
                 },
                 array_column($matrix, $columnNum)
             );
         }
-
         $rowNum = $rowKeys[--$rowNum];
 
         return $matrix[$rowNum][$columnNum];
     }
 
-    private static function extractRowValue(array $matrix, array $rowKeys, int $rowNum) {
-
+    /** @return mixed */
+    private static function extractRowValue(array $matrix, array $rowKeys, int $rowNum)
+    {
         if ($rowNum === 0) {
             return $matrix;
         }
 
         $rowNum = $rowKeys[--$rowNum];
         $row = $matrix[$rowNum];
-
         if (is_array($row)) {
             return [$rowNum => $row];
         }
 
         return $row;
     }
-
 }

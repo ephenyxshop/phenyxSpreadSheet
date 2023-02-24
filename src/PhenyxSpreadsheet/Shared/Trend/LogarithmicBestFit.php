@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared\Trend;
 
-class LogarithmicBestFit extends BestFit {
-
+class LogarithmicBestFit extends BestFit
+{
     /**
      * Algorithm type to use for best-fit
      * (Name of this Trend class).
@@ -19,8 +19,8 @@ class LogarithmicBestFit extends BestFit {
      *
      * @return float Y-Value
      */
-    public function getValueOfYForX($xValue) {
-
+    public function getValueOfYForX($xValue)
+    {
         return $this->getIntersect() + $this->getSlope() * log($xValue - $this->xOffset);
     }
 
@@ -31,8 +31,8 @@ class LogarithmicBestFit extends BestFit {
      *
      * @return float X-Value
      */
-    public function getValueOfXForY($yValue) {
-
+    public function getValueOfXForY($yValue)
+    {
         return exp(($yValue - $this->getIntersect()) / $this->getSlope());
     }
 
@@ -43,8 +43,8 @@ class LogarithmicBestFit extends BestFit {
      *
      * @return string
      */
-    public function getEquation($dp = 0) {
-
+    public function getEquation($dp = 0)
+    {
         $slope = $this->getSlope($dp);
         $intersect = $this->getIntersect($dp);
 
@@ -57,11 +57,10 @@ class LogarithmicBestFit extends BestFit {
      * @param float[] $yValues The set of Y-values for this regression
      * @param float[] $xValues The set of X-values for this regression
      */
-    private function logarithmicRegression(array $yValues, array $xValues, bool $const): void{
-
+    private function logarithmicRegression(array $yValues, array $xValues, bool $const): void
+    {
         $adjustedYValues = array_map(
             function ($value) {
-
                 return ($value < 0.0) ? 0 - log(abs($value)) : log($value);
             },
             $yValues
@@ -77,14 +76,12 @@ class LogarithmicBestFit extends BestFit {
      * @param float[] $xValues The set of X-values for this regression
      * @param bool $const
      */
-    public function __construct($yValues, $xValues = [], $const = true) {
-
+    public function __construct($yValues, $xValues = [], $const = true)
+    {
         parent::__construct($yValues, $xValues);
 
         if (!$this->error) {
             $this->logarithmicRegression($yValues, $xValues, (bool) $const);
         }
-
     }
-
 }

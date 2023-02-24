@@ -2,7 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\RichText;
 
-interface ITextElement {
+interface ITextElement
+{
     /**
      * Get text.
      *
@@ -22,7 +23,7 @@ interface ITextElement {
     /**
      * Get font.
      *
-     * @return null|\PhpOffice\PhenyxSpreadsheet\Style\Font
+     * @return null|\EphenyxShop\PhenyxSpreadsheet\Style\Font
      */
     public function getFont();
 

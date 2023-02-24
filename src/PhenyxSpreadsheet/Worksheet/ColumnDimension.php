@@ -5,12 +5,12 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
 
-class ColumnDimension extends Dimension {
-
+class ColumnDimension extends Dimension
+{
     /**
      * Column index.
      *
-     * @var string
+     * @var ?string
      */
     private $columnIndex;
 
@@ -33,10 +33,10 @@ class ColumnDimension extends Dimension {
     /**
      * Create a new ColumnDimension.
      *
-     * @param string $index Character column index
+     * @param ?string $index Character column index
      */
-    public function __construct($index = 'A') {
-
+    public function __construct($index = 'A')
+    {
         // Initialise values
         $this->columnIndex = $index;
 
@@ -47,16 +47,16 @@ class ColumnDimension extends Dimension {
     /**
      * Get column index as string eg: 'A'.
      */
-    public function getColumnIndex(): string {
-
+    public function getColumnIndex(): ?string
+    {
         return $this->columnIndex;
     }
 
     /**
      * Set column index as string eg: 'A'.
      */
-    public function setColumnIndex(string $index): self{
-
+    public function setColumnIndex(string $index): self
+    {
         $this->columnIndex = $index;
 
         return $this;
@@ -65,16 +65,16 @@ class ColumnDimension extends Dimension {
     /**
      * Get column index as numeric.
      */
-    public function getColumnNumeric(): int {
-
-        return Coordinate::columnIndexFromString($this->columnIndex);
+    public function getColumnNumeric(): int
+    {
+        return Coordinate::columnIndexFromString($this->columnIndex ?? '');
     }
 
     /**
      * Set column index as numeric.
      */
-    public function setColumnNumeric(int $index): self{
-
+    public function setColumnNumeric(int $index): self
+    {
         $this->columnIndex = Coordinate::stringFromColumnIndex($index);
 
         return $this;
@@ -88,11 +88,11 @@ class ColumnDimension extends Dimension {
      * By default, this will be the return value; but this method also accepts an optional unit of measure argument
      *    and will convert the returned value to the specified UoM..
      */
-    public function getWidth( ? string $unitOfMeasure = null) : float {
-
+    public function getWidth(?string $unitOfMeasure = null): float
+    {
         return ($unitOfMeasure === null || $this->width < 0)
-        ? $this->width
-        : (new CssDimension((string) $this->width))->toUnit($unitOfMeasure);
+            ? $this->width
+            : (new CssDimension((string) $this->width))->toUnit($unitOfMeasure);
     }
 
     /**
@@ -106,11 +106,11 @@ class ColumnDimension extends Dimension {
      *
      * @return $this
      */
-    public function setWidth(float $width,  ? string $unitOfMeasure = null) {
-
+    public function setWidth(float $width, ?string $unitOfMeasure = null)
+    {
         $this->width = ($unitOfMeasure === null || $width < 0)
-        ? $width
-        : (new CssDimension("{$width}{$unitOfMeasure}"))->width();
+            ? $width
+            : (new CssDimension("{$width}{$unitOfMeasure}"))->width();
 
         return $this;
     }
@@ -118,8 +118,8 @@ class ColumnDimension extends Dimension {
     /**
      * Get Auto Size.
      */
-    public function getAutoSize() : bool {
-
+    public function getAutoSize(): bool
+    {
         return $this->autoSize;
     }
 
@@ -128,8 +128,8 @@ class ColumnDimension extends Dimension {
      *
      * @return $this
      */
-    public function setAutoSize(bool $autosizeEnabled) {
-
+    public function setAutoSize(bool $autosizeEnabled)
+    {
         $this->autoSize = $autosizeEnabled;
 
         return $this;

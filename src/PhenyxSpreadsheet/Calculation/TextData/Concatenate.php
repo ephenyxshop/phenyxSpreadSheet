@@ -4,10 +4,13 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\TextData;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
+use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
+use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class Concatenate {
-
+class Concatenate
+{
     use ArrayEnabled;
 
     /**
@@ -15,15 +18,26 @@ class Concatenate {
      *
      * @param array $args
      */
-    public static function CONCATENATE(...$args): string{
-
+    public static function CONCATENATE(...$args): string
+    {
         $returnValue = '';
 
         // Loop through arguments
         $aArgs = Functions::flattenArray($args);
 
         foreach ($aArgs as $arg) {
+            $value = Helpers::extractString($arg);
+            if (ErrorValue::isError($value)) {
+                $returnValue = $value;
+
+                break;
+            }
             $returnValue .= Helpers::extractString($arg);
+            if (StringHelper::countCharacters($returnValue) > DataType::MAX_STRING_LENGTH) {
+                $returnValue = ExcelError::CALC();
+
+                break;
+            }
         }
 
         return $returnValue;
@@ -42,8 +56,8 @@ class Concatenate {
      *         If an array of values is passed for the $delimiter or $ignoreEmpty arguments, then the returned result
      *            will also be an array with matching dimensions
      */
-    public static function TEXTJOIN($delimiter, $ignoreEmpty, ...$args) {
-
+    public static function TEXTJOIN($delimiter = '', $ignoreEmpty = true, ...$args)
+    {
         if (is_array($delimiter) || is_array($ignoreEmpty)) {
             return self::evaluateArrayArgumentsSubset(
                 [self::class, __FUNCTION__],
@@ -54,20 +68,35 @@ class Concatenate {
             );
         }
 
-        // Loop through arguments
+        $delimiter ??= '';
+        $ignoreEmpty ??= true;
         $aArgs = Functions::flattenArray($args);
+        $returnValue = self::evaluateTextJoinArray($ignoreEmpty, $aArgs);
 
-        foreach ($aArgs as $key => &$arg) {
-
-            if ($ignoreEmpty === true && is_string($arg) && trim($arg) === '') {
-                unset($aArgs[$key]);
-            } else if (is_bool($arg)) {
-                $arg = Helpers::convertBooleanValue($arg);
-            }
-
+        $returnValue ??= implode($delimiter, $aArgs);
+        if (StringHelper::countCharacters($returnValue) > DataType::MAX_STRING_LENGTH) {
+            $returnValue = ExcelError::CALC();
         }
 
-        return implode($delimiter, $aArgs);
+        return $returnValue;
+    }
+
+    private static function evaluateTextJoinArray(bool $ignoreEmpty, array &$aArgs): ?string
+    {
+        foreach ($aArgs as $key => &$arg) {
+            $value = Helpers::extractString($arg);
+            if (ErrorValue::isError($value)) {
+                return $value;
+            }
+
+            if ($ignoreEmpty === true && ((is_string($arg) && trim($arg) === '') || $arg === null)) {
+                unset($aArgs[$key]);
+            } elseif (is_bool($arg)) {
+                $arg = Helpers::convertBooleanValue($arg);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -84,8 +113,8 @@ class Concatenate {
      *         If an array of values is passed for the $stringValue or $repeatCount arguments, then the returned result
      *            will also be an array with matching dimensions
      */
-    public static function builtinREPT($stringValue, $repeatCount) {
-
+    public static function builtinREPT($stringValue, $repeatCount)
+    {
         if (is_array($stringValue) || is_array($repeatCount)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $stringValue, $repeatCount);
         }
@@ -93,10 +122,16 @@ class Concatenate {
         $stringValue = Helpers::extractString($stringValue);
 
         if (!is_numeric($repeatCount) || $repeatCount < 0) {
-            return ExcelError::VALUE();
+            $returnValue = ExcelError::VALUE();
+        } elseif (ErrorValue::isError($stringValue)) {
+            $returnValue = $stringValue;
+        } else {
+            $returnValue = str_repeat($stringValue, (int) $repeatCount);
+            if (StringHelper::countCharacters($returnValue) > DataType::MAX_STRING_LENGTH) {
+                $returnValue = ExcelError::VALUE(); // note VALUE not CALC
+            }
         }
 
-        return str_repeat($stringValue, (int) $repeatCount);
+        return $returnValue;
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Variances extends VarianceBase {
-
+class Variances extends VarianceBase
+{
     /**
      * VAR.
      *
@@ -19,8 +19,8 @@ class Variances extends VarianceBase {
      *
      * @return float|string (string if result is an error)
      */
-    public static function VAR (...$args) {
-
+    public static function VAR(...$args)
+    {
         $returnValue = ExcelError::DIV0();
 
         $summerA = $summerB = 0.0;
@@ -28,18 +28,15 @@ class Variances extends VarianceBase {
         // Loop through arguments
         $aArgs = Functions::flattenArray($args);
         $aCount = 0;
-
         foreach ($aArgs as $arg) {
             $arg = self::datatypeAdjustmentBooleans($arg);
 
             // Is it a numeric value?
-
             if ((is_numeric($arg)) && (!is_string($arg))) {
                 $summerA += ($arg * $arg);
                 $summerB += $arg;
                 ++$aCount;
             }
-
         }
 
         if ($aCount > 1) {
@@ -64,8 +61,8 @@ class Variances extends VarianceBase {
      *
      * @return float|string (string if result is an error)
      */
-    public static function VARA(...$args) {
-
+    public static function VARA(...$args)
+    {
         $returnValue = ExcelError::DIV0();
 
         $summerA = $summerB = 0.0;
@@ -73,24 +70,19 @@ class Variances extends VarianceBase {
         // Loop through arguments
         $aArgs = Functions::flattenArrayIndexed($args);
         $aCount = 0;
-
         foreach ($aArgs as $k => $arg) {
-
             if ((is_string($arg)) && (Functions::isValue($k))) {
                 return ExcelError::VALUE();
-            } else if ((is_string($arg)) && (!Functions::isMatrixValue($k))) {
+            } elseif ((is_string($arg)) && (!Functions::isMatrixValue($k))) {
             } else {
                 // Is it a numeric value?
-
-                if ((is_numeric($arg)) || (is_bool($arg)) || ((is_string($arg) & ($arg != '')))) {
+                if ((is_numeric($arg)) || (is_bool($arg)) || ((is_string($arg) && ($arg != '')))) {
                     $arg = self::datatypeAdjustmentAllowStrings($arg);
                     $summerA += ($arg * $arg);
                     $summerB += $arg;
                     ++$aCount;
                 }
-
             }
-
         }
 
         if ($aCount > 1) {
@@ -115,8 +107,8 @@ class Variances extends VarianceBase {
      *
      * @return float|string (string if result is an error)
      */
-    public static function VARP(...$args) {
-
+    public static function VARP(...$args)
+    {
         // Return value
         $returnValue = ExcelError::DIV0();
 
@@ -125,18 +117,15 @@ class Variances extends VarianceBase {
         // Loop through arguments
         $aArgs = Functions::flattenArray($args);
         $aCount = 0;
-
         foreach ($aArgs as $arg) {
             $arg = self::datatypeAdjustmentBooleans($arg);
 
             // Is it a numeric value?
-
             if ((is_numeric($arg)) && (!is_string($arg))) {
                 $summerA += ($arg * $arg);
                 $summerB += $arg;
                 ++$aCount;
             }
-
         }
 
         if ($aCount > 0) {
@@ -161,8 +150,8 @@ class Variances extends VarianceBase {
      *
      * @return float|string (string if result is an error)
      */
-    public static function VARPA(...$args) {
-
+    public static function VARPA(...$args)
+    {
         $returnValue = ExcelError::DIV0();
 
         $summerA = $summerB = 0.0;
@@ -170,24 +159,19 @@ class Variances extends VarianceBase {
         // Loop through arguments
         $aArgs = Functions::flattenArrayIndexed($args);
         $aCount = 0;
-
         foreach ($aArgs as $k => $arg) {
-
             if ((is_string($arg)) && (Functions::isValue($k))) {
                 return ExcelError::VALUE();
-            } else if ((is_string($arg)) && (!Functions::isMatrixValue($k))) {
+            } elseif ((is_string($arg)) && (!Functions::isMatrixValue($k))) {
             } else {
                 // Is it a numeric value?
-
-                if ((is_numeric($arg)) || (is_bool($arg)) || ((is_string($arg) & ($arg != '')))) {
+                if ((is_numeric($arg)) || (is_bool($arg)) || ((is_string($arg) && ($arg != '')))) {
                     $arg = self::datatypeAdjustmentAllowStrings($arg);
                     $summerA += ($arg * $arg);
                     $summerB += $arg;
                     ++$aCount;
                 }
-
             }
-
         }
 
         if ($aCount > 0) {
@@ -199,5 +183,4 @@ class Variances extends VarianceBase {
 
         return $returnValue;
     }
-
 }

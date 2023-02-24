@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class Unique {
-
+class Unique
+{
     /**
      * UNIQUE
      * The UNIQUE function searches for value either from a one-row or one-column range or from an array.
@@ -18,8 +18,8 @@ class Unique {
      *
      * @return mixed The unique values from the search range
      */
-    public static function unique($lookupVector, $byColumn = false, $exactlyOnce = false) {
-
+    public static function unique($lookupVector, $byColumn = false, $exactlyOnce = false)
+    {
         if (!is_array($lookupVector)) {
             // Scalars are always returned "as is"
             return $lookupVector;
@@ -29,21 +29,20 @@ class Unique {
         $exactlyOnce = (bool) $exactlyOnce;
 
         return ($byColumn === true)
-        ? self::uniqueByColumn($lookupVector, $exactlyOnce)
-        : self::uniqueByRow($lookupVector, $exactlyOnce);
+            ? self::uniqueByColumn($lookupVector, $exactlyOnce)
+            : self::uniqueByRow($lookupVector, $exactlyOnce);
     }
 
     /**
      * @return mixed
      */
-    private static function uniqueByRow(array $lookupVector, bool $exactlyOnce) {
-
+    private static function uniqueByRow(array $lookupVector, bool $exactlyOnce)
+    {
         // When not $byColumn, we count whole rows or values, not individual values
         //      so implode each row into a single string value
         array_walk(
             $lookupVector,
-            function (array &$value): void{
-
+            function (array &$value): void {
                 $value = implode(chr(0x00), $value);
             }
         );
@@ -63,8 +62,7 @@ class Unique {
         // restore rows from their strings
         array_walk(
             $result,
-            function (string &$value): void{
-
+            function (string &$value): void {
                 $value = explode(chr(0x00), $value);
             }
         );
@@ -75,8 +73,8 @@ class Unique {
     /**
      * @return mixed
      */
-    private static function uniqueByColumn(array $lookupVector, bool $exactlyOnce) {
-
+    private static function uniqueByColumn(array $lookupVector, bool $exactlyOnce)
+    {
         $flattenedLookupVector = Functions::flattenArray($lookupVector);
 
         if (count($lookupVector, COUNT_RECURSIVE) > count($flattenedLookupVector, COUNT_RECURSIVE) + 1) {
@@ -104,11 +102,9 @@ class Unique {
 
     private static function countValuesCaseInsensitive(array $caseSensitiveLookupValues): array
     {
-
         $caseInsensitiveCounts = array_count_values(
             array_map(
                 function (string $value) {
-
                     return StringHelper::strToUpper($value);
                 },
                 $caseSensitiveLookupValues
@@ -116,25 +112,18 @@ class Unique {
         );
 
         $caseSensitiveCounts = [];
-
         foreach ($caseInsensitiveCounts as $caseInsensitiveKey => $count) {
-
             if (is_numeric($caseInsensitiveKey)) {
                 $caseSensitiveCounts[$caseInsensitiveKey] = $count;
             } else {
-
                 foreach ($caseSensitiveLookupValues as $caseSensitiveValue) {
-
                     if ($caseInsensitiveKey === StringHelper::strToUpper($caseSensitiveValue)) {
                         $caseSensitiveCounts[$caseSensitiveValue] = $count;
 
                         break;
                     }
-
                 }
-
             }
-
         }
 
         return $caseSensitiveCounts;
@@ -142,14 +131,11 @@ class Unique {
 
     private static function exactlyOnceFilter(array $values): array
     {
-
         return array_filter(
             $values,
             function ($value) {
-
                 return $value === 1;
             }
         );
     }
-
 }

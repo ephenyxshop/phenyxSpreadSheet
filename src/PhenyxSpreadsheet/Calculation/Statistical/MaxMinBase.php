@@ -2,17 +2,21 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
-abstract class MaxMinBase {
-
-    protected static function datatypeAdjustmentAllowStrings($value) {
-
+abstract class MaxMinBase
+{
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    protected static function datatypeAdjustmentAllowStrings($value)
+    {
         if (is_bool($value)) {
             return (int) $value;
-        } else if (is_string($value)) {
+        } elseif (is_string($value)) {
             return 0;
         }
 
         return $value;
     }
-
 }

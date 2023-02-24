@@ -5,13 +5,13 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use ZipArchive;
 
-class Drawing extends BaseDrawing {
-
+class Drawing extends BaseDrawing
+{
     const IMAGE_TYPES_CONVERTION_MAP = [
-        IMAGETYPE_GIF  => IMAGETYPE_PNG,
+        IMAGETYPE_GIF => IMAGETYPE_PNG,
         IMAGETYPE_JPEG => IMAGETYPE_JPEG,
-        IMAGETYPE_PNG  => IMAGETYPE_PNG,
-        IMAGETYPE_BMP  => IMAGETYPE_PNG,
+        IMAGETYPE_PNG => IMAGETYPE_PNG,
+        IMAGETYPE_BMP => IMAGETYPE_PNG,
     ];
 
     /**
@@ -31,8 +31,8 @@ class Drawing extends BaseDrawing {
     /**
      * Create a new Drawing.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Initialise values
         $this->path = '';
         $this->isUrl = false;
@@ -46,16 +46,16 @@ class Drawing extends BaseDrawing {
      *
      * @return string
      */
-    public function getFilename() {
-
+    public function getFilename()
+    {
         return basename($this->path);
     }
 
     /**
      * Get indexed filename (using image index).
      */
-    public function getIndexedFilename(): string {
-
+    public function getIndexedFilename(): string
+    {
         return md5($this->path) . '.' . $this->getExtension();
     }
 
@@ -64,8 +64,8 @@ class Drawing extends BaseDrawing {
      *
      * @return string
      */
-    public function getExtension() {
-
+    public function getExtension()
+    {
         $exploded = explode('.', basename($this->path));
 
         return $exploded[count($exploded) - 1];
@@ -76,8 +76,8 @@ class Drawing extends BaseDrawing {
      *
      * @return string
      */
-    public function getMediaFilename() {
-
+    public function getMediaFilename()
+    {
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
             throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
@@ -90,8 +90,8 @@ class Drawing extends BaseDrawing {
      *
      * @return string
      */
-    public function getPath() {
-
+    public function getPath()
+    {
         return $this->path;
     }
 
@@ -104,43 +104,35 @@ class Drawing extends BaseDrawing {
      *
      * @return $this
      */
-    public function setPath($path, $verifyFile = true, $zip = null) {
-
-        if ($verifyFile) {
+    public function setPath($path, $verifyFile = true, $zip = null)
+    {
+        if ($verifyFile && preg_match('~^data:image/[a-z]+;base64,~', $path) !== 1) {
             // Check if a URL has been passed. https://stackoverflow.com/a/2058596/1252979
-
             if (filter_var($path, FILTER_VALIDATE_URL)) {
                 $this->path = $path;
                 // Implicit that it is a URL, rather store info than running check above on value in other places.
                 $this->isUrl = true;
                 $imageContents = file_get_contents($path);
                 $filePath = tempnam(sys_get_temp_dir(), 'Drawing');
-
                 if ($filePath) {
                     file_put_contents($filePath, $imageContents);
-
                     if (file_exists($filePath)) {
                         $this->setSizesAndType($filePath);
                         unlink($filePath);
                     }
-
                 }
-
-            } else if (file_exists($path)) {
+            } elseif (file_exists($path)) {
                 $this->path = $path;
                 $this->setSizesAndType($path);
-            } else if ($zip instanceof ZipArchive) {
+            } elseif ($zip instanceof ZipArchive) {
                 $zipPath = explode('#', $path)[1];
-
                 if ($zip->locateName($zipPath) !== false) {
                     $this->path = $path;
                     $this->setSizesAndType($path);
                 }
-
             } else {
                 throw new PhenyxSpreadsheetException("File $path not found!");
             }
-
         } else {
             $this->path = $path;
         }
@@ -151,8 +143,8 @@ class Drawing extends BaseDrawing {
     /**
      * Get isURL.
      */
-    public function getIsURL(): bool {
-
+    public function getIsURL(): bool
+    {
         return $this->isUrl;
     }
 
@@ -161,8 +153,8 @@ class Drawing extends BaseDrawing {
      *
      * @return $this
      */
-    public function setIsURL(bool $isUrl): self{
-
+    public function setIsURL(bool $isUrl): self
+    {
         $this->isUrl = $isUrl;
 
         return $this;
@@ -173,8 +165,8 @@ class Drawing extends BaseDrawing {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->path .
             parent::getHashCode() .
@@ -185,8 +177,8 @@ class Drawing extends BaseDrawing {
     /**
      * Get Image Type for Save.
      */
-    public function getImageTypeForSave(): int {
-
+    public function getImageTypeForSave(): int
+    {
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
             throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
@@ -197,27 +189,26 @@ class Drawing extends BaseDrawing {
     /**
      * Get Image file extention for Save.
      */
-    public function getImageFileExtensionForSave(bool $includeDot = true): string {
-
+    public function getImageFileExtensionForSave(bool $includeDot = true): string
+    {
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
             throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         $result = image_type_to_extension(self::IMAGE_TYPES_CONVERTION_MAP[$this->type], $includeDot);
 
-        return is_string($result) ? $result : '';
+        return "$result";
     }
 
     /**
      * Get Image mime type.
      */
-    public function getImageMimeType(): string {
-
+    public function getImageMimeType(): string
+    {
         if (!array_key_exists($this->type, self::IMAGE_TYPES_CONVERTION_MAP)) {
             throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
 
         return image_type_to_mime_type(self::IMAGE_TYPES_CONVERTION_MAP[$this->type]);
     }
-
 }

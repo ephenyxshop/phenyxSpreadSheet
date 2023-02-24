@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 use EphenyxShop\PhenyxSpreadsheet\RichText\RichText;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class DataType {
-
+class DataType
+{
     // Data types
     const TYPE_STRING2 = 'str';
     const TYPE_STRING = 's';
@@ -21,25 +21,28 @@ class DataType {
     /**
      * List of error codes.
      *
-     * @var array
+     * @var array<string, int>
      */
     private static $errorCodes = [
-        '#NULL!'  => 0,
+        '#NULL!' => 0,
         '#DIV/0!' => 1,
         '#VALUE!' => 2,
-        '#REF!'   => 3,
-        '#NAME?'  => 4,
-        '#NUM!'   => 5,
-        '#N/A'    => 6,
+        '#REF!' => 3,
+        '#NAME?' => 4,
+        '#NUM!' => 5,
+        '#N/A' => 6,
+        '#CALC!' => 7,
     ];
+
+    public const MAX_STRING_LENGTH = 32767;
 
     /**
      * Get list of error codes.
      *
-     * @return array
+     * @return array<string, int>
      */
-    public static function getErrorCodes() {
-
+    public static function getErrorCodes()
+    {
         return self::$errorCodes;
     }
 
@@ -48,17 +51,17 @@ class DataType {
      *
      * @param null|RichText|string $textValue Value to sanitize to an Excel string
      *
-     * @return null|RichText|string Sanitized value
+     * @return RichText|string Sanitized value
      */
-    public static function checkString($textValue) {
-
+    public static function checkString($textValue)
+    {
         if ($textValue instanceof RichText) {
             // TODO: Sanitize Rich-Text string (max. character count is 32,767)
             return $textValue;
         }
 
         // string must never be longer than 32,767 characters, truncate if necessary
-        $textValue = StringHelper::substring($textValue, 0, 32767);
+        $textValue = StringHelper::substring((string) $textValue, 0, self::MAX_STRING_LENGTH);
 
         // we require that newline is represented as "\n" in core, not as "\r\n" or "\r"
         $textValue = str_replace(["\r\n", "\r"], "\n", $textValue);
@@ -73,8 +76,8 @@ class DataType {
      *
      * @return string Sanitized value
      */
-    public static function checkErrorCode($value) {
-
+    public static function checkErrorCode($value)
+    {
         $value = (string) $value;
 
         if (!isset(self::$errorCodes[$value])) {
@@ -83,5 +86,4 @@ class DataType {
 
         return $value;
     }
-
 }

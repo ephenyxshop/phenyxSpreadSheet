@@ -2,10 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
 
-class DAverage extends DatabaseAbstract {
-
+class DAverage extends DatabaseAbstract
+{
     /**
      * DAVERAGE.
      *
@@ -29,19 +30,17 @@ class DAverage extends DatabaseAbstract {
      *                              the column label in which you specify a condition for the
      *                              column.
      *
-     * @return null|float|string
+     * @return float|string
      */
-    public static function evaluate($database, $field, $criteria) {
-
+    public static function evaluate($database, $field, $criteria)
+    {
         $field = self::fieldExtract($database, $field);
-
         if ($field === null) {
-            return null;
+            return ExcelError::VALUE();
         }
 
         return Averages::average(
             self::getFilteredColumn($database, $field, $criteria)
         );
     }
-
 }

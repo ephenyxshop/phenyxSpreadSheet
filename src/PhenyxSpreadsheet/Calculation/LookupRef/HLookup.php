@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class HLookup extends LookupBase {
-
+class HLookup extends LookupBase
+{
     use ArrayEnabled;
 
     /**
@@ -25,8 +25,8 @@ class HLookup extends LookupBase {
      *
      * @return mixed The value of the found cell
      */
-    public static function lookup($lookupValue, $lookupArray, $indexNumber, $notExactMatch = true) {
-
+    public static function lookup($lookupValue, $lookupArray, $indexNumber, $notExactMatch = true)
+    {
         if (is_array($lookupValue)) {
             return self::evaluateArrayArgumentsIgnore([self::class, __FUNCTION__], 1, $lookupValue, $lookupArray, $indexNumber, $notExactMatch);
         }
@@ -43,7 +43,6 @@ class HLookup extends LookupBase {
 
         $f = array_keys($lookupArray);
         $firstRow = reset($f);
-
         if ((!is_array($lookupArray[$firstRow])) || ($indexNumber > count($lookupArray))) {
             return ExcelError::REF();
         }
@@ -65,17 +64,16 @@ class HLookup extends LookupBase {
      * @param mixed $lookupValue The value that you want to match in lookup_array
      * @param  int|string $column
      */
-    private static function hLookupSearch($lookupValue, array $lookupArray, $column, bool $notExactMatch) :  ? int{
-
-        $lookupLower = StringHelper::strToLower($lookupValue);
+    private static function hLookupSearch($lookupValue, array $lookupArray, $column, bool $notExactMatch): ?int
+    {
+        $lookupLower = StringHelper::strToLower((string) $lookupValue);
 
         $rowNumber = null;
-
         foreach ($lookupArray[$column] as $rowKey => $rowData) {
             // break if we have passed possible keys
             $bothNumeric = is_numeric($lookupValue) && is_numeric($rowData);
             $bothNotNumeric = !is_numeric($lookupValue) && !is_numeric($rowData);
-            $cellDataLower = StringHelper::strToLower($rowData);
+            $cellDataLower = StringHelper::strToLower((string) $rowData);
 
             if (
                 $notExactMatch &&
@@ -98,34 +96,26 @@ class HLookup extends LookupBase {
         return $rowNumber;
     }
 
-    private static function convertLiteralArray(array $lookupArray) : array
+    private static function convertLiteralArray(array $lookupArray): array
     {
-
         if (array_key_exists(0, $lookupArray)) {
             $lookupArray2 = [];
             $row = 0;
-
             foreach ($lookupArray as $arrayVal) {
                 ++$row;
-
                 if (!is_array($arrayVal)) {
                     $arrayVal = [$arrayVal];
                 }
-
                 $arrayVal2 = [];
-
                 foreach ($arrayVal as $key2 => $val2) {
                     $index = Coordinate::stringFromColumnIndex($key2 + 1);
                     $arrayVal2[$index] = $val2;
                 }
-
                 $lookupArray2[$row] = $arrayVal2;
             }
-
             $lookupArray = $lookupArray2;
         }
 
         return $lookupArray;
     }
-
 }

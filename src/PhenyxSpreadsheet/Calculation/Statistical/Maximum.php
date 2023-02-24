@@ -3,9 +3,10 @@
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ErrorValue;
 
-class Maximum extends MaxMinBase {
-
+class Maximum extends MaxMinBase
+{
     /**
      * MAX.
      *
@@ -19,24 +20,24 @@ class Maximum extends MaxMinBase {
      *
      * @return float
      */
-    public static function max(...$args) {
-
+    public static function max(...$args)
+    {
         $returnValue = null;
 
         // Loop through arguments
         $aArgs = Functions::flattenArray($args);
-
         foreach ($aArgs as $arg) {
+            if (ErrorValue::isError($arg)) {
+                $returnValue = $arg;
+
+                break;
+            }
             // Is it a numeric value?
-
             if ((is_numeric($arg)) && (!is_string($arg))) {
-
                 if (($returnValue === null) || ($arg > $returnValue)) {
                     $returnValue = $arg;
                 }
-
             }
-
         }
 
         if ($returnValue === null) {
@@ -58,25 +59,25 @@ class Maximum extends MaxMinBase {
      *
      * @return float
      */
-    public static function maxA(...$args) {
-
+    public static function maxA(...$args)
+    {
         $returnValue = null;
 
         // Loop through arguments
         $aArgs = Functions::flattenArray($args);
-
         foreach ($aArgs as $arg) {
-            // Is it a numeric value?
+            if (ErrorValue::isError($arg)) {
+                $returnValue = $arg;
 
+                break;
+            }
+            // Is it a numeric value?
             if ((is_numeric($arg)) || (is_bool($arg)) || ((is_string($arg) && ($arg != '')))) {
                 $arg = self::datatypeAdjustmentAllowStrings($arg);
-
                 if (($returnValue === null) || ($arg > $returnValue)) {
                     $returnValue = $arg;
                 }
-
             }
-
         }
 
         if ($returnValue === null) {
@@ -85,5 +86,4 @@ class Maximum extends MaxMinBase {
 
         return $returnValue;
     }
-
 }

@@ -5,30 +5,36 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\LookupRef;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-abstract class LookupBase {
-
+abstract class LookupBase
+{
     /**
      * @param mixed $lookup_array
      */
-    protected static function validateLookupArray($lookup_array): void {
-
+    protected static function validateLookupArray($lookup_array): void
+    {
         if (!is_array($lookup_array)) {
             throw new Exception(ExcelError::REF());
         }
-
     }
 
-    protected static function validateIndexLookup(array $lookup_array, $index_number): int {
-
-        // index_number must be a number greater than or equal to 1
-
-        if (!is_numeric($index_number) || $index_number < 1) {
+    /** @param float|int|string $index_number */
+    protected static function validateIndexLookup(array $lookup_array, $index_number): int
+    {
+        // index_number must be a number greater than or equal to 1.
+        // Excel results are inconsistent when index is non-numeric.
+        // VLOOKUP(whatever, whatever, SQRT(-1)) yields NUM error, but
+        // VLOOKUP(whatever, whatever, cellref) yields REF error
+        //   when cellref is '=SQRT(-1)'. So just try our best here.
+        // Similar results if string (literal yields VALUE, cellRef REF).
+        if (!is_numeric($index_number)) {
+            throw new Exception(ExcelError::throwError($index_number));
+        }
+        if ($index_number < 1) {
             throw new Exception(ExcelError::VALUE());
         }
 
         // index_number must be less than or equal to the number of columns in lookup_array
-
-        if ((!is_array($lookup_array)) || (empty($lookup_array))) {
+        if (empty($lookup_array)) {
             throw new Exception(ExcelError::REF());
         }
 
@@ -42,25 +48,20 @@ abstract class LookupBase {
         int $rowKey,
         string $cellDataLower,
         string $lookupLower,
-        ? int $rowNumber
-    ) :  ? int {
-
+        ?int $rowNumber
+    ): ?int {
         // remember the last key, but only if datatypes match
-
         if ($bothNumeric || $bothNotNumeric) {
             // Spreadsheets software returns first exact match,
             // we have sorted and we might have broken key orders
             // we want the first one (by its initial index)
-
             if ($notExactMatch) {
                 $rowNumber = $rowKey;
-            } else if (($cellDataLower == $lookupLower) && (($rowNumber === null) || ($rowKey < $rowNumber))) {
+            } elseif (($cellDataLower == $lookupLower) && (($rowNumber === null) || ($rowKey < $rowNumber))) {
                 $rowNumber = $rowKey;
             }
-
         }
 
         return $rowNumber;
     }
-
 }

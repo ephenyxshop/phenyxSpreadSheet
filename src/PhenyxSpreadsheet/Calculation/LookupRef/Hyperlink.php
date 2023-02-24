@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
 
-class Hyperlink {
-
+class Hyperlink
+{
     /**
      * HYPERLINK.
      *
@@ -20,8 +20,8 @@ class Hyperlink {
      *
      * @return mixed The value of $displayName (or $linkURL if $displayName was blank)
      */
-    public static function set($linkURL = '', $displayName = null,  ? Cell $cell = null) {
-
+    public static function set($linkURL = '', $displayName = null, ?Cell $cell = null)
+    {
         $linkURL = ($linkURL === null) ? '' : Functions::flattenSingleValue($linkURL);
         $displayName = ($displayName === null) ? '' : Functions::flattenSingleValue($displayName);
 
@@ -38,5 +38,4 @@ class Hyperlink {
 
         return $displayName;
     }
-
 }

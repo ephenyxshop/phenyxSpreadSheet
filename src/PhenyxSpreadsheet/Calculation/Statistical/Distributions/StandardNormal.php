@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Averages;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
 
-class StandardNormal {
-
+class StandardNormal
+{
     use ArrayEnabled;
 
     /**
@@ -30,8 +30,8 @@ class StandardNormal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function cumulative($value) {
-
+    public static function cumulative($value)
+    {
         return Normal::distribution($value, 0, 1, true);
     }
 
@@ -55,8 +55,8 @@ class StandardNormal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $cumulative) {
-
+    public static function distribution($value, $cumulative)
+    {
         return Normal::distribution($value, 0, 1, $cumulative);
     }
 
@@ -76,8 +76,8 @@ class StandardNormal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function inverse($value) {
-
+    public static function inverse($value)
+    {
         return Normal::inverse($value, 0, 1);
     }
 
@@ -94,8 +94,8 @@ class StandardNormal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function gauss($value) {
-
+    public static function gauss($value)
+    {
         if (is_array($value)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $value);
         }
@@ -103,7 +103,6 @@ class StandardNormal {
         if (!is_numeric($value)) {
             return ExcelError::VALUE();
         }
-
         /** @var float */
         $dist = self::distribution($value, true);
 
@@ -129,8 +128,8 @@ class StandardNormal {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function zTest($dataSet, $m0, $sigma = null) {
-
+    public static function zTest($dataSet, $m0, $sigma = null)
+    {
         if (is_array($m0) || is_array($sigma)) {
             return self::evaluateArrayArgumentsSubsetFrom([self::class, __FUNCTION__], 1, $dataSet, $m0, $sigma);
         }
@@ -145,10 +144,10 @@ class StandardNormal {
             /** @var float */
             $sigma = StandardDeviations::STDEV($dataSet);
         }
-
         $n = count($dataSet);
 
-        return 1 - self::cumulative((Averages::average($dataSet) - $m0) / ($sigma / sqrt($n)));
-    }
+        $sub1 = Averages::average($dataSet);
 
+        return is_numeric($sub1) ? (1 - self::cumulative(($sub1 - $m0) / ($sigma / sqrt($n)))) : $sub1;
+    }
 }

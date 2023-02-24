@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDateHelper;
 
-class YearFrac {
-
+class YearFrac
+{
     use ArrayEnabled;
 
     /**
@@ -43,8 +43,8 @@ class YearFrac {
      *         If an array of values is passed for the $startDate or $endDays,arguments, then the returned result
      *            will also be an array with matching dimensions
      */
-    public static function fraction($startDate, $endDate, $method = 0) {
-
+    public static function fraction($startDate, $endDate, $method = 0)
+    {
         if (is_array($startDate) || is_array($endDate) || is_array($method)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $startDate, $endDate, $method);
         }
@@ -62,16 +62,16 @@ class YearFrac {
         }
 
         switch ($method) {
-        case 0:
-            return Functions::scalar(Days360::between($startDate, $endDate)) / 360;
-        case 1:
-            return self::method1($startDate, $endDate);
-        case 2:
-            return Functions::scalar(Difference::interval($startDate, $endDate)) / 360;
-        case 3:
-            return Functions::scalar(Difference::interval($startDate, $endDate)) / 365;
-        case 4:
-            return Functions::scalar(Days360::between($startDate, $endDate, true)) / 360;
+            case 0:
+                return Functions::scalar(Days360::between($startDate, $endDate)) / 360;
+            case 1:
+                return self::method1($startDate, $endDate);
+            case 2:
+                return Functions::scalar(Difference::interval($startDate, $endDate)) / 360;
+            case 3:
+                return Functions::scalar(Difference::interval($startDate, $endDate)) / 365;
+            case 4:
+                return Functions::scalar(Days360::between($startDate, $endDate, true)) / 360;
         }
 
         return ExcelError::NAN();
@@ -83,27 +83,23 @@ class YearFrac {
      * @param mixed $startDate
      * @param mixed $endDate
      */
-    private static function excelBug(float $sDate, $startDate, $endDate, int $method): float {
-
+    private static function excelBug(float $sDate, $startDate, $endDate, int $method): float
+    {
         if (Functions::getCompatibilityMode() !== Functions::COMPATIBILITY_OPENOFFICE && SharedDateHelper::getExcelCalendar() !== SharedDateHelper::CALENDAR_MAC_1904) {
-
             if ($endDate === null && $startDate !== null) {
-
                 if (DateParts::month($sDate) == 12 && DateParts::day($sDate) === 31 && $method === 0) {
                     $sDate += 2;
                 } else {
                     ++$sDate;
                 }
-
             }
-
         }
 
         return $sDate;
     }
 
-    private static function method1(float $startDate, float $endDate): float{
-
+    private static function method1(float $startDate, float $endDate): float
+    {
         $days = Functions::scalar(Difference::interval($startDate, $endDate));
         $startYear = (int) DateParts::year($startDate);
         $endYear = (int) DateParts::year($endDate);
@@ -114,30 +110,24 @@ class YearFrac {
         $endDay = (int) DateParts::day($endDate);
         $startMonthDay = 100 * $startMonth + $startDay;
         $endMonthDay = 100 * $endMonth + $endDay;
-
         if ($years == 1) {
             $tmpCalcAnnualBasis = 365 + (int) Helpers::isLeapYear($endYear);
-        } else if ($years == 2 && $startMonthDay >= $endMonthDay) {
-
+        } elseif ($years == 2 && $startMonthDay >= $endMonthDay) {
             if (Helpers::isLeapYear($startYear)) {
                 $tmpCalcAnnualBasis = 365 + (int) ($startMonthDay <= 229);
-            } else if (Helpers::isLeapYear($endYear)) {
+            } elseif (Helpers::isLeapYear($endYear)) {
                 $tmpCalcAnnualBasis = 365 + (int) ($endMonthDay >= 229);
             } else {
                 $tmpCalcAnnualBasis = 365;
             }
-
         } else {
             $tmpCalcAnnualBasis = 0;
-
             for ($year = $startYear; $year <= $endYear; ++$year) {
                 $tmpCalcAnnualBasis += 365 + (int) Helpers::isLeapYear($year);
             }
-
             $tmpCalcAnnualBasis /= $years;
         }
 
         return $days / $tmpCalcAnnualBasis;
     }
-
 }

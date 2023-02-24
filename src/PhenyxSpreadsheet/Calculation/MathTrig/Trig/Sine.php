@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Helpers;
 
-class Sine {
-
+class Sine
+{
     use ArrayEnabled;
 
     /**
@@ -21,8 +21,8 @@ class Sine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function sin($angle) {
-
+    public static function sin($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -47,8 +47,8 @@ class Sine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function sinh($angle) {
-
+    public static function sinh($angle)
+    {
         if (is_array($angle)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $angle);
         }
@@ -73,8 +73,8 @@ class Sine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function asin($number) {
-
+    public static function asin($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -99,8 +99,8 @@ class Sine {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function asinh($number) {
-
+    public static function asinh($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -113,5 +113,4 @@ class Sine {
 
         return Helpers::numberOrNan(asinh($number));
     }
-
 }

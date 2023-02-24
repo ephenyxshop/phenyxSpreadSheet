@@ -7,8 +7,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Beta {
-
+class Beta
+{
     use ArrayEnabled;
 
     private const MAX_ITERATIONS = 256;
@@ -37,8 +37,8 @@ class Beta {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $alpha, $beta, $rMin = 0.0, $rMax = 1.0) {
-
+    public static function distribution($value, $alpha, $beta, $rMin = 0.0, $rMax = 1.0)
+    {
         if (is_array($value) || is_array($alpha) || is_array($beta) || is_array($rMin) || is_array($rMax)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $alpha, $beta, $rMin, $rMax);
         }
@@ -61,7 +61,6 @@ class Beta {
             $rMin = $rMax;
             $rMax = $tmp;
         }
-
         if (($value < $rMin) || ($value > $rMax) || ($alpha <= 0) || ($beta <= 0) || ($rMin == $rMax)) {
             return ExcelError::NAN();
         }
@@ -92,8 +91,8 @@ class Beta {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function inverse($probability, $alpha, $beta, $rMin = 0.0, $rMax = 1.0) {
-
+    public static function inverse($probability, $alpha, $beta, $rMin = 0.0, $rMax = 1.0)
+    {
         if (is_array($probability) || is_array($alpha) || is_array($beta) || is_array($rMin) || is_array($rMax)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $probability, $alpha, $beta, $rMin, $rMax);
         }
@@ -116,7 +115,6 @@ class Beta {
             $rMin = $rMax;
             $rMax = $tmp;
         }
-
         if (($alpha <= 0) || ($beta <= 0) || ($rMin == $rMax) || ($probability <= 0.0)) {
             return ExcelError::NAN();
         }
@@ -127,25 +125,23 @@ class Beta {
     /**
      * @return float|string
      */
-    private static function calculateInverse(float $probability, float $alpha, float $beta, float $rMin, float $rMax) {
-
+    private static function calculateInverse(float $probability, float $alpha, float $beta, float $rMin, float $rMax)
+    {
         $a = 0;
         $b = 2;
+        $guess = ($a + $b) / 2;
 
         $i = 0;
-
         while ((($b - $a) > Functions::PRECISION) && (++$i <= self::MAX_ITERATIONS)) {
             $guess = ($a + $b) / 2;
             $result = self::distribution($guess, $alpha, $beta);
-
             if (($result === $probability) || ($result === 0.0)) {
                 $b = $a;
-            } else if ($result > $probability) {
+            } elseif ($result > $probability) {
                 $b = $guess;
             } else {
                 $a = $guess;
             }
-
         }
 
         if ($i === self::MAX_ITERATIONS) {
@@ -169,18 +165,17 @@ class Beta {
      *
      * @return float 0 if x<0, p<=0, q<=0 or p+q>2.55E305 and 1 if x>1 to avoid errors and over/underflow
      */
-    public static function incompleteBeta(float $x, float $p, float $q) : float {
-
+    public static function incompleteBeta(float $x, float $p, float $q): float
+    {
         if ($x <= 0.0) {
             return 0.0;
-        } else if ($x >= 1.0) {
+        } elseif ($x >= 1.0) {
             return 1.0;
-        } else if (($p <= 0.0) || ($q <= 0.0) || (($p + $q) > self::LOG_GAMMA_X_MAX_VALUE)) {
+        } elseif (($p <= 0.0) || ($q <= 0.0) || (($p + $q) > self::LOG_GAMMA_X_MAX_VALUE)) {
             return 0.0;
         }
 
         $beta_gam = exp((0 - self::logBeta($p, $q)) + $p * log($x) + $q * log(1.0 - $x));
-
         if ($x < ($p + 1.0) / ($p + $q + 2.0)) {
             return $beta_gam * self::betaFraction($x, $p, $q) / $p;
         }
@@ -189,10 +184,13 @@ class Beta {
     }
 
     // Function cache for logBeta function
+    /** @var float */
     private static $logBetaCacheP = 0.0;
 
+    /** @var float */
     private static $logBetaCacheQ = 0.0;
 
+    /** @var float */
     private static $logBetaCacheResult = 0.0;
 
     /**
@@ -205,18 +203,16 @@ class Beta {
      *
      * @author Jaco van Kooten
      */
-    private static function logBeta(float $p, float $q) : float {
-
+    private static function logBeta(float $p, float $q): float
+    {
         if ($p != self::$logBetaCacheP || $q != self::$logBetaCacheQ) {
             self::$logBetaCacheP = $p;
             self::$logBetaCacheQ = $q;
-
             if (($p <= 0.0) || ($q <= 0.0) || (($p + $q) > self::LOG_GAMMA_X_MAX_VALUE)) {
                 self::$logBetaCacheResult = 0.0;
             } else {
                 self::$logBetaCacheResult = Gamma::logGamma($p) + Gamma::logGamma($q) - Gamma::logGamma($p + $q);
             }
-
         }
 
         return self::$logBetaCacheResult;
@@ -228,56 +224,45 @@ class Beta {
      *
      * @author Jaco van Kooten
      */
-    private static function betaFraction(float $x, float $p, float $q) : float{
-
+    private static function betaFraction(float $x, float $p, float $q): float
+    {
         $c = 1.0;
         $sum_pq = $p + $q;
         $p_plus = $p + 1.0;
         $p_minus = $p - 1.0;
         $h = 1.0 - $sum_pq * $x / $p_plus;
-
         if (abs($h) < self::XMININ) {
             $h = self::XMININ;
         }
-
         $h = 1.0 / $h;
         $frac = $h;
         $m = 1;
         $delta = 0.0;
-
         while ($m <= self::MAX_ITERATIONS && abs($delta - 1.0) > Functions::PRECISION) {
             $m2 = 2 * $m;
             // even index for d
             $d = $m * ($q - $m) * $x / (($p_minus + $m2) * ($p + $m2));
             $h = 1.0 + $d * $h;
-
             if (abs($h) < self::XMININ) {
                 $h = self::XMININ;
             }
-
             $h = 1.0 / $h;
             $c = 1.0 + $d / $c;
-
             if (abs($c) < self::XMININ) {
                 $c = self::XMININ;
             }
-
             $frac *= $h * $c;
             // odd index for d
             $d = -($p + $m) * ($sum_pq + $m) * $x / (($p + $m2) * ($p_plus + $m2));
             $h = 1.0 + $d * $h;
-
             if (abs($h) < self::XMININ) {
                 $h = self::XMININ;
             }
-
             $h = 1.0 / $h;
             $c = 1.0 + $d / $c;
-
             if (abs($c) < self::XMININ) {
                 $c = self::XMININ;
             }
-
             $delta = $h * $c;
             $frac *= $delta;
             ++$m;
@@ -286,15 +271,16 @@ class Beta {
         return $frac;
     }
 
-    private static function betaValue(float $a, float $b) : float {
-
+    /*
+    private static function betaValue(float $a, float $b): float
+    {
         return (Gamma::gammaValue($a) * Gamma::gammaValue($b)) /
-        Gamma::gammaValue($a + $b);
+            Gamma::gammaValue($a + $b);
     }
 
-    private static function regularizedIncompleteBeta(float $value, float $a, float $b) : float {
-
+    private static function regularizedIncompleteBeta(float $value, float $a, float $b): float
+    {
         return self::incompleteBeta($value, $a, $b) / self::betaValue($a, $b);
     }
-
+    */
 }

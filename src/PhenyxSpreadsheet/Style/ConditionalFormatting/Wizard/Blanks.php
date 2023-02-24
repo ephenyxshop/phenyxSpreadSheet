@@ -12,18 +12,18 @@ use EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
  * @method Blanks isBlank()
  * @method Blanks isEmpty()
  */
-class Blanks extends WizardAbstract implements WizardInterface {
-
+class Blanks extends WizardAbstract implements WizardInterface
+{
     protected const OPERATORS = [
         'notBlank' => false,
-        'isBlank'  => true,
+        'isBlank' => true,
         'notEmpty' => false,
-        'empty'    => true,
+        'empty' => true,
     ];
 
     protected const EXPRESSIONS = [
         Wizard::NOT_BLANKS => 'LEN(TRIM(%s))>0',
-        Wizard::BLANKS     => 'LEN(TRIM(%s))=0',
+        Wizard::BLANKS => 'LEN(TRIM(%s))=0',
     ];
 
     /**
@@ -31,27 +31,27 @@ class Blanks extends WizardAbstract implements WizardInterface {
      */
     protected $inverse;
 
-    public function __construct(string $cellRange, bool $inverse = false) {
-
+    public function __construct(string $cellRange, bool $inverse = false)
+    {
         parent::__construct($cellRange);
         $this->inverse = $inverse;
     }
 
-    protected function inverse(bool $inverse): void{
-
+    protected function inverse(bool $inverse): void
+    {
         $this->inverse = $inverse;
     }
 
-    protected function getExpression(): void{
-
+    protected function getExpression(): void
+    {
         $this->expression = sprintf(
             self::EXPRESSIONS[$this->inverse ? Wizard::BLANKS : Wizard::NOT_BLANKS],
             $this->referenceCell
         );
     }
 
-    public function getConditional(): Conditional{
-
+    public function getConditional(): Conditional
+    {
         $this->getExpression();
 
         $conditional = new Conditional();
@@ -65,8 +65,8 @@ class Blanks extends WizardAbstract implements WizardInterface {
         return $conditional;
     }
 
-    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface {
-
+    public static function fromConditional(Conditional $conditional, string $cellRange = 'A1'): WizardInterface
+    {
         if (
             $conditional->getConditionType() !== Conditional::CONDITION_CONTAINSBLANKS &&
             $conditional->getConditionType() !== Conditional::CONDITION_NOTCONTAINSBLANKS
@@ -86,8 +86,8 @@ class Blanks extends WizardAbstract implements WizardInterface {
      * @param string $methodName
      * @param mixed[] $arguments
      */
-    public function __call($methodName, $arguments): self {
-
+    public function __call($methodName, $arguments): self
+    {
         if (!array_key_exists($methodName, self::OPERATORS)) {
             throw new Exception('Invalid Operation for Blanks CF Rule Wizard');
         }
@@ -96,5 +96,4 @@ class Blanks extends WizardAbstract implements WizardInterface {
 
         return $this;
     }
-
 }

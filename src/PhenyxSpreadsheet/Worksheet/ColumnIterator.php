@@ -2,16 +2,16 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
+use Iterator as NativeIterator;
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 use EphenyxShop\PhenyxSpreadsheet\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
-use Iterator;
 
 /**
- * @implements Iterator<string, Column>
+ * @implements NativeIterator<string, Column>
  */
-class ColumnIterator implements Iterator {
-
+class ColumnIterator implements NativeIterator
+{
     /**
      * Worksheet to iterate.
      *
@@ -47,8 +47,8 @@ class ColumnIterator implements Iterator {
      * @param string $startColumn The column address at which to start iterating
      * @param string $endColumn Optionally, the column address at which to stop iterating
      */
-    public function __construct(Worksheet $worksheet, $startColumn = 'A', $endColumn = null) {
-
+    public function __construct(Worksheet $worksheet, $startColumn = 'A', $endColumn = null)
+    {
         // Set subject
         $this->worksheet = $worksheet;
         $this->resetEnd($endColumn);
@@ -58,8 +58,8 @@ class ColumnIterator implements Iterator {
     /**
      * Destructor.
      */
-    public function __destruct() {
-
+    public function __destruct()
+    {
         // @phpstan-ignore-next-line
         $this->worksheet = null;
     }
@@ -71,10 +71,9 @@ class ColumnIterator implements Iterator {
      *
      * @return $this
      */
-    public function resetStart(string $startColumn = 'A') {
-
+    public function resetStart(string $startColumn = 'A')
+    {
         $startColumnIndex = Coordinate::columnIndexFromString($startColumn);
-
         if ($startColumnIndex > Coordinate::columnIndexFromString($this->worksheet->getHighestColumn())) {
             throw new Exception(
                 "Start column ({$startColumn}) is beyond highest column ({$this->worksheet->getHighestColumn()})"
@@ -82,11 +81,9 @@ class ColumnIterator implements Iterator {
         }
 
         $this->startColumnIndex = $startColumnIndex;
-
         if ($this->endColumnIndex < $this->startColumnIndex) {
             $this->endColumnIndex = $this->startColumnIndex;
         }
-
         $this->seek($startColumn);
 
         return $this;
@@ -99,8 +96,8 @@ class ColumnIterator implements Iterator {
      *
      * @return $this
      */
-    public function resetEnd($endColumn = null) {
-
+    public function resetEnd($endColumn = null)
+    {
         $endColumn = $endColumn ?: $this->worksheet->getHighestColumn();
         $this->endColumnIndex = Coordinate::columnIndexFromString($endColumn);
 
@@ -114,16 +111,14 @@ class ColumnIterator implements Iterator {
      *
      * @return $this
      */
-    public function seek(string $column = 'A') {
-
+    public function seek(string $column = 'A')
+    {
         $column = Coordinate::columnIndexFromString($column);
-
         if (($column < $this->startColumnIndex) || ($column > $this->endColumnIndex)) {
             throw new PhenyxSpreadsheetException(
                 "Column $column is out of range ({$this->startColumnIndex} - {$this->endColumnIndex})"
             );
         }
-
         $this->currentColumnIndex = $column;
 
         return $this;
@@ -132,49 +127,48 @@ class ColumnIterator implements Iterator {
     /**
      * Rewind the iterator to the starting column.
      */
-    public function rewind(): void{
-
+    public function rewind(): void
+    {
         $this->currentColumnIndex = $this->startColumnIndex;
     }
 
     /**
      * Return the current column in this worksheet.
      */
-    public function current(): Column {
-
+    public function current(): Column
+    {
         return new Column($this->worksheet, Coordinate::stringFromColumnIndex($this->currentColumnIndex));
     }
 
     /**
      * Return the current iterator key.
      */
-    public function key(): string {
-
+    public function key(): string
+    {
         return Coordinate::stringFromColumnIndex($this->currentColumnIndex);
     }
 
     /**
      * Set the iterator to its next value.
      */
-    public function next(): void {
-
+    public function next(): void
+    {
         ++$this->currentColumnIndex;
     }
 
     /**
      * Set the iterator to its previous value.
      */
-    public function prev(): void {
-
+    public function prev(): void
+    {
         --$this->currentColumnIndex;
     }
 
     /**
      * Indicate if more columns exist in the worksheet range of columns that we're iterating.
      */
-    public function valid(): bool {
-
+    public function valid(): bool
+    {
         return $this->currentColumnIndex <= $this->endColumnIndex && $this->currentColumnIndex >= $this->startColumnIndex;
     }
-
 }

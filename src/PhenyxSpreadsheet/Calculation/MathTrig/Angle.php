@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Angle {
-
+class Angle
+{
     use ArrayEnabled;
 
     /**
@@ -20,8 +20,8 @@ class Angle {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function toDegrees($number) {
-
+    public static function toDegrees($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -46,8 +46,8 @@ class Angle {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function toRadians($number) {
-
+    public static function toRadians($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -60,5 +60,4 @@ class Angle {
 
         return deg2rad($number);
     }
-
 }

@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Single {
-
+class Single
+{
     /**
      * FVSCHEDULE.
      *
@@ -22,8 +22,8 @@ class Single {
      *
      * @return float|string
      */
-    public static function futureValue($principal, $schedule) {
-
+    public static function futureValue($principal, $schedule)
+    {
         $principal = Functions::flattenSingleValue($principal);
         $schedule = Functions::flattenArray($schedule);
 
@@ -34,7 +34,6 @@ class Single {
                 $rate = CashFlowValidations::validateFloat($rate);
                 $principal *= 1 + $rate;
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -53,8 +52,8 @@ class Single {
      *
      * @return float|string Result, or a string containing an error
      */
-    public static function periods($rate, $presentValue, $futureValue) {
-
+    public static function periods($rate, $presentValue, $futureValue)
+    {
         $rate = Functions::flattenSingleValue($rate);
         $presentValue = Functions::flattenSingleValue($presentValue);
         $futureValue = Functions::flattenSingleValue($futureValue);
@@ -68,7 +67,6 @@ class Single {
         }
 
         // Validate parameters
-
         if ($rate <= 0.0 || $presentValue <= 0.0 || $futureValue <= 0.0) {
             return ExcelError::NAN();
         }
@@ -87,8 +85,8 @@ class Single {
      *
      * @return float|string Result, or a string containing an error
      */
-    public static function interestRate($periods = 0.0, $presentValue = 0.0, $futureValue = 0.0) {
-
+    public static function interestRate($periods = 0.0, $presentValue = 0.0, $futureValue = 0.0)
+    {
         $periods = Functions::flattenSingleValue($periods);
         $presentValue = Functions::flattenSingleValue($presentValue);
         $futureValue = Functions::flattenSingleValue($futureValue);
@@ -102,12 +100,10 @@ class Single {
         }
 
         // Validate parameters
-
         if ($periods <= 0.0 || $presentValue <= 0.0 || $futureValue < 0.0) {
             return ExcelError::NAN();
         }
 
         return ($futureValue / $presentValue) ** (1 / $periods) - 1;
     }
-
 }

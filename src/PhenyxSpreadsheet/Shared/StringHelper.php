@@ -2,15 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Shared;
 
-use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
-
-class StringHelper {
-
-    /**    Constants                */
-    /**    Regular Expressions        */
-    //    Fraction
-    const STRING_REGEXP_FRACTION = '(-?)(\d+)\s+(\d+\/\d+)';
-
+class StringHelper
+{
     /**
      * Control characters array.
      *
@@ -28,14 +21,14 @@ class StringHelper {
     /**
      * Decimal separator.
      *
-     * @var string
+     * @var ?string
      */
     private static $decimalSeparator;
 
     /**
      * Thousands separator.
      *
-     * @var string
+     * @var ?string
      */
     private static $thousandsSeparator;
 
@@ -63,125 +56,122 @@ class StringHelper {
     /**
      * Build control characters array.
      */
-    private static function buildControlCharacters(): void {
-
+    private static function buildControlCharacters(): void
+    {
         for ($i = 0; $i <= 31; ++$i) {
-
             if ($i != 9 && $i != 10 && $i != 13) {
                 $find = '_x' . sprintf('%04s', strtoupper(dechex($i))) . '_';
                 $replace = chr($i);
                 self::$controlCharacters[$find] = $replace;
             }
-
         }
-
     }
 
     /**
      * Build SYLK characters array.
      */
-    private static function buildSYLKCharacters(): void{
-
+    private static function buildSYLKCharacters(): void
+    {
         self::$SYLKCharacters = [
-            "\x1B 0"  => chr(0),
-            "\x1B 1"  => chr(1),
-            "\x1B 2"  => chr(2),
-            "\x1B 3"  => chr(3),
-            "\x1B 4"  => chr(4),
-            "\x1B 5"  => chr(5),
-            "\x1B 6"  => chr(6),
-            "\x1B 7"  => chr(7),
-            "\x1B 8"  => chr(8),
-            "\x1B 9"  => chr(9),
-            "\x1B :"  => chr(10),
-            "\x1B ;"  => chr(11),
-            "\x1B <"  => chr(12),
-            "\x1B ="  => chr(13),
-            "\x1B >"  => chr(14),
-            "\x1B ?"  => chr(15),
-            "\x1B!0"  => chr(16),
-            "\x1B!1"  => chr(17),
-            "\x1B!2"  => chr(18),
-            "\x1B!3"  => chr(19),
-            "\x1B!4"  => chr(20),
-            "\x1B!5"  => chr(21),
-            "\x1B!6"  => chr(22),
-            "\x1B!7"  => chr(23),
-            "\x1B!8"  => chr(24),
-            "\x1B!9"  => chr(25),
-            "\x1B!:"  => chr(26),
-            "\x1B!;"  => chr(27),
-            "\x1B!<"  => chr(28),
-            "\x1B!="  => chr(29),
-            "\x1B!>"  => chr(30),
-            "\x1B!?"  => chr(31),
-            "\x1B'?"  => chr(127),
-            "\x1B(0"  => '€', // 128 in CP1252
-            "\x1B(2"  => '‚', // 130 in CP1252
-            "\x1B(3"  => 'ƒ', // 131 in CP1252
-            "\x1B(4"  => '„', // 132 in CP1252
-            "\x1B(5"  => '…', // 133 in CP1252
-            "\x1B(6"  => '†', // 134 in CP1252
-            "\x1B(7"  => '‡', // 135 in CP1252
-            "\x1B(8"  => 'ˆ', // 136 in CP1252
-            "\x1B(9"  => '‰', // 137 in CP1252
-            "\x1B(:"  => 'Š', // 138 in CP1252
-            "\x1B(;"  => '‹', // 139 in CP1252
-            "\x1BNj"  => 'Œ', // 140 in CP1252
-            "\x1B(>"  => 'Ž', // 142 in CP1252
-            "\x1B)1"  => '‘', // 145 in CP1252
-            "\x1B)2"  => '’', // 146 in CP1252
-            "\x1B)3"  => '“', // 147 in CP1252
-            "\x1B)4"  => '”', // 148 in CP1252
-            "\x1B)5"  => '•', // 149 in CP1252
-            "\x1B)6"  => '–', // 150 in CP1252
-            "\x1B)7"  => '—', // 151 in CP1252
-            "\x1B)8"  => '˜', // 152 in CP1252
-            "\x1B)9"  => '™', // 153 in CP1252
-            "\x1B):"  => 'š', // 154 in CP1252
-            "\x1B);"  => '›', // 155 in CP1252
-            "\x1BNz"  => 'œ', // 156 in CP1252
-            "\x1B)>"  => 'ž', // 158 in CP1252
-            "\x1B)?"  => 'Ÿ', // 159 in CP1252
-            "\x1B*0"  => ' ', // 160 in CP1252
-            "\x1BN!"  => '¡', // 161 in CP1252
+            "\x1B 0" => chr(0),
+            "\x1B 1" => chr(1),
+            "\x1B 2" => chr(2),
+            "\x1B 3" => chr(3),
+            "\x1B 4" => chr(4),
+            "\x1B 5" => chr(5),
+            "\x1B 6" => chr(6),
+            "\x1B 7" => chr(7),
+            "\x1B 8" => chr(8),
+            "\x1B 9" => chr(9),
+            "\x1B :" => chr(10),
+            "\x1B ;" => chr(11),
+            "\x1B <" => chr(12),
+            "\x1B =" => chr(13),
+            "\x1B >" => chr(14),
+            "\x1B ?" => chr(15),
+            "\x1B!0" => chr(16),
+            "\x1B!1" => chr(17),
+            "\x1B!2" => chr(18),
+            "\x1B!3" => chr(19),
+            "\x1B!4" => chr(20),
+            "\x1B!5" => chr(21),
+            "\x1B!6" => chr(22),
+            "\x1B!7" => chr(23),
+            "\x1B!8" => chr(24),
+            "\x1B!9" => chr(25),
+            "\x1B!:" => chr(26),
+            "\x1B!;" => chr(27),
+            "\x1B!<" => chr(28),
+            "\x1B!=" => chr(29),
+            "\x1B!>" => chr(30),
+            "\x1B!?" => chr(31),
+            "\x1B'?" => chr(127),
+            "\x1B(0" => '€', // 128 in CP1252
+            "\x1B(2" => '‚', // 130 in CP1252
+            "\x1B(3" => 'ƒ', // 131 in CP1252
+            "\x1B(4" => '„', // 132 in CP1252
+            "\x1B(5" => '…', // 133 in CP1252
+            "\x1B(6" => '†', // 134 in CP1252
+            "\x1B(7" => '‡', // 135 in CP1252
+            "\x1B(8" => 'ˆ', // 136 in CP1252
+            "\x1B(9" => '‰', // 137 in CP1252
+            "\x1B(:" => 'Š', // 138 in CP1252
+            "\x1B(;" => '‹', // 139 in CP1252
+            "\x1BNj" => 'Œ', // 140 in CP1252
+            "\x1B(>" => 'Ž', // 142 in CP1252
+            "\x1B)1" => '‘', // 145 in CP1252
+            "\x1B)2" => '’', // 146 in CP1252
+            "\x1B)3" => '“', // 147 in CP1252
+            "\x1B)4" => '”', // 148 in CP1252
+            "\x1B)5" => '•', // 149 in CP1252
+            "\x1B)6" => '–', // 150 in CP1252
+            "\x1B)7" => '—', // 151 in CP1252
+            "\x1B)8" => '˜', // 152 in CP1252
+            "\x1B)9" => '™', // 153 in CP1252
+            "\x1B):" => 'š', // 154 in CP1252
+            "\x1B);" => '›', // 155 in CP1252
+            "\x1BNz" => 'œ', // 156 in CP1252
+            "\x1B)>" => 'ž', // 158 in CP1252
+            "\x1B)?" => 'Ÿ', // 159 in CP1252
+            "\x1B*0" => ' ', // 160 in CP1252
+            "\x1BN!" => '¡', // 161 in CP1252
             "\x1BN\"" => '¢', // 162 in CP1252
-            "\x1BN#"  => '£', // 163 in CP1252
-            "\x1BN("  => '¤', // 164 in CP1252
-            "\x1BN%"  => '¥', // 165 in CP1252
-            "\x1B*6"  => '¦', // 166 in CP1252
-            "\x1BN'"  => '§', // 167 in CP1252
+            "\x1BN#" => '£', // 163 in CP1252
+            "\x1BN(" => '¤', // 164 in CP1252
+            "\x1BN%" => '¥', // 165 in CP1252
+            "\x1B*6" => '¦', // 166 in CP1252
+            "\x1BN'" => '§', // 167 in CP1252
             "\x1BNH " => '¨', // 168 in CP1252
-            "\x1BNS"  => '©', // 169 in CP1252
-            "\x1BNc"  => 'ª', // 170 in CP1252
-            "\x1BN+"  => '«', // 171 in CP1252
-            "\x1B*<"  => '¬', // 172 in CP1252
-            "\x1B*="  => '­', // 173 in CP1252
-            "\x1BNR"  => '®', // 174 in CP1252
-            "\x1B*?"  => '¯', // 175 in CP1252
-            "\x1BN0"  => '°', // 176 in CP1252
-            "\x1BN1"  => '±', // 177 in CP1252
-            "\x1BN2"  => '²', // 178 in CP1252
-            "\x1BN3"  => '³', // 179 in CP1252
+            "\x1BNS" => '©', // 169 in CP1252
+            "\x1BNc" => 'ª', // 170 in CP1252
+            "\x1BN+" => '«', // 171 in CP1252
+            "\x1B*<" => '¬', // 172 in CP1252
+            "\x1B*=" => '­', // 173 in CP1252
+            "\x1BNR" => '®', // 174 in CP1252
+            "\x1B*?" => '¯', // 175 in CP1252
+            "\x1BN0" => '°', // 176 in CP1252
+            "\x1BN1" => '±', // 177 in CP1252
+            "\x1BN2" => '²', // 178 in CP1252
+            "\x1BN3" => '³', // 179 in CP1252
             "\x1BNB " => '´', // 180 in CP1252
-            "\x1BN5"  => 'µ', // 181 in CP1252
-            "\x1BN6"  => '¶', // 182 in CP1252
-            "\x1BN7"  => '·', // 183 in CP1252
-            "\x1B+8"  => '¸', // 184 in CP1252
-            "\x1BNQ"  => '¹', // 185 in CP1252
-            "\x1BNk"  => 'º', // 186 in CP1252
-            "\x1BN;"  => '»', // 187 in CP1252
-            "\x1BN<"  => '¼', // 188 in CP1252
-            "\x1BN="  => '½', // 189 in CP1252
-            "\x1BN>"  => '¾', // 190 in CP1252
-            "\x1BN?"  => '¿', // 191 in CP1252
+            "\x1BN5" => 'µ', // 181 in CP1252
+            "\x1BN6" => '¶', // 182 in CP1252
+            "\x1BN7" => '·', // 183 in CP1252
+            "\x1B+8" => '¸', // 184 in CP1252
+            "\x1BNQ" => '¹', // 185 in CP1252
+            "\x1BNk" => 'º', // 186 in CP1252
+            "\x1BN;" => '»', // 187 in CP1252
+            "\x1BN<" => '¼', // 188 in CP1252
+            "\x1BN=" => '½', // 189 in CP1252
+            "\x1BN>" => '¾', // 190 in CP1252
+            "\x1BN?" => '¿', // 191 in CP1252
             "\x1BNAA" => 'À', // 192 in CP1252
             "\x1BNBA" => 'Á', // 193 in CP1252
             "\x1BNCA" => 'Â', // 194 in CP1252
             "\x1BNDA" => 'Ã', // 195 in CP1252
             "\x1BNHA" => 'Ä', // 196 in CP1252
             "\x1BNJA" => 'Å', // 197 in CP1252
-            "\x1BNa"  => 'Æ', // 198 in CP1252
+            "\x1BNa" => 'Æ', // 198 in CP1252
             "\x1BNKC" => 'Ç', // 199 in CP1252
             "\x1BNAE" => 'È', // 200 in CP1252
             "\x1BNBE" => 'É', // 201 in CP1252
@@ -191,29 +181,29 @@ class StringHelper {
             "\x1BNBI" => 'Í', // 205 in CP1252
             "\x1BNCI" => 'Î', // 206 in CP1252
             "\x1BNHI" => 'Ï', // 207 in CP1252
-            "\x1BNb"  => 'Ð', // 208 in CP1252
+            "\x1BNb" => 'Ð', // 208 in CP1252
             "\x1BNDN" => 'Ñ', // 209 in CP1252
             "\x1BNAO" => 'Ò', // 210 in CP1252
             "\x1BNBO" => 'Ó', // 211 in CP1252
             "\x1BNCO" => 'Ô', // 212 in CP1252
             "\x1BNDO" => 'Õ', // 213 in CP1252
             "\x1BNHO" => 'Ö', // 214 in CP1252
-            "\x1B-7"  => '×', // 215 in CP1252
-            "\x1BNi"  => 'Ø', // 216 in CP1252
+            "\x1B-7" => '×', // 215 in CP1252
+            "\x1BNi" => 'Ø', // 216 in CP1252
             "\x1BNAU" => 'Ù', // 217 in CP1252
             "\x1BNBU" => 'Ú', // 218 in CP1252
             "\x1BNCU" => 'Û', // 219 in CP1252
             "\x1BNHU" => 'Ü', // 220 in CP1252
-            "\x1B-="  => 'Ý', // 221 in CP1252
-            "\x1BNl"  => 'Þ', // 222 in CP1252
-            "\x1BN{"  => 'ß', // 223 in CP1252
+            "\x1B-=" => 'Ý', // 221 in CP1252
+            "\x1BNl" => 'Þ', // 222 in CP1252
+            "\x1BN{" => 'ß', // 223 in CP1252
             "\x1BNAa" => 'à', // 224 in CP1252
             "\x1BNBa" => 'á', // 225 in CP1252
             "\x1BNCa" => 'â', // 226 in CP1252
             "\x1BNDa" => 'ã', // 227 in CP1252
             "\x1BNHa" => 'ä', // 228 in CP1252
             "\x1BNJa" => 'å', // 229 in CP1252
-            "\x1BNq"  => 'æ', // 230 in CP1252
+            "\x1BNq" => 'æ', // 230 in CP1252
             "\x1BNKc" => 'ç', // 231 in CP1252
             "\x1BNAe" => 'è', // 232 in CP1252
             "\x1BNBe" => 'é', // 233 in CP1252
@@ -223,21 +213,21 @@ class StringHelper {
             "\x1BNBi" => 'í', // 237 in CP1252
             "\x1BNCi" => 'î', // 238 in CP1252
             "\x1BNHi" => 'ï', // 239 in CP1252
-            "\x1BNs"  => 'ð', // 240 in CP1252
+            "\x1BNs" => 'ð', // 240 in CP1252
             "\x1BNDn" => 'ñ', // 241 in CP1252
             "\x1BNAo" => 'ò', // 242 in CP1252
             "\x1BNBo" => 'ó', // 243 in CP1252
             "\x1BNCo" => 'ô', // 244 in CP1252
             "\x1BNDo" => 'õ', // 245 in CP1252
             "\x1BNHo" => 'ö', // 246 in CP1252
-            "\x1B/7"  => '÷', // 247 in CP1252
-            "\x1BNy"  => 'ø', // 248 in CP1252
+            "\x1B/7" => '÷', // 247 in CP1252
+            "\x1BNy" => 'ø', // 248 in CP1252
             "\x1BNAu" => 'ù', // 249 in CP1252
             "\x1BNBu" => 'ú', // 250 in CP1252
             "\x1BNCu" => 'û', // 251 in CP1252
             "\x1BNHu" => 'ü', // 252 in CP1252
-            "\x1B/="  => 'ý', // 253 in CP1252
-            "\x1BN|"  => 'þ', // 254 in CP1252
+            "\x1B/=" => 'ý', // 253 in CP1252
+            "\x1BN|" => 'þ', // 254 in CP1252
             "\x1BNHy" => 'ÿ', // 255 in CP1252
         ];
     }
@@ -247,8 +237,8 @@ class StringHelper {
      *
      * @return bool
      */
-    public static function getIsIconvEnabled() {
-
+    public static function getIsIconvEnabled()
+    {
         if (isset(self::$isIconvEnabled)) {
             return self::$isIconvEnabled;
         }
@@ -257,19 +247,17 @@ class StringHelper {
         self::$isIconvEnabled = true;
 
         // Fail if iconv doesn't exist
-
         if (!function_exists('iconv')) {
             self::$isIconvEnabled = false;
-        } else if (!@iconv('UTF-8', 'UTF-16LE', 'x')) {
+        } elseif (!@iconv('UTF-8', 'UTF-16LE', 'x')) {
             // Sometimes iconv is not working, and e.g. iconv('UTF-8', 'UTF-16LE', 'x') just returns false,
             self::$isIconvEnabled = false;
-        } else if (defined('PHP_OS') && @stristr(PHP_OS, 'AIX') && defined('ICONV_IMPL') && (@strcasecmp(ICONV_IMPL, 'unknown') == 0) && defined('ICONV_VERSION') && (@strcasecmp(ICONV_VERSION, 'unknown') == 0)) {
+        } elseif (defined('PHP_OS') && @stristr(PHP_OS, 'AIX') && defined('ICONV_IMPL') && (@strcasecmp(ICONV_IMPL, 'unknown') == 0) && defined('ICONV_VERSION') && (@strcasecmp(ICONV_VERSION, 'unknown') == 0)) {
             // CUSTOM: IBM AIX iconv() does not work
             self::$isIconvEnabled = false;
         }
 
         // Deactivate iconv default options if they fail (as seen on IMB i)
-
         if (self::$isIconvEnabled && !@iconv('UTF-8', 'UTF-16LE' . self::$iconvOptions, 'x')) {
             self::$iconvOptions = '';
         }
@@ -277,8 +265,8 @@ class StringHelper {
         return self::$isIconvEnabled;
     }
 
-    private static function buildCharacterSets(): void {
-
+    private static function buildCharacterSets(): void
+    {
         if (empty(self::$controlCharacters)) {
             self::buildControlCharacters();
         }
@@ -286,7 +274,6 @@ class StringHelper {
         if (empty(self::$SYLKCharacters)) {
             self::buildSYLKCharacters();
         }
-
     }
 
     /**
@@ -304,8 +291,8 @@ class StringHelper {
      *
      * @return string
      */
-    public static function controlCharacterOOXML2PHP($textValue) {
-
+    public static function controlCharacterOOXML2PHP($textValue)
+    {
         self::buildCharacterSets();
 
         return str_replace(array_keys(self::$controlCharacters), array_values(self::$controlCharacters), $textValue);
@@ -326,57 +313,56 @@ class StringHelper {
      *
      * @return string
      */
-    public static function controlCharacterPHP2OOXML($textValue) {
-
+    public static function controlCharacterPHP2OOXML($textValue)
+    {
         self::buildCharacterSets();
 
         return str_replace(array_values(self::$controlCharacters), array_keys(self::$controlCharacters), $textValue);
     }
 
     /**
-     * Try to sanitize UTF8, stripping invalid byte sequences. Not perfect. Does not surrogate characters.
-     *
-     * @param string $textValue
-     *
-     * @return string
+     * Try to sanitize UTF8, replacing invalid sequences with Unicode substitution characters.
      */
-    public static function sanitizeUTF8($textValue) {
+    public static function sanitizeUTF8(string $textValue): string
+    {
+        $textValue = str_replace(["\xef\xbf\xbe", "\xef\xbf\xbf"], "\xef\xbf\xbd", $textValue);
+        $subst = mb_substitute_character(); // default is question mark
+        mb_substitute_character(65533); // Unicode substitution character
+        // Phpstan does not think this can return false.
+        $returnValue = mb_convert_encoding($textValue, 'UTF-8', 'UTF-8');
+        mb_substitute_character(/** @scrutinizer ignore-type */ $subst);
 
-        if (self::getIsIconvEnabled()) {
-            $textValue = @iconv('UTF-8', 'UTF-8', $textValue);
+        return self::returnString($returnValue);
+    }
 
-            return $textValue;
-        }
-
-        $textValue = mb_convert_encoding($textValue, 'UTF-8', 'UTF-8');
-
-        return $textValue;
+    /**
+     * Strictly to satisfy Scrutinizer.
+     *
+     * @param mixed $value
+     */
+    private static function returnString($value): string
+    {
+        return is_string($value) ? $value : '';
     }
 
     /**
      * Check if a string contains UTF8 data.
-     *
-     * @param string $textValue
-     *
-     * @return bool
      */
-    public static function isUTF8($textValue) {
-
-        return $textValue === '' || preg_match('/^./su', $textValue) === 1;
+    public static function isUTF8(string $textValue): bool
+    {
+        return $textValue === self::sanitizeUTF8($textValue);
     }
 
     /**
      * Formats a numeric value as a string for output in various output writers forcing
      * point as decimal separator in case locale is other than English.
      *
-     * @param mixed $numericValue
-     *
-     * @return string
+     * @param float|int|string $numericValue
      */
-    public static function formatNumber($numericValue) {
-
+    public static function formatNumber($numericValue): string
+    {
         if (is_float($numericValue)) {
-            return str_replace(',', '.', $numericValue);
+            return str_replace(',', '.', (string) $numericValue);
         }
 
         return (string) $numericValue;
@@ -391,15 +377,12 @@ class StringHelper {
      *
      * @param string $textValue UTF-8 encoded string
      * @param mixed[] $arrcRuns Details of rich text runs in $value
-     *
-     * @return string
      */
-    public static function UTF8toBIFF8UnicodeShort($textValue, $arrcRuns = []) {
-
+    public static function UTF8toBIFF8UnicodeShort(string $textValue, array $arrcRuns = []): string
+    {
         // character count
         $ln = self::countCharacters($textValue, 'UTF-8');
         // option flags
-
         if (empty($arrcRuns)) {
             $data = pack('CC', $ln, 0x0001);
             // characters
@@ -409,12 +392,10 @@ class StringHelper {
             $data .= pack('v', count($arrcRuns));
             // characters
             $data .= self::convertEncoding($textValue, 'UTF-16LE', 'UTF-8');
-
             foreach ($arrcRuns as $cRun) {
                 $data .= pack('v', $cRun['strlen']);
                 $data .= pack('v', $cRun['fontidx']);
             }
-
         }
 
         return $data;
@@ -428,11 +409,9 @@ class StringHelper {
      * see OpenOffice.org's Documentation of the Microsoft Excel File Format, sect. 2.5.3.
      *
      * @param string $textValue UTF-8 encoded string
-     *
-     * @return string
      */
-    public static function UTF8toBIFF8UnicodeLong($textValue) {
-
+    public static function UTF8toBIFF8UnicodeLong(string $textValue): string
+    {
         // character count
         $ln = self::countCharacters($textValue, 'UTF-8');
 
@@ -445,37 +424,31 @@ class StringHelper {
     /**
      * Convert string from one encoding to another.
      *
-     * @param string $textValue
      * @param string $to Encoding to convert to, e.g. 'UTF-8'
      * @param string $from Encoding to convert from, e.g. 'UTF-16LE'
-     *
-     * @return string
      */
-    public static function convertEncoding($textValue, $to, $from) {
-
+    public static function convertEncoding(string $textValue, string $to, string $from): string
+    {
         if (self::getIsIconvEnabled()) {
             $result = iconv($from, $to . self::$iconvOptions, $textValue);
-
             if (false !== $result) {
                 return $result;
             }
-
         }
 
-        return mb_convert_encoding($textValue, $to, $from);
+        return self::returnString(mb_convert_encoding($textValue, $to, $from));
     }
 
     /**
      * Get character count.
      *
-     * @param string $textValue
      * @param string $encoding Encoding
      *
      * @return int Character count
      */
-    public static function countCharacters($textValue, $encoding = 'UTF-8') {
-
-        return mb_strlen($textValue ?? '', $encoding);
+    public static function countCharacters(string $textValue, string $encoding = 'UTF-8'): int
+    {
+        return mb_strlen($textValue, $encoding);
     }
 
     /**
@@ -483,12 +456,10 @@ class StringHelper {
      *
      * @param string $textValue UTF-8 encoded string
      * @param int $offset Start offset
-     * @param int $length Maximum number of characters in substring
-     *
-     * @return string
+     * @param ?int $length Maximum number of characters in substring
      */
-    public static function substring($textValue, $offset, $length = 0) {
-
+    public static function substring(string $textValue, int $offset, ?int $length = 0): string
+    {
         return mb_substr($textValue, $offset, $length, 'UTF-8');
     }
 
@@ -496,24 +467,20 @@ class StringHelper {
      * Convert a UTF-8 encoded string to upper case.
      *
      * @param string $textValue UTF-8 encoded string
-     *
-     * @return string
      */
-    public static function strToUpper($textValue) {
-
-        return mb_convert_case($textValue ?? '', MB_CASE_UPPER, 'UTF-8');
+    public static function strToUpper(string $textValue): string
+    {
+        return mb_convert_case($textValue, MB_CASE_UPPER, 'UTF-8');
     }
 
     /**
      * Convert a UTF-8 encoded string to lower case.
      *
      * @param string $textValue UTF-8 encoded string
-     *
-     * @return string
      */
-    public static function strToLower($textValue) {
-
-        return mb_convert_case($textValue ?? '', MB_CASE_LOWER, 'UTF-8');
+    public static function strToLower(string $textValue): string
+    {
+        return mb_convert_case($textValue, MB_CASE_LOWER, 'UTF-8');
     }
 
     /**
@@ -521,24 +488,27 @@ class StringHelper {
      * (uppercase every first character in each word, lower case all other characters).
      *
      * @param string $textValue UTF-8 encoded string
-     *
-     * @return string
      */
-    public static function strToTitle($textValue) {
-
+    public static function strToTitle(string $textValue): string
+    {
         return mb_convert_case($textValue, MB_CASE_TITLE, 'UTF-8');
     }
 
-    public static function mbIsUpper($character) {
-
-        return mb_strtolower($character, 'UTF-8') != $character;
+    public static function mbIsUpper(string $character): bool
+    {
+        return mb_strtolower($character, 'UTF-8') !== $character;
     }
 
-    public static function mbStrSplit($string) {
-
+    /**
+     * Splits a UTF-8 string into an array of individual characters.
+     */
+    public static function mbStrSplit(string $string): array
+    {
         // Split at all position not after the start: ^
         // and not before the end: $
-        return preg_split('/(?<!^)(?!$)/u', $string);
+        $split = preg_split('/(?<!^)(?!$)/u', $string);
+
+        return ($split === false) ? [] : $split;
     }
 
     /**
@@ -546,67 +516,36 @@ class StringHelper {
      * and all lowercase characters become uppercase.
      *
      * @param string $textValue UTF-8 encoded string
-     *
-     * @return string
      */
-    public static function strCaseReverse($textValue) {
-
+    public static function strCaseReverse(string $textValue): string
+    {
         $characters = self::mbStrSplit($textValue);
-
         foreach ($characters as &$character) {
-
             if (self::mbIsUpper($character)) {
                 $character = mb_strtolower($character, 'UTF-8');
             } else {
                 $character = mb_strtoupper($character, 'UTF-8');
             }
-
         }
 
         return implode('', $characters);
     }
 
     /**
-     * Identify whether a string contains a fractional numeric value,
-     * and convert it to a numeric if it is.
-     *
-     * @param string $operand string value to test
-     *
-     * @return bool
-     */
-    public static function convertToNumberIfFraction(&$operand) {
-
-        if (preg_match('/^' . self::STRING_REGEXP_FRACTION . '$/i', $operand, $match)) {
-            $sign = ($match[1] == '-') ? '-' : '+';
-            $fractionFormula = '=' . $sign . $match[2] . $sign . $match[3];
-            $operand = Calculation::getInstance()->_calculateFormulaValue($fractionFormula);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    //    function convertToNumberIfFraction()
-
-    /**
      * Get the decimal separator. If it has not yet been set explicitly, try to obtain number
      * formatting information from locale.
-     *
-     * @return string
      */
-    public static function getDecimalSeparator() {
-
+    public static function getDecimalSeparator(): string
+    {
         if (!isset(self::$decimalSeparator)) {
             $localeconv = localeconv();
             self::$decimalSeparator = ($localeconv['decimal_point'] != '')
-            ? $localeconv['decimal_point'] : $localeconv['mon_decimal_point'];
+                ? $localeconv['decimal_point'] : $localeconv['mon_decimal_point'];
 
             if (self::$decimalSeparator == '') {
                 // Default to .
                 self::$decimalSeparator = '.';
             }
-
         }
 
         return self::$decimalSeparator;
@@ -614,33 +553,30 @@ class StringHelper {
 
     /**
      * Set the decimal separator. Only used by NumberFormat::toFormattedString()
-     * to format output by \PhpOffice\PhenyxSpreadsheet\Writer\Html and \PhpOffice\PhenyxSpreadsheet\Writer\Pdf.
+     * to format output by \EphenyxShop\PhenyxSpreadsheet\Writer\Html and \EphenyxShop\PhenyxSpreadsheet\Writer\Pdf.
      *
      * @param string $separator Character for decimal separator
      */
-    public static function setDecimalSeparator($separator) : void{
-
+    public static function setDecimalSeparator(string $separator): void
+    {
         self::$decimalSeparator = $separator;
     }
 
     /**
      * Get the thousands separator. If it has not yet been set explicitly, try to obtain number
      * formatting information from locale.
-     *
-     * @return string
      */
-    public static function getThousandsSeparator() {
-
+    public static function getThousandsSeparator(): string
+    {
         if (!isset(self::$thousandsSeparator)) {
             $localeconv = localeconv();
             self::$thousandsSeparator = ($localeconv['thousands_sep'] != '')
-            ? $localeconv['thousands_sep'] : $localeconv['mon_thousands_sep'];
+                ? $localeconv['thousands_sep'] : $localeconv['mon_thousands_sep'];
 
             if (self::$thousandsSeparator == '') {
                 // Default to .
                 self::$thousandsSeparator = ',';
             }
-
         }
 
         return self::$thousandsSeparator;
@@ -648,36 +584,31 @@ class StringHelper {
 
     /**
      * Set the thousands separator. Only used by NumberFormat::toFormattedString()
-     * to format output by \PhpOffice\PhenyxSpreadsheet\Writer\Html and \PhpOffice\PhenyxSpreadsheet\Writer\Pdf.
+     * to format output by \EphenyxShop\PhenyxSpreadsheet\Writer\Html and \EphenyxShop\PhenyxSpreadsheet\Writer\Pdf.
      *
      * @param string $separator Character for thousands separator
      */
-    public static function setThousandsSeparator($separator) : void{
-
+    public static function setThousandsSeparator(string $separator): void
+    {
         self::$thousandsSeparator = $separator;
     }
 
     /**
      *    Get the currency code. If it has not yet been set explicitly, try to obtain the
      *        symbol information from locale.
-     *
-     * @return string
      */
-    public static function getCurrencyCode() {
-
+    public static function getCurrencyCode(): string
+    {
         if (!empty(self::$currencyCode)) {
             return self::$currencyCode;
         }
-
         self::$currencyCode = '$';
         $localeconv = localeconv();
-
         if (!empty($localeconv['currency_symbol'])) {
             self::$currencyCode = $localeconv['currency_symbol'];
 
             return self::$currencyCode;
         }
-
         if (!empty($localeconv['int_curr_symbol'])) {
             self::$currencyCode = $localeconv['int_curr_symbol'];
 
@@ -689,28 +620,27 @@ class StringHelper {
 
     /**
      * Set the currency code. Only used by NumberFormat::toFormattedString()
-     *        to format output by \PhpOffice\PhenyxSpreadsheet\Writer\Html and \PhpOffice\PhenyxSpreadsheet\Writer\Pdf.
+     *        to format output by \EphenyxShop\PhenyxSpreadsheet\Writer\Html and \EphenyxShop\PhenyxSpreadsheet\Writer\Pdf.
      *
      * @param string $currencyCode Character for currency code
      */
-    public static function setCurrencyCode($currencyCode) : void{
-
+    public static function setCurrencyCode(string $currencyCode): void
+    {
         self::$currencyCode = $currencyCode;
     }
 
     /**
      * Convert SYLK encoded string to UTF-8.
      *
-     * @param string $textValue
+     * @param string $textValue SYLK encoded string
      *
      * @return string UTF-8 encoded string
      */
-    public static function SYLKtoUTF8($textValue) {
-
+    public static function SYLKtoUTF8(string $textValue): string
+    {
         self::buildCharacterSets();
 
         // If there is no escape character in the string there is nothing to do
-
         if (strpos($textValue, '') === false) {
             return $textValue;
         }
@@ -730,15 +660,13 @@ class StringHelper {
      *
      * @return mixed string or only the leading numeric part of the string
      */
-    public static function testStringAsNumeric($textValue) {
-
+    public static function testStringAsNumeric($textValue)
+    {
         if (is_numeric($textValue)) {
             return $textValue;
         }
-
         $v = (float) $textValue;
 
-        return (is_numeric(substr($textValue, 0, strlen($v)))) ? $v : $textValue;
+        return (is_numeric(substr($textValue, 0, strlen((string) $v)))) ? $v : $textValue;
     }
-
 }

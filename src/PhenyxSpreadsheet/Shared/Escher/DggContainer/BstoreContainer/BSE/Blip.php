@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContain
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer\BSE;
 
-class Blip {
-
+class Blip
+{
     /**
      * The parent BSE.
      *
@@ -25,8 +25,8 @@ class Blip {
      *
      * @return string
      */
-    public function getData() {
-
+    public function getData()
+    {
         return $this->data;
     }
 
@@ -35,24 +35,24 @@ class Blip {
      *
      * @param string $data
      */
-    public function setData($data): void{
-
+    public function setData($data): void
+    {
         $this->data = $data;
     }
 
     /**
      * Set parent BSE.
      */
-    public function setParent(BSE $parent): void{
-
+    public function setParent(BSE $parent): void
+    {
         $this->parent = $parent;
     }
 
     /**
      * Get parent BSE.
      */
-    public function getParent(): BSE {
-
+    public function getParent(): BSE
+    {
         return $this->parent;
     }
 }

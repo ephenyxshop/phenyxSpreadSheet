@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Sqrt {
-
+class Sqrt
+{
     use ArrayEnabled;
 
     /**
@@ -20,8 +20,8 @@ class Sqrt {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function sqrt($number) {
-
+    public static function sqrt($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -46,8 +46,8 @@ class Sqrt {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function pi($number) {
-
+    public static function pi($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -61,5 +61,4 @@ class Sqrt {
 
         return sqrt($number * M_PI);
     }
-
 }

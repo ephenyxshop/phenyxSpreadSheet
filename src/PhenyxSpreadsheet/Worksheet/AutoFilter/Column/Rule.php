@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\AutoFilter\Column;
 
-class Rule {
-
+class Rule
+{
     const AUTOFILTER_RULETYPE_FILTER = 'filter';
     const AUTOFILTER_RULETYPE_DATEGROUP = 'dateGroupItem';
     const AUTOFILTER_RULETYPE_CUSTOMFILTER = 'customFilter';
@@ -208,17 +208,16 @@ class Rule {
     /**
      * Create a new Rule.
      */
-    public function __construct( ? Column $parent = null) {
-
+    public function __construct(?Column $parent = null)
+    {
         $this->parent = $parent;
     }
 
-    private function setEvaluatedFalse() : void {
-
+    private function setEvaluatedFalse(): void
+    {
         if ($this->parent !== null) {
             $this->parent->setEvaluatedFalse();
         }
-
     }
 
     /**
@@ -226,8 +225,8 @@ class Rule {
      *
      * @return string
      */
-    public function getRuleType() {
-
+    public function getRuleType()
+    {
         return $this->ruleType;
     }
 
@@ -238,10 +237,9 @@ class Rule {
      *
      * @return $this
      */
-    public function setRuleType($ruleType) {
-
+    public function setRuleType($ruleType)
+    {
         $this->setEvaluatedFalse();
-
         if (!in_array($ruleType, self::RULE_TYPES)) {
             throw new PhenyxSpreadsheetException('Invalid rule type for column AutoFilter Rule.');
         }
@@ -256,8 +254,8 @@ class Rule {
      *
      * @return int|int[]|string|string[]
      */
-    public function getValue() {
-
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -268,16 +266,13 @@ class Rule {
      *
      * @return $this
      */
-    public function setValue($value) {
-
+    public function setValue($value)
+    {
         $this->setEvaluatedFalse();
-
         if (is_array($value)) {
             $grouping = -1;
-
             foreach ($value as $key => $v) {
                 //    Validate array entries
-
                 if (!in_array($key, self::DATE_TIME_GROUPS)) {
                     //    Remove any invalid entries from the value array
                     unset($value[$key]);
@@ -285,17 +280,13 @@ class Rule {
                     //    Work out what the dateTime grouping will be
                     $grouping = max($grouping, array_search($key, self::DATE_TIME_GROUPS));
                 }
-
             }
-
             if (count($value) == 0) {
                 throw new PhenyxSpreadsheetException('Invalid rule value for column AutoFilter Rule.');
             }
-
             //    Set the dateTime grouping that we've anticipated
             $this->setGrouping(self::DATE_TIME_GROUPS[$grouping]);
         }
-
         $this->value = $value;
 
         return $this;
@@ -306,8 +297,8 @@ class Rule {
      *
      * @return string
      */
-    public function getOperator() {
-
+    public function getOperator()
+    {
         return $this->operator;
     }
 
@@ -318,21 +309,18 @@ class Rule {
      *
      * @return $this
      */
-    public function setOperator($operator) {
-
+    public function setOperator($operator)
+    {
         $this->setEvaluatedFalse();
-
         if (empty($operator)) {
             $operator = self::AUTOFILTER_COLUMN_RULE_EQUAL;
         }
-
         if (
             (!in_array($operator, self::OPERATORS)) &&
             (!in_array($operator, self::TOP_TEN_VALUE))
         ) {
             throw new PhenyxSpreadsheetException('Invalid operator for column AutoFilter Rule.');
         }
-
         $this->operator = $operator;
 
         return $this;
@@ -343,8 +331,8 @@ class Rule {
      *
      * @return string
      */
-    public function getGrouping() {
-
+    public function getGrouping()
+    {
         return $this->grouping;
     }
 
@@ -355,10 +343,9 @@ class Rule {
      *
      * @return $this
      */
-    public function setGrouping($grouping) {
-
+    public function setGrouping($grouping)
+    {
         $this->setEvaluatedFalse();
-
         if (
             ($grouping !== null) &&
             (!in_array($grouping, self::DATE_TIME_GROUPS)) &&
@@ -367,7 +354,6 @@ class Rule {
         ) {
             throw new PhenyxSpreadsheetException('Invalid grouping for column AutoFilter Rule.');
         }
-
         $this->grouping = $grouping;
 
         return $this;
@@ -382,15 +368,14 @@ class Rule {
      *
      * @return $this
      */
-    public function setRule($operator, $value, $grouping = null) {
-
+    public function setRule($operator, $value, $grouping = null)
+    {
         $this->setEvaluatedFalse();
         $this->setOperator($operator);
         $this->setValue($value);
         //  Only set grouping if it's been passed in as a user-supplied argument,
         //      otherwise we're calculating it when we setValue() and don't want to overwrite that
         //      If the user supplies an argumnet for grouping, then on their own head be it
-
         if ($grouping !== null) {
             $this->setGrouping($grouping);
         }
@@ -403,8 +388,8 @@ class Rule {
      *
      * @return ?Column
      */
-    public function getParent() {
-
+    public function getParent()
+    {
         return $this->parent;
     }
 
@@ -413,8 +398,8 @@ class Rule {
      *
      * @return $this
      */
-    public function setParent( ? Column $parent = null) {
-
+    public function setParent(?Column $parent = null)
+    {
         $this->setEvaluatedFalse();
         $this->parent = $parent;
 
@@ -424,26 +409,18 @@ class Rule {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
-
-                if ($key == 'parent') {
-                    // this is only object
+                if ($key == 'parent') { // this is only object
                     //    Detach from autofilter column parent
                     $this->$key = null;
                 }
-
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
-
 }

@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\OLE;
 
-class ChainedBlockStream {
-
+class ChainedBlockStream
+{
     /**
      * The OLE container of the file that is being read.
      *
@@ -48,9 +48,7 @@ class ChainedBlockStream {
      */
     public function stream_open($path, $mode, $options, &$openedPath) // @codingStandardsIgnoreLine
     {
-
-        if ($mode != 'r') {
-
+        if ($mode[0] !== 'r') {
             if ($options & STREAM_REPORT_ERRORS) {
                 trigger_error('Only reading is supported', E_USER_WARNING);
             }
@@ -60,44 +58,35 @@ class ChainedBlockStream {
 
         // 25 is length of "ole-chainedblockstream://"
         parse_str(substr($path, 25), $this->params);
-
         if (!isset($this->params['oleInstanceId'], $this->params['blockId'], $GLOBALS['_OLE_INSTANCES'][$this->params['oleInstanceId']])) {
-
             if ($options & STREAM_REPORT_ERRORS) {
                 trigger_error('OLE stream not found', E_USER_WARNING);
             }
 
             return false;
         }
-
         $this->ole = $GLOBALS['_OLE_INSTANCES'][$this->params['oleInstanceId']];
 
         $blockId = $this->params['blockId'];
         $this->data = '';
-
         if (isset($this->params['size']) && $this->params['size'] < $this->ole->bigBlockThreshold && $blockId != $this->ole->root->startBlock) {
             // Block id refers to small blocks
             $rootPos = $this->ole->getBlockOffset($this->ole->root->startBlock);
-
             while ($blockId != -2) {
                 $pos = $rootPos + $blockId * $this->ole->bigBlockSize;
                 $blockId = $this->ole->sbat[$blockId];
                 fseek($this->ole->_file_handle, $pos);
                 $this->data .= fread($this->ole->_file_handle, $this->ole->bigBlockSize);
             }
-
         } else {
             // Block id refers to big blocks
-
             while ($blockId != -2) {
                 $pos = $this->ole->getBlockOffset($blockId);
                 fseek($this->ole->_file_handle, $pos);
                 $this->data .= fread($this->ole->_file_handle, $this->ole->bigBlockSize);
                 $blockId = $this->ole->bbat[$blockId];
             }
-
         }
-
         if (isset($this->params['size'])) {
             $this->data = substr($this->data, 0, $this->params['size']);
         }
@@ -112,9 +101,8 @@ class ChainedBlockStream {
     /**
      * Implements support for fclose().
      */
-    public function stream_close(): void// @codingStandardsIgnoreLine
+    public function stream_close(): void // @codingStandardsIgnoreLine
     {
-
         $this->ole = null;
         unset($GLOBALS['_OLE_INSTANCES']);
     }
@@ -128,12 +116,10 @@ class ChainedBlockStream {
      */
     public function stream_read($count) // @codingStandardsIgnoreLine
     {
-
         if ($this->stream_eof()) {
             return false;
         }
-
-        $s = substr($this->data, $this->pos, $count);
+        $s = substr($this->data, (int) $this->pos, $count);
         $this->pos += $count;
 
         return $s;
@@ -146,7 +132,6 @@ class ChainedBlockStream {
      */
     public function stream_eof() // @codingStandardsIgnoreLine
     {
-
         return $this->pos >= strlen($this->data);
     }
 
@@ -158,7 +143,6 @@ class ChainedBlockStream {
      */
     public function stream_tell() // @codingStandardsIgnoreLine
     {
-
         return $this->pos;
     }
 
@@ -172,13 +156,12 @@ class ChainedBlockStream {
      */
     public function stream_seek($offset, $whence) // @codingStandardsIgnoreLine
     {
-
         if ($whence == SEEK_SET && $offset >= 0) {
             $this->pos = $offset;
-        } else if ($whence == SEEK_CUR && -$offset <= $this->pos) {
+        } elseif ($whence == SEEK_CUR && -$offset <= $this->pos) {
             $this->pos += $offset;
-            // @phpstan-ignore-next-line
-        } else if ($whence == SEEK_END && -$offset <= count($this->data)) {
+        // @phpstan-ignore-next-line
+        } elseif ($whence == SEEK_END && -$offset <= count(/** @scrutinizer ignore-type */ $this->data)) {
             $this->pos = strlen($this->data) + $offset;
         } else {
             return false;
@@ -195,7 +178,6 @@ class ChainedBlockStream {
      */
     public function stream_stat() // @codingStandardsIgnoreLine
     {
-
         return [
             'size' => strlen($this->data),
         ];

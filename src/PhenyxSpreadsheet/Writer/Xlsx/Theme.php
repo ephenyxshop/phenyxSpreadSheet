@@ -2,11 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
-use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-class Theme extends WriterPart {
-
+class Theme extends WriterPart
+{
     /**
      * Map of Major fonts to write.
      *
@@ -89,15 +89,15 @@ class Theme extends WriterPart {
      * @var string[]
      */
     private static $colourScheme = [
-        'dk2'      => '1F497D',
-        'lt2'      => 'EEECE1',
-        'accent1'  => '4F81BD',
-        'accent2'  => 'C0504D',
-        'accent3'  => '9BBB59',
-        'accent4'  => '8064A2',
-        'accent5'  => '4BACC6',
-        'accent6'  => 'F79646',
-        'hlink'    => '0000FF',
+        'dk2' => '1F497D',
+        'lt2' => 'EEECE1',
+        'accent1' => '4F81BD',
+        'accent2' => 'C0504D',
+        'accent3' => '9BBB59',
+        'accent4' => '8064A2',
+        'accent5' => '4BACC6',
+        'accent6' => 'F79646',
+        'hlink' => '0000FF',
         'folHlink' => '800080',
     ];
 
@@ -106,11 +106,10 @@ class Theme extends WriterPart {
      *
      * @return string XML Output
      */
-    public function writeTheme(Spreadsheet $spreadsheet) {
-
+    public function writeTheme()
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -122,7 +121,7 @@ class Theme extends WriterPart {
 
         // a:theme
         $objWriter->startElement('a:theme');
-        $objWriter->writeAttribute('xmlns:a', 'http://schemas.openxmlformats.org/drawingml/2006/main');
+        $objWriter->writeAttribute('xmlns:a', Namespaces::DRAWINGML);
         $objWriter->writeAttribute('name', 'Office Theme');
 
         // a:themeElements
@@ -787,8 +786,8 @@ class Theme extends WriterPart {
      *
      * @param string[] $fontSet
      */
-    private function writeFonts(XMLWriter $objWriter, string $latinFont, array $fontSet): void{
-
+    private function writeFonts(XMLWriter $objWriter, string $latinFont, array $fontSet): void
+    {
         // a:latin
         $objWriter->startElement('a:latin');
         $objWriter->writeAttribute('typeface', $latinFont);
@@ -810,14 +809,13 @@ class Theme extends WriterPart {
             $objWriter->writeAttribute('typeface', $typeface);
             $objWriter->endElement();
         }
-
     }
 
     /**
      * Write colour scheme to XML format.
      */
-    private function writeColourScheme(XMLWriter $objWriter): void {
-
+    private function writeColourScheme(XMLWriter $objWriter): void
+    {
         foreach (self::$colourScheme as $colourName => $colourValue) {
             $objWriter->startElement('a:' . $colourName);
 
@@ -827,7 +825,5 @@ class Theme extends WriterPart {
 
             $objWriter->endElement();
         }
-
     }
-
 }

@@ -6,7 +6,10 @@ use EphenyxShop\PhenyxSpreadsheet\Worksheet\PageSetup;
 use EphenyxShop\PhenyxSpreadsheet\Writer\Html;
 use EphenyxShop\PhenyxSpreadsheet\Writer\Pdf;
 
-class Mpdf extends Pdf {
+class Mpdf extends Pdf
+{
+    /** @var bool */
+    protected $isMPdf = true;
 
     /**
      * Gets the implementation of external PDF library that should be used.
@@ -15,8 +18,8 @@ class Mpdf extends Pdf {
      *
      * @return \Mpdf\Mpdf implementation
      */
-    protected function createExternalWriterInstance($config) {
-
+    protected function createExternalWriterInstance($config)
+    {
         return new \Mpdf\Mpdf($config);
     }
 
@@ -25,8 +28,8 @@ class Mpdf extends Pdf {
      *
      * @param string $filename Name of the file to save as
      */
-    public function save($filename, int $flags = 0): void{
-
+    public function save($filename, int $flags = 0): void
+    {
         $fileHandle = parent::prepareForSave($filename);
 
         //  Check for paper size and page orientation
@@ -43,10 +46,10 @@ class Mpdf extends Pdf {
         $pdf->_setPageSize($paperSize, $ortmp);
         $pdf->DefOrientation = $orientation;
         $pdf->AddPageByArray([
-            'orientation'   => $orientation,
-            'margin-left'   => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getLeft()),
-            'margin-right'  => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getRight()),
-            'margin-top'    => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getTop()),
+            'orientation' => $orientation,
+            'margin-left' => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getLeft()),
+            'margin-right' => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getRight()),
+            'margin-top' => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getTop()),
             'margin-bottom' => $this->inchesToMm($this->spreadsheet->getActiveSheet()->getPageMargins()->getBottom()),
         ]);
 
@@ -61,13 +64,11 @@ class Mpdf extends Pdf {
         $bodyLocation = strpos($html, Html::BODY_LINE);
         // Make sure first data presented to Mpdf includes body tag
         //   so that Mpdf doesn't parse it as content. Issue 2432.
-
         if ($bodyLocation !== false) {
             $bodyLocation += strlen(Html::BODY_LINE);
             $pdf->WriteHTML(substr($html, 0, $bodyLocation));
             $html = substr($html, $bodyLocation);
         }
-
         foreach (\array_chunk(\explode(PHP_EOL, $html), 1000) as $lines) {
             $pdf->WriteHTML(\implode(PHP_EOL, $lines));
         }
@@ -85,9 +86,8 @@ class Mpdf extends Pdf {
      *
      * @return float
      */
-    private function inchesToMm($inches) {
-
+    private function inchesToMm($inches)
+    {
         return $inches * 25.4;
     }
-
 }

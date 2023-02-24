@@ -10,8 +10,8 @@ use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
 use EphenyxShop\PhenyxSpreadsheet\Style\Color;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Drawing;
 
-class Comment implements IComparable {
-
+class Comment implements IComparable
+{
     /**
      * Author.
      *
@@ -85,8 +85,8 @@ class Comment implements IComparable {
     /**
      * Create a new Comment.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Initialise variables
         $this->author = 'Author';
         $this->text = new RichText();
@@ -98,16 +98,16 @@ class Comment implements IComparable {
     /**
      * Get Author.
      */
-    public function getAuthor(): string {
-
+    public function getAuthor(): string
+    {
         return $this->author;
     }
 
     /**
      * Set Author.
      */
-    public function setAuthor(string $author): self{
-
+    public function setAuthor(string $author): self
+    {
         $this->author = $author;
 
         return $this;
@@ -116,16 +116,16 @@ class Comment implements IComparable {
     /**
      * Get Rich text comment.
      */
-    public function getText(): RichText {
-
+    public function getText(): RichText
+    {
         return $this->text;
     }
 
     /**
      * Set Rich text comment.
      */
-    public function setText(RichText $text): self{
-
+    public function setText(RichText $text): self
+    {
         $this->text = $text;
 
         return $this;
@@ -134,18 +134,17 @@ class Comment implements IComparable {
     /**
      * Get comment width (CSS style, i.e. XXpx or YYpt).
      */
-    public function getWidth(): string {
-
+    public function getWidth(): string
+    {
         return $this->width;
     }
 
     /**
      * Set comment width (CSS style, i.e. XXpx or YYpt). Default unit is pt.
      */
-    public function setWidth(string $width): self{
-
+    public function setWidth(string $width): self
+    {
         $width = new Size($width);
-
         if ($width->valid()) {
             $this->width = (string) $width;
         }
@@ -156,18 +155,17 @@ class Comment implements IComparable {
     /**
      * Get comment height (CSS style, i.e. XXpx or YYpt).
      */
-    public function getHeight(): string {
-
+    public function getHeight(): string
+    {
         return $this->height;
     }
 
     /**
      * Set comment height (CSS style, i.e. XXpx or YYpt). Default unit is pt.
      */
-    public function setHeight(string $height): self{
-
+    public function setHeight(string $height): self
+    {
         $height = new Size($height);
-
         if ($height->valid()) {
             $this->height = (string) $height;
         }
@@ -178,18 +176,17 @@ class Comment implements IComparable {
     /**
      * Get left margin (CSS style, i.e. XXpx or YYpt).
      */
-    public function getMarginLeft(): string {
-
+    public function getMarginLeft(): string
+    {
         return $this->marginLeft;
     }
 
     /**
      * Set left margin (CSS style, i.e. XXpx or YYpt). Default unit is pt.
      */
-    public function setMarginLeft(string $margin): self{
-
+    public function setMarginLeft(string $margin): self
+    {
         $margin = new Size($margin);
-
         if ($margin->valid()) {
             $this->marginLeft = (string) $margin;
         }
@@ -200,18 +197,17 @@ class Comment implements IComparable {
     /**
      * Get top margin (CSS style, i.e. XXpx or YYpt).
      */
-    public function getMarginTop(): string {
-
+    public function getMarginTop(): string
+    {
         return $this->marginTop;
     }
 
     /**
      * Set top margin (CSS style, i.e. XXpx or YYpt). Default unit is pt.
      */
-    public function setMarginTop(string $margin): self{
-
+    public function setMarginTop(string $margin): self
+    {
         $margin = new Size($margin);
-
         if ($margin->valid()) {
             $this->marginTop = (string) $margin;
         }
@@ -222,16 +218,16 @@ class Comment implements IComparable {
     /**
      * Is the comment visible by default?
      */
-    public function getVisible(): bool {
-
+    public function getVisible(): bool
+    {
         return $this->visible;
     }
 
     /**
      * Set comment default visibility.
      */
-    public function setVisible(bool $visibility): self{
-
+    public function setVisible(bool $visibility): self
+    {
         $this->visible = $visibility;
 
         return $this;
@@ -240,8 +236,8 @@ class Comment implements IComparable {
     /**
      * Set fill color.
      */
-    public function setFillColor(Color $color): self{
-
+    public function setFillColor(Color $color): self
+    {
         $this->fillColor = $color;
 
         return $this;
@@ -250,16 +246,16 @@ class Comment implements IComparable {
     /**
      * Get fill color.
      */
-    public function getFillColor(): Color {
-
+    public function getFillColor(): Color
+    {
         return $this->fillColor;
     }
 
     /**
      * Set Alignment.
      */
-    public function setAlignment(string $alignment): self{
-
+    public function setAlignment(string $alignment): self
+    {
         $this->alignment = $alignment;
 
         return $this;
@@ -268,16 +264,16 @@ class Comment implements IComparable {
     /**
      * Get Alignment.
      */
-    public function getAlignment(): string {
-
+    public function getAlignment(): string
+    {
         return $this->alignment;
     }
 
     /**
      * Get hash code.
      */
-    public function getHashCode(): string {
-
+    public function getHashCode(): string
+    {
         return md5(
             $this->author .
             $this->text->getHashCode() .
@@ -296,35 +292,31 @@ class Comment implements IComparable {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
     /**
      * Convert to string.
      */
-    public function __toString(): string {
-
+    public function __toString(): string
+    {
         return $this->text->getPlainText();
     }
 
     /**
      * Check is background image exists.
      */
-    public function hasBackgroundImage(): bool{
-
+    public function hasBackgroundImage(): bool
+    {
         $path = $this->backgroundImage->getPath();
 
         if (empty($path)) {
@@ -337,20 +329,19 @@ class Comment implements IComparable {
     /**
      * Returns background image.
      */
-    public function getBackgroundImage(): Drawing {
-
+    public function getBackgroundImage(): Drawing
+    {
         return $this->backgroundImage;
     }
 
     /**
      * Sets background image.
      */
-    public function setBackgroundImage(Drawing $objDrawing): self {
-
+    public function setBackgroundImage(Drawing $objDrawing): self
+    {
         if (!array_key_exists($objDrawing->getType(), Drawing::IMAGE_TYPES_CONVERTION_MAP)) {
             throw new PhenyxSpreadsheetException('Unsupported image type in comment background. Supported types: PNG, JPEG, BMP, GIF.');
         }
-
         $this->backgroundImage = $objDrawing;
 
         return $this;
@@ -359,8 +350,8 @@ class Comment implements IComparable {
     /**
      * Sets size of comment as size of background image.
      */
-    public function setSizeAsBackgroundImage(): self {
-
+    public function setSizeAsBackgroundImage(): self
+    {
         if ($this->hasBackgroundImage()) {
             $this->setWidth(SharedDrawing::pixelsToPoints($this->backgroundImage->getWidth()) . 'pt');
             $this->setHeight(SharedDrawing::pixelsToPoints($this->backgroundImage->getHeight()) . 'pt');
@@ -368,5 +359,4 @@ class Comment implements IComparable {
 
         return $this;
     }
-
 }

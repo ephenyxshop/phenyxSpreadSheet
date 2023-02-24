@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDateHelper;
 
-class Days {
-
+class Days
+{
     use ArrayEnabled;
 
     /**
@@ -31,8 +31,8 @@ class Days {
      *         If an array of values is passed for the $startDate or $endDays,arguments, then the returned result
      *            will also be an array with matching dimensions
      */
-    public static function between($endDate, $startDate) {
-
+    public static function between($endDate, $startDate)
+    {
         if (is_array($endDate) || is_array($startDate)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $endDate, $startDate);
         }
@@ -50,17 +50,13 @@ class Days {
 
         $days = ExcelError::VALUE();
         $diff = $PHPStartDateObject->diff($PHPEndDateObject);
-
         if ($diff !== false && !is_bool($diff->days)) {
             $days = $diff->days;
-
             if ($diff->invert) {
                 $days = -$days;
             }
-
         }
 
         return $days;
     }
-
 }

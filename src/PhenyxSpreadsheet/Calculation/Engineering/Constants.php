@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 
-class Constants {
-
+class Constants
+{
     /**
      * EULER.
      */

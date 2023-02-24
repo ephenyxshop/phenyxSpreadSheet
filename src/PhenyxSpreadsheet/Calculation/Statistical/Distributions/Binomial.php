@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig\Combinations;
 
-class Binomial {
-
+class Binomial
+{
     use ArrayEnabled;
 
     /**
@@ -34,8 +34,8 @@ class Binomial {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $trials, $probability, $cumulative) {
-
+    public static function distribution($value, $trials, $probability, $cumulative)
+    {
         if (is_array($value) || is_array($trials) || is_array($probability) || is_array($cumulative)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $trials, $probability, $cumulative);
         }
@@ -56,7 +56,6 @@ class Binomial {
         if ($cumulative) {
             return self::calculateCumulativeBinomial($value, $trials, $probability);
         }
-
         /** @var float */
         $comb = Combinations::withoutRepetition($trials, $value);
 
@@ -84,8 +83,8 @@ class Binomial {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function range($trials, $probability, $successes, $limit = null) {
-
+    public static function range($trials, $probability, $successes, $limit = null)
+    {
         if (is_array($trials) || is_array($probability) || is_array($successes) || is_array($limit)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $trials, $probability, $successes, $limit);
         }
@@ -104,13 +103,11 @@ class Binomial {
         if (($successes < 0) || ($successes > $trials)) {
             return ExcelError::NAN();
         }
-
         if (($limit < 0) || ($limit > $trials) || $limit < $successes) {
             return ExcelError::NAN();
         }
 
         $summer = 0;
-
         for ($i = $successes; $i <= $limit; ++$i) {
             /** @var float */
             $comb = Combinations::withoutRepetition($trials, $i);
@@ -144,8 +141,8 @@ class Binomial {
      * TODO Add support for the cumulative flag not present for NEGBINOMDIST, but introduced for NEGBINOM.DIST
      *      The cumulative default should be false to reflect the behaviour of NEGBINOMDIST
      */
-    public static function negative($failures, $successes, $probability) {
-
+    public static function negative($failures, $successes, $probability)
+    {
         if (is_array($failures) || is_array($successes) || is_array($probability)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $failures, $successes, $probability);
         }
@@ -161,15 +158,11 @@ class Binomial {
         if (($failures < 0) || ($successes < 1)) {
             return ExcelError::NAN();
         }
-
         if (Functions::getCompatibilityMode() == Functions::COMPATIBILITY_GNUMERIC) {
-
             if (($failures + $successes - 1) <= 0) {
                 return ExcelError::NAN();
             }
-
         }
-
         /** @var float */
         $comb = Combinations::withoutRepetition($failures + $successes - 1, $successes - 1);
 
@@ -194,8 +187,8 @@ class Binomial {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function inverse($trials, $probability, $alpha) {
-
+    public static function inverse($trials, $probability, $alpha)
+    {
         if (is_array($trials) || is_array($probability) || is_array($alpha)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $trials, $probability, $alpha);
         }
@@ -210,19 +203,16 @@ class Binomial {
 
         if ($trials < 0) {
             return ExcelError::NAN();
-        } else if (($alpha < 0.0) || ($alpha > 1.0)) {
+        } elseif (($alpha < 0.0) || ($alpha > 1.0)) {
             return ExcelError::NAN();
         }
 
         $successes = 0;
-
         while ($successes <= $trials) {
             $result = self::calculateCumulativeBinomial($successes, $trials, $probability);
-
             if ($result >= $alpha) {
                 break;
             }
-
             ++$successes;
         }
 
@@ -232,10 +222,9 @@ class Binomial {
     /**
      * @return float|int
      */
-    private static function calculateCumulativeBinomial(int $value, int $trials, float $probability) {
-
+    private static function calculateCumulativeBinomial(int $value, int $trials, float $probability)
+    {
         $summer = 0;
-
         for ($i = 0; $i <= $value; ++$i) {
             /** @var float */
             $comb = Combinations::withoutRepetition($trials, $i);
@@ -245,5 +234,4 @@ class Binomial {
 
         return $summer;
     }
-
 }

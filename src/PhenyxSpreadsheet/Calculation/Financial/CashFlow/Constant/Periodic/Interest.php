@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialCo
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Interest {
-
+class Interest
+{
     private const FINANCIAL_MAX_ITERATIONS = 128;
 
     private const FINANCIAL_PRECISION = 1.0e-08;
@@ -40,7 +40,6 @@ class Interest {
         $futureValue = 0,
         $type = FinancialConstants::PAYMENT_END_OF_PERIOD
     ) {
-
         $interestRate = Functions::flattenSingleValue($interestRate);
         $period = Functions::flattenSingleValue($period);
         $numberOfPeriods = Functions::flattenSingleValue($numberOfPeriods);
@@ -60,7 +59,6 @@ class Interest {
         }
 
         // Validate parameters
-
         if ($period <= 0 || $period > $numberOfPeriods) {
             return ExcelError::NAN();
         }
@@ -90,9 +88,11 @@ class Interest {
      * @param mixed $period is the period to calculate the interest rate.  It must be betweeen 1 and number_payments.
      * @param mixed $numberOfPeriods is the number of payments for the annuity
      * @param mixed $principleRemaining is the loan amount or present value of the payments
+     *
+     * @return float|string
      */
-    public static function schedulePayment($interestRate, $period, $numberOfPeriods, $principleRemaining) {
-
+    public static function schedulePayment($interestRate, $period, $numberOfPeriods, $principleRemaining)
+    {
         $interestRate = Functions::flattenSingleValue($interestRate);
         $period = Functions::flattenSingleValue($period);
         $numberOfPeriods = Functions::flattenSingleValue($numberOfPeriods);
@@ -108,7 +108,6 @@ class Interest {
         }
 
         // Validate parameters
-
         if ($period <= 0 || $period > $numberOfPeriods) {
             return ExcelError::NAN();
         }
@@ -118,16 +117,13 @@ class Interest {
 
         // Calculate
         $principlePayment = ($principleRemaining * 1.0) / ($numberOfPeriods * 1.0);
-
         for ($i = 0; $i <= $period; ++$i) {
             $returnValue = $interestRate * $principleRemaining * -1;
             $principleRemaining -= $principlePayment;
             // principle needs to be 0 after the last payment, don't let floating point screw it up
-
             if ($i == $numberOfPeriods) {
                 $returnValue = 0.0;
             }
-
         }
 
         return $returnValue;
@@ -167,7 +163,6 @@ class Interest {
         $type = FinancialConstants::PAYMENT_END_OF_PERIOD,
         $guess = 0.1
     ) {
-
         $numberOfPeriods = Functions::flattenSingleValue($numberOfPeriods);
         $payment = Functions::flattenSingleValue($payment);
         $presentValue = Functions::flattenSingleValue($presentValue);
@@ -190,14 +185,11 @@ class Interest {
         // rest of code adapted from python/numpy
         $close = false;
         $iter = 0;
-
         while (!$close && $iter < self::FINANCIAL_MAX_ITERATIONS) {
             $nextdiff = self::rateNextGuess($rate, $numberOfPeriods, $payment, $presentValue, $futureValue, $type);
-
             if (!is_numeric($nextdiff)) {
                 break;
             }
-
             $rate1 = $rate - $nextdiff;
             $close = abs($rate1 - $rate) < self::FINANCIAL_PRECISION;
             ++$iter;
@@ -207,24 +199,22 @@ class Interest {
         return $close ? $rate : ExcelError::NAN();
     }
 
-    private static function rateNextGuess($rate, $numberOfPeriods, $payment, $presentValue, $futureValue, $type) {
-
+    /** @return float|string */
+    private static function rateNextGuess(float $rate, int $numberOfPeriods, float $payment, float $presentValue, float $futureValue, int $type)
+    {
         if ($rate == 0.0) {
             return ExcelError::NAN();
         }
-
         $tt1 = ($rate + 1) ** $numberOfPeriods;
         $tt2 = ($rate + 1) ** ($numberOfPeriods - 1);
         $numerator = $futureValue + $tt1 * $presentValue + $payment * ($tt1 - 1) * ($rate * $type + 1) / $rate;
         $denominator = $numberOfPeriods * $tt2 * $presentValue - $payment * ($tt1 - 1)
             * ($rate * $type + 1) / ($rate * $rate) + $numberOfPeriods
             * $payment * $tt2 * ($rate * $type + 1) / $rate + $payment * ($tt1 - 1) * $type / $rate;
-
         if ($denominator == 0) {
             return ExcelError::NAN();
         }
 
         return $numerator / $denominator;
     }
-
 }

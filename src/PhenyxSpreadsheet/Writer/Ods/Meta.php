@@ -7,19 +7,18 @@ use EphenyxShop\PhenyxSpreadsheet\Shared\Date;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
 
-class Meta extends WriterPart {
-
+class Meta extends WriterPart
+{
     /**
      * Write meta.xml to XML format.
      *
      * @return string XML Output
      */
-    public function write(): string{
-
+    public function write(): string
+    {
         $spreadsheet = $this->getParentWriter()->getSpreadsheet();
 
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -83,10 +82,9 @@ class Meta extends WriterPart {
         return $objWriter->getData();
     }
 
-    private static function writeDocPropsCustom(XMLWriter $objWriter, Spreadsheet $spreadsheet): void{
-
+    private static function writeDocPropsCustom(XMLWriter $objWriter, Spreadsheet $spreadsheet): void
+    {
         $customPropertyList = $spreadsheet->getProperties()->getCustomProperties();
-
         foreach ($customPropertyList as $key => $customProperty) {
             $propertyValue = $spreadsheet->getProperties()->getCustomPropertyValue($customProperty);
             $propertyType = $spreadsheet->getProperties()->getCustomPropertyType($customProperty);
@@ -95,32 +93,30 @@ class Meta extends WriterPart {
             $objWriter->writeAttribute('meta:name', $customProperty);
 
             switch ($propertyType) {
-            case Properties::PROPERTY_TYPE_INTEGER:
-            case Properties::PROPERTY_TYPE_FLOAT:
-                $objWriter->writeAttribute('meta:value-type', 'float');
-                $objWriter->writeRawData($propertyValue);
+                case Properties::PROPERTY_TYPE_INTEGER:
+                case Properties::PROPERTY_TYPE_FLOAT:
+                    $objWriter->writeAttribute('meta:value-type', 'float');
+                    $objWriter->writeRawData($propertyValue);
 
-                break;
-            case Properties::PROPERTY_TYPE_BOOLEAN:
-                $objWriter->writeAttribute('meta:value-type', 'boolean');
-                $objWriter->writeRawData($propertyValue ? 'true' : 'false');
+                    break;
+                case Properties::PROPERTY_TYPE_BOOLEAN:
+                    $objWriter->writeAttribute('meta:value-type', 'boolean');
+                    $objWriter->writeRawData($propertyValue ? 'true' : 'false');
 
-                break;
-            case Properties::PROPERTY_TYPE_DATE:
-                $objWriter->writeAttribute('meta:value-type', 'date');
-                $dtobj = Date::dateTimeFromTimestamp($propertyValue ?? 0);
-                $objWriter->writeRawData($dtobj->format(DATE_W3C));
+                    break;
+                case Properties::PROPERTY_TYPE_DATE:
+                    $objWriter->writeAttribute('meta:value-type', 'date');
+                    $dtobj = Date::dateTimeFromTimestamp($propertyValue ?? 0);
+                    $objWriter->writeRawData($dtobj->format(DATE_W3C));
 
-                break;
-            default :
-                $objWriter->writeRawData($propertyValue);
+                    break;
+                default:
+                    $objWriter->writeRawData($propertyValue);
 
-                break;
+                    break;
             }
 
             $objWriter->endElement();
         }
-
     }
-
 }

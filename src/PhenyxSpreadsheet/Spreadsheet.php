@@ -2,14 +2,18 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet;
 
+use JsonSerializable;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Calculation;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx as XlsxReader;
+use EphenyxShop\PhenyxSpreadsheet\Shared\File;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Iterator;
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
+use EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx as XlsxWriter;
 
-class Spreadsheet {
-
+class Spreadsheet implements JsonSerializable
+{
     // Allowable values for workbook window visilbity
     const VISIBILITY_VISIBLE = 'visible';
     const VISIBILITY_HIDDEN = 'hidden';
@@ -18,7 +22,7 @@ class Spreadsheet {
     private const DEFINED_NAME_IS_RANGE = false;
     private const DEFINED_NAME_IS_FORMULA = true;
 
-    private static $workbookViewVisibilityValues = [
+    private const WORKBOOK_VIEW_VISIBILITY_VALUES = [
         self::VISIBILITY_VISIBLE,
         self::VISIBILITY_HIDDEN,
         self::VISIBILITY_VERY_HIDDEN,
@@ -204,8 +208,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function hasMacros() {
-
+    public function hasMacros()
+    {
         return $this->hasMacros;
     }
 
@@ -214,8 +218,8 @@ class Spreadsheet {
      *
      * @param bool $hasMacros true|false
      */
-    public function setHasMacros($hasMacros): void{
-
+    public function setHasMacros($hasMacros): void
+    {
         $this->hasMacros = (bool) $hasMacros;
     }
 
@@ -224,8 +228,8 @@ class Spreadsheet {
      *
      * @param string $macroCode string|null
      */
-    public function setMacrosCode($macroCode): void{
-
+    public function setMacrosCode($macroCode): void
+    {
         $this->macrosCode = $macroCode;
         $this->setHasMacros($macroCode !== null);
     }
@@ -235,8 +239,8 @@ class Spreadsheet {
      *
      * @return null|string
      */
-    public function getMacrosCode() {
-
+    public function getMacrosCode()
+    {
         return $this->macrosCode;
     }
 
@@ -245,8 +249,8 @@ class Spreadsheet {
      *
      * @param null|string $certificate
      */
-    public function setMacrosCertificate($certificate): void{
-
+    public function setMacrosCertificate($certificate): void
+    {
         $this->macrosCertificate = $certificate;
     }
 
@@ -255,8 +259,8 @@ class Spreadsheet {
      *
      * @return bool true|false
      */
-    public function hasMacrosCertificate() {
-
+    public function hasMacrosCertificate()
+    {
         return $this->macrosCertificate !== null;
     }
 
@@ -265,16 +269,16 @@ class Spreadsheet {
      *
      * @return null|string
      */
-    public function getMacrosCertificate() {
-
+    public function getMacrosCertificate()
+    {
         return $this->macrosCertificate;
     }
 
     /**
      * Remove all macros, certificate from spreadsheet.
      */
-    public function discardMacros(): void{
-
+    public function discardMacros(): void
+    {
         $this->hasMacros = false;
         $this->macrosCode = null;
         $this->macrosCertificate = null;
@@ -286,14 +290,13 @@ class Spreadsheet {
      * @param null|mixed $target
      * @param null|mixed $xmlData
      */
-    public function setRibbonXMLData($target, $xmlData): void {
-
+    public function setRibbonXMLData($target, $xmlData): void
+    {
         if ($target !== null && $xmlData !== null) {
             $this->ribbonXMLData = ['target' => $target, 'data' => $xmlData];
         } else {
             $this->ribbonXMLData = null;
         }
-
     }
 
     /**
@@ -305,23 +308,20 @@ class Spreadsheet {
      */
     public function getRibbonXMLData($what = 'all') //we need some constants here...
     {
-
         $returnData = null;
         $what = strtolower($what);
-
         switch ($what) {
-        case 'all':
-            $returnData = $this->ribbonXMLData;
+            case 'all':
+                $returnData = $this->ribbonXMLData;
 
-            break;
-        case 'target':
-        case 'data':
+                break;
+            case 'target':
+            case 'data':
+                if (is_array($this->ribbonXMLData)) {
+                    $returnData = $this->ribbonXMLData[$what];
+                }
 
-            if (is_array($this->ribbonXMLData)) {
-                $returnData = $this->ribbonXMLData[$what];
-            }
-
-            break;
+                break;
         }
 
         return $returnData;
@@ -333,14 +333,13 @@ class Spreadsheet {
      * @param null|mixed $BinObjectsNames
      * @param null|mixed $BinObjectsData
      */
-    public function setRibbonBinObjects($BinObjectsNames, $BinObjectsData): void {
-
+    public function setRibbonBinObjects($BinObjectsNames, $BinObjectsData): void
+    {
         if ($BinObjectsNames !== null && $BinObjectsData !== null) {
             $this->ribbonBinObjects = ['names' => $BinObjectsNames, 'data' => $BinObjectsData];
         } else {
             $this->ribbonBinObjects = null;
         }
-
     }
 
     /**
@@ -351,8 +350,8 @@ class Spreadsheet {
      *
      * @return array
      */
-    public function getUnparsedLoadedData() {
-
+    public function getUnparsedLoadedData()
+    {
         return $this->unparsedLoadedData;
     }
 
@@ -362,8 +361,8 @@ class Spreadsheet {
      *
      * @internal
      */
-    public function setUnparsedLoadedData(array $unparsedLoadedData): void{
-
+    public function setUnparsedLoadedData(array $unparsedLoadedData): void
+    {
         $this->unparsedLoadedData = $unparsedLoadedData;
     }
 
@@ -374,11 +373,11 @@ class Spreadsheet {
      *
      * @return string
      */
-    private function getExtensionOnly($path) {
-
+    private function getExtensionOnly($path)
+    {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-        return is_array($extension) ? '' : $extension;
+        return substr(/** @scrutinizer ignore-type */$extension, 0);
     }
 
     /**
@@ -388,37 +387,32 @@ class Spreadsheet {
      *
      * @return null|array
      */
-    public function getRibbonBinObjects($what = 'all') {
-
+    public function getRibbonBinObjects($what = 'all')
+    {
         $ReturnData = null;
         $what = strtolower($what);
-
         switch ($what) {
-        case 'all':
-            return $this->ribbonBinObjects;
+            case 'all':
+                return $this->ribbonBinObjects;
+            case 'names':
+            case 'data':
+                if (is_array($this->ribbonBinObjects) && isset($this->ribbonBinObjects[$what])) {
+                    $ReturnData = $this->ribbonBinObjects[$what];
+                }
 
-            break;
-        case 'names':
-        case 'data':
+                break;
+            case 'types':
+                if (
+                    is_array($this->ribbonBinObjects) &&
+                    isset($this->ribbonBinObjects['data']) && is_array($this->ribbonBinObjects['data'])
+                ) {
+                    $tmpTypes = array_keys($this->ribbonBinObjects['data']);
+                    $ReturnData = array_unique(array_map([$this, 'getExtensionOnly'], $tmpTypes));
+                } else {
+                    $ReturnData = []; // the caller want an array... not null if empty
+                }
 
-            if (is_array($this->ribbonBinObjects) && isset($this->ribbonBinObjects[$what])) {
-                $ReturnData = $this->ribbonBinObjects[$what];
-            }
-
-            break;
-        case 'types':
-
-            if (
-                is_array($this->ribbonBinObjects) &&
-                isset($this->ribbonBinObjects['data']) && is_array($this->ribbonBinObjects['data'])
-            ) {
-                $tmpTypes = array_keys($this->ribbonBinObjects['data']);
-                $ReturnData = array_unique(array_map([$this, 'getExtensionOnly'], $tmpTypes));
-            } else {
-                $ReturnData = []; // the caller want an array... not null if empty
-            }
-
-            break;
+                break;
         }
 
         return $ReturnData;
@@ -429,8 +423,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function hasRibbon() {
-
+    public function hasRibbon()
+    {
         return $this->ribbonXMLData !== null;
     }
 
@@ -439,8 +433,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function hasRibbonBinObjects() {
-
+    public function hasRibbonBinObjects()
+    {
         return $this->ribbonBinObjects !== null;
     }
 
@@ -451,8 +445,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function sheetCodeNameExists($codeName) {
-
+    public function sheetCodeNameExists($codeName)
+    {
         return $this->getSheetByCodeName($codeName) !== null;
     }
 
@@ -463,16 +457,13 @@ class Spreadsheet {
      *
      * @return null|Worksheet
      */
-    public function getSheetByCodeName($codeName) {
-
+    public function getSheetByCodeName($codeName)
+    {
         $worksheetCount = count($this->workSheetCollection);
-
         for ($i = 0; $i < $worksheetCount; ++$i) {
-
             if ($this->workSheetCollection[$i]->getCodeName() == $codeName) {
                 return $this->workSheetCollection[$i];
             }
-
         }
 
         return null;
@@ -481,8 +472,8 @@ class Spreadsheet {
     /**
      * Create a new PhenyxSpreadsheet with one Worksheet.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->uniqueID = uniqid('', true);
         $this->calculationEngine = new Calculation($this);
 
@@ -512,8 +503,8 @@ class Spreadsheet {
     /**
      * Code to execute when this worksheet is unset().
      */
-    public function __destruct() {
-
+    public function __destruct()
+    {
         $this->disconnectWorksheets();
         $this->calculationEngine = null;
         $this->cellXfCollection = [];
@@ -524,13 +515,12 @@ class Spreadsheet {
      * Disconnect all worksheets from this PhenyxSpreadsheet workbook object,
      * typically so that the PhenyxSpreadsheet object can be unset.
      */
-    public function disconnectWorksheets(): void {
-
+    public function disconnectWorksheets(): void
+    {
         foreach ($this->workSheetCollection as $worksheet) {
             $worksheet->disconnectCells();
             unset($worksheet);
         }
-
         $this->workSheetCollection = [];
     }
 
@@ -539,8 +529,8 @@ class Spreadsheet {
      *
      * @return null|Calculation
      */
-    public function getCalculationEngine() {
-
+    public function getCalculationEngine()
+    {
         return $this->calculationEngine;
     }
 
@@ -549,16 +539,16 @@ class Spreadsheet {
      *
      * @return Document\Properties
      */
-    public function getProperties() {
-
+    public function getProperties()
+    {
         return $this->properties;
     }
 
     /**
      * Set properties.
      */
-    public function setProperties(Document\Properties $documentProperties): void{
-
+    public function setProperties(Document\Properties $documentProperties): void
+    {
         $this->properties = $documentProperties;
     }
 
@@ -567,16 +557,16 @@ class Spreadsheet {
      *
      * @return Document\Security
      */
-    public function getSecurity() {
-
+    public function getSecurity()
+    {
         return $this->security;
     }
 
     /**
      * Set security.
      */
-    public function setSecurity(Document\Security $documentSecurity): void{
-
+    public function setSecurity(Document\Security $documentSecurity): void
+    {
         $this->security = $documentSecurity;
     }
 
@@ -585,8 +575,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function getActiveSheet() {
-
+    public function getActiveSheet()
+    {
         return $this->getSheet($this->activeSheetIndex);
     }
 
@@ -597,8 +587,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function createSheet($sheetIndex = null) {
-
+    public function createSheet($sheetIndex = null)
+    {
         $newSheet = new Worksheet($this);
         $this->addSheet($newSheet, $sheetIndex);
 
@@ -612,8 +602,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function sheetNameExists($worksheetName) {
-
+    public function sheetNameExists($worksheetName)
+    {
         return $this->getSheetByName($worksheetName) !== null;
     }
 
@@ -625,8 +615,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function addSheet(Worksheet $worksheet, $sheetIndex = null) {
-
+    public function addSheet(Worksheet $worksheet, $sheetIndex = null)
+    {
         if ($this->sheetNameExists($worksheet->getTitle())) {
             throw new Exception(
                 "Workbook already contains a worksheet named '{$worksheet->getTitle()}'. Rename this worksheet first."
@@ -634,11 +624,9 @@ class Spreadsheet {
         }
 
         if ($sheetIndex === null) {
-
             if ($this->activeSheetIndex < 0) {
                 $this->activeSheetIndex = 0;
             }
-
             $this->workSheetCollection[] = $worksheet;
         } else {
             // Insert the sheet at the requested index
@@ -650,11 +638,9 @@ class Spreadsheet {
             );
 
             // Adjust active sheet index if necessary
-
             if ($this->activeSheetIndex >= $sheetIndex) {
                 ++$this->activeSheetIndex;
             }
-
         }
 
         if ($worksheet->getParent() === null) {
@@ -669,27 +655,23 @@ class Spreadsheet {
      *
      * @param int $sheetIndex Index position of the worksheet to remove
      */
-    public function removeSheetByIndex($sheetIndex): void{
-
+    public function removeSheetByIndex($sheetIndex): void
+    {
         $numSheets = count($this->workSheetCollection);
-
         if ($sheetIndex > $numSheets - 1) {
             throw new Exception(
                 "You tried to remove a sheet by the out of bounds index: {$sheetIndex}. The actual number of sheets is {$numSheets}."
             );
         }
-
         array_splice($this->workSheetCollection, $sheetIndex, 1);
 
         // Adjust active sheet index if necessary
-
         if (
             ($this->activeSheetIndex >= $sheetIndex) &&
             ($this->activeSheetIndex > 0 || $numSheets <= 1)
         ) {
             --$this->activeSheetIndex;
         }
-
     }
 
     /**
@@ -699,8 +681,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function getSheet($sheetIndex) {
-
+    public function getSheet($sheetIndex)
+    {
         if (!isset($this->workSheetCollection[$sheetIndex])) {
             $numSheets = $this->getSheetCount();
 
@@ -717,8 +699,8 @@ class Spreadsheet {
      *
      * @return Worksheet[]
      */
-    public function getAllSheets() {
-
+    public function getAllSheets()
+    {
         return $this->workSheetCollection;
     }
 
@@ -729,19 +711,29 @@ class Spreadsheet {
      *
      * @return null|Worksheet
      */
-    public function getSheetByName($worksheetName) {
-
+    public function getSheetByName($worksheetName)
+    {
         $worksheetCount = count($this->workSheetCollection);
-
         for ($i = 0; $i < $worksheetCount; ++$i) {
-
             if ($this->workSheetCollection[$i]->getTitle() === trim($worksheetName, "'")) {
                 return $this->workSheetCollection[$i];
             }
-
         }
 
         return null;
+    }
+
+    /**
+     * Get sheet by name, throwing exception if not found.
+     */
+    public function getSheetByNameOrThrow(string $worksheetName): Worksheet
+    {
+        $worksheet = $this->getSheetByName($worksheetName);
+        if ($worksheet === null) {
+            throw new Exception("Sheet $worksheetName does not exist.");
+        }
+
+        return $worksheet;
     }
 
     /**
@@ -749,14 +741,12 @@ class Spreadsheet {
      *
      * @return int index
      */
-    public function getIndex(Worksheet $worksheet) {
-
+    public function getIndex(Worksheet $worksheet)
+    {
         foreach ($this->workSheetCollection as $key => $value) {
-
             if ($value->getHashCode() === $worksheet->getHashCode()) {
                 return $key;
             }
-
         }
 
         throw new Exception('Sheet does not exist.');
@@ -770,9 +760,9 @@ class Spreadsheet {
      *
      * @return int New sheet index
      */
-    public function setIndexByName($worksheetName, $newIndexPosition) {
-
-        $oldIndex = $this->getIndex($this->getSheetByName($worksheetName));
+    public function setIndexByName($worksheetName, $newIndexPosition)
+    {
+        $oldIndex = $this->getIndex($this->getSheetByNameOrThrow($worksheetName));
         $worksheet = array_splice(
             $this->workSheetCollection,
             $oldIndex,
@@ -793,8 +783,8 @@ class Spreadsheet {
      *
      * @return int
      */
-    public function getSheetCount() {
-
+    public function getSheetCount()
+    {
         return count($this->workSheetCollection);
     }
 
@@ -803,8 +793,8 @@ class Spreadsheet {
      *
      * @return int Active sheet index
      */
-    public function getActiveSheetIndex() {
-
+    public function getActiveSheetIndex()
+    {
         return $this->activeSheetIndex;
     }
 
@@ -815,8 +805,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function setActiveSheetIndex($worksheetIndex) {
-
+    public function setActiveSheetIndex($worksheetIndex)
+    {
         $numSheets = count($this->workSheetCollection);
 
         if ($worksheetIndex > $numSheets - 1) {
@@ -824,7 +814,6 @@ class Spreadsheet {
                 "You tried to set a sheet active by the out of bounds index: {$worksheetIndex}. The actual number of sheets is {$numSheets}."
             );
         }
-
         $this->activeSheetIndex = $worksheetIndex;
 
         return $this->getActiveSheet();
@@ -837,8 +826,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function setActiveSheetIndexByName($worksheetName) {
-
+    public function setActiveSheetIndexByName($worksheetName)
+    {
         if (($worksheet = $this->getSheetByName($worksheetName)) instanceof Worksheet) {
             $this->setActiveSheetIndex($this->getIndex($worksheet));
 
@@ -853,11 +842,10 @@ class Spreadsheet {
      *
      * @return string[]
      */
-    public function getSheetNames() {
-
+    public function getSheetNames()
+    {
         $returnValue = [];
         $worksheetCount = $this->getSheetCount();
-
         for ($i = 0; $i < $worksheetCount; ++$i) {
             $returnValue[] = $this->getSheet($i)->getTitle();
         }
@@ -873,8 +861,8 @@ class Spreadsheet {
      *
      * @return Worksheet
      */
-    public function addExternalSheet(Worksheet $worksheet, $sheetIndex = null) {
-
+    public function addExternalSheet(Worksheet $worksheet, $sheetIndex = null)
+    {
         if ($this->sheetNameExists($worksheet->getTitle())) {
             throw new Exception("Workbook already contains a worksheet named '{$worksheet->getTitle()}'. Rename the external sheet first.");
         }
@@ -883,8 +871,7 @@ class Spreadsheet {
         $countCellXfs = count($this->cellXfCollection);
 
         // copy all the shared cellXfs from the external workbook and append them to the current
-
-        foreach ($worksheet->getParent()->getCellXfCollection() as $cellXf) {
+        foreach ($worksheet->getParentOrThrow()->getCellXfCollection() as $cellXf) {
             $this->addCellXf(clone $cellXf);
         }
 
@@ -892,27 +879,22 @@ class Spreadsheet {
         $worksheet->rebindParent($this);
 
         // update the cellXfs
-
         foreach ($worksheet->getCoordinates(false) as $coordinate) {
             $cell = $worksheet->getCell($coordinate);
             $cell->setXfIndex($cell->getXfIndex() + $countCellXfs);
         }
 
         // update the column dimensions Xfs
-
         foreach ($worksheet->getColumnDimensions() as $columnDimension) {
             $columnDimension->setXfIndex($columnDimension->getXfIndex() + $countCellXfs);
         }
 
         // update the row dimensions Xfs
-
         foreach ($worksheet->getRowDimensions() as $rowDimension) {
             $xfIndex = $rowDimension->getXfIndex();
-
             if ($xfIndex !== null) {
                 $rowDimension->setXfIndex($xfIndex + $countCellXfs);
             }
-
         }
 
         return $this->addSheet($worksheet, $sheetIndex);
@@ -925,11 +907,9 @@ class Spreadsheet {
      */
     public function getNamedRanges(): array
     {
-
         return array_filter(
             $this->definedNames,
             function (DefinedName $definedName) {
-
                 return $definedName->isFormula() === self::DEFINED_NAME_IS_RANGE;
             }
         );
@@ -942,11 +922,9 @@ class Spreadsheet {
      */
     public function getNamedFormulae(): array
     {
-
         return array_filter(
             $this->definedNames,
             function (DefinedName $definedName) {
-
                 return $definedName->isFormula() === self::DEFINED_NAME_IS_FORMULA;
             }
         );
@@ -959,7 +937,6 @@ class Spreadsheet {
      */
     public function getDefinedNames(): array
     {
-
         return $this->definedNames;
     }
 
@@ -967,8 +944,8 @@ class Spreadsheet {
      * Add a named range.
      * If a named range with this name already exists, then this will replace the existing value.
      */
-    public function addNamedRange(NamedRange $namedRange): void{
-
+    public function addNamedRange(NamedRange $namedRange): void
+    {
         $this->addDefinedName($namedRange);
     }
 
@@ -976,8 +953,8 @@ class Spreadsheet {
      * Add a named formula.
      * If a named formula with this name already exists, then this will replace the existing value.
      */
-    public function addNamedFormula(NamedFormula $namedFormula): void{
-
+    public function addNamedFormula(NamedFormula $namedFormula): void
+    {
         $this->addDefinedName($namedFormula);
     }
 
@@ -985,10 +962,9 @@ class Spreadsheet {
      * Add a defined name (either a named range or a named formula).
      * If a defined named with this name already exists, then this will replace the existing value.
      */
-    public function addDefinedName(DefinedName $definedName): void{
-
+    public function addDefinedName(DefinedName $definedName): void
+    {
         $upperCaseName = StringHelper::strToUpper($definedName->getName());
-
         if ($definedName->getScope() == null) {
             // global scope
             $this->definedNames[$upperCaseName] = $definedName;
@@ -996,7 +972,6 @@ class Spreadsheet {
             // local scope
             $this->definedNames[$definedName->getScope()->getTitle() . '!' . $upperCaseName] = $definedName;
         }
-
     }
 
     /**
@@ -1004,8 +979,8 @@ class Spreadsheet {
      *
      * @param null|Worksheet $worksheet Scope. Use null for global scope
      */
-    public function getNamedRange(string $namedRange,  ? Worksheet $worksheet = null) :  ? NamedRange{
-
+    public function getNamedRange(string $namedRange, ?Worksheet $worksheet = null): ?NamedRange
+    {
         $returnValue = null;
 
         if ($namedRange !== '') {
@@ -1024,8 +999,8 @@ class Spreadsheet {
      *
      * @param null|Worksheet $worksheet Scope. Use null for global scope
      */
-    public function getNamedFormula(string $namedFormula,  ? Worksheet $worksheet = null) :  ? NamedFormula{
-
+    public function getNamedFormula(string $namedFormula, ?Worksheet $worksheet = null): ?NamedFormula
+    {
         $returnValue = null;
 
         if ($namedFormula !== '') {
@@ -1039,8 +1014,8 @@ class Spreadsheet {
         return $returnValue instanceof NamedFormula ? $returnValue : null;
     }
 
-    private function getGlobalDefinedNameByType(string $name, bool $type) :  ? DefinedName {
-
+    private function getGlobalDefinedNameByType(string $name, bool $type): ?DefinedName
+    {
         if (isset($this->definedNames[$name]) && $this->definedNames[$name]->isFormula() === $type) {
             return $this->definedNames[$name];
         }
@@ -1048,8 +1023,8 @@ class Spreadsheet {
         return null;
     }
 
-    private function getLocalDefinedNameByType(string $name, bool $type,  ? Worksheet $worksheet = null) :  ? DefinedName {
-
+    private function getLocalDefinedNameByType(string $name, bool $type, ?Worksheet $worksheet = null): ?DefinedName
+    {
         if (
             ($worksheet !== null) && isset($this->definedNames[$worksheet->getTitle() . '!' . $name])
             && $this->definedNames[$worksheet->getTitle() . '!' . $name]->isFormula() === $type
@@ -1065,24 +1040,21 @@ class Spreadsheet {
      *
      * @param null|Worksheet $worksheet Scope. Use null for global scope
      */
-    public function getDefinedName(string $definedName,  ? Worksheet $worksheet = null) :  ? DefinedName{
-
+    public function getDefinedName(string $definedName, ?Worksheet $worksheet = null): ?DefinedName
+    {
         $returnValue = null;
 
         if ($definedName !== '') {
             $definedName = StringHelper::strToUpper($definedName);
             // first look for global defined name
-
             if (isset($this->definedNames[$definedName])) {
                 $returnValue = $this->definedNames[$definedName];
             }
 
             // then look for local defined name (has priority over global defined name if both names exist)
-
             if (($worksheet !== null) && isset($this->definedNames[$worksheet->getTitle() . '!' . $definedName])) {
                 $returnValue = $this->definedNames[$worksheet->getTitle() . '!' . $definedName];
             }
-
         }
 
         return $returnValue;
@@ -1095,8 +1067,8 @@ class Spreadsheet {
      *
      * @return $this
      */
-    public function removeNamedRange(string $namedRange,  ? Worksheet $worksheet = null) : self {
-
+    public function removeNamedRange(string $namedRange, ?Worksheet $worksheet = null): self
+    {
         if ($this->getNamedRange($namedRange, $worksheet) === null) {
             return $this;
         }
@@ -1111,8 +1083,8 @@ class Spreadsheet {
      *
      * @return $this
      */
-    public function removeNamedFormula(string $namedFormula,  ? Worksheet $worksheet = null) : self {
-
+    public function removeNamedFormula(string $namedFormula, ?Worksheet $worksheet = null): self
+    {
         if ($this->getNamedFormula($namedFormula, $worksheet) === null) {
             return $this;
         }
@@ -1127,24 +1099,20 @@ class Spreadsheet {
      *
      * @return $this
      */
-    public function removeDefinedName(string $definedName,  ? Worksheet $worksheet = null) : self{
-
+    public function removeDefinedName(string $definedName, ?Worksheet $worksheet = null): self
+    {
         $definedName = StringHelper::strToUpper($definedName);
 
         if ($worksheet === null) {
-
             if (isset($this->definedNames[$definedName])) {
                 unset($this->definedNames[$definedName]);
             }
-
         } else {
-
             if (isset($this->definedNames[$worksheet->getTitle() . '!' . $definedName])) {
                 unset($this->definedNames[$worksheet->getTitle() . '!' . $definedName]);
-            } else if (isset($this->definedNames[$definedName])) {
+            } elseif (isset($this->definedNames[$definedName])) {
                 unset($this->definedNames[$definedName]);
             }
-
         }
 
         return $this;
@@ -1155,8 +1123,8 @@ class Spreadsheet {
      *
      * @return Iterator
      */
-    public function getWorksheetIterator() {
-
+    public function getWorksheetIterator()
+    {
         return new Iterator($this);
     }
 
@@ -1165,36 +1133,26 @@ class Spreadsheet {
      *
      * @return Spreadsheet
      */
-    public function copy() {
+    public function copy()
+    {
+        $filename = File::temporaryFilename();
+        $writer = new XlsxWriter($this);
+        $writer->setIncludeCharts(true);
+        $writer->save($filename);
 
-        $copied = clone $this;
+        $reader = new XlsxReader();
+        $reader->setIncludeCharts(true);
+        $reloadedSpreadsheet = $reader->load($filename);
+        unlink($filename);
 
-        $worksheetCount = count($this->workSheetCollection);
-
-        for ($i = 0; $i < $worksheetCount; ++$i) {
-            $this->workSheetCollection[$i] = $this->workSheetCollection[$i]->copy();
-            $this->workSheetCollection[$i]->rebindParent($this);
-        }
-
-        return $copied;
+        return $reloadedSpreadsheet;
     }
 
-    /**
-     * Implement PHP __clone to create a deep clone, not just a shallow copy.
-     */
-    public function __clone() {
-
-        // @phpstan-ignore-next-line
-
-        foreach ($this as $key => $val) {
-
-            if (is_object($val) || (is_array($val))) {
-                $this->{$key}
-                = unserialize(serialize($val));
-            }
-
-        }
-
+    public function __clone()
+    {
+        throw new Exception(
+            'Do not use clone on spreadsheet. Use spreadsheet->copy() instead.'
+        );
     }
 
     /**
@@ -1202,8 +1160,8 @@ class Spreadsheet {
      *
      * @return Style[]
      */
-    public function getCellXfCollection() {
-
+    public function getCellXfCollection()
+    {
         return $this->cellXfCollection;
     }
 
@@ -1214,8 +1172,8 @@ class Spreadsheet {
      *
      * @return Style
      */
-    public function getCellXfByIndex($cellStyleIndex) {
-
+    public function getCellXfByIndex($cellStyleIndex)
+    {
         return $this->cellXfCollection[$cellStyleIndex];
     }
 
@@ -1226,14 +1184,12 @@ class Spreadsheet {
      *
      * @return false|Style
      */
-    public function getCellXfByHashCode($hashcode) {
-
+    public function getCellXfByHashCode($hashcode)
+    {
         foreach ($this->cellXfCollection as $cellXf) {
-
             if ($cellXf->getHashCode() === $hashcode) {
                 return $cellXf;
             }
-
         }
 
         return false;
@@ -1244,8 +1200,8 @@ class Spreadsheet {
      *
      * @return bool
      */
-    public function cellXfExists(Style $cellStyleIndex) {
-
+    public function cellXfExists(Style $cellStyleIndex)
+    {
         return in_array($cellStyleIndex, $this->cellXfCollection, true);
     }
 
@@ -1254,8 +1210,8 @@ class Spreadsheet {
      *
      * @return Style
      */
-    public function getDefaultStyle() {
-
+    public function getDefaultStyle()
+    {
         if (isset($this->cellXfCollection[0])) {
             return $this->cellXfCollection[0];
         }
@@ -1266,8 +1222,8 @@ class Spreadsheet {
     /**
      * Add a cellXf to the workbook.
      */
-    public function addCellXf(Style $style) : void{
-
+    public function addCellXf(Style $style): void
+    {
         $this->cellXfCollection[] = $style;
         $style->setIndex(count($this->cellXfCollection) - 1);
     }
@@ -1277,8 +1233,8 @@ class Spreadsheet {
      *
      * @param int $cellStyleIndex Index to cellXf
      */
-    public function removeCellXfByIndex($cellStyleIndex) : void {
-
+    public function removeCellXfByIndex($cellStyleIndex): void
+    {
         if ($cellStyleIndex > count($this->cellXfCollection) - 1) {
             throw new Exception('CellXf index is out of bounds.');
         }
@@ -1287,25 +1243,19 @@ class Spreadsheet {
         array_splice($this->cellXfCollection, $cellStyleIndex, 1);
 
         // then update cellXf indexes for cells
-
         foreach ($this->workSheetCollection as $worksheet) {
-
             foreach ($worksheet->getCoordinates(false) as $coordinate) {
                 $cell = $worksheet->getCell($coordinate);
                 $xfIndex = $cell->getXfIndex();
-
                 if ($xfIndex > $cellStyleIndex) {
                     // decrease xf index by 1
                     $cell->setXfIndex($xfIndex - 1);
-                } else if ($xfIndex == $cellStyleIndex) {
+                } elseif ($xfIndex == $cellStyleIndex) {
                     // set to default xf index 0
                     $cell->setXfIndex(0);
                 }
-
             }
-
         }
-
     }
 
     /**
@@ -1313,8 +1263,8 @@ class Spreadsheet {
      *
      * @return Style
      */
-    public function getCellXfSupervisor() {
-
+    public function getCellXfSupervisor()
+    {
         return $this->cellXfSupervisor;
     }
 
@@ -1323,8 +1273,8 @@ class Spreadsheet {
      *
      * @return Style[]
      */
-    public function getCellStyleXfCollection() {
-
+    public function getCellStyleXfCollection()
+    {
         return $this->cellStyleXfCollection;
     }
 
@@ -1335,8 +1285,8 @@ class Spreadsheet {
      *
      * @return Style
      */
-    public function getCellStyleXfByIndex($cellStyleIndex) {
-
+    public function getCellStyleXfByIndex($cellStyleIndex)
+    {
         return $this->cellStyleXfCollection[$cellStyleIndex];
     }
 
@@ -1347,14 +1297,12 @@ class Spreadsheet {
      *
      * @return false|Style
      */
-    public function getCellStyleXfByHashCode($hashcode) {
-
+    public function getCellStyleXfByHashCode($hashcode)
+    {
         foreach ($this->cellStyleXfCollection as $cellStyleXf) {
-
             if ($cellStyleXf->getHashCode() === $hashcode) {
                 return $cellStyleXf;
             }
-
         }
 
         return false;
@@ -1363,8 +1311,8 @@ class Spreadsheet {
     /**
      * Add a cellStyleXf to the workbook.
      */
-    public function addCellStyleXf(Style $style) : void{
-
+    public function addCellStyleXf(Style $style): void
+    {
         $this->cellStyleXfCollection[] = $style;
         $style->setIndex(count($this->cellStyleXfCollection) - 1);
     }
@@ -1374,12 +1322,11 @@ class Spreadsheet {
      *
      * @param int $cellStyleIndex Index to cellXf
      */
-    public function removeCellStyleXfByIndex($cellStyleIndex) : void {
-
+    public function removeCellStyleXfByIndex($cellStyleIndex): void
+    {
         if ($cellStyleIndex > count($this->cellStyleXfCollection) - 1) {
             throw new Exception('CellStyleXf index is out of bounds.');
         }
-
         array_splice($this->cellStyleXfCollection, $cellStyleIndex, 1);
     }
 
@@ -1387,94 +1334,74 @@ class Spreadsheet {
      * Eliminate all unneeded cellXf and afterwards update the xfIndex for all cells
      * and columns in the workbook.
      */
-    public function garbageCollect(): void{
-
+    public function garbageCollect(): void
+    {
         // how many references are there to each cellXf ?
         $countReferencesCellXf = [];
-
         foreach ($this->cellXfCollection as $index => $cellXf) {
             $countReferencesCellXf[$index] = 0;
         }
 
         foreach ($this->getWorksheetIterator() as $sheet) {
             // from cells
-
             foreach ($sheet->getCoordinates(false) as $coordinate) {
                 $cell = $sheet->getCell($coordinate);
                 ++$countReferencesCellXf[$cell->getXfIndex()];
             }
 
             // from row dimensions
-
             foreach ($sheet->getRowDimensions() as $rowDimension) {
-
                 if ($rowDimension->getXfIndex() !== null) {
                     ++$countReferencesCellXf[$rowDimension->getXfIndex()];
                 }
-
             }
 
             // from column dimensions
-
             foreach ($sheet->getColumnDimensions() as $columnDimension) {
                 ++$countReferencesCellXf[$columnDimension->getXfIndex()];
             }
-
         }
 
         // remove cellXfs without references and create mapping so we can update xfIndex
         // for all cells and columns
         $countNeededCellXfs = 0;
         $map = [];
-
         foreach ($this->cellXfCollection as $index => $cellXf) {
-
-            if ($countReferencesCellXf[$index] > 0 || $index == 0) {
-                // we must never remove the first cellXf
+            if ($countReferencesCellXf[$index] > 0 || $index == 0) { // we must never remove the first cellXf
                 ++$countNeededCellXfs;
             } else {
                 unset($this->cellXfCollection[$index]);
             }
-
             $map[$index] = $countNeededCellXfs - 1;
         }
-
         $this->cellXfCollection = array_values($this->cellXfCollection);
 
         // update the index for all cellXfs
-
         foreach ($this->cellXfCollection as $i => $cellXf) {
             $cellXf->setIndex($i);
         }
 
         // make sure there is always at least one cellXf (there should be)
-
         if (empty($this->cellXfCollection)) {
             $this->cellXfCollection[] = new Style();
         }
 
         // update the xfIndex for all cells, row dimensions, column dimensions
-
         foreach ($this->getWorksheetIterator() as $sheet) {
             // for all cells
-
             foreach ($sheet->getCoordinates(false) as $coordinate) {
                 $cell = $sheet->getCell($coordinate);
                 $cell->setXfIndex($map[$cell->getXfIndex()]);
             }
 
             // for all row dimensions
-
             foreach ($sheet->getRowDimensions() as $rowDimension) {
-
                 if ($rowDimension->getXfIndex() !== null) {
                     $rowDimension->setXfIndex($map[$rowDimension->getXfIndex()]);
                 }
-
             }
 
             // for all column dimensions
-
             foreach ($sheet->getColumnDimensions() as $columnDimension) {
                 $columnDimension->setXfIndex($map[$columnDimension->getXfIndex()]);
             }
@@ -1482,7 +1409,6 @@ class Spreadsheet {
             // also do garbage collection for all the sheets
             $sheet->garbageCollect();
         }
-
     }
 
     /**
@@ -1490,8 +1416,8 @@ class Spreadsheet {
      *
      * @return string
      */
-    public function getID() {
-
+    public function getID()
+    {
         return $this->uniqueID;
     }
 
@@ -1500,8 +1426,8 @@ class Spreadsheet {
      *
      * @return bool True if horizonal scroll bar is visible
      */
-    public function getShowHorizontalScroll() {
-
+    public function getShowHorizontalScroll()
+    {
         return $this->showHorizontalScroll;
     }
 
@@ -1510,8 +1436,8 @@ class Spreadsheet {
      *
      * @param bool $showHorizontalScroll True if horizonal scroll bar is visible
      */
-    public function setShowHorizontalScroll($showHorizontalScroll): void{
-
+    public function setShowHorizontalScroll($showHorizontalScroll): void
+    {
         $this->showHorizontalScroll = (bool) $showHorizontalScroll;
     }
 
@@ -1520,8 +1446,8 @@ class Spreadsheet {
      *
      * @return bool True if vertical scroll bar is visible
      */
-    public function getShowVerticalScroll() {
-
+    public function getShowVerticalScroll()
+    {
         return $this->showVerticalScroll;
     }
 
@@ -1530,8 +1456,8 @@ class Spreadsheet {
      *
      * @param bool $showVerticalScroll True if vertical scroll bar is visible
      */
-    public function setShowVerticalScroll($showVerticalScroll): void{
-
+    public function setShowVerticalScroll($showVerticalScroll): void
+    {
         $this->showVerticalScroll = (bool) $showVerticalScroll;
     }
 
@@ -1540,8 +1466,8 @@ class Spreadsheet {
      *
      * @return bool True if the sheet tabs are visible
      */
-    public function getShowSheetTabs() {
-
+    public function getShowSheetTabs()
+    {
         return $this->showSheetTabs;
     }
 
@@ -1550,8 +1476,8 @@ class Spreadsheet {
      *
      * @param bool $showSheetTabs True if sheet tabs are visible
      */
-    public function setShowSheetTabs($showSheetTabs): void{
-
+    public function setShowSheetTabs($showSheetTabs): void
+    {
         $this->showSheetTabs = (bool) $showSheetTabs;
     }
 
@@ -1560,8 +1486,8 @@ class Spreadsheet {
      *
      * @return bool true if workbook window is minimized
      */
-    public function getMinimized() {
-
+    public function getMinimized()
+    {
         return $this->minimized;
     }
 
@@ -1570,8 +1496,8 @@ class Spreadsheet {
      *
      * @param bool $minimized true if workbook window is minimized
      */
-    public function setMinimized($minimized): void{
-
+    public function setMinimized($minimized): void
+    {
         $this->minimized = (bool) $minimized;
     }
 
@@ -1581,8 +1507,8 @@ class Spreadsheet {
      *
      * @return bool true if workbook window is minimized
      */
-    public function getAutoFilterDateGrouping() {
-
+    public function getAutoFilterDateGrouping()
+    {
         return $this->autoFilterDateGrouping;
     }
 
@@ -1592,8 +1518,8 @@ class Spreadsheet {
      *
      * @param bool $autoFilterDateGrouping true if workbook window is minimized
      */
-    public function setAutoFilterDateGrouping($autoFilterDateGrouping): void{
-
+    public function setAutoFilterDateGrouping($autoFilterDateGrouping): void
+    {
         $this->autoFilterDateGrouping = (bool) $autoFilterDateGrouping;
     }
 
@@ -1602,8 +1528,8 @@ class Spreadsheet {
      *
      * @return int First sheet in book view
      */
-    public function getFirstSheetIndex() {
-
+    public function getFirstSheetIndex()
+    {
         return $this->firstSheetIndex;
     }
 
@@ -1612,14 +1538,13 @@ class Spreadsheet {
      *
      * @param int $firstSheetIndex First sheet in book view
      */
-    public function setFirstSheetIndex($firstSheetIndex): void {
-
+    public function setFirstSheetIndex($firstSheetIndex): void
+    {
         if ($firstSheetIndex >= 0) {
             $this->firstSheetIndex = (int) $firstSheetIndex;
         } else {
             throw new Exception('First sheet index must be a positive integer.');
         }
-
     }
 
     /**
@@ -1630,8 +1555,8 @@ class Spreadsheet {
      *
      * @return string Visible status
      */
-    public function getVisibility() {
-
+    public function getVisibility()
+    {
         return $this->visibility;
     }
 
@@ -1648,20 +1573,19 @@ class Spreadsheet {
      *       Workbook window is hidden and cannot be shown in the
      *       user interface.
      *
-     * @param string $visibility visibility status of the workbook
+     * @param null|string $visibility visibility status of the workbook
      */
-    public function setVisibility($visibility): void {
-
+    public function setVisibility($visibility): void
+    {
         if ($visibility === null) {
             $visibility = self::VISIBILITY_VISIBLE;
         }
 
-        if (in_array($visibility, self::$workbookViewVisibilityValues)) {
+        if (in_array($visibility, self::WORKBOOK_VIEW_VISIBILITY_VALUES)) {
             $this->visibility = $visibility;
         } else {
             throw new Exception('Invalid visibility value.');
         }
-
     }
 
     /**
@@ -1670,8 +1594,8 @@ class Spreadsheet {
      *
      * @return int Ratio between the workbook tabs bar and the horizontal scroll bar
      */
-    public function getTabRatio() {
-
+    public function getTabRatio()
+    {
         return $this->tabRatio;
     }
 
@@ -1681,32 +1605,26 @@ class Spreadsheet {
      *
      * @param int $tabRatio Ratio between the tabs bar and the horizontal scroll bar
      */
-    public function setTabRatio($tabRatio): void {
-
-        if ($tabRatio >= 0 || $tabRatio <= 1000) {
+    public function setTabRatio($tabRatio): void
+    {
+        if ($tabRatio >= 0 && $tabRatio <= 1000) {
             $this->tabRatio = (int) $tabRatio;
         } else {
             throw new Exception('Tab ratio must be between 0 and 1000.');
         }
-
     }
 
-    public function reevaluateAutoFilters(bool $resetToMax): void {
-
+    public function reevaluateAutoFilters(bool $resetToMax): void
+    {
         foreach ($this->workSheetCollection as $sheet) {
             $filter = $sheet->getAutoFilter();
-
             if (!empty($filter->getRange())) {
-
                 if ($resetToMax) {
                     $filter->setRangeToMaxRow();
                 }
-
                 $filter->showHideRows();
             }
-
         }
-
     }
 
     /**
@@ -1714,9 +1632,26 @@ class Spreadsheet {
      *
      * @codeCoverageIgnore
      */
-    public function getSharedComponent(): Style {
-
+    public function getSharedComponent(): Style
+    {
         return new Style();
     }
 
+    /**
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function __serialize()
+    {
+        throw new Exception('Spreadsheet objects cannot be serialized');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function jsonSerialize(): mixed
+    {
+        throw new Exception('Spreadsheet objects cannot be json encoded');
+    }
 }

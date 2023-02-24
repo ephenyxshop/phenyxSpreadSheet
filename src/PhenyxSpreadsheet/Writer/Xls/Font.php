@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xls;
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 
-class Font {
-
+class Font
+{
     /**
      * Color index.
      *
@@ -16,15 +16,15 @@ class Font {
     /**
      * Font.
      *
-     * @var \PhpOffice\PhenyxSpreadsheet\Style\Font
+     * @var \EphenyxShop\PhenyxSpreadsheet\Style\Font
      */
     private $font;
 
     /**
      * Constructor.
      */
-    public function __construct(\PhpOffice\PhenyxSpreadsheet\Style\Font $font) {
-
+    public function __construct(\EphenyxShop\PhenyxSpreadsheet\Style\Font $font)
+    {
         $this->colorIndex = 0x7FFF;
         $this->font = $font;
     }
@@ -34,50 +34,47 @@ class Font {
      *
      * @param int $colorIndex
      */
-    public function setColorIndex($colorIndex): void{
-
+    public function setColorIndex($colorIndex): void
+    {
         $this->colorIndex = $colorIndex;
     }
+
+    /** @var int */
+    private static $notImplemented = 0;
 
     /**
      * Get font record data.
      *
      * @return string
      */
-    public function writeFont() {
-
-        $font_outline = 0;
-        $font_shadow = 0;
+    public function writeFont()
+    {
+        $font_outline = self::$notImplemented;
+        $font_shadow = self::$notImplemented;
 
         $icv = $this->colorIndex; // Index to color palette
-
         if ($this->font->getSuperscript()) {
             $sss = 1;
-        } else if ($this->font->getSubscript()) {
+        } elseif ($this->font->getSubscript()) {
             $sss = 2;
         } else {
             $sss = 0;
         }
-
         $bFamily = 0; // Font family
-        $bCharSet = \PhpOffice\PhenyxSpreadsheet\Shared\Font::getCharsetFromFontName($this->font->getName()); // Character set
+        $bCharSet = \EphenyxShop\PhenyxSpreadsheet\Shared\Font::getCharsetFromFontName((string) $this->font->getName()); // Character set
 
         $record = 0x31; // Record identifier
         $reserved = 0x00; // Reserved
         $grbit = 0x00; // Font attributes
-
         if ($this->font->getItalic()) {
             $grbit |= 0x02;
         }
-
         if ($this->font->getStrikethrough()) {
             $grbit |= 0x08;
         }
-
         if ($font_outline) {
             $grbit |= 0x10;
         }
-
         if ($font_shadow) {
             $grbit |= 0x20;
         }
@@ -93,12 +90,12 @@ class Font {
             self::mapBold($this->font->getBold()),
             // Superscript/Subscript
             $sss,
-            self::mapUnderline($this->font->getUnderline()),
+            self::mapUnderline((string) $this->font->getUnderline()),
             $bFamily,
             $bCharSet,
             $reserved
         );
-        $data .= StringHelper::UTF8toBIFF8UnicodeShort($this->font->getName());
+        $data .= StringHelper::UTF8toBIFF8UnicodeShort((string) $this->font->getName());
 
         $length = strlen($data);
         $header = pack('vv', $record, $length);
@@ -108,14 +105,10 @@ class Font {
 
     /**
      * Map to BIFF5-BIFF8 codes for bold.
-     *
-     * @param bool $bold
-     *
-     * @return int
      */
-    private static function mapBold($bold) {
-
-        if ($bold) {
+    private static function mapBold(?bool $bold): int
+    {
+        if ($bold === true) {
             return 0x2BC; //  700 = Bold font weight
         }
 
@@ -128,11 +121,11 @@ class Font {
      * @var int[]
      */
     private static $mapUnderline = [
-        \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_NONE             => 0x00,
-        \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLE           => 0x01,
-        \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLE           => 0x02,
-        \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLEACCOUNTING => 0x21,
-        \PhpOffice\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLEACCOUNTING => 0x22,
+        \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_NONE => 0x00,
+        \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLE => 0x01,
+        \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLE => 0x02,
+        \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_SINGLEACCOUNTING => 0x21,
+        \EphenyxShop\PhenyxSpreadsheet\Style\Font::UNDERLINE_DOUBLEACCOUNTING => 0x22,
     ];
 
     /**
@@ -142,13 +135,12 @@ class Font {
      *
      * @return int
      */
-    private static function mapUnderline($underline) {
-
+    private static function mapUnderline($underline)
+    {
         if (isset(self::$mapUnderline[$underline])) {
             return self::$mapUnderline[$underline];
         }
 
         return 0x00;
     }
-
 }

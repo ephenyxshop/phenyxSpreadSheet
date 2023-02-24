@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Shared\Date as SharedDateHelper;
 
-class Week {
-
+class Week
+{
     use ArrayEnabled;
 
     /**
@@ -45,8 +45,8 @@ class Week {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function number($dateValue, $method = Constants::STARTWEEK_SUNDAY) {
-
+    public static function number($dateValue, $method = Constants::STARTWEEK_SUNDAY)
+    {
         if (is_array($dateValue) || is_array($method)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $method);
         }
@@ -55,36 +55,28 @@ class Week {
 
         try {
             $method = self::validateMethod($method);
-
-            if ($dateValue === null) {
-                // boolean not allowed
+            if ($dateValue === null) { // boolean not allowed
                 $dateValue = (SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_MAC_1904 || $method === Constants::DOW_SUNDAY) ? 0 : 1;
             }
-
             $dateValue = self::validateDateValue($dateValue);
-
             if (!$dateValue && self::buggyWeekNum1900($method)) {
                 // This seems to be an additional Excel bug.
                 return 0;
             }
-
         } catch (Exception $e) {
             return $e->getMessage();
         }
 
         // Execute function
         $PHPDateObject = SharedDateHelper::excelToDateTimeObject($dateValue);
-
         if ($method == Constants::STARTWEEK_MONDAY_ISO) {
             Helpers::silly1900($PHPDateObject);
 
             return (int) $PHPDateObject->format('W');
         }
-
         if (self::buggyWeekNum1904($method, $origDateValueNull, $PHPDateObject)) {
             return 0;
         }
-
         Helpers::silly1900($PHPDateObject, '+ 5 years'); // 1905 calendar matches
         $dayOfYear = (int) $PHPDateObject->format('z');
         $PHPDateObject->modify('-' . $dayOfYear . ' days');
@@ -113,8 +105,8 @@ class Week {
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function isoWeekNumber($dateValue) {
-
+    public static function isoWeekNumber($dateValue)
+    {
         if (is_array($dateValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $dateValue);
         }
@@ -158,8 +150,8 @@ class Week {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function day($dateValue, $style = 1) {
-
+    public static function day($dateValue, $style = 1)
+    {
         if (is_array($dateValue) || is_array($style)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $style);
         }
@@ -177,18 +169,18 @@ class Week {
         $DoW = (int) $PHPDateObject->format('w');
 
         switch ($style) {
-        case 1:
-            ++$DoW;
+            case 1:
+                ++$DoW;
 
-            break;
-        case 2:
-            $DoW = self::dow0Becomes7($DoW);
+                break;
+            case 2:
+                $DoW = self::dow0Becomes7($DoW);
 
-            break;
-        case 3:
-            $DoW = self::dow0Becomes7($DoW) - 1;
+                break;
+            case 3:
+                $DoW = self::dow0Becomes7($DoW) - 1;
 
-            break;
+                break;
         }
 
         return $DoW;
@@ -197,14 +189,12 @@ class Week {
     /**
      * @param mixed $style expect int
      */
-    private static function validateStyle($style): int {
-
+    private static function validateStyle($style): int
+    {
         if (!is_numeric($style)) {
             throw new Exception(ExcelError::VALUE());
         }
-
         $style = (int) $style;
-
         if (($style < 1) || ($style > 3)) {
             throw new Exception(ExcelError::NAN());
         }
@@ -212,8 +202,8 @@ class Week {
         return $style;
     }
 
-    private static function dow0Becomes7(int $DoW): int {
-
+    private static function dow0Becomes7(int $DoW): int
+    {
         return ($DoW === 0) ? 7 : $DoW;
     }
 
@@ -221,18 +211,15 @@ class Week {
      * @param mixed $dateValue Excel date serial value (float), PHP date timestamp (integer),
      *                                    PHP DateTime object, or a standard date string
      */
-    private static function apparentBug($dateValue): bool {
-
+    private static function apparentBug($dateValue): bool
+    {
         if (SharedDateHelper::getExcelCalendar() !== SharedDateHelper::CALENDAR_MAC_1904) {
-
             if (is_bool($dateValue)) {
                 return true;
             }
-
             if (is_numeric($dateValue) && !((int) $dateValue)) {
                 return true;
             }
-
         }
 
         return false;
@@ -243,8 +230,8 @@ class Week {
      *
      * @param mixed $dateValue
      */
-    private static function validateDateValue($dateValue): float {
-
+    private static function validateDateValue($dateValue): float
+    {
         if (is_bool($dateValue)) {
             throw new Exception(ExcelError::VALUE());
         }
@@ -257,8 +244,8 @@ class Week {
      *
      * @param mixed $method
      */
-    private static function validateMethod($method): int {
-
+    private static function validateMethod($method): int
+    {
         if ($method === null) {
             $method = Constants::STARTWEEK_SUNDAY;
         }
@@ -268,27 +255,24 @@ class Week {
         }
 
         $method = (int) $method;
-
         if (!array_key_exists($method, Constants::METHODARR)) {
             throw new Exception(ExcelError::NAN());
         }
-
         $method = Constants::METHODARR[$method];
 
         return $method;
     }
 
-    private static function buggyWeekNum1900(int $method): bool {
-
+    private static function buggyWeekNum1900(int $method): bool
+    {
         return $method === Constants::DOW_SUNDAY && SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_WINDOWS_1900;
     }
 
-    private static function buggyWeekNum1904(int $method, bool $origNull, DateTime $dateObject): bool {
-
+    private static function buggyWeekNum1904(int $method, bool $origNull, DateTime $dateObject): bool
+    {
         // This appears to be another Excel bug.
 
         return $method === Constants::DOW_SUNDAY && SharedDateHelper::getExcelCalendar() === SharedDateHelper::CALENDAR_MAC_1904 &&
-        !$origNull && $dateObject->format('Y-m-d') === '1904-01-01';
+            !$origNull && $dateObject->format('Y-m-d') === '1904-01-01';
     }
-
 }

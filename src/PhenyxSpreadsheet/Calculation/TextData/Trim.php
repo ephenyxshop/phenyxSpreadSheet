@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\TextData;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 
-class Trim {
-
+class Trim
+{
     use ArrayEnabled;
 
     /**
@@ -14,19 +14,19 @@ class Trim {
      * @param mixed $stringValue String Value to check
      *                              Or can be an array of values
      *
-     * @return null|array|string
+     * @return array|string
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function nonPrintable($stringValue = '') {
-
+    public static function nonPrintable($stringValue = '')
+    {
         if (is_array($stringValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $stringValue);
         }
 
         $stringValue = Helpers::extractString($stringValue);
 
-        return preg_replace('/[\\x00-\\x1f]/', '', "$stringValue");
+        return (string) preg_replace('/[\\x00-\\x1f]/', '', "$stringValue");
     }
 
     /**
@@ -39,8 +39,8 @@ class Trim {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function spaces($stringValue = '') {
-
+    public static function spaces($stringValue = '')
+    {
         if (is_array($stringValue)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $stringValue);
         }
@@ -49,5 +49,4 @@ class Trim {
 
         return trim(preg_replace('/ +/', ' ', trim("$stringValue", ' ')) ?? '', ' ');
     }
-
 }

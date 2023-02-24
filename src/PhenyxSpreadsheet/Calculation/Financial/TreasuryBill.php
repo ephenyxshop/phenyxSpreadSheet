@@ -8,8 +8,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialCo
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class TreasuryBill {
-
+class TreasuryBill
+{
     /**
      * TBILLEQ.
      *
@@ -24,8 +24,8 @@ class TreasuryBill {
      *
      * @return float|string Result, or a string containing an error
      */
-    public static function bondEquivalentYield($settlement, $maturity, $discount) {
-
+    public static function bondEquivalentYield($settlement, $maturity, $discount)
+    {
         $settlement = Functions::flattenSingleValue($settlement);
         $maturity = Functions::flattenSingleValue($maturity);
         $discount = Functions::flattenSingleValue($discount);
@@ -69,8 +69,8 @@ class TreasuryBill {
      *
      * @return float|string Result, or a string containing an error
      */
-    public static function price($settlement, $maturity, $discount) {
-
+    public static function price($settlement, $maturity, $discount)
+    {
         $settlement = Functions::flattenSingleValue($settlement);
         $maturity = Functions::flattenSingleValue($maturity);
         $discount = Functions::flattenSingleValue($discount);
@@ -98,7 +98,6 @@ class TreasuryBill {
         }
 
         $price = 100 * (1 - (($discount * $daysBetweenSettlementAndMaturity) / 360));
-
         if ($price < 0.0) {
             return ExcelError::NAN();
         }
@@ -120,8 +119,8 @@ class TreasuryBill {
      *
      * @return float|string
      */
-    public static function yield ($settlement, $maturity, $price) {
-
+    public static function yield($settlement, $maturity, $price)
+    {
         $settlement = Functions::flattenSingleValue($settlement);
         $maturity = Functions::flattenSingleValue($maturity);
         $price = Functions::flattenSingleValue($price);
@@ -146,5 +145,4 @@ class TreasuryBill {
 
         return ((100 - $price) / $price) * (360 / $daysBetweenSettlementAndMaturity);
     }
-
 }

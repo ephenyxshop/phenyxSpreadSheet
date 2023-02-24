@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
 
-abstract class Category {
-
+abstract class Category
+{
     // Function categories
     const CATEGORY_CUBE = 'Cube';
     const CATEGORY_DATABASE = 'Database';
@@ -17,4 +17,5 @@ abstract class Category {
     const CATEGORY_STATISTICAL = 'Statistical';
     const CATEGORY_TEXT_AND_DATA = 'Text and Data';
     const CATEGORY_WEB = 'Web';
+    const CATEGORY_UNCATEGORISED = 'Uncategorised';
 }

@@ -15,8 +15,8 @@ use ZipStream\Exception\OverflowException;
 use ZipStream\Option\Archive;
 use ZipStream\ZipStream;
 
-class Ods extends BaseWriter {
-
+class Ods extends BaseWriter
+{
     /**
      * Private PhenyxSpreadsheet.
      *
@@ -62,8 +62,8 @@ class Ods extends BaseWriter {
     /**
      * Create a new Ods.
      */
-    public function __construct(Spreadsheet $spreadsheet) {
-
+    public function __construct(Spreadsheet $spreadsheet)
+    {
         $this->setSpreadsheet($spreadsheet);
 
         $this->writerPartContent = new Content($this);
@@ -75,38 +75,38 @@ class Ods extends BaseWriter {
         $this->writerPartThumbnails = new Thumbnails($this);
     }
 
-    public function getWriterPartContent(): Content {
-
+    public function getWriterPartContent(): Content
+    {
         return $this->writerPartContent;
     }
 
-    public function getWriterPartMeta(): Meta {
-
+    public function getWriterPartMeta(): Meta
+    {
         return $this->writerPartMeta;
     }
 
-    public function getWriterPartMetaInf(): MetaInf {
-
+    public function getWriterPartMetaInf(): MetaInf
+    {
         return $this->writerPartMetaInf;
     }
 
-    public function getWriterPartMimetype(): Mimetype {
-
+    public function getWriterPartMimetype(): Mimetype
+    {
         return $this->writerPartMimetype;
     }
 
-    public function getWriterPartSettings(): Settings {
-
+    public function getWriterPartSettings(): Settings
+    {
         return $this->writerPartSettings;
     }
 
-    public function getWriterPartStyles(): Styles {
-
+    public function getWriterPartStyles(): Styles
+    {
         return $this->writerPartStyles;
     }
 
-    public function getWriterPartThumbnails(): Thumbnails {
-
+    public function getWriterPartThumbnails(): Thumbnails
+    {
         return $this->writerPartThumbnails;
     }
 
@@ -115,12 +115,8 @@ class Ods extends BaseWriter {
      *
      * @param resource|string $filename
      */
-    public function save($filename, int $flags = 0): void {
-
-        if (!$this->spreadSheet) {
-            throw new WriterException('PhenyxSpreadsheet object unassigned.');
-        }
-
+    public function save($filename, int $flags = 0): void
+    {
         $this->processFlags($flags);
 
         // garbage collect
@@ -154,10 +150,9 @@ class Ods extends BaseWriter {
      *
      * @return ZipStream
      */
-    private function createZip() {
-
+    private function createZip()
+    {
         // Try opening the ZIP file
-
         if (!is_resource($this->fileHandle)) {
             throw new WriterException('Could not open resource for writing.');
         }
@@ -175,13 +170,9 @@ class Ods extends BaseWriter {
      *
      * @return Spreadsheet
      */
-    public function getSpreadsheet() {
-
-        if ($this->spreadSheet !== null) {
-            return $this->spreadSheet;
-        }
-
-        throw new WriterException('No PhenyxSpreadsheet assigned.');
+    public function getSpreadsheet()
+    {
+        return $this->spreadSheet;
     }
 
     /**
@@ -191,11 +182,10 @@ class Ods extends BaseWriter {
      *
      * @return $this
      */
-    public function setSpreadsheet(Spreadsheet $spreadsheet) {
-
+    public function setSpreadsheet(Spreadsheet $spreadsheet)
+    {
         $this->spreadSheet = $spreadsheet;
 
         return $this;
     }
-
 }

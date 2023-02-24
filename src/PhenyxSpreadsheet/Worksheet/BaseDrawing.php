@@ -6,11 +6,11 @@ use EphenyxShop\PhenyxSpreadsheet\Cell\Hyperlink;
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 use EphenyxShop\PhenyxSpreadsheet\IComparable;
 
-class BaseDrawing implements IComparable {
-
+class BaseDrawing implements IComparable
+{
     const EDIT_AS_ABSOLUTE = 'absolute';
-    const EDIT_AS_ONECELL = 'onecell';
-    const EDIT_AS_TWOCELL = 'twocell';
+    const EDIT_AS_ONECELL = 'oneCell';
+    const EDIT_AS_TWOCELL = 'twoCell';
     private const VALID_EDIT_AS = [
         self::EDIT_AS_ABSOLUTE,
         self::EDIT_AS_ONECELL,
@@ -167,8 +167,8 @@ class BaseDrawing implements IComparable {
     /**
      * Create a new BaseDrawing.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         // Initialise values
         $this->setShadow();
 
@@ -177,37 +177,37 @@ class BaseDrawing implements IComparable {
         $this->imageIndex = self::$imageCounter;
     }
 
-    public function getImageIndex(): int {
-
+    public function getImageIndex(): int
+    {
         return $this->imageIndex;
     }
 
-    public function getName(): string {
-
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function setName(string $name): self{
-
+    public function setName(string $name): self
+    {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDescription(): string {
-
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-    public function setDescription(string $description): self{
-
+    public function setDescription(string $description): self
+    {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getWorksheet():  ? Worksheet {
-
+    public function getWorksheet(): ?Worksheet
+    {
         return $this->worksheet;
     }
 
@@ -216,126 +216,119 @@ class BaseDrawing implements IComparable {
      *
      * @param bool $overrideOld If a Worksheet has already been assigned, overwrite it and remove image from old Worksheet?
      */
-    public function setWorksheet( ? Worksheet $worksheet = null, bool $overrideOld = false) : self {
-
+    public function setWorksheet(?Worksheet $worksheet = null, bool $overrideOld = false): self
+    {
         if ($this->worksheet === null) {
-            // Add drawing to \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet
-
+            // Add drawing to \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet
             if ($worksheet !== null) {
                 $this->worksheet = $worksheet;
                 $this->worksheet->getCell($this->coordinates);
                 $this->worksheet->getDrawingCollection()->append($this);
             }
-
         } else {
-
             if ($overrideOld) {
-                // Remove drawing from old \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet
+                // Remove drawing from old \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet
                 $iterator = $this->worksheet->getDrawingCollection()->getIterator();
 
                 while ($iterator->valid()) {
-
                     if ($iterator->current()->getHashCode() === $this->getHashCode()) {
-                        $this->worksheet->getDrawingCollection()->offsetUnset($iterator->key());
+                        $this->worksheet->getDrawingCollection()->offsetUnset(/** @scrutinizer ignore-type */ $iterator->key());
                         $this->worksheet = null;
 
                         break;
                     }
-
                 }
 
-                // Set new \PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet
+                // Set new \EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet
                 $this->setWorksheet($worksheet);
             } else {
-                throw new PhenyxSpreadsheetException('A Worksheet has already been assigned. Drawings can only exist on one \\PhpOffice\\PhenyxSpreadsheet\\Worksheet.');
+                throw new PhenyxSpreadsheetException('A Worksheet has already been assigned. Drawings can only exist on one \\EphenyxShop\\PhenyxSpreadsheet\\Worksheet.');
             }
-
         }
 
         return $this;
     }
 
-    public function getCoordinates() : string {
-
+    public function getCoordinates(): string
+    {
         return $this->coordinates;
     }
 
-    public function setCoordinates(string $coordinates): self{
-
+    public function setCoordinates(string $coordinates): self
+    {
         $this->coordinates = $coordinates;
 
         return $this;
     }
 
-    public function getOffsetX(): int {
-
+    public function getOffsetX(): int
+    {
         return $this->offsetX;
     }
 
-    public function setOffsetX(int $offsetX): self{
-
+    public function setOffsetX(int $offsetX): self
+    {
         $this->offsetX = $offsetX;
 
         return $this;
     }
 
-    public function getOffsetY(): int {
-
+    public function getOffsetY(): int
+    {
         return $this->offsetY;
     }
 
-    public function setOffsetY(int $offsetY): self{
-
+    public function setOffsetY(int $offsetY): self
+    {
         $this->offsetY = $offsetY;
 
         return $this;
     }
 
-    public function getCoordinates2(): string {
-
+    public function getCoordinates2(): string
+    {
         return $this->coordinates2;
     }
 
-    public function setCoordinates2(string $coordinates2): self{
-
+    public function setCoordinates2(string $coordinates2): self
+    {
         $this->coordinates2 = $coordinates2;
 
         return $this;
     }
 
-    public function getOffsetX2(): int {
-
+    public function getOffsetX2(): int
+    {
         return $this->offsetX2;
     }
 
-    public function setOffsetX2(int $offsetX2): self{
-
+    public function setOffsetX2(int $offsetX2): self
+    {
         $this->offsetX2 = $offsetX2;
 
         return $this;
     }
 
-    public function getOffsetY2(): int {
-
+    public function getOffsetY2(): int
+    {
         return $this->offsetY2;
     }
 
-    public function setOffsetY2(int $offsetY2): self{
-
+    public function setOffsetY2(int $offsetY2): self
+    {
         $this->offsetY2 = $offsetY2;
 
         return $this;
     }
 
-    public function getWidth(): int {
-
+    public function getWidth(): int
+    {
         return $this->width;
     }
 
-    public function setWidth(int $width): self {
-
+    public function setWidth(int $width): self
+    {
         // Resize proportional?
-
         if ($this->resizeProportional && $width != 0) {
             $ratio = $this->height / ($this->width != 0 ? $this->width : 1);
             $this->height = (int) round($ratio * $width);
@@ -347,15 +340,14 @@ class BaseDrawing implements IComparable {
         return $this;
     }
 
-    public function getHeight(): int {
-
+    public function getHeight(): int
+    {
         return $this->height;
     }
 
-    public function setHeight(int $height): self {
-
+    public function setHeight(int $height): self
+    {
         // Resize proportional?
-
         if ($this->resizeProportional && $height != 0) {
             $ratio = $this->width / ($this->height != 0 ? $this->height : 1);
             $this->width = (int) round($ratio * $height);
@@ -378,13 +370,11 @@ class BaseDrawing implements IComparable {
      *
      * @author Vincent@luo MSN:kele_100@hotmail.com
      */
-    public function setWidthAndHeight(int $width, int $height): self{
-
+    public function setWidthAndHeight(int $width, int $height): self
+    {
         $xratio = $width / ($this->width != 0 ? $this->width : 1);
         $yratio = $height / ($this->height != 0 ? $this->height : 1);
-
         if ($this->resizeProportional && !($width == 0 || $height == 0)) {
-
             if (($xratio * $this->height) < $height) {
                 $this->height = (int) ceil($xratio * $this->height);
                 $this->width = $width;
@@ -392,7 +382,6 @@ class BaseDrawing implements IComparable {
                 $this->width = (int) ceil($yratio * $this->width);
                 $this->height = $height;
             }
-
         } else {
             $this->width = $width;
             $this->height = $height;
@@ -401,37 +390,37 @@ class BaseDrawing implements IComparable {
         return $this;
     }
 
-    public function getResizeProportional(): bool {
-
+    public function getResizeProportional(): bool
+    {
         return $this->resizeProportional;
     }
 
-    public function setResizeProportional(bool $resizeProportional): self{
-
+    public function setResizeProportional(bool $resizeProportional): self
+    {
         $this->resizeProportional = $resizeProportional;
 
         return $this;
     }
 
-    public function getRotation(): int {
-
+    public function getRotation(): int
+    {
         return $this->rotation;
     }
 
-    public function setRotation(int $rotation): self{
-
+    public function setRotation(int $rotation): self
+    {
         $this->rotation = $rotation;
 
         return $this;
     }
 
-    public function getShadow(): Drawing\Shadow {
-
+    public function getShadow(): Drawing\Shadow
+    {
         return $this->shadow;
     }
 
-    public function setShadow( ? Drawing\Shadow $shadow = null) : self{
-
+    public function setShadow(?Drawing\Shadow $shadow = null): self
+    {
         $this->shadow = $shadow ?? new Drawing\Shadow();
 
         return $this;
@@ -442,8 +431,8 @@ class BaseDrawing implements IComparable {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         return md5(
             $this->name .
             $this->description .
@@ -465,90 +454,82 @@ class BaseDrawing implements IComparable {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if ($key == 'worksheet') {
                 $this->worksheet = null;
-            } else if (is_object($value)) {
+            } elseif (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
-    public function setHyperlink( ? Hyperlink $hyperlink = null) : void{
-
+    public function setHyperlink(?Hyperlink $hyperlink = null): void
+    {
         $this->hyperlink = $hyperlink;
     }
 
-    public function getHyperlink() :  ? Hyperlink {
-
+    public function getHyperlink(): ?Hyperlink
+    {
         return $this->hyperlink;
     }
 
     /**
      * Set Fact Sizes and Type of Image.
      */
-    protected function setSizesAndType(string $path) : void {
-
+    protected function setSizesAndType(string $path): void
+    {
         if ($this->imageWidth === 0 && $this->imageHeight === 0 && $this->type === IMAGETYPE_UNKNOWN) {
             $imageData = getimagesize($path);
 
-            if (is_array($imageData)) {
+            if (!empty($imageData)) {
                 $this->imageWidth = $imageData[0];
                 $this->imageHeight = $imageData[1];
                 $this->type = $imageData[2];
             }
-
         }
-
         if ($this->width === 0 && $this->height === 0) {
             $this->width = $this->imageWidth;
             $this->height = $this->imageHeight;
         }
-
     }
 
     /**
      * Get Image Type.
      */
-    public function getType() : int {
-
+    public function getType(): int
+    {
         return $this->type;
     }
 
-    public function getImageWidth(): int {
-
+    public function getImageWidth(): int
+    {
         return $this->imageWidth;
     }
 
-    public function getImageHeight(): int {
-
+    public function getImageHeight(): int
+    {
         return $this->imageHeight;
     }
 
-    public function getEditAs(): string {
-
+    public function getEditAs(): string
+    {
         return $this->editAs;
     }
 
-    public function setEditAs(string $editAs): self{
-
+    public function setEditAs(string $editAs): self
+    {
         $this->editAs = $editAs;
 
         return $this;
     }
 
-    public function validEditAs(): bool {
-
-        return in_array($this->editAs, self::VALID_EDIT_AS);
+    public function validEditAs(): bool
+    {
+        return in_array($this->editAs, self::VALID_EDIT_AS, true);
     }
-
 }

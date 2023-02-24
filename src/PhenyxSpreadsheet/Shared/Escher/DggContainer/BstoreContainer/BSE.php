@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContain
 
 use EphenyxShop\PhenyxSpreadsheet\Shared\Escher\DggContainer\BstoreContainer;
 
-class BSE {
-
+class BSE
+{
     const BLIPTYPE_ERROR = 0x00;
     const BLIPTYPE_UNKNOWN = 0x01;
     const BLIPTYPE_EMF = 0x02;
@@ -19,15 +19,16 @@ class BSE {
 
     /**
      * The parent BLIP Store Entry Container.
+     * Property is never currently read.
      *
      * @var BstoreContainer
      */
-    private $parent;
+    private $parent; // @phpstan-ignore-line
 
     /**
      * The BLIP (Big Large Image or Picture).
      *
-     * @var BSE\Blip
+     * @var ?BSE\Blip
      */
     private $blip;
 
@@ -41,26 +42,26 @@ class BSE {
     /**
      * Set parent BLIP Store Entry Container.
      */
-    public function setParent(BstoreContainer $parent): void{
-
+    public function setParent(BstoreContainer $parent): void
+    {
         $this->parent = $parent;
     }
 
     /**
      * Get the BLIP.
      *
-     * @return BSE\Blip
+     * @return ?BSE\Blip
      */
-    public function getBlip() {
-
+    public function getBlip()
+    {
         return $this->blip;
     }
 
     /**
      * Set the BLIP.
      */
-    public function setBlip(BSE\Blip $blip): void{
-
+    public function setBlip(BSE\Blip $blip): void
+    {
         $this->blip = $blip;
         $blip->setParent($this);
     }
@@ -70,8 +71,8 @@ class BSE {
      *
      * @return int
      */
-    public function getBlipType() {
-
+    public function getBlipType()
+    {
         return $this->blipType;
     }
 
@@ -80,8 +81,8 @@ class BSE {
      *
      * @param int $blipType
      */
-    public function setBlipType($blipType): void{
-
+    public function setBlipType($blipType): void
+    {
         $this->blipType = $blipType;
     }
 }

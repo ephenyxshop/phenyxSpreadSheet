@@ -4,10 +4,12 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\CashFlow\Constant\
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Financial\Constants as FinancialConstants;
 
-class InterestAndPrincipal {
-
+class InterestAndPrincipal
+{
+    /** @var float */
     protected $interest;
 
+    /** @var float */
     protected $principal;
 
     public function __construct(
@@ -18,15 +20,13 @@ class InterestAndPrincipal {
         float $futureValue = 0,
         int $type = FinancialConstants::PAYMENT_END_OF_PERIOD
     ) {
-
         $payment = Payments::annuity($rate, $numberOfPeriods, $presentValue, $futureValue, $type);
         $capital = $presentValue;
         $interest = 0.0;
         $principal = 0.0;
-
         for ($i = 1; $i <= $period; ++$i) {
             $interest = ($type === FinancialConstants::PAYMENT_BEGINNING_OF_PERIOD && $i == 1) ? 0 : -$capital * $rate;
-            $principal = $payment - $interest;
+            $principal = (float) $payment - $interest;
             $capital += $principal;
         }
 
@@ -34,14 +34,13 @@ class InterestAndPrincipal {
         $this->principal = $principal;
     }
 
-    public function interest(): float {
-
+    public function interest(): float
+    {
         return $this->interest;
     }
 
-    public function principal(): float {
-
+    public function principal(): float
+    {
         return $this->principal;
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\DateTimeExcel;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class Month {
-
+class Month
+{
     use ArrayEnabled;
 
     /**
@@ -33,8 +33,8 @@ class Month {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function adjust($dateValue, $adjustmentMonths) {
-
+    public static function adjust($dateValue, $adjustmentMonths)
+    {
         if (is_array($dateValue) || is_array($adjustmentMonths)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $adjustmentMonths);
         }
@@ -45,7 +45,6 @@ class Month {
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
         $adjustmentMonths = floor($adjustmentMonths);
 
         // Execute function
@@ -77,8 +76,8 @@ class Month {
      *         If an array of values is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function lastDay($dateValue, $adjustmentMonths) {
-
+    public static function lastDay($dateValue, $adjustmentMonths)
+    {
         if (is_array($dateValue) || is_array($adjustmentMonths)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $dateValue, $adjustmentMonths);
         }
@@ -89,7 +88,6 @@ class Month {
         } catch (Exception $e) {
             return $e->getMessage();
         }
-
         $adjustmentMonths = floor($adjustmentMonths);
 
         // Execute function
@@ -100,5 +98,4 @@ class Month {
 
         return Helpers::returnIn3FormatsObject($PHPDateObject);
     }
-
 }

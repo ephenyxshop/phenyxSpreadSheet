@@ -24,8 +24,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation;
  * https://ewbi.blogs.com/develops/2007/03/excel_formula_p.html
  * https://ewbi.blogs.com/develops/2004/12/excel_formula_p.html
  */
-class FormulaToken {
-
+class FormulaToken
+{
     // Token types
     const TOKEN_TYPE_NOOP = 'Noop';
     const TOKEN_TYPE_OPERAND = 'Operand';
@@ -80,8 +80,8 @@ class FormulaToken {
      * @param string $tokenType Token type (represented by TOKEN_TYPE_*)
      * @param string $tokenSubType Token Subtype (represented by TOKEN_SUBTYPE_*)
      */
-    public function __construct($value, $tokenType = self::TOKEN_TYPE_UNKNOWN, $tokenSubType = self::TOKEN_SUBTYPE_NOTHING) {
-
+    public function __construct($value, $tokenType = self::TOKEN_TYPE_UNKNOWN, $tokenSubType = self::TOKEN_SUBTYPE_NOTHING)
+    {
         // Initialise values
         $this->value = $value;
         $this->tokenType = $tokenType;
@@ -93,8 +93,8 @@ class FormulaToken {
      *
      * @return string
      */
-    public function getValue() {
-
+    public function getValue()
+    {
         return $this->value;
     }
 
@@ -103,8 +103,8 @@ class FormulaToken {
      *
      * @param string $value
      */
-    public function setValue($value): void{
-
+    public function setValue($value): void
+    {
         $this->value = $value;
     }
 
@@ -113,8 +113,8 @@ class FormulaToken {
      *
      * @return string
      */
-    public function getTokenType() {
-
+    public function getTokenType()
+    {
         return $this->tokenType;
     }
 
@@ -123,8 +123,8 @@ class FormulaToken {
      *
      * @param string $value
      */
-    public function setTokenType($value): void{
-
+    public function setTokenType($value): void
+    {
         $this->tokenType = $value;
     }
 
@@ -133,8 +133,8 @@ class FormulaToken {
      *
      * @return string
      */
-    public function getTokenSubType() {
-
+    public function getTokenSubType()
+    {
         return $this->tokenSubType;
     }
 
@@ -143,8 +143,8 @@ class FormulaToken {
      *
      * @param string $value
      */
-    public function setTokenSubType($value): void{
-
+    public function setTokenSubType($value): void
+    {
         $this->tokenSubType = $value;
     }
 }

@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engine;
 
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class BranchPruner {
-
+class BranchPruner
+{
     /**
      * @var bool
      */
@@ -70,18 +70,18 @@ class BranchPruner {
      */
     protected $previousStoreKey;
 
-    public function __construct(bool $branchPruningEnabled) {
-
+    public function __construct(bool $branchPruningEnabled)
+    {
         $this->branchPruningEnabled = $branchPruningEnabled;
     }
 
-    public function clearBranchStore(): void{
-
+    public function clearBranchStore(): void
+    {
         $this->branchStoreKeyCounter = 0;
     }
 
-    public function initialiseForLoop(): void{
-
+    public function initialiseForLoop(): void
+    {
         $this->currentCondition = null;
         $this->currentOnlyIf = null;
         $this->currentOnlyIfNot = null;
@@ -93,108 +93,95 @@ class BranchPruner {
             $this->initialiseThen();
             $this->initialiseElse();
         }
-
     }
 
-    private function initialiseCondition(): void {
-
+    private function initialiseCondition(): void
+    {
         if (isset($this->conditionMap[$this->pendingStoreKey]) && $this->conditionMap[$this->pendingStoreKey]) {
             $this->currentCondition = $this->pendingStoreKey;
             $stackDepth = count($this->storeKeysStack);
-
             if ($stackDepth > 1) {
                 // nested if
                 $this->previousStoreKey = $this->storeKeysStack[$stackDepth - 2];
             }
-
         }
-
     }
 
-    private function initialiseThen(): void {
-
+    private function initialiseThen(): void
+    {
         if (isset($this->thenMap[$this->pendingStoreKey]) && $this->thenMap[$this->pendingStoreKey]) {
             $this->currentOnlyIf = $this->pendingStoreKey;
-        } else if (
+        } elseif (
             isset($this->previousStoreKey, $this->thenMap[$this->previousStoreKey])
             && $this->thenMap[$this->previousStoreKey]
         ) {
             $this->currentOnlyIf = $this->previousStoreKey;
         }
-
     }
 
-    private function initialiseElse(): void {
-
+    private function initialiseElse(): void
+    {
         if (isset($this->elseMap[$this->pendingStoreKey]) && $this->elseMap[$this->pendingStoreKey]) {
             $this->currentOnlyIfNot = $this->pendingStoreKey;
-        } else if (
+        } elseif (
             isset($this->previousStoreKey, $this->elseMap[$this->previousStoreKey])
             && $this->elseMap[$this->previousStoreKey]
         ) {
             $this->currentOnlyIfNot = $this->previousStoreKey;
         }
-
     }
 
-    public function decrementDepth(): void {
-
+    public function decrementDepth(): void
+    {
         if (!empty($this->pendingStoreKey)) {
             --$this->braceDepthMap[$this->pendingStoreKey];
         }
-
     }
 
-    public function incrementDepth(): void {
-
+    public function incrementDepth(): void
+    {
         if (!empty($this->pendingStoreKey)) {
             ++$this->braceDepthMap[$this->pendingStoreKey];
         }
-
     }
 
-    public function functionCall(string $functionName): void {
-
+    public function functionCall(string $functionName): void
+    {
         if ($this->branchPruningEnabled && ($functionName === 'IF(')) {
             // we handle a new if
             $this->pendingStoreKey = $this->getUnusedBranchStoreKey();
             $this->storeKeysStack[] = $this->pendingStoreKey;
             $this->conditionMap[$this->pendingStoreKey] = true;
             $this->braceDepthMap[$this->pendingStoreKey] = 0;
-        } else if (!empty($this->pendingStoreKey) && array_key_exists($this->pendingStoreKey, $this->braceDepthMap)) {
+        } elseif (!empty($this->pendingStoreKey) && array_key_exists($this->pendingStoreKey, $this->braceDepthMap)) {
             // this is not an if but we go deeper
             ++$this->braceDepthMap[$this->pendingStoreKey];
         }
-
     }
 
-    public function argumentSeparator(): void {
-
+    public function argumentSeparator(): void
+    {
         if (!empty($this->pendingStoreKey) && $this->braceDepthMap[$this->pendingStoreKey] === 0) {
             // We must go to the IF next argument
-
             if ($this->conditionMap[$this->pendingStoreKey]) {
                 $this->conditionMap[$this->pendingStoreKey] = false;
                 $this->thenMap[$this->pendingStoreKey] = true;
-            } else if ($this->thenMap[$this->pendingStoreKey]) {
+            } elseif ($this->thenMap[$this->pendingStoreKey]) {
                 $this->thenMap[$this->pendingStoreKey] = false;
                 $this->elseMap[$this->pendingStoreKey] = true;
-            } else if ($this->elseMap[$this->pendingStoreKey]) {
+            } elseif ($this->elseMap[$this->pendingStoreKey]) {
                 throw new Exception('Reaching fourth argument of an IF');
             }
-
         }
-
     }
 
     /**
      * @param mixed $value
      */
-    public function closingBrace($value): void {
-
+    public function closingBrace($value): void
+    {
         if (!empty($this->pendingStoreKey) && $this->braceDepthMap[$this->pendingStoreKey] === -1) {
             // we are closing an IF(
-
             if ($value !== 'IF(') {
                 throw new Exception('Parser bug we should be in an "IF("');
             }
@@ -209,30 +196,28 @@ class BranchPruner {
             array_pop($this->storeKeysStack);
             $this->pendingStoreKey = null;
         }
-
     }
 
-    public function currentCondition():  ? string {
-
+    public function currentCondition(): ?string
+    {
         return $this->currentCondition;
     }
 
-    public function currentOnlyIf() :  ? string {
-
+    public function currentOnlyIf(): ?string
+    {
         return $this->currentOnlyIf;
     }
 
-    public function currentOnlyIfNot() :  ? string {
-
+    public function currentOnlyIfNot(): ?string
+    {
         return $this->currentOnlyIfNot;
     }
 
-    private function getUnusedBranchStoreKey() : string{
-
+    private function getUnusedBranchStoreKey(): string
+    {
         $storeKeyValue = 'storeKey-' . $this->branchStoreKeyCounter;
         ++$this->branchStoreKeyCounter;
 
         return $storeKeyValue;
     }
-
 }

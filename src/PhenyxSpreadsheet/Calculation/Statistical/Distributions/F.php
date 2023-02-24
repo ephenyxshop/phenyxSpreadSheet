@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class F {
-
+class F
+{
     use ArrayEnabled;
 
     /**
@@ -31,8 +31,8 @@ class F {
      *         If an array of numbers is passed as an argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function distribution($value, $u, $v, $cumulative) {
-
+    public static function distribution($value, $u, $v, $cumulative)
+    {
         if (is_array($value) || is_array($u) || is_array($v) || is_array($cumulative)) {
             return self::evaluateArrayArguments([self::class, __FUNCTION__], $value, $u, $v, $cumulative);
         }
@@ -57,9 +57,8 @@ class F {
         }
 
         return (Gamma::gammaValue(($v + $u) / 2) /
-            (Gamma::gammaValue($u / 2) * Gamma::gammaValue($v / 2))) *
+                (Gamma::gammaValue($u / 2) * Gamma::gammaValue($v / 2))) *
             (($u / $v) ** ($u / 2)) *
             (($value ** (($u - 2) / 2)) / ((1 + ($u / $v) * $value) ** (($u + $v) / 2)));
     }
-
 }

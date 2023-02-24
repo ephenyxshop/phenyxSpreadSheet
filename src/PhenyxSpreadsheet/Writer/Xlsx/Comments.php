@@ -4,20 +4,20 @@ namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
 use EphenyxShop\PhenyxSpreadsheet\Cell\Coordinate;
 use EphenyxShop\PhenyxSpreadsheet\Comment;
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 
-class Comments extends WriterPart {
-
+class Comments extends WriterPart
+{
     /**
      * Write comments to XML format.
      *
      * @return string XML Output
      */
-    public function writeComments(\PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet $worksheet) {
-
+    public function writeComments(\EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet $worksheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -33,35 +33,28 @@ class Comments extends WriterPart {
         // Authors cache
         $authors = [];
         $authorId = 0;
-
         foreach ($comments as $comment) {
-
             if (!isset($authors[$comment->getAuthor()])) {
                 $authors[$comment->getAuthor()] = $authorId++;
             }
-
         }
 
         // comments
         $objWriter->startElement('comments');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
+        $objWriter->writeAttribute('xmlns', Namespaces::MAIN);
 
         // Loop through authors
         $objWriter->startElement('authors');
-
         foreach ($authors as $author => $index) {
             $objWriter->writeElement('author', $author);
         }
-
         $objWriter->endElement();
 
         // Loop through comments
         $objWriter->startElement('commentList');
-
         foreach ($comments as $key => $value) {
             $this->writeComment($objWriter, $key, $value, $authors);
         }
-
         $objWriter->endElement();
 
         $objWriter->endElement();
@@ -77,8 +70,8 @@ class Comments extends WriterPart {
      * @param Comment $comment Comment
      * @param array $authors Array of authors
      */
-    private function writeComment(XMLWriter $objWriter, $cellReference, Comment $comment, array $authors): void{
-
+    private function writeComment(XMLWriter $objWriter, $cellReference, Comment $comment, array $authors): void
+    {
         // comment
         $objWriter->startElement('comment');
         $objWriter->writeAttribute('ref', $cellReference);
@@ -97,11 +90,10 @@ class Comments extends WriterPart {
      *
      * @return string XML Output
      */
-    public function writeVMLComments(\PhpOffice\PhenyxSpreadsheet\Worksheet\Worksheet $worksheet) {
-
+    public function writeVMLComments(\EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet $worksheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -116,9 +108,9 @@ class Comments extends WriterPart {
 
         // xml
         $objWriter->startElement('xml');
-        $objWriter->writeAttribute('xmlns:v', 'urn:schemas-microsoft-com:vml');
-        $objWriter->writeAttribute('xmlns:o', 'urn:schemas-microsoft-com:office:office');
-        $objWriter->writeAttribute('xmlns:x', 'urn:schemas-microsoft-com:office:excel');
+        $objWriter->writeAttribute('xmlns:v', Namespaces::URN_VML);
+        $objWriter->writeAttribute('xmlns:o', Namespaces::URN_MSOFFICE);
+        $objWriter->writeAttribute('xmlns:x', Namespaces::URN_EXCEL);
 
         // o:shapelayout
         $objWriter->startElement('o:shapelayout');
@@ -153,7 +145,6 @@ class Comments extends WriterPart {
         $objWriter->endElement();
 
         // Loop through comments
-
         foreach ($comments as $key => $value) {
             $this->writeVMLComment($objWriter, $key, $value);
         }
@@ -170,12 +161,12 @@ class Comments extends WriterPart {
      * @param string $cellReference Cell reference, eg: 'A1'
      * @param Comment $comment Comment
      */
-    private function writeVMLComment(XMLWriter $objWriter, $cellReference, Comment $comment): void {
-
+    private function writeVMLComment(XMLWriter $objWriter, $cellReference, Comment $comment): void
+    {
         // Metadata
         [$column, $row] = Coordinate::indexesFromString($cellReference);
         $id = 1024 + $column + $row;
-        $id = substr($id, 0, 4);
+        $id = substr("$id", 0, 4);
 
         // v:shape
         $objWriter->startElement('v:shape');
@@ -188,14 +179,12 @@ class Comments extends WriterPart {
         // v:fill
         $objWriter->startElement('v:fill');
         $objWriter->writeAttribute('color2', '#' . $comment->getFillColor()->getRGB());
-
         if ($comment->hasBackgroundImage()) {
             $bgImage = $comment->getBackgroundImage();
             $objWriter->writeAttribute('o:relid', 'rId' . $bgImage->getImageIndex());
             $objWriter->writeAttribute('o:title', $bgImage->getName());
             $objWriter->writeAttribute('type', 'frame');
         }
-
         $objWriter->endElement();
 
         // v:shadow
@@ -235,14 +224,13 @@ class Comments extends WriterPart {
         $objWriter->writeElement('x:AutoFill', 'False');
 
         // x:Row
-        $objWriter->writeElement('x:Row', ($row - 1));
+        $objWriter->writeElement('x:Row', (string) ($row - 1));
 
         // x:Column
-        $objWriter->writeElement('x:Column', ($column - 1));
+        $objWriter->writeElement('x:Column', (string) ($column - 1));
 
         $objWriter->endElement();
 
         $objWriter->endElement();
     }
-
 }

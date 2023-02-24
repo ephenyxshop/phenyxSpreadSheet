@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Cell\Cell;
 use EphenyxShop\PhenyxSpreadsheet\Cell\DataType;
 use EphenyxShop\PhenyxSpreadsheet\IComparable;
 
-class RichText implements IComparable {
-
+class RichText implements IComparable
+{
     /**
      * Rich text elements.
      *
@@ -18,16 +18,14 @@ class RichText implements IComparable {
     /**
      * Create a new RichText instance.
      */
-    public function __construct( ? Cell $cell = null) {
-
+    public function __construct(?Cell $cell = null)
+    {
         // Initialise variables
         $this->richTextElements = [];
 
         // Rich-Text string attached to cell?
-
         if ($cell !== null) {
             // Add cell text and style
-
             if ($cell->getValue() != '') {
                 $objRun = new Run($cell->getValue());
                 $objRun->setFont(clone $cell->getWorksheet()->getStyle($cell->getCoordinate())->getFont());
@@ -37,7 +35,6 @@ class RichText implements IComparable {
             // Set parent value
             $cell->setValueExplicit($this, DataType::TYPE_STRING);
         }
-
     }
 
     /**
@@ -47,8 +44,8 @@ class RichText implements IComparable {
      *
      * @return $this
      */
-    public function addText(ITextElement $text) {
-
+    public function addText(ITextElement $text)
+    {
         $this->richTextElements[] = $text;
 
         return $this;
@@ -61,8 +58,8 @@ class RichText implements IComparable {
      *
      * @return TextElement
      */
-    public function createText($text) {
-
+    public function createText($text)
+    {
         $objText = new TextElement($text);
         $this->addText($objText);
 
@@ -76,8 +73,8 @@ class RichText implements IComparable {
      *
      * @return Run
      */
-    public function createTextRun($text) {
-
+    public function createTextRun($text)
+    {
         $objText = new Run($text);
         $this->addText($objText);
 
@@ -89,13 +86,12 @@ class RichText implements IComparable {
      *
      * @return string
      */
-    public function getPlainText() {
-
+    public function getPlainText()
+    {
         // Return value
         $returnValue = '';
 
         // Loop through all ITextElements
-
         foreach ($this->richTextElements as $text) {
             $returnValue .= $text->getText();
         }
@@ -108,8 +104,8 @@ class RichText implements IComparable {
      *
      * @return string
      */
-    public function __toString() {
-
+    public function __toString()
+    {
         return $this->getPlainText();
     }
 
@@ -118,8 +114,8 @@ class RichText implements IComparable {
      *
      * @return ITextElement[]
      */
-    public function getRichTextElements() {
-
+    public function getRichTextElements()
+    {
         return $this->richTextElements;
     }
 
@@ -130,8 +126,8 @@ class RichText implements IComparable {
      *
      * @return $this
      */
-    public function setRichTextElements(array $textElements) {
-
+    public function setRichTextElements(array $textElements)
+    {
         $this->richTextElements = $textElements;
 
         return $this;
@@ -142,10 +138,9 @@ class RichText implements IComparable {
      *
      * @return string Hash code
      */
-    public function getHashCode() {
-
+    public function getHashCode()
+    {
         $hashElements = '';
-
         foreach ($this->richTextElements as $element) {
             $hashElements .= $element->getHashCode();
         }
@@ -159,20 +154,18 @@ class RichText implements IComparable {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
-            if (is_object($value)) {
-                $this->$key = clone $value;
-            } else {
-                $this->$key = $value;
+            $newValue = is_object($value) ? (clone $value) : $value;
+            if (is_array($value)) {
+                $newValue = [];
+                foreach ($value as $key2 => $value2) {
+                    $newValue[$key2] = is_object($value2) ? (clone $value2) : $value2;
+                }
             }
-
+            $this->$key = $newValue;
         }
-
     }
-
 }

@@ -2,9 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Writer\Xlsx;
 
+use EphenyxShop\PhenyxSpreadsheet\Reader\Xlsx\Namespaces;
 use EphenyxShop\PhenyxSpreadsheet\Shared\StringHelper;
 use EphenyxShop\PhenyxSpreadsheet\Shared\XMLWriter;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Style\Alignment;
 use EphenyxShop\PhenyxSpreadsheet\Style\Border;
 use EphenyxShop\PhenyxSpreadsheet\Style\Borders;
 use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
@@ -13,18 +15,17 @@ use EphenyxShop\PhenyxSpreadsheet\Style\Font;
 use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 use EphenyxShop\PhenyxSpreadsheet\Style\Protection;
 
-class Style extends WriterPart {
-
+class Style extends WriterPart
+{
     /**
      * Write styles to XML format.
      *
      * @return string XML Output
      */
-    public function writeStyles(Spreadsheet $spreadsheet) {
-
+    public function writeStyles(Spreadsheet $spreadsheet)
+    {
         // Create XML writer
         $objWriter = null;
-
         if ($this->getParentWriter()->getUseDiskCaching()) {
             $objWriter = new XMLWriter(XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
@@ -37,14 +38,13 @@ class Style extends WriterPart {
         // styleSheet
         $objWriter->startElement('styleSheet');
         $objWriter->writeAttribute('xml:space', 'preserve');
-        $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
+        $objWriter->writeAttribute('xmlns', Namespaces::MAIN);
 
         // numFmts
         $objWriter->startElement('numFmts');
-        $objWriter->writeAttribute('count', $this->getParentWriter()->getNumFmtHashTable()->count());
+        $objWriter->writeAttribute('count', (string) $this->getParentWriter()->getNumFmtHashTable()->count());
 
         // numFmt
-
         for ($i = 0; $i < $this->getParentWriter()->getNumFmtHashTable()->count(); ++$i) {
             $this->writeNumFmt($objWriter, $this->getParentWriter()->getNumFmtHashTable()->getByIndex($i), $i);
         }
@@ -53,60 +53,65 @@ class Style extends WriterPart {
 
         // fonts
         $objWriter->startElement('fonts');
-        $objWriter->writeAttribute('count', $this->getParentWriter()->getFontHashTable()->count());
+        $objWriter->writeAttribute('count', (string) $this->getParentWriter()->getFontHashTable()->count());
 
         // font
-
         for ($i = 0; $i < $this->getParentWriter()->getFontHashTable()->count(); ++$i) {
-            $this->writeFont($objWriter, $this->getParentWriter()->getFontHashTable()->getByIndex($i));
+            $thisfont = $this->getParentWriter()->getFontHashTable()->getByIndex($i);
+            if ($thisfont !== null) {
+                $this->writeFont($objWriter, $thisfont);
+            }
         }
 
         $objWriter->endElement();
 
         // fills
         $objWriter->startElement('fills');
-        $objWriter->writeAttribute('count', $this->getParentWriter()->getFillHashTable()->count());
+        $objWriter->writeAttribute('count', (string) $this->getParentWriter()->getFillHashTable()->count());
 
         // fill
-
         for ($i = 0; $i < $this->getParentWriter()->getFillHashTable()->count(); ++$i) {
-            $this->writeFill($objWriter, $this->getParentWriter()->getFillHashTable()->getByIndex($i));
+            $thisfill = $this->getParentWriter()->getFillHashTable()->getByIndex($i);
+            if ($thisfill !== null) {
+                $this->writeFill($objWriter, $thisfill);
+            }
         }
 
         $objWriter->endElement();
 
         // borders
         $objWriter->startElement('borders');
-        $objWriter->writeAttribute('count', $this->getParentWriter()->getBordersHashTable()->count());
+        $objWriter->writeAttribute('count', (string) $this->getParentWriter()->getBordersHashTable()->count());
 
         // border
-
         for ($i = 0; $i < $this->getParentWriter()->getBordersHashTable()->count(); ++$i) {
-            $this->writeBorder($objWriter, $this->getParentWriter()->getBordersHashTable()->getByIndex($i));
+            $thisborder = $this->getParentWriter()->getBordersHashTable()->getByIndex($i);
+            if ($thisborder !== null) {
+                $this->writeBorder($objWriter, $thisborder);
+            }
         }
 
         $objWriter->endElement();
 
         // cellStyleXfs
         $objWriter->startElement('cellStyleXfs');
-        $objWriter->writeAttribute('count', 1);
+        $objWriter->writeAttribute('count', '1');
 
         // xf
         $objWriter->startElement('xf');
-        $objWriter->writeAttribute('numFmtId', 0);
-        $objWriter->writeAttribute('fontId', 0);
-        $objWriter->writeAttribute('fillId', 0);
-        $objWriter->writeAttribute('borderId', 0);
+        $objWriter->writeAttribute('numFmtId', '0');
+        $objWriter->writeAttribute('fontId', '0');
+        $objWriter->writeAttribute('fillId', '0');
+        $objWriter->writeAttribute('borderId', '0');
         $objWriter->endElement();
 
         $objWriter->endElement();
 
         // cellXfs
         $objWriter->startElement('cellXfs');
-        $objWriter->writeAttribute('count', count($spreadsheet->getCellXfCollection()));
+        $objWriter->writeAttribute('count', (string) count($spreadsheet->getCellXfCollection()));
 
         // xf
-
         foreach ($spreadsheet->getCellXfCollection() as $cellXf) {
             $this->writeCellStyleXf($objWriter, $cellXf, $spreadsheet);
         }
@@ -115,25 +120,27 @@ class Style extends WriterPart {
 
         // cellStyles
         $objWriter->startElement('cellStyles');
-        $objWriter->writeAttribute('count', 1);
+        $objWriter->writeAttribute('count', '1');
 
         // cellStyle
         $objWriter->startElement('cellStyle');
         $objWriter->writeAttribute('name', 'Normal');
-        $objWriter->writeAttribute('xfId', 0);
-        $objWriter->writeAttribute('builtinId', 0);
+        $objWriter->writeAttribute('xfId', '0');
+        $objWriter->writeAttribute('builtinId', '0');
         $objWriter->endElement();
 
         $objWriter->endElement();
 
         // dxfs
         $objWriter->startElement('dxfs');
-        $objWriter->writeAttribute('count', $this->getParentWriter()->getStylesConditionalHashTable()->count());
+        $objWriter->writeAttribute('count', (string) $this->getParentWriter()->getStylesConditionalHashTable()->count());
 
         // dxf
-
         for ($i = 0; $i < $this->getParentWriter()->getStylesConditionalHashTable()->count(); ++$i) {
-            $this->writeCellStyleDxf($objWriter, $this->getParentWriter()->getStylesConditionalHashTable()->getByIndex($i)->getStyle());
+            $thisstyle = $this->getParentWriter()->getStylesConditionalHashTable()->getByIndex($i);
+            if ($thisstyle !== null) {
+                $this->writeCellStyleDxf($objWriter, $thisstyle->getStyle());
+            }
         }
 
         $objWriter->endElement();
@@ -153,44 +160,44 @@ class Style extends WriterPart {
     /**
      * Write Fill.
      */
-    private function writeFill(XMLWriter $objWriter, Fill $fill): void {
-
+    private function writeFill(XMLWriter $objWriter, Fill $fill): void
+    {
         // Check if this is a pattern type or gradient type
-
         if (
             $fill->getFillType() === Fill::FILL_GRADIENT_LINEAR ||
             $fill->getFillType() === Fill::FILL_GRADIENT_PATH
         ) {
             // Gradient fill
             $this->writeGradientFill($objWriter, $fill);
-        } else if ($fill->getFillType() !== null) {
+        } elseif ($fill->getFillType() !== null) {
             // Pattern fill
             $this->writePatternFill($objWriter, $fill);
         }
-
     }
 
     /**
      * Write Gradient Fill.
      */
-    private function writeGradientFill(XMLWriter $objWriter, Fill $fill): void{
-
+    private function writeGradientFill(XMLWriter $objWriter, Fill $fill): void
+    {
         // fill
         $objWriter->startElement('fill');
 
         // gradientFill
         $objWriter->startElement('gradientFill');
-        $objWriter->writeAttribute('type', $fill->getFillType());
-        $objWriter->writeAttribute('degree', $fill->getRotation());
+        $objWriter->writeAttribute('type', (string) $fill->getFillType());
+        $objWriter->writeAttribute('degree', (string) $fill->getRotation());
 
         // stop
         $objWriter->startElement('stop');
         $objWriter->writeAttribute('position', '0');
 
         // color
-        $objWriter->startElement('color');
-        $objWriter->writeAttribute('rgb', $fill->getStartColor()->getARGB());
-        $objWriter->endElement();
+        if ($fill->getStartColor()->getARGB() !== null) {
+            $objWriter->startElement('color');
+            $objWriter->writeAttribute('rgb', $fill->getStartColor()->getARGB());
+            $objWriter->endElement();
+        }
 
         $objWriter->endElement();
 
@@ -199,9 +206,11 @@ class Style extends WriterPart {
         $objWriter->writeAttribute('position', '1');
 
         // color
-        $objWriter->startElement('color');
-        $objWriter->writeAttribute('rgb', $fill->getEndColor()->getARGB());
-        $objWriter->endElement();
+        if ($fill->getEndColor()->getARGB() !== null) {
+            $objWriter->startElement('color');
+            $objWriter->writeAttribute('rgb', $fill->getEndColor()->getARGB());
+            $objWriter->endElement();
+        }
 
         $objWriter->endElement();
 
@@ -210,8 +219,8 @@ class Style extends WriterPart {
         $objWriter->endElement();
     }
 
-    private static function writePatternColors(Fill $fill): bool {
-
+    private static function writePatternColors(Fill $fill): bool
+    {
         if ($fill->getFillType() === Fill::FILL_NONE) {
             return false;
         }
@@ -222,32 +231,28 @@ class Style extends WriterPart {
     /**
      * Write Pattern Fill.
      */
-    private function writePatternFill(XMLWriter $objWriter, Fill $fill): void{
-
+    private function writePatternFill(XMLWriter $objWriter, Fill $fill): void
+    {
         // fill
         $objWriter->startElement('fill');
 
         // patternFill
         $objWriter->startElement('patternFill');
-        $objWriter->writeAttribute('patternType', $fill->getFillType());
+        $objWriter->writeAttribute('patternType', (string) $fill->getFillType());
 
         if (self::writePatternColors($fill)) {
             // fgColor
-
             if ($fill->getStartColor()->getARGB()) {
                 $objWriter->startElement('fgColor');
                 $objWriter->writeAttribute('rgb', $fill->getStartColor()->getARGB());
                 $objWriter->endElement();
             }
-
             // bgColor
-
             if ($fill->getEndColor()->getARGB()) {
                 $objWriter->startElement('bgColor');
                 $objWriter->writeAttribute('rgb', $fill->getEndColor()->getARGB());
                 $objWriter->endElement();
             }
-
         }
 
         $objWriter->endElement();
@@ -258,8 +263,8 @@ class Style extends WriterPart {
     /**
      * Write Font.
      */
-    private function writeFont(XMLWriter $objWriter, Font $font): void{
-
+    private function writeFont(XMLWriter $objWriter, Font $font): void
+    {
         // font
         $objWriter->startElement('font');
         //    Weird! The order of these elements actually makes a difference when opening Xlsx
@@ -269,7 +274,6 @@ class Style extends WriterPart {
         // Bold. We explicitly write this element also when false (like MS Office Excel 2007 does
         // for conditional formatting). Otherwise it will apparently not be picked up in conditional
         // formatting style dialog
-
         if ($font->getBold() !== null) {
             $objWriter->startElement('b');
             $objWriter->writeAttribute('val', $font->getBold() ? '1' : '0');
@@ -277,7 +281,6 @@ class Style extends WriterPart {
         }
 
         // Italic
-
         if ($font->getItalic() !== null) {
             $objWriter->startElement('i');
             $objWriter->writeAttribute('val', $font->getItalic() ? '1' : '0');
@@ -285,7 +288,6 @@ class Style extends WriterPart {
         }
 
         // Strikethrough
-
         if ($font->getStrikethrough() !== null) {
             $objWriter->startElement('strike');
             $objWriter->writeAttribute('val', $font->getStrikethrough() ? '1' : '0');
@@ -293,7 +295,6 @@ class Style extends WriterPart {
         }
 
         // Underline
-
         if ($font->getUnderline() !== null) {
             $objWriter->startElement('u');
             $objWriter->writeAttribute('val', $font->getUnderline());
@@ -301,21 +302,17 @@ class Style extends WriterPart {
         }
 
         // Superscript / subscript
-
         if ($font->getSuperscript() === true || $font->getSubscript() === true) {
             $objWriter->startElement('vertAlign');
-
             if ($font->getSuperscript() === true) {
                 $objWriter->writeAttribute('val', 'superscript');
-            } else if ($font->getSubscript() === true) {
+            } elseif ($font->getSubscript() === true) {
                 $objWriter->writeAttribute('val', 'subscript');
             }
-
             $objWriter->endElement();
         }
 
         // Size
-
         if ($font->getSize() !== null) {
             $objWriter->startElement('sz');
             $objWriter->writeAttribute('val', StringHelper::formatNumber($font->getSize()));
@@ -323,7 +320,6 @@ class Style extends WriterPart {
         }
 
         // Foreground color
-
         if ($font->getColor()->getARGB() !== null) {
             $objWriter->startElement('color');
             $objWriter->writeAttribute('rgb', $font->getColor()->getARGB());
@@ -331,7 +327,6 @@ class Style extends WriterPart {
         }
 
         // Name
-
         if ($font->getName() !== null) {
             $objWriter->startElement('name');
             $objWriter->writeAttribute('val', $font->getName());
@@ -344,28 +339,27 @@ class Style extends WriterPart {
     /**
      * Write Border.
      */
-    private function writeBorder(XMLWriter $objWriter, Borders $borders): void{
-
+    private function writeBorder(XMLWriter $objWriter, Borders $borders): void
+    {
         // Write border
         $objWriter->startElement('border');
         // Diagonal?
-
         switch ($borders->getDiagonalDirection()) {
-        case Borders::DIAGONAL_UP:
-            $objWriter->writeAttribute('diagonalUp', 'true');
-            $objWriter->writeAttribute('diagonalDown', 'false');
+            case Borders::DIAGONAL_UP:
+                $objWriter->writeAttribute('diagonalUp', 'true');
+                $objWriter->writeAttribute('diagonalDown', 'false');
 
-            break;
-        case Borders::DIAGONAL_DOWN:
-            $objWriter->writeAttribute('diagonalUp', 'false');
-            $objWriter->writeAttribute('diagonalDown', 'true');
+                break;
+            case Borders::DIAGONAL_DOWN:
+                $objWriter->writeAttribute('diagonalUp', 'false');
+                $objWriter->writeAttribute('diagonalDown', 'true');
 
-            break;
-        case Borders::DIAGONAL_BOTH:
-            $objWriter->writeAttribute('diagonalUp', 'true');
-            $objWriter->writeAttribute('diagonalDown', 'true');
+                break;
+            case Borders::DIAGONAL_BOTH:
+                $objWriter->writeAttribute('diagonalUp', 'true');
+                $objWriter->writeAttribute('diagonalDown', 'true');
 
-            break;
+                break;
         }
 
         // BorderPr
@@ -377,28 +371,30 @@ class Style extends WriterPart {
         $objWriter->endElement();
     }
 
+    /** @var mixed */
+    private static $scrutinizerFalse = false;
+
     /**
      * Write Cell Style Xf.
      */
-    private function writeCellStyleXf(XMLWriter $objWriter, \PhpOffice\PhenyxSpreadsheet\Style\Style $style, Spreadsheet $spreadsheet): void{
-
+    private function writeCellStyleXf(XMLWriter $objWriter, \EphenyxShop\PhenyxSpreadsheet\Style\Style $style, Spreadsheet $spreadsheet): void
+    {
         // xf
         $objWriter->startElement('xf');
-        $objWriter->writeAttribute('xfId', 0);
-        $objWriter->writeAttribute('fontId', (int) $this->getParentWriter()->getFontHashTable()->getIndexForHashCode($style->getFont()->getHashCode()));
-
+        $objWriter->writeAttribute('xfId', '0');
+        $objWriter->writeAttribute('fontId', (string) (int) $this->getParentWriter()->getFontHashTable()->getIndexForHashCode($style->getFont()->getHashCode()));
         if ($style->getQuotePrefix()) {
-            $objWriter->writeAttribute('quotePrefix', 1);
+            $objWriter->writeAttribute('quotePrefix', '1');
         }
 
-        if ($style->getNumberFormat()->getBuiltInFormatCode() === false) {
-            $objWriter->writeAttribute('numFmtId', (int) ($this->getParentWriter()->getNumFmtHashTable()->getIndexForHashCode($style->getNumberFormat()->getHashCode()) + 164));
+        if ($style->getNumberFormat()->getBuiltInFormatCode() === self::$scrutinizerFalse) {
+            $objWriter->writeAttribute('numFmtId', (string) (int) ($this->getParentWriter()->getNumFmtHashTable()->getIndexForHashCode($style->getNumberFormat()->getHashCode()) + 164));
         } else {
-            $objWriter->writeAttribute('numFmtId', (int) $style->getNumberFormat()->getBuiltInFormatCode());
+            $objWriter->writeAttribute('numFmtId', (string) (int) $style->getNumberFormat()->getBuiltInFormatCode());
         }
 
-        $objWriter->writeAttribute('fillId', (int) $this->getParentWriter()->getFillHashTable()->getIndexForHashCode($style->getFill()->getHashCode()));
-        $objWriter->writeAttribute('borderId', (int) $this->getParentWriter()->getBordersHashTable()->getIndexForHashCode($style->getBorders()->getHashCode()));
+        $objWriter->writeAttribute('fillId', (string) (int) $this->getParentWriter()->getFillHashTable()->getIndexForHashCode($style->getFill()->getHashCode()));
+        $objWriter->writeAttribute('borderId', (string) (int) $this->getParentWriter()->getBordersHashTable()->getIndexForHashCode($style->getBorders()->getHashCode()));
 
         // Apply styles?
         $objWriter->writeAttribute('applyFont', ($spreadsheet->getDefaultStyle()->getFont()->getHashCode() != $style->getFont()->getHashCode()) ? '1' : '0');
@@ -406,52 +402,49 @@ class Style extends WriterPart {
         $objWriter->writeAttribute('applyFill', ($spreadsheet->getDefaultStyle()->getFill()->getHashCode() != $style->getFill()->getHashCode()) ? '1' : '0');
         $objWriter->writeAttribute('applyBorder', ($spreadsheet->getDefaultStyle()->getBorders()->getHashCode() != $style->getBorders()->getHashCode()) ? '1' : '0');
         $objWriter->writeAttribute('applyAlignment', ($spreadsheet->getDefaultStyle()->getAlignment()->getHashCode() != $style->getAlignment()->getHashCode()) ? '1' : '0');
-
         if ($style->getProtection()->getLocked() != Protection::PROTECTION_INHERIT || $style->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
             $objWriter->writeAttribute('applyProtection', 'true');
         }
 
         // alignment
         $objWriter->startElement('alignment');
-        $objWriter->writeAttribute('horizontal', $style->getAlignment()->getHorizontal());
-        $objWriter->writeAttribute('vertical', $style->getAlignment()->getVertical());
-
-        $textRotation = 0;
-
-        if ($style->getAlignment()->getTextRotation() >= 0) {
-            $textRotation = $style->getAlignment()->getTextRotation();
-        } else if ($style->getAlignment()->getTextRotation() < 0) {
-            $textRotation = 90 - $style->getAlignment()->getTextRotation();
+        $vertical = Alignment::VERTICAL_ALIGNMENT_FOR_XLSX[$style->getAlignment()->getVertical()] ?? '';
+        $horizontal = Alignment::HORIZONTAL_ALIGNMENT_FOR_XLSX[$style->getAlignment()->getHorizontal()] ?? '';
+        if ($horizontal !== '') {
+            $objWriter->writeAttribute('horizontal', $horizontal);
+        }
+        if ($vertical !== '') {
+            $objWriter->writeAttribute('vertical', $vertical);
         }
 
-        $objWriter->writeAttribute('textRotation', $textRotation);
+        $textRotation = 0;
+        if ($style->getAlignment()->getTextRotation() >= 0) {
+            $textRotation = $style->getAlignment()->getTextRotation();
+        } else {
+            $textRotation = 90 - $style->getAlignment()->getTextRotation();
+        }
+        $objWriter->writeAttribute('textRotation', (string) $textRotation);
 
         $objWriter->writeAttribute('wrapText', ($style->getAlignment()->getWrapText() ? 'true' : 'false'));
         $objWriter->writeAttribute('shrinkToFit', ($style->getAlignment()->getShrinkToFit() ? 'true' : 'false'));
 
         if ($style->getAlignment()->getIndent() > 0) {
-            $objWriter->writeAttribute('indent', $style->getAlignment()->getIndent());
+            $objWriter->writeAttribute('indent', (string) $style->getAlignment()->getIndent());
         }
-
         if ($style->getAlignment()->getReadOrder() > 0) {
-            $objWriter->writeAttribute('readingOrder', $style->getAlignment()->getReadOrder());
+            $objWriter->writeAttribute('readingOrder', (string) $style->getAlignment()->getReadOrder());
         }
-
         $objWriter->endElement();
 
         // protection
-
         if ($style->getProtection()->getLocked() != Protection::PROTECTION_INHERIT || $style->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
             $objWriter->startElement('protection');
-
             if ($style->getProtection()->getLocked() != Protection::PROTECTION_INHERIT) {
                 $objWriter->writeAttribute('locked', ($style->getProtection()->getLocked() == Protection::PROTECTION_PROTECTED ? 'true' : 'false'));
             }
-
             if ($style->getProtection()->getHidden() != Protection::PROTECTION_INHERIT) {
                 $objWriter->writeAttribute('hidden', ($style->getProtection()->getHidden() == Protection::PROTECTION_PROTECTED ? 'true' : 'false'));
             }
-
             $objWriter->endElement();
         }
 
@@ -461,8 +454,8 @@ class Style extends WriterPart {
     /**
      * Write Cell Style Dxf.
      */
-    private function writeCellStyleDxf(XMLWriter $objWriter, \PhpOffice\PhenyxSpreadsheet\Style\Style $style): void{
-
+    private function writeCellStyleDxf(XMLWriter $objWriter, \EphenyxShop\PhenyxSpreadsheet\Style\Style $style): void
+    {
         // dxf
         $objWriter->startElement('dxf');
 
@@ -477,59 +470,50 @@ class Style extends WriterPart {
 
         // alignment
         $objWriter->startElement('alignment');
-
-        if ($style->getAlignment()->getHorizontal() !== null) {
-            $objWriter->writeAttribute('horizontal', $style->getAlignment()->getHorizontal());
+        $horizontal = Alignment::HORIZONTAL_ALIGNMENT_FOR_XLSX[$style->getAlignment()->getHorizontal()] ?? '';
+        if ($horizontal) {
+            $objWriter->writeAttribute('horizontal', $horizontal);
         }
-
-        if ($style->getAlignment()->getVertical() !== null) {
-            $objWriter->writeAttribute('vertical', $style->getAlignment()->getVertical());
+        $vertical = Alignment::VERTICAL_ALIGNMENT_FOR_XLSX[$style->getAlignment()->getVertical()] ?? '';
+        if ($vertical) {
+            $objWriter->writeAttribute('vertical', $vertical);
         }
 
         if ($style->getAlignment()->getTextRotation() !== null) {
             $textRotation = 0;
-
             if ($style->getAlignment()->getTextRotation() >= 0) {
                 $textRotation = $style->getAlignment()->getTextRotation();
-            } else if ($style->getAlignment()->getTextRotation() < 0) {
+            } else {
                 $textRotation = 90 - $style->getAlignment()->getTextRotation();
             }
-
-            $objWriter->writeAttribute('textRotation', $textRotation);
+            $objWriter->writeAttribute('textRotation', (string) $textRotation);
         }
-
         $objWriter->endElement();
 
         // border
         $this->writeBorder($objWriter, $style->getBorders());
 
         // protection
-
-        if (($style->getProtection()->getLocked() !== null) || ($style->getProtection()->getHidden() !== null)) {
-
+        if ((!empty($style->getProtection()->getLocked())) || (!empty($style->getProtection()->getHidden()))) {
             if (
                 $style->getProtection()->getLocked() !== Protection::PROTECTION_INHERIT ||
                 $style->getProtection()->getHidden() !== Protection::PROTECTION_INHERIT
             ) {
                 $objWriter->startElement('protection');
-
                 if (
                     ($style->getProtection()->getLocked() !== null) &&
                     ($style->getProtection()->getLocked() !== Protection::PROTECTION_INHERIT)
                 ) {
                     $objWriter->writeAttribute('locked', ($style->getProtection()->getLocked() == Protection::PROTECTION_PROTECTED ? 'true' : 'false'));
                 }
-
                 if (
                     ($style->getProtection()->getHidden() !== null) &&
                     ($style->getProtection()->getHidden() !== Protection::PROTECTION_INHERIT)
                 ) {
                     $objWriter->writeAttribute('hidden', ($style->getProtection()->getHidden() == Protection::PROTECTION_PROTECTED ? 'true' : 'false'));
                 }
-
                 $objWriter->endElement();
             }
-
         }
 
         $objWriter->endElement();
@@ -540,22 +524,22 @@ class Style extends WriterPart {
      *
      * @param string $name Element name
      */
-    private function writeBorderPr(XMLWriter $objWriter, $name, Border $border): void {
-
+    private function writeBorderPr(XMLWriter $objWriter, $name, Border $border): void
+    {
         // Write BorderPr
-
         if ($border->getBorderStyle() != Border::BORDER_NONE) {
             $objWriter->startElement($name);
             $objWriter->writeAttribute('style', $border->getBorderStyle());
 
             // color
-            $objWriter->startElement('color');
-            $objWriter->writeAttribute('rgb', $border->getColor()->getARGB());
-            $objWriter->endElement();
+            if ($border->getColor()->getARGB() !== null) {
+                $objWriter->startElement('color');
+                $objWriter->writeAttribute('rgb', $border->getColor()->getARGB());
+                $objWriter->endElement();
 
-            $objWriter->endElement();
+                $objWriter->endElement();
+            }
         }
-
     }
 
     /**
@@ -563,29 +547,27 @@ class Style extends WriterPart {
      *
      * @param int $id Number Format identifier
      */
-    private function writeNumFmt(XMLWriter $objWriter, NumberFormat $numberFormat, $id = 0): void{
-
+    private function writeNumFmt(XMLWriter $objWriter, ?NumberFormat $numberFormat, $id = 0): void
+    {
         // Translate formatcode
-        $formatCode = $numberFormat->getFormatCode();
+        $formatCode = ($numberFormat === null) ? null : $numberFormat->getFormatCode();
 
         // numFmt
-
         if ($formatCode !== null) {
             $objWriter->startElement('numFmt');
-            $objWriter->writeAttribute('numFmtId', ($id + 164));
+            $objWriter->writeAttribute('numFmtId', (string) ($id + 164));
             $objWriter->writeAttribute('formatCode', $formatCode);
             $objWriter->endElement();
         }
-
     }
 
     /**
      * Get an array of all styles.
      *
-     * @return \PhpOffice\PhenyxSpreadsheet\Style\Style[] All styles in PhenyxSpreadsheet
+     * @return \EphenyxShop\PhenyxSpreadsheet\Style\Style[] All styles in PhenyxSpreadsheet
      */
-    public function allStyles(Spreadsheet $spreadsheet) {
-
+    public function allStyles(Spreadsheet $spreadsheet)
+    {
         return $spreadsheet->getCellXfCollection();
     }
 
@@ -594,23 +576,18 @@ class Style extends WriterPart {
      *
      * @return Conditional[] All conditional styles in PhenyxSpreadsheet
      */
-    public function allConditionalStyles(Spreadsheet $spreadsheet) {
-
+    public function allConditionalStyles(Spreadsheet $spreadsheet)
+    {
         // Get an array of all styles
         $aStyles = [];
 
         $sheetCount = $spreadsheet->getSheetCount();
-
         for ($i = 0; $i < $sheetCount; ++$i) {
-
             foreach ($spreadsheet->getSheet($i)->getConditionalStylesCollection() as $conditionalStyles) {
-
                 foreach ($conditionalStyles as $conditionalStyle) {
                     $aStyles[] = $conditionalStyle;
                 }
-
             }
-
         }
 
         return $aStyles;
@@ -621,8 +598,8 @@ class Style extends WriterPart {
      *
      * @return Fill[] All fills in PhenyxSpreadsheet
      */
-    public function allFills(Spreadsheet $spreadsheet) {
-
+    public function allFills(Spreadsheet $spreadsheet)
+    {
         // Get an array of unique fills
         $aFills = [];
 
@@ -636,14 +613,11 @@ class Style extends WriterPart {
         $aFills[] = $fill1;
         // The remaining fills
         $aStyles = $this->allStyles($spreadsheet);
-        /** @var \PhpOffice\PhenyxSpreadsheet\Style\Style $style */
-
+        /** @var \EphenyxShop\PhenyxSpreadsheet\Style\Style $style */
         foreach ($aStyles as $style) {
-
             if (!isset($aFills[$style->getFill()->getHashCode()])) {
                 $aFills[$style->getFill()->getHashCode()] = $style->getFill();
             }
-
         }
 
         return $aFills;
@@ -654,20 +628,17 @@ class Style extends WriterPart {
      *
      * @return Font[] All fonts in PhenyxSpreadsheet
      */
-    public function allFonts(Spreadsheet $spreadsheet) {
-
+    public function allFonts(Spreadsheet $spreadsheet)
+    {
         // Get an array of unique fonts
         $aFonts = [];
         $aStyles = $this->allStyles($spreadsheet);
 
-        /** @var \PhpOffice\PhenyxSpreadsheet\Style\Style $style */
-
+        /** @var \EphenyxShop\PhenyxSpreadsheet\Style\Style $style */
         foreach ($aStyles as $style) {
-
             if (!isset($aFonts[$style->getFont()->getHashCode()])) {
                 $aFonts[$style->getFont()->getHashCode()] = $style->getFont();
             }
-
         }
 
         return $aFonts;
@@ -678,20 +649,17 @@ class Style extends WriterPart {
      *
      * @return Borders[] All borders in PhenyxSpreadsheet
      */
-    public function allBorders(Spreadsheet $spreadsheet) {
-
+    public function allBorders(Spreadsheet $spreadsheet)
+    {
         // Get an array of unique borders
         $aBorders = [];
         $aStyles = $this->allStyles($spreadsheet);
 
-        /** @var \PhpOffice\PhenyxSpreadsheet\Style\Style $style */
-
+        /** @var \EphenyxShop\PhenyxSpreadsheet\Style\Style $style */
         foreach ($aStyles as $style) {
-
             if (!isset($aBorders[$style->getBorders()->getHashCode()])) {
                 $aBorders[$style->getBorders()->getHashCode()] = $style->getBorders();
             }
-
         }
 
         return $aBorders;
@@ -702,23 +670,19 @@ class Style extends WriterPart {
      *
      * @return NumberFormat[] All number formats in PhenyxSpreadsheet
      */
-    public function allNumberFormats(Spreadsheet $spreadsheet) {
-
+    public function allNumberFormats(Spreadsheet $spreadsheet)
+    {
         // Get an array of unique number formats
         $aNumFmts = [];
         $aStyles = $this->allStyles($spreadsheet);
 
-        /** @var \PhpOffice\PhenyxSpreadsheet\Style\Style $style */
-
+        /** @var \EphenyxShop\PhenyxSpreadsheet\Style\Style $style */
         foreach ($aStyles as $style) {
-
             if ($style->getNumberFormat()->getBuiltInFormatCode() === false && !isset($aNumFmts[$style->getNumberFormat()->getHashCode()])) {
                 $aNumFmts[$style->getNumberFormat()->getHashCode()] = $style->getNumberFormat();
             }
-
         }
 
         return $aNumFmts;
     }
-
 }

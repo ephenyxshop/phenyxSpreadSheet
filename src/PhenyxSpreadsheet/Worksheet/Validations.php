@@ -5,24 +5,25 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 use EphenyxShop\PhenyxSpreadsheet\Cell\AddressRange;
 use EphenyxShop\PhenyxSpreadsheet\Cell\CellAddress;
 use EphenyxShop\PhenyxSpreadsheet\Cell\CellRange;
+use EphenyxShop\PhenyxSpreadsheet\Exception as SpreadsheetException;
 
-class Validations {
-
+class Validations
+{
     /**
      * Validate a cell address.
      *
      * @param null|array<int>|CellAddress|string $cellAddress Coordinate of the cell as a string, eg: 'C5';
      *               or as an array of [$columnIndex, $row] (e.g. [3, 5]), or a CellAddress object.
      */
-    public static function validateCellAddress($cellAddress): string {
-
+    public static function validateCellAddress($cellAddress): string
+    {
         if (is_string($cellAddress)) {
             [$worksheet, $address] = Worksheet::extractSheetTitle($cellAddress, true);
 //            if (!empty($worksheet) && $worksheet !== $this->getTitle()) {
-            //                throw new Exception('Reference is not for this worksheet');
-            //            }
+//                throw new Exception('Reference is not for this worksheet');
+//            }
 
-            return empty($worksheet) ? strtoupper($address) : $worksheet . '!' . strtoupper($address);
+            return empty($worksheet) ? strtoupper("$address") : $worksheet . '!' . strtoupper("$address");
         }
 
         if (is_array($cellAddress)) {
@@ -39,15 +40,13 @@ class Validations {
      *               or as an array of [$fromColumnIndex, $fromRow, $toColumnIndex, $toRow] (e.g. [3, 5, 6, 12]),
      *               or as a CellAddress or AddressRange object.
      */
-    public static function validateCellOrCellRange($cellRange): string {
-
+    public static function validateCellOrCellRange($cellRange): string
+    {
         if (is_string($cellRange) || is_numeric($cellRange)) {
-            $cellRange = (string) $cellRange;
-            // Convert a single column reference like 'A' to 'A:A'
-            $cellRange = (string) preg_replace('/^([A-Z]+)$/', '${1}:${1}', $cellRange);
-            // Convert a single row reference like '1' to '1:1'
-            $cellRange = (string) preg_replace('/^(\d+)$/', '${1}:${1}', $cellRange);
-        } else if (is_object($cellRange) && $cellRange instanceof CellAddress) {
+            // Convert a single column reference like 'A' to 'A:A',
+            //    a single row reference like '1' to '1:1'
+            $cellRange = (string) preg_replace('/^([A-Z]+|\d+)$/', '${1}:${1}', (string) $cellRange);
+        } elseif (is_object($cellRange) && $cellRange instanceof CellAddress) {
             $cellRange = new CellRange($cellRange, $cellRange);
         }
 
@@ -61,44 +60,56 @@ class Validations {
      *               or as an array of [$fromColumnIndex, $fromRow, $toColumnIndex, $toRow] (e.g. [3, 5, 6, 12]),
      *               or as an AddressRange object.
      */
-    public static function validateCellRange($cellRange): string {
-
+    public static function validateCellRange($cellRange): string
+    {
         if (is_string($cellRange)) {
             [$worksheet, $addressRange] = Worksheet::extractSheetTitle($cellRange, true);
 
             // Convert Column ranges like 'A:C' to 'A1:C1048576'
-            $addressRange = (string) preg_replace('/^([A-Z]+):([A-Z]+)$/', '${1}1:${2}1048576', $addressRange);
-            // Convert Row ranges like '1:3' to 'A1:XFD3'
-            $addressRange = (string) preg_replace('/^(\\d+):(\\d+)$/', 'A${1}:XFD${2}', $addressRange);
+            //      or Row ranges like '1:3' to 'A1:XFD3'
+            $addressRange = (string) preg_replace(
+                ['/^([A-Z]+):([A-Z]+)$/i', '/^(\\d+):(\\d+)$/'],
+                ['${1}1:${2}1048576', 'A${1}:XFD${2}'],
+                $addressRange
+            );
 
             return empty($worksheet) ? strtoupper($addressRange) : $worksheet . '!' . strtoupper($addressRange);
         }
 
         if (is_array($cellRange)) {
-            [$from, $to] = array_chunk($cellRange, 2);
+            switch (count($cellRange)) {
+                case 2:
+                    $from = [$cellRange[0], $cellRange[1]];
+                    $to = [$cellRange[0], $cellRange[1]];
+
+                    break;
+                case 4:
+                    $from = [$cellRange[0], $cellRange[1]];
+                    $to = [$cellRange[2], $cellRange[3]];
+
+                    break;
+                default:
+                    throw new SpreadsheetException('CellRange array length must be 2 or 4');
+            }
             $cellRange = new CellRange(CellAddress::fromColumnRowArray($from), CellAddress::fromColumnRowArray($to));
         }
 
         return (string) $cellRange;
     }
 
-    public static function definedNameToCoordinate(string $coordinate, Worksheet $worksheet): string{
-
+    public static function definedNameToCoordinate(string $coordinate, Worksheet $worksheet): string
+    {
         // Uppercase coordinate
-        $testCoordinate = strtoupper($coordinate);
+        $coordinate = strtoupper($coordinate);
         // Eliminate leading equal sign
         $testCoordinate = (string) preg_replace('/^=/', '', $coordinate);
-        $defined = $worksheet->getParent()->getDefinedName($testCoordinate, $worksheet);
-
+        $defined = $worksheet->getParentOrThrow()->getDefinedName($testCoordinate, $worksheet);
         if ($defined !== null) {
-
             if ($defined->getWorksheet() === $worksheet && !$defined->isFormula()) {
                 $coordinate = (string) preg_replace('/^=/', '', $defined->getValue());
             }
-
         }
 
         return $coordinate;
     }
-
 }

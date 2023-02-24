@@ -4,10 +4,11 @@ namespace EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
 use EphenyxShop\PhenyxSpreadsheet\Style\NumberFormat;
 
-class PercentageFormatter extends BaseFormatter {
-
-    public static function format($value, string $format): string {
-
+class PercentageFormatter extends BaseFormatter
+{
+    /** @param float|int $value */
+    public static function format($value, string $format): string
+    {
         if ($format === NumberFormat::FORMAT_PERCENTAGE) {
             return round((100 * $value), 0) . '%';
         }
@@ -20,30 +21,28 @@ class PercentageFormatter extends BaseFormatter {
 
         $format = str_replace('%', '%%', $format);
         $wholePartSize = strlen((string) floor($value));
-        $decimalPartSize = $placeHolders = 0;
+        $decimalPartSize = 0;
+        $placeHolders = '';
         // Number of decimals
-
         if (preg_match('/\.([?0]+)/u', $format, $matches)) {
             $decimalPartSize = strlen($matches[1]);
             $vMinDecimalCount = strlen(rtrim($matches[1], '?'));
             $decimalPartSize = min(max($vMinDecimalCount, $vDecimalCount), $decimalPartSize);
             $placeHolders = str_repeat(' ', strlen($matches[1]) - $decimalPartSize);
         }
-
         // Number of digits to display before the decimal
-
-        if (preg_match('/([#0,]+)\./u', $format, $matches)) {
-            $wholePartSize = max($wholePartSize, strlen($matches[1]));
+        if (preg_match('/([#0,]+)\.?/u', $format, $matches)) {
+            $firstZero = preg_replace('/^[#,]*/', '', $matches[1]) ?? '';
+            $wholePartSize = max($wholePartSize, strlen($firstZero));
         }
 
-        $wholePartSize += $decimalPartSize;
-        $replacement = "{$wholePartSize}.{$decimalPartSize}";
-        $mask = preg_replace('/[#0,]+\.?[?#0,]*/ui', "%{$replacement}f{$placeHolders}", $format);
+        $wholePartSize += $decimalPartSize + (int) ($decimalPartSize > 0);
+        $replacement = "0{$wholePartSize}.{$decimalPartSize}";
+        $mask = (string) preg_replace('/[#0,]+\.?[?#0,]*/ui', "%{$replacement}f{$placeHolders}", $format);
 
         /** @var float */
         $valueFloat = $value;
 
         return sprintf($mask, round($valueFloat, $decimalPartSize));
     }
-
 }

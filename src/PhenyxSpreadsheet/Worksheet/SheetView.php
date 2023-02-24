@@ -4,14 +4,14 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
 use EphenyxShop\PhenyxSpreadsheet\Exception as PhenyxSpreadsheetException;
 
-class SheetView {
-
+class SheetView
+{
     // Sheet View types
     const SHEETVIEW_NORMAL = 'normal';
     const SHEETVIEW_PAGE_LAYOUT = 'pageLayout';
     const SHEETVIEW_PAGE_BREAK_PREVIEW = 'pageBreakPreview';
 
-    private static $sheetViewTypes = [
+    private const SHEET_VIEW_TYPES = [
         self::SHEETVIEW_NORMAL,
         self::SHEETVIEW_PAGE_LAYOUT,
         self::SHEETVIEW_PAGE_BREAK_PREVIEW,
@@ -22,7 +22,7 @@ class SheetView {
      *
      * Valid values range from 10 to 400.
      *
-     * @var int
+     * @var ?int
      */
     private $zoomScale = 100;
 
@@ -31,7 +31,7 @@ class SheetView {
      *
      * Valid values range from 10 to 400.
      *
-     * @var int
+     * @var ?int
      */
     private $zoomScaleNormal = 100;
 
@@ -57,15 +57,17 @@ class SheetView {
     /**
      * Create a new SheetView.
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Get ZoomScale.
      *
-     * @return int
+     * @return ?int
      */
-    public function getZoomScale() {
-
+    public function getZoomScale()
+    {
         return $this->zoomScale;
     }
 
@@ -73,16 +75,15 @@ class SheetView {
      * Set ZoomScale.
      * Valid values range from 10 to 400.
      *
-     * @param int $zoomScale
+     * @param ?int $zoomScale
      *
      * @return $this
      */
-    public function setZoomScale($zoomScale) {
-
+    public function setZoomScale($zoomScale)
+    {
         // Microsoft Office Excel 2007 only allows setting a scale between 10 and 400 via the user interface,
         // but it is apparently still able to handle any scale >= 1
-
-        if (($zoomScale >= 1) || $zoomScale === null) {
+        if ($zoomScale === null || $zoomScale >= 1) {
             $this->zoomScale = $zoomScale;
         } else {
             throw new PhenyxSpreadsheetException('Scale must be greater than or equal to 1.');
@@ -94,10 +95,10 @@ class SheetView {
     /**
      * Get ZoomScaleNormal.
      *
-     * @return int
+     * @return ?int
      */
-    public function getZoomScaleNormal() {
-
+    public function getZoomScaleNormal()
+    {
         return $this->zoomScaleNormal;
     }
 
@@ -105,13 +106,13 @@ class SheetView {
      * Set ZoomScale.
      * Valid values range from 10 to 400.
      *
-     * @param int $zoomScaleNormal
+     * @param ?int $zoomScaleNormal
      *
      * @return $this
      */
-    public function setZoomScaleNormal($zoomScaleNormal) {
-
-        if (($zoomScaleNormal >= 1) || $zoomScaleNormal === null) {
+    public function setZoomScaleNormal($zoomScaleNormal)
+    {
+        if ($zoomScaleNormal === null || $zoomScaleNormal >= 1) {
             $this->zoomScaleNormal = $zoomScaleNormal;
         } else {
             throw new PhenyxSpreadsheetException('Scale must be greater than or equal to 1.');
@@ -125,16 +126,16 @@ class SheetView {
      *
      * @param bool $showZeros
      */
-    public function setShowZeros($showZeros): void{
-
+    public function setShowZeros($showZeros): void
+    {
         $this->showZeros = $showZeros;
     }
 
     /**
      * @return bool
      */
-    public function getShowZeros() {
-
+    public function getShowZeros()
+    {
         return $this->showZeros;
     }
 
@@ -143,8 +144,8 @@ class SheetView {
      *
      * @return string
      */
-    public function getView() {
-
+    public function getView()
+    {
         return $this->sheetviewType;
     }
 
@@ -156,19 +157,17 @@ class SheetView {
      *        'pageLayout'        self::SHEETVIEW_PAGE_LAYOUT
      *        'pageBreakPreview'  self::SHEETVIEW_PAGE_BREAK_PREVIEW
      *
-     * @param string $sheetViewType
+     * @param ?string $sheetViewType
      *
      * @return $this
      */
-    public function setView($sheetViewType) {
-
+    public function setView($sheetViewType)
+    {
         // MS Excel 2007 allows setting the view to 'normal', 'pageLayout' or 'pageBreakPreview' via the user interface
-
         if ($sheetViewType === null) {
             $sheetViewType = self::SHEETVIEW_NORMAL;
         }
-
-        if (in_array($sheetViewType, self::$sheetViewTypes)) {
+        if (in_array($sheetViewType, self::SHEET_VIEW_TYPES)) {
             $this->sheetviewType = $sheetViewType;
         } else {
             throw new PhenyxSpreadsheetException('Invalid sheetview layout type.');
@@ -180,20 +179,15 @@ class SheetView {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
-
 }

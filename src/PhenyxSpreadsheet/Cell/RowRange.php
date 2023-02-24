@@ -4,8 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Cell;
 
 use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 
-class RowRange implements AddressRange {
-
+class RowRange implements AddressRange
+{
     /**
      * @var ?Worksheet
      */
@@ -21,43 +21,43 @@ class RowRange implements AddressRange {
      */
     protected $to;
 
-    public function __construct(int $from,  ? int $to = null,  ? Worksheet $worksheet = null) {
-
+    public function __construct(int $from, ?int $to = null, ?Worksheet $worksheet = null)
+    {
         $this->validateFromTo($from, $to ?? $from);
         $this->worksheet = $worksheet;
     }
 
-    public static function fromArray(array $array,  ? Worksheet $worksheet = null) : self {
-
+    public static function fromArray(array $array, ?Worksheet $worksheet = null): self
+    {
         [$from, $to] = $array;
 
         return new self($from, $to, $worksheet);
     }
 
-    private function validateFromTo(int $from, int $to) : void{
-
+    private function validateFromTo(int $from, int $to): void
+    {
         // Identify actual top and bottom values (in case we've been given bottom and top)
         $this->from = min($from, $to);
         $this->to = max($from, $to);
     }
 
-    public function from() : int {
-
+    public function from(): int
+    {
         return $this->from;
     }
 
-    public function to() : int {
-
+    public function to(): int
+    {
         return $this->to;
     }
 
-    public function rowCount() : int {
-
+    public function rowCount(): int
+    {
         return $this->to - $this->from + 1;
     }
 
-    public function shiftRight(int $offset = 1): self{
-
+    public function shiftRight(int $offset = 1): self
+    {
         $newFrom = $this->from + $offset;
         $newFrom = ($newFrom < 1) ? 1 : $newFrom;
 
@@ -67,21 +67,21 @@ class RowRange implements AddressRange {
         return new self($newFrom, $newTo, $this->worksheet);
     }
 
-    public function shiftLeft(int $offset = 1): self {
-
+    public function shiftLeft(int $offset = 1): self
+    {
         return $this->shiftRight(0 - $offset);
     }
 
-    public function toCellRange(): CellRange {
-
+    public function toCellRange(): CellRange
+    {
         return new CellRange(
             CellAddress::fromColumnAndRow(Coordinate::columnIndexFromString('A'), $this->from, $this->worksheet),
             CellAddress::fromColumnAndRow(Coordinate::columnIndexFromString(AddressRange::MAX_COLUMN), $this->to)
         );
     }
 
-    public function __toString(): string {
-
+    public function __toString(): string
+    {
         if ($this->worksheet !== null) {
             $title = str_replace("'", "''", $this->worksheet->getTitle());
 
@@ -90,5 +90,4 @@ class RowRange implements AddressRange {
 
         return "{$this->from}:{$this->to}";
     }
-
 }

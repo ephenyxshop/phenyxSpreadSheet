@@ -6,8 +6,8 @@ use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Functions;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class Percentiles {
-
+class Percentiles
+{
     public const RANK_SORT_DESCENDING = 0;
 
     public const RANK_SORT_ASCENDING = 1;
@@ -24,8 +24,8 @@ class Percentiles {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function PERCENTILE(...$args) {
-
+    public static function PERCENTILE(...$args)
+    {
         $aArgs = Functions::flattenArray($args);
 
         // Calculate
@@ -43,17 +43,14 @@ class Percentiles {
 
         $mArgs = self::percentileFilterValues($aArgs);
         $mValueCount = count($mArgs);
-
         if ($mValueCount > 0) {
             sort($mArgs);
             $count = Counts::COUNT($mArgs);
             $index = $entry * ($count - 1);
             $iBase = floor($index);
-
             if ($index == $iBase) {
                 return $mArgs[$index];
             }
-
             $iNext = $iBase + 1;
             $iProportion = $index - $iBase;
 
@@ -77,8 +74,8 @@ class Percentiles {
      *
      * @return float|string (string if result is an error)
      */
-    public static function PERCENTRANK($valueSet, $value, $significance = 3) {
-
+    public static function PERCENTRANK($valueSet, $value, $significance = 3)
+    {
         $valueSet = Functions::flattenArray($valueSet);
         $value = Functions::flattenSingleValue($value);
         $significance = ($significance === null) ? 3 : Functions::flattenSingleValue($significance);
@@ -92,34 +89,28 @@ class Percentiles {
 
         $valueSet = self::rankFilterValues($valueSet);
         $valueCount = count($valueSet);
-
         if ($valueCount == 0) {
             return ExcelError::NA();
         }
-
         sort($valueSet, SORT_NUMERIC);
 
         $valueAdjustor = $valueCount - 1;
-
         if (($value < $valueSet[0]) || ($value > $valueSet[$valueAdjustor])) {
             return ExcelError::NA();
         }
 
         $pos = array_search($value, $valueSet);
-
         if ($pos === false) {
             $pos = 0;
             $testValue = $valueSet[0];
-
             while ($testValue < $value) {
                 $testValue = $valueSet[++$pos];
             }
-
             --$pos;
             $pos += (($value - $valueSet[$pos]) / ($testValue - $valueSet[$pos]));
         }
 
-        return round($pos / $valueAdjustor, $significance);
+        return round(((float) $pos) / $valueAdjustor, $significance);
     }
 
     /**
@@ -134,8 +125,8 @@ class Percentiles {
      *
      * @return float|string The result, or a string containing an error
      */
-    public static function QUARTILE(...$args) {
-
+    public static function QUARTILE(...$args)
+    {
         $aArgs = Functions::flattenArray($args);
         $entry = array_pop($aArgs);
 
@@ -147,7 +138,6 @@ class Percentiles {
 
         $entry = floor($entry);
         $entry /= 4;
-
         if (($entry < 0) || ($entry > 1)) {
             return ExcelError::NAN();
         }
@@ -166,8 +156,8 @@ class Percentiles {
      *
      * @return float|string The result, or a string containing an error (0 = Descending, 1 = Ascending)
      */
-    public static function RANK($value, $valueSet, $order = self::RANK_SORT_DESCENDING) {
-
+    public static function RANK($value, $valueSet, $order = self::RANK_SORT_DESCENDING)
+    {
         $value = Functions::flattenSingleValue($value);
         $valueSet = Functions::flattenArray($valueSet);
         $order = ($order === null) ? self::RANK_SORT_DESCENDING : Functions::flattenSingleValue($order);
@@ -180,7 +170,6 @@ class Percentiles {
         }
 
         $valueSet = self::rankFilterValues($valueSet);
-
         if ($order === self::RANK_SORT_DESCENDING) {
             rsort($valueSet, SORT_NUMERIC);
         } else {
@@ -188,7 +177,6 @@ class Percentiles {
         }
 
         $pos = array_search($value, $valueSet);
-
         if ($pos === false) {
             return ExcelError::NA();
         }
@@ -196,26 +184,23 @@ class Percentiles {
         return ++$pos;
     }
 
-    protected static function percentileFilterValues(array $dataSet) {
-
+    protected static function percentileFilterValues(array $dataSet): array
+    {
         return array_filter(
             $dataSet,
             function ($value): bool {
-
                 return is_numeric($value) && !is_string($value);
             }
         );
     }
 
-    protected static function rankFilterValues(array $dataSet) {
-
+    protected static function rankFilterValues(array $dataSet): array
+    {
         return array_filter(
             $dataSet,
             function ($value): bool {
-
                 return is_numeric($value);
             }
         );
     }
-
 }

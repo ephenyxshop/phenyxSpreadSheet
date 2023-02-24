@@ -4,7 +4,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Chart\Renderer;
 
 use EphenyxShop\PhenyxSpreadsheet\Chart\Chart;
 
-interface IRenderer {
+interface IRenderer
+{
     /**
      * IRenderer constructor.
      */

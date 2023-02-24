@@ -4,12 +4,12 @@ namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
 use EphenyxShop\PhenyxSpreadsheet\Helper\Dimension as CssDimension;
 
-class RowDimension extends Dimension {
-
+class RowDimension extends Dimension
+{
     /**
      * Row index.
      *
-     * @var int
+     * @var ?int
      */
     private $rowIndex;
 
@@ -32,10 +32,10 @@ class RowDimension extends Dimension {
     /**
      * Create a new RowDimension.
      *
-     * @param int $index Numeric row index
+     * @param ?int $index Numeric row index
      */
-    public function __construct($index = 0) {
-
+    public function __construct($index = 0)
+    {
         // Initialise values
         $this->rowIndex = $index;
 
@@ -46,8 +46,8 @@ class RowDimension extends Dimension {
     /**
      * Get Row Index.
      */
-    public function getRowIndex(): int {
-
+    public function getRowIndex(): ?int
+    {
         return $this->rowIndex;
     }
 
@@ -56,8 +56,8 @@ class RowDimension extends Dimension {
      *
      * @return $this
      */
-    public function setRowIndex(int $index) {
-
+    public function setRowIndex(int $index)
+    {
         $this->rowIndex = $index;
 
         return $this;
@@ -71,11 +71,11 @@ class RowDimension extends Dimension {
      *
      * @return float
      */
-    public function getRowHeight( ? string $unitOfMeasure = null) {
-
+    public function getRowHeight(?string $unitOfMeasure = null)
+    {
         return ($unitOfMeasure === null || $this->height < 0)
-        ? $this->height
-        : (new CssDimension($this->height . CssDimension::UOM_POINTS))->toUnit($unitOfMeasure);
+            ? $this->height
+            : (new CssDimension($this->height . CssDimension::UOM_POINTS))->toUnit($unitOfMeasure);
     }
 
     /**
@@ -87,11 +87,11 @@ class RowDimension extends Dimension {
      *
      * @return $this
      */
-    public function setRowHeight($height,  ? string $unitOfMeasure = null) {
-
+    public function setRowHeight($height, ?string $unitOfMeasure = null)
+    {
         $this->height = ($unitOfMeasure === null || $height < 0)
-        ? $height
-        : (new CssDimension("{$height}{$unitOfMeasure}"))->height();
+            ? $height
+            : (new CssDimension("{$height}{$unitOfMeasure}"))->height();
 
         return $this;
     }
@@ -99,8 +99,8 @@ class RowDimension extends Dimension {
     /**
      * Get ZeroHeight.
      */
-    public function getZeroHeight() : bool {
-
+    public function getZeroHeight(): bool
+    {
         return $this->zeroHeight;
     }
 
@@ -109,8 +109,8 @@ class RowDimension extends Dimension {
      *
      * @return $this
      */
-    public function setZeroHeight(bool $zeroHeight) {
-
+    public function setZeroHeight(bool $zeroHeight)
+    {
         $this->zeroHeight = $zeroHeight;
 
         return $this;

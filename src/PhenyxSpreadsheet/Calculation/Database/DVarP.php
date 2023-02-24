@@ -2,10 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\Variances;
 
-class DVarP extends DatabaseAbstract {
-
+class DVarP extends DatabaseAbstract
+{
     /**
      * DVARP.
      *
@@ -30,19 +31,17 @@ class DVarP extends DatabaseAbstract {
      *                                        the column label in which you specify a condition for the
      *                                        column.
      *
-     * @return null|float|string (string if result is an error)
+     * @return float|string (string if result is an error)
      */
-    public static function evaluate($database, $field, $criteria) {
-
+    public static function evaluate($database, $field, $criteria)
+    {
         $field = self::fieldExtract($database, $field);
-
         if ($field === null) {
-            return null;
+            return ExcelError::VALUE();
         }
 
         return Variances::VARP(
             self::getFilteredColumn($database, $field, $criteria)
         );
     }
-
 }

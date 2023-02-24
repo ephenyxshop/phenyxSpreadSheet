@@ -2,10 +2,11 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Database;
 
+use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Statistical\StandardDeviations;
 
-class DStDevP extends DatabaseAbstract {
-
+class DStDevP extends DatabaseAbstract
+{
     /**
      * DSTDEVP.
      *
@@ -30,19 +31,17 @@ class DStDevP extends DatabaseAbstract {
      *                                        the column label in which you specify a condition for the
      *                                        column.
      *
-     * @return null|float|string
+     * @return float|string
      */
-    public static function evaluate($database, $field, $criteria) {
-
+    public static function evaluate($database, $field, $criteria)
+    {
         $field = self::fieldExtract($database, $field);
-
         if ($field === null) {
-            return null;
+            return ExcelError::VALUE();
         }
 
         return StandardDeviations::STDEVP(
             self::getFilteredColumn($database, $field, $criteria)
         );
     }
-
 }

@@ -5,13 +5,13 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Engineering;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Information\ExcelError;
 
-class EngineeringValidations {
-
+class EngineeringValidations
+{
     /**
      * @param mixed $value
      */
-    public static function validateFloat($value): float {
-
+    public static function validateFloat($value): float
+    {
         if (!is_numeric($value)) {
             throw new Exception(ExcelError::VALUE());
         }
@@ -22,13 +22,12 @@ class EngineeringValidations {
     /**
      * @param mixed $value
      */
-    public static function validateInt($value): int {
-
+    public static function validateInt($value): int
+    {
         if (!is_numeric($value)) {
             throw new Exception(ExcelError::VALUE());
         }
 
         return (int) floor((float) $value);
     }
-
 }

@@ -5,8 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Calculation\MathTrig;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\ArrayEnabled;
 use EphenyxShop\PhenyxSpreadsheet\Calculation\Exception;
 
-class IntClass {
-
+class IntClass
+{
     use ArrayEnabled;
 
     /**
@@ -19,12 +19,12 @@ class IntClass {
      *
      * @param array|float $number Number to cast to an integer, or can be an array of numbers
      *
-     * @return array|string Integer value, or a string containing an error
+     * @return array|int|string Integer value, or a string containing an error
      *         If an array of numbers is passed as the argument, then the returned result will also be an array
      *            with the same dimensions
      */
-    public static function evaluate($number) {
-
+    public static function evaluate($number)
+    {
         if (is_array($number)) {
             return self::evaluateSingleArgumentArray([self::class, __FUNCTION__], $number);
         }
@@ -37,5 +37,4 @@ class IntClass {
 
         return (int) floor($number);
     }
-
 }

@@ -18,8 +18,8 @@ use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
 use XMLReader;
 
-class Gnumeric extends BaseReader {
-
+class Gnumeric extends BaseReader
+{
     const NAMESPACE_GNM = 'http://www.gnumeric.org/v10.dtd'; // gmr in old sheets
 
     const NAMESPACE_XSI = 'http://www.w3.org/2001/XMLSchema-instance';
@@ -68,8 +68,8 @@ class Gnumeric extends BaseReader {
     /**
      * Create a new Gnumeric.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         parent::__construct();
         $this->referenceHelper = ReferenceHelper::getInstance();
         $this->securityScanner = XmlScanner::getInstance($this);
@@ -78,29 +78,26 @@ class Gnumeric extends BaseReader {
     /**
      * Can the current IReader read the file?
      */
-    public function canRead(string $filename): bool {
-
+    public function canRead(string $filename): bool
+    {
         // Check if gzlib functions are available
-
         if (File::testFileNoThrow($filename) && function_exists('gzread')) {
             // Read signature data (first 3 bytes)
             $fh = fopen($filename, 'rb');
-
             if ($fh !== false) {
                 $data = fread($fh, 2);
                 fclose($fh);
             }
-
         }
 
         return isset($data) && $data === chr(0x1F) . chr(0x8B);
     }
 
-    private static function matchXml(XMLReader $xml, string $expectedLocalName): bool {
-
+    private static function matchXml(XMLReader $xml, string $expectedLocalName): bool
+    {
         return $xml->namespaceURI === self::NAMESPACE_GNM
-        && $xml->localName === $expectedLocalName
-        && $xml->nodeType === XMLReader::ELEMENT;
+            && $xml->localName === $expectedLocalName
+            && $xml->nodeType === XMLReader::ELEMENT;
     }
 
     /**
@@ -110,26 +107,23 @@ class Gnumeric extends BaseReader {
      *
      * @return array
      */
-    public function listWorksheetNames($filename) {
-
+    public function listWorksheetNames($filename)
+    {
         File::assertFile($filename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->getSecurityScannerOrThrow()->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetNames = [];
-
         while ($xml->read()) {
-
             if (self::matchXml($xml, 'SheetName')) {
                 $xml->read(); //    Move onto the value node
                 $worksheetNames[] = (string) $xml->value;
-            } else if (self::matchXml($xml, 'Sheets')) {
+            } elseif (self::matchXml($xml, 'Sheets')) {
                 //    break out of the loop once we've got our sheet names rather than parse the entire file
                 break;
             }
-
         }
 
         return $worksheetNames;
@@ -142,49 +136,43 @@ class Gnumeric extends BaseReader {
      *
      * @return array
      */
-    public function listWorksheetInfo($filename) {
-
+    public function listWorksheetInfo($filename)
+    {
         File::assertFile($filename);
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanner->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->getSecurityScannerOrThrow()->scanFile('compress.zlib://' . realpath($filename)), null, Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetInfo = [];
-
         while ($xml->read()) {
-
             if (self::matchXml($xml, 'Sheet')) {
                 $tmpInfo = [
-                    'worksheetName'    => '',
+                    'worksheetName' => '',
                     'lastColumnLetter' => 'A',
-                    'lastColumnIndex'  => 0,
-                    'totalRows'        => 0,
-                    'totalColumns'     => 0,
+                    'lastColumnIndex' => 0,
+                    'totalRows' => 0,
+                    'totalColumns' => 0,
                 ];
 
                 while ($xml->read()) {
-
                     if (self::matchXml($xml, 'Name')) {
                         $xml->read(); //    Move onto the value node
                         $tmpInfo['worksheetName'] = (string) $xml->value;
-                    } else if (self::matchXml($xml, 'MaxCol')) {
+                    } elseif (self::matchXml($xml, 'MaxCol')) {
                         $xml->read(); //    Move onto the value node
                         $tmpInfo['lastColumnIndex'] = (int) $xml->value;
                         $tmpInfo['totalColumns'] = (int) $xml->value + 1;
-                    } else if (self::matchXml($xml, 'MaxRow')) {
+                    } elseif (self::matchXml($xml, 'MaxRow')) {
                         $xml->read(); //    Move onto the value node
                         $tmpInfo['totalRows'] = (int) $xml->value + 1;
 
                         break;
                     }
-
                 }
-
                 $tmpInfo['lastColumnLetter'] = Coordinate::stringFromColumnIndex($tmpInfo['lastColumnIndex'] + 1);
                 $worksheetInfo[] = $tmpInfo;
             }
-
         }
 
         return $worksheetInfo;
@@ -195,17 +183,14 @@ class Gnumeric extends BaseReader {
      *
      * @return string
      */
-    private function gzfileGetContents($filename) {
-
+    private function gzfileGetContents($filename)
+    {
         $file = @gzopen($filename, 'rb');
         $data = '';
-
         if ($file !== false) {
-
             while (!gzeof($file)) {
                 $data .= gzread($file, 1024);
             }
-
             gzclose($file);
         }
 
@@ -214,43 +199,37 @@ class Gnumeric extends BaseReader {
 
     public static function gnumericMappings(): array
     {
-
         return array_merge(self::$mappings, Styles::$mappings);
     }
 
-    private function processComments(SimpleXMLElement $sheet): void {
-
+    private function processComments(SimpleXMLElement $sheet): void
+    {
         if ((!$this->readDataOnly) && (isset($sheet->Objects))) {
-
             foreach ($sheet->Objects->children(self::NAMESPACE_GNM) as $key => $comment) {
                 $commentAttributes = $comment->attributes();
                 //    Only comment objects are handled at the moment
-
                 if ($commentAttributes && $commentAttributes->Text) {
                     $this->spreadsheet->getActiveSheet()->getComment((string) $commentAttributes->ObjectBound)
                         ->setAuthor((string) $commentAttributes->Author)
                         ->setText($this->parseRichText((string) $commentAttributes->Text));
                 }
-
             }
-
         }
-
     }
 
     /**
      * @param mixed $value
      */
-    private static function testSimpleXml($value): SimpleXMLElement {
-
+    private static function testSimpleXml($value): SimpleXMLElement
+    {
         return ($value instanceof SimpleXMLElement) ? $value : new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><root></root>');
     }
 
     /**
      * Loads Spreadsheet from file.
      */
-    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet{
-
+    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet
+    {
         // Create new Spreadsheet
         $spreadsheet = new Spreadsheet();
         $spreadsheet->removeSheetByIndex(0);
@@ -262,25 +241,23 @@ class Gnumeric extends BaseReader {
     /**
      * Loads from file into Spreadsheet instance.
      */
-    public function loadIntoExisting(string $filename, Spreadsheet $spreadsheet): Spreadsheet{
-
+    public function loadIntoExisting(string $filename, Spreadsheet $spreadsheet): Spreadsheet
+    {
         $this->spreadsheet = $spreadsheet;
         File::assertFile($filename);
 
         $gFileData = $this->gzfileGetContents($filename);
 
-        $xml2 = simplexml_load_string($this->securityScanner->scan($gFileData), 'SimpleXMLElement', Settings::getLibXmlLoaderOptions());
+        $xml2 = simplexml_load_string($this->getSecurityScannerOrThrow()->scan($gFileData), 'SimpleXMLElement', Settings::getLibXmlLoaderOptions());
         $xml = self::testSimpleXml($xml2);
 
         $gnmXML = $xml->children(self::NAMESPACE_GNM);
         (new Properties($this->spreadsheet))->readProperties($xml, $gnmXML);
 
         $worksheetID = 0;
-
         foreach ($gnmXML->Sheets->Sheet as $sheetOrNull) {
             $sheet = self::testSimpleXml($sheetOrNull);
             $worksheetName = (string) $sheet->Name;
-
             if (is_array($this->loadSheetsOnly) && !in_array($worksheetName, $this->loadSheetsOnly, true)) {
                 continue;
             }
@@ -294,6 +271,11 @@ class Gnumeric extends BaseReader {
             //        cells... during the load, all formulae should be correct, and we're simply bringing the worksheet
             //        name in line with the formula, not the reverse
             $this->spreadsheet->getActiveSheet()->setTitle($worksheetName, false, false);
+
+            $visibility = $sheet->attributes()['Visibility'] ?? 'GNM_SHEET_VISIBILITY_VISIBLE';
+            if ((string) $visibility !== 'GNM_SHEET_VISIBILITY_VISIBLE') {
+                $this->spreadsheet->getActiveSheet()->setSheetState(Worksheet::SHEETSTATE_HIDDEN);
+            }
 
             if (!$this->readDataOnly) {
                 (new PageSetup($this->spreadsheet))
@@ -313,13 +295,10 @@ class Gnumeric extends BaseReader {
                 $column = Coordinate::stringFromColumnIndex($column + 1);
 
                 // Read cell?
-
                 if ($this->getReadFilter() !== null) {
-
                     if (!$this->getReadFilter()->readCell($column, $row, $worksheetName)) {
                         continue;
                     }
-
                 }
 
                 $this->loadCell($cell, $worksheetName, $cellAttributes, $column, $row);
@@ -347,20 +326,18 @@ class Gnumeric extends BaseReader {
         return $this->spreadsheet;
     }
 
-    private function setSelectedSheet(SimpleXMLElement $gnmXML): void {
-
+    private function setSelectedSheet(SimpleXMLElement $gnmXML): void
+    {
         if (isset($gnmXML->UIData)) {
             $attributes = self::testSimpleXml($gnmXML->UIData->attributes());
             $selectedSheet = (int) $attributes['SelectedTab'];
             $this->spreadsheet->setActiveSheetIndex($selectedSheet);
         }
-
     }
 
-    private function setSelectedCells( ? SimpleXMLElement $sheet) : void {
-
+    private function setSelectedCells(?SimpleXMLElement $sheet): void
+    {
         if ($sheet !== null && isset($sheet->Selections)) {
-
             foreach ($sheet->Selections as $selection) {
                 $startCol = (int) ($selection->StartCol ?? 0);
                 $startRow = (int) ($selection->StartRow ?? 0) + 1;
@@ -377,189 +354,149 @@ class Gnumeric extends BaseReader {
 
                 break;
             }
-
         }
-
     }
 
-    private function processMergedCells( ? SimpleXMLElement $sheet) : void {
-
+    private function processMergedCells(?SimpleXMLElement $sheet): void
+    {
         //    Handle Merged Cells in this worksheet
-
         if ($sheet !== null && isset($sheet->MergedRegions)) {
-
             foreach ($sheet->MergedRegions->Merge as $mergeCells) {
-
                 if (strpos((string) $mergeCells, ':') !== false) {
-                    $this->spreadsheet->getActiveSheet()->mergeCells($mergeCells);
+                    $this->spreadsheet->getActiveSheet()->mergeCells($mergeCells, Worksheet::MERGE_CELL_CONTENT_HIDE);
                 }
-
             }
-
         }
-
     }
 
-    private function processAutofilter( ? SimpleXMLElement $sheet) : void {
-
+    private function processAutofilter(?SimpleXMLElement $sheet): void
+    {
         if ($sheet !== null && isset($sheet->Filters)) {
-
             foreach ($sheet->Filters->Filter as $autofilter) {
-
                 if ($autofilter !== null) {
                     $attributes = $autofilter->attributes();
-
                     if (isset($attributes['Area'])) {
                         $this->spreadsheet->getActiveSheet()->setAutoFilter((string) $attributes['Area']);
                     }
-
                 }
-
             }
-
         }
-
     }
 
-    private function setColumnWidth(int $whichColumn, float $defaultWidth) : void{
-
+    private function setColumnWidth(int $whichColumn, float $defaultWidth): void
+    {
         $columnDimension = $this->spreadsheet->getActiveSheet()
             ->getColumnDimension(Coordinate::stringFromColumnIndex($whichColumn + 1));
-
         if ($columnDimension !== null) {
             $columnDimension->setWidth($defaultWidth);
         }
-
     }
 
-    private function setColumnInvisible(int $whichColumn) : void{
-
+    private function setColumnInvisible(int $whichColumn): void
+    {
         $columnDimension = $this->spreadsheet->getActiveSheet()
             ->getColumnDimension(Coordinate::stringFromColumnIndex($whichColumn + 1));
-
         if ($columnDimension !== null) {
             $columnDimension->setVisible(false);
         }
-
     }
 
-    private function processColumnLoop(int $whichColumn, int $maxCol,  ? SimpleXMLElement $columnOverride, float $defaultWidth) : int{
-
+    private function processColumnLoop(int $whichColumn, int $maxCol, ?SimpleXMLElement $columnOverride, float $defaultWidth): int
+    {
         $columnOverride = self::testSimpleXml($columnOverride);
         $columnAttributes = self::testSimpleXml($columnOverride->attributes());
         $column = $columnAttributes['No'];
         $columnWidth = ((float) $columnAttributes['Unit']) / 5.4;
         $hidden = (isset($columnAttributes['Hidden'])) && ((string) $columnAttributes['Hidden'] == '1');
         $columnCount = (int) ($columnAttributes['Count'] ?? 1);
-
         while ($whichColumn < $column) {
             $this->setColumnWidth($whichColumn, $defaultWidth);
             ++$whichColumn;
         }
-
         while (($whichColumn < ($column + $columnCount)) && ($whichColumn <= $maxCol)) {
             $this->setColumnWidth($whichColumn, $columnWidth);
-
             if ($hidden) {
                 $this->setColumnInvisible($whichColumn);
             }
-
             ++$whichColumn;
         }
 
         return $whichColumn;
     }
 
-    private function processColumnWidths( ? SimpleXMLElement $sheet, int $maxCol) : void {
-
+    private function processColumnWidths(?SimpleXMLElement $sheet, int $maxCol): void
+    {
         if ((!$this->readDataOnly) && $sheet !== null && (isset($sheet->Cols))) {
             //    Column Widths
             $defaultWidth = 0;
             $columnAttributes = $sheet->Cols->attributes();
-
             if ($columnAttributes !== null) {
                 $defaultWidth = $columnAttributes['DefaultSizePts'] / 5.4;
             }
-
             $whichColumn = 0;
-
             foreach ($sheet->Cols->ColInfo as $columnOverride) {
                 $whichColumn = $this->processColumnLoop($whichColumn, $maxCol, $columnOverride, $defaultWidth);
             }
-
             while ($whichColumn <= $maxCol) {
                 $this->setColumnWidth($whichColumn, $defaultWidth);
                 ++$whichColumn;
             }
-
         }
-
     }
 
-    private function setRowHeight(int $whichRow, float $defaultHeight) : void{
-
+    private function setRowHeight(int $whichRow, float $defaultHeight): void
+    {
         $rowDimension = $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow);
-
         if ($rowDimension !== null) {
             $rowDimension->setRowHeight($defaultHeight);
         }
-
     }
 
-    private function setRowInvisible(int $whichRow) : void{
-
+    private function setRowInvisible(int $whichRow): void
+    {
         $rowDimension = $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow);
-
         if ($rowDimension !== null) {
             $rowDimension->setVisible(false);
         }
-
     }
 
-    private function processRowLoop(int $whichRow, int $maxRow,  ? SimpleXMLElement $rowOverride, float $defaultHeight) : int{
-
+    private function processRowLoop(int $whichRow, int $maxRow, ?SimpleXMLElement $rowOverride, float $defaultHeight): int
+    {
         $rowOverride = self::testSimpleXml($rowOverride);
         $rowAttributes = self::testSimpleXml($rowOverride->attributes());
         $row = $rowAttributes['No'];
         $rowHeight = (float) $rowAttributes['Unit'];
         $hidden = (isset($rowAttributes['Hidden'])) && ((string) $rowAttributes['Hidden'] == '1');
         $rowCount = (int) ($rowAttributes['Count'] ?? 1);
-
         while ($whichRow < $row) {
             ++$whichRow;
             $this->setRowHeight($whichRow, $defaultHeight);
         }
-
         while (($whichRow < ($row + $rowCount)) && ($whichRow < $maxRow)) {
             ++$whichRow;
             $this->setRowHeight($whichRow, $rowHeight);
-
             if ($hidden) {
                 $this->setRowInvisible($whichRow);
             }
-
         }
 
         return $whichRow;
     }
 
-    private function processRowHeights( ? SimpleXMLElement $sheet, int $maxRow) : void {
-
+    private function processRowHeights(?SimpleXMLElement $sheet, int $maxRow): void
+    {
         if ((!$this->readDataOnly) && $sheet !== null && (isset($sheet->Rows))) {
             //    Row Heights
             $defaultHeight = 0;
             $rowAttributes = $sheet->Rows->attributes();
-
             if ($rowAttributes !== null) {
                 $defaultHeight = (float) $rowAttributes['DefaultSizePts'];
             }
-
             $whichRow = 0;
 
             foreach ($sheet->Rows->RowInfo as $rowOverride) {
                 $whichRow = $this->processRowLoop($whichRow, $maxRow, $rowOverride, $defaultHeight);
             }
-
             // never executed, I can't figure out any circumstances
             // under which it would be executed, and, even if
             // such exist, I'm not convinced this is needed.
@@ -568,19 +505,15 @@ class Gnumeric extends BaseReader {
             //    $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow)->setRowHeight($defaultHeight);
             //}
         }
-
     }
 
-    private function processDefinedNames( ? SimpleXMLElement $gnmXML) : void {
-
+    private function processDefinedNames(?SimpleXMLElement $gnmXML): void
+    {
         //    Loop through definedNames (global named ranges)
-
         if ($gnmXML !== null && isset($gnmXML->Names)) {
-
             foreach ($gnmXML->Names->Name as $definedName) {
                 $name = (string) $definedName->name;
                 $value = (string) $definedName->value;
-
                 if (stripos($value, '#REF!') !== false) {
                     continue;
                 }
@@ -589,19 +522,15 @@ class Gnumeric extends BaseReader {
                 $worksheetName = trim($worksheetName, "'");
                 $worksheet = $this->spreadsheet->getSheetByName($worksheetName);
                 // Worksheet might still be null if we're only loading selected sheets rather than the full spreadsheet
-
                 if ($worksheet !== null) {
                     $this->spreadsheet->addDefinedName(DefinedName::createInstance($name, $worksheet, $value));
                 }
-
             }
-
         }
-
     }
 
-    private function parseRichText(string $is) : RichText{
-
+    private function parseRichText(string $is): RichText
+    {
         $value = new RichText();
         $value->createText($is);
 
@@ -614,18 +543,15 @@ class Gnumeric extends BaseReader {
         SimpleXMLElement $cellAttributes,
         string $column,
         int $row
-    ) : void{
-
+    ): void {
         $ValueType = $cellAttributes->ValueType;
         $ExprID = (string) $cellAttributes->ExprID;
         $type = DataType::TYPE_FORMULA;
-
         if ($ExprID > '') {
-
             if (((string) $cell) > '') {
                 $this->expressions[$ExprID] = [
-                    'column'  => $cellAttributes->Col,
-                    'row'     => $cellAttributes->Row,
+                    'column' => $cellAttributes->Col,
+                    'row' => $cellAttributes->Row,
                     'formula' => (string) $cell,
                 ];
             } else {
@@ -639,30 +565,22 @@ class Gnumeric extends BaseReader {
                     $worksheetName
                 );
             }
-
             $type = DataType::TYPE_FORMULA;
         } else {
             $vtype = (string) $ValueType;
-
             if (array_key_exists($vtype, self::$mappings['dataType'])) {
                 $type = self::$mappings['dataType'][$vtype];
             }
-
-            if ($vtype === '20') {
-                //    Boolean
+            if ($vtype === '20') {        //    Boolean
                 $cell = $cell == 'TRUE';
             }
-
         }
 
         $this->spreadsheet->getActiveSheet()->getCell($column . $row)->setValueExplicit((string) $cell, $type);
-
         if (isset($cellAttributes->ValueFormat)) {
             $this->spreadsheet->getActiveSheet()->getCell($column . $row)
                 ->getStyle()->getNumberFormat()
                 ->setFormatCode((string) $cellAttributes->ValueFormat);
         }
-
     }
-
 }

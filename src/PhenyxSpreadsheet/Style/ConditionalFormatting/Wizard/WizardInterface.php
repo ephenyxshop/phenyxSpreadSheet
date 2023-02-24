@@ -5,7 +5,8 @@ namespace EphenyxShop\PhenyxSpreadsheet\Style\ConditionalFormatting\Wizard;
 use EphenyxShop\PhenyxSpreadsheet\Style\Conditional;
 use EphenyxShop\PhenyxSpreadsheet\Style\Style;
 
-interface WizardInterface {
+interface WizardInterface
+{
     public function getCellRange(): string;
 
     public function setCellRange(string $cellRange): void;

@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Worksheet;
 
-class PageMargins {
-
+class PageMargins
+{
     /**
      * Left.
      *
@@ -49,15 +49,17 @@ class PageMargins {
     /**
      * Create a new PageMargins.
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Get Left.
      *
      * @return float
      */
-    public function getLeft() {
-
+    public function getLeft()
+    {
         return $this->left;
     }
 
@@ -68,8 +70,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setLeft($left) {
-
+    public function setLeft($left)
+    {
         $this->left = $left;
 
         return $this;
@@ -80,8 +82,8 @@ class PageMargins {
      *
      * @return float
      */
-    public function getRight() {
-
+    public function getRight()
+    {
         return $this->right;
     }
 
@@ -92,8 +94,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setRight($right) {
-
+    public function setRight($right)
+    {
         $this->right = $right;
 
         return $this;
@@ -104,8 +106,8 @@ class PageMargins {
      *
      * @return float
      */
-    public function getTop() {
-
+    public function getTop()
+    {
         return $this->top;
     }
 
@@ -116,8 +118,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setTop($top) {
-
+    public function setTop($top)
+    {
         $this->top = $top;
 
         return $this;
@@ -128,8 +130,8 @@ class PageMargins {
      *
      * @return float
      */
-    public function getBottom() {
-
+    public function getBottom()
+    {
         return $this->bottom;
     }
 
@@ -140,8 +142,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setBottom($bottom) {
-
+    public function setBottom($bottom)
+    {
         $this->bottom = $bottom;
 
         return $this;
@@ -152,8 +154,8 @@ class PageMargins {
      *
      * @return float
      */
-    public function getHeader() {
-
+    public function getHeader()
+    {
         return $this->header;
     }
 
@@ -164,8 +166,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setHeader($header) {
-
+    public function setHeader($header)
+    {
         $this->header = $header;
 
         return $this;
@@ -176,8 +178,8 @@ class PageMargins {
      *
      * @return float
      */
-    public function getFooter() {
-
+    public function getFooter()
+    {
         return $this->footer;
     }
 
@@ -188,8 +190,8 @@ class PageMargins {
      *
      * @return $this
      */
-    public function setFooter($footer) {
-
+    public function setFooter($footer)
+    {
         $this->footer = $footer;
 
         return $this;
@@ -198,50 +200,45 @@ class PageMargins {
     /**
      * Implement PHP __clone to create a deep clone, not just a shallow copy.
      */
-    public function __clone() {
-
+    public function __clone()
+    {
         $vars = get_object_vars($this);
-
         foreach ($vars as $key => $value) {
-
             if (is_object($value)) {
                 $this->$key = clone $value;
             } else {
                 $this->$key = $value;
             }
-
         }
-
     }
 
-    public static function fromCentimeters(float $value): float {
-
+    public static function fromCentimeters(float $value): float
+    {
         return $value / 2.54;
     }
 
-    public static function toCentimeters(float $value): float {
-
+    public static function toCentimeters(float $value): float
+    {
         return $value * 2.54;
     }
 
-    public static function fromMillimeters(float $value): float {
-
+    public static function fromMillimeters(float $value): float
+    {
         return $value / 25.4;
     }
 
-    public static function toMillimeters(float $value): float {
-
+    public static function toMillimeters(float $value): float
+    {
         return $value * 25.4;
     }
 
-    public static function fromPoints(float $value): float {
-
+    public static function fromPoints(float $value): float
+    {
         return $value / 72;
     }
 
-    public static function toPoints(float $value): float {
-
+    public static function toPoints(float $value): float
+    {
         return $value * 72;
     }
-
 }

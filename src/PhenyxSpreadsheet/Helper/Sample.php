@@ -4,6 +4,7 @@ namespace EphenyxShop\PhenyxSpreadsheet\Helper;
 
 use EphenyxShop\PhenyxSpreadsheet\IOFactory;
 use EphenyxShop\PhenyxSpreadsheet\Spreadsheet;
+use EphenyxShop\PhenyxSpreadsheet\Worksheet\Worksheet;
 use EphenyxShop\PhenyxSpreadsheet\Writer\IWriter;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -15,15 +16,15 @@ use RuntimeException;
 /**
  * Helper class to be used in sample code.
  */
-class Sample {
-
+class Sample
+{
     /**
      * Returns whether we run on CLI or browser.
      *
      * @return bool
      */
-    public function isCli() {
-
+    public function isCli()
+    {
         return PHP_SAPI === 'cli';
     }
 
@@ -32,8 +33,8 @@ class Sample {
      *
      * @return string
      */
-    public function getScriptFilename() {
-
+    public function getScriptFilename()
+    {
         return basename($_SERVER['SCRIPT_FILENAME'], '.php');
     }
 
@@ -42,8 +43,8 @@ class Sample {
      *
      * @return bool
      */
-    public function isIndex() {
-
+    public function isIndex()
+    {
         return $this->getScriptFilename() === 'index';
     }
 
@@ -52,8 +53,8 @@ class Sample {
      *
      * @return string
      */
-    public function getPageTitle() {
-
+    public function getPageTitle()
+    {
         return $this->isIndex() ? 'PHPSpreadsheet' : $this->getScriptFilename();
     }
 
@@ -62,8 +63,8 @@ class Sample {
      *
      * @return string
      */
-    public function getPageHeading() {
-
+    public function getPageHeading()
+    {
         return $this->isIndex() ? '' : '<h1>' . str_replace('_', ' ', $this->getScriptFilename()) . '</h1>';
     }
 
@@ -72,36 +73,40 @@ class Sample {
      *
      * @return string[][] [$name => $path]
      */
-    public function getSamples() {
-
+    public function getSamples()
+    {
         // Populate samples
         $baseDir = realpath(__DIR__ . '/../../../samples');
+        if ($baseDir === false) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('realpath returned false');
+            // @codeCoverageIgnoreEnd
+        }
         $directory = new RecursiveDirectoryIterator($baseDir);
         $iterator = new RecursiveIteratorIterator($directory);
         $regex = new RegexIterator($iterator, '/^.+\.php$/', RecursiveRegexIterator::GET_MATCH);
 
         $files = [];
-
         foreach ($regex as $file) {
             $file = str_replace(str_replace('\\', '/', $baseDir) . '/', '', str_replace('\\', '/', $file[0]));
+            if (is_array($file)) {
+                // @codeCoverageIgnoreStart
+                throw new RuntimeException('str_replace returned array');
+                // @codeCoverageIgnoreEnd
+            }
             $info = pathinfo($file);
-            $category = str_replace('_', ' ', $info['dirname']);
-            $name = str_replace('_', ' ', preg_replace('/(|\.php)/', '', $info['filename']));
-
+            $category = str_replace('_', ' ', $info['dirname'] ?? '');
+            $name = str_replace('_', ' ', (string) preg_replace('/(|\.php)/', '', $info['filename']));
             if (!in_array($category, ['.', 'boostrap', 'templates'])) {
-
                 if (!isset($files[$category])) {
                     $files[$category] = [];
                 }
-
                 $files[$category][$name] = $file;
             }
-
         }
 
         // Sort everything
         ksort($files);
-
         foreach ($files as &$f) {
             asort($f);
         }
@@ -115,26 +120,25 @@ class Sample {
      * @param string $filename
      * @param string[] $writers
      */
-    public function write(Spreadsheet $spreadsheet, $filename, array $writers = ['Xlsx', 'Xls']): void{
-
+    public function write(Spreadsheet $spreadsheet, $filename, array $writers = ['Xlsx', 'Xls']): void
+    {
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $spreadsheet->setActiveSheetIndex(0);
 
         // Write documents
-
         foreach ($writers as $writerType) {
             $path = $this->getFilename($filename, mb_strtolower($writerType));
             $writer = IOFactory::createWriter($spreadsheet, $writerType);
             $callStartTime = microtime(true);
             $writer->save($path);
-            $this->logWrite($writer, $path, $callStartTime);
+            $this->logWrite($writer, $path, /** @scrutinizer ignore-type */ $callStartTime);
         }
 
         $this->logEndingNotes();
     }
 
-    protected function isDirOrMkdir(string $folder): bool {
-
+    protected function isDirOrMkdir(string $folder): bool
+    {
         return \is_dir($folder) || \mkdir($folder);
     }
 
@@ -143,10 +147,9 @@ class Sample {
      *
      * @return string
      */
-    private function getTemporaryFolder() {
-
+    private function getTemporaryFolder()
+    {
         $tempFolder = sys_get_temp_dir() . '/phpspreadsheet';
-
         if (!$this->isDirOrMkdir($tempFolder)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $tempFolder));
         }
@@ -162,11 +165,11 @@ class Sample {
      *
      * @return string
      */
-    public function getFilename($filename, $extension = 'xlsx') {
-
+    public function getFilename($filename, $extension = 'xlsx')
+    {
         $originalExtension = pathinfo($filename, PATHINFO_EXTENSION);
 
-        return $this->getTemporaryFolder() . '/' . str_replace('.' . $originalExtension, '.' . $extension, basename($filename));
+        return $this->getTemporaryFolder() . '/' . str_replace('.' . /** @scrutinizer ignore-type */ $originalExtension, '.' . $extension, basename($filename));
     }
 
     /**
@@ -176,25 +179,57 @@ class Sample {
      *
      * @return string
      */
-    public function getTemporaryFilename($extension = 'xlsx') {
-
+    public function getTemporaryFilename($extension = 'xlsx')
+    {
         $temporaryFilename = tempnam($this->getTemporaryFolder(), 'phpspreadsheet-');
+        if ($temporaryFilename === false) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('tempnam returned false');
+            // @codeCoverageIgnoreEnd
+        }
         unlink($temporaryFilename);
 
         return $temporaryFilename . '.' . $extension;
     }
 
-    public function log($message): void{
-
+    public function log(string $message): void
+    {
         $eol = $this->isCli() ? PHP_EOL : '<br />';
         echo date('H:i:s ') . $message . $eol;
+    }
+
+    public function titles(string $category, string $functionName, ?string $description = null): void
+    {
+        $this->log(sprintf('%s Functions:', $category));
+        $description === null
+            ? $this->log(sprintf('Function: %s()', rtrim($functionName, '()')))
+            : $this->log(sprintf('Function: %s() - %s.', rtrim($functionName, '()'), rtrim($description, '.')));
+    }
+
+    public function displayGrid(array $matrix): void
+    {
+        $renderer = new TextGrid($matrix, $this->isCli());
+        echo $renderer->render();
+    }
+
+    public function logCalculationResult(
+        Worksheet $worksheet,
+        string $functionName,
+        string $formulaCell,
+        ?string $descriptionCell = null
+    ): void {
+        if ($descriptionCell !== null) {
+            $this->log($worksheet->getCell($descriptionCell)->getValue());
+        }
+        $this->log($worksheet->getCell($formulaCell)->getValue());
+        $this->log(sprintf('%s() Result is ', $functionName) . $worksheet->getCell($formulaCell)->getCalculatedValue());
     }
 
     /**
      * Log ending notes.
      */
-    public function logEndingNotes(): void{
-
+    public function logEndingNotes(): void
+    {
         // Do not show execution time for index
         $this->log('Peak memory usage: ' . (memory_get_peak_usage(true) / 1024 / 1024) . 'MB');
     }
@@ -205,8 +240,8 @@ class Sample {
      * @param string $path
      * @param float $callStartTime
      */
-    public function logWrite(IWriter $writer, $path, $callStartTime): void{
-
+    public function logWrite(IWriter $writer, $path, $callStartTime): void
+    {
         $callEndTime = microtime(true);
         $callTime = $callEndTime - $callStartTime;
         $reflection = new ReflectionClass($writer);
@@ -223,13 +258,12 @@ class Sample {
      * @param string $path
      * @param float $callStartTime
      */
-    public function logRead($format, $path, $callStartTime): void{
-
+    public function logRead($format, $path, $callStartTime): void
+    {
         $callEndTime = microtime(true);
         $callTime = $callEndTime - $callStartTime;
         $message = "Read {$format} format from <code>{$path}</code>  in " . sprintf('%.4f', $callTime) . ' seconds';
 
         $this->log($message);
     }
-
 }

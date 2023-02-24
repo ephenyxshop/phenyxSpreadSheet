@@ -2,8 +2,8 @@
 
 namespace EphenyxShop\PhenyxSpreadsheet\Calculation\Logical;
 
-class Boolean {
-
+class Boolean
+{
     /**
      * TRUE.
      *
@@ -14,8 +14,8 @@ class Boolean {
      *
      * @return bool True
      */
-    public static function true(): bool {
-
+    public static function true(): bool
+    {
         return true;
     }
 
@@ -29,8 +29,8 @@ class Boolean {
      *
      * @return bool False
      */
-    public static function false(): bool {
-
+    public static function false(): bool
+    {
         return false;
     }
 }
