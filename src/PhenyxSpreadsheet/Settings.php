@@ -10,7 +10,8 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 use ReflectionClass;
 
-class Settings {
+class Settings
+{
     /**
      * Class name of the chart renderer used for rendering charts
      * eg: EphenyxShop\PhenyxSpreadsheet\Chart\Renderer\JpGraph.
